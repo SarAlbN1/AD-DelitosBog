@@ -1,0 +1,344 @@
+\documentclass[12pt,letterpaper]{article}
+
+% Compilar con pdfLaTeX en Overleaf.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\usepackage{enumitem}
+
+\geometry{left=2.8cm,right=2.8cm,top=2.7cm,bottom=2.7cm}
+\onehalfspacing
+\setlength{\parindent}{1.15cm}
+\setlength{\parskip}{0.25em}
+\setlist[itemize]{leftmargin=*,itemsep=2pt}
+\setlist[enumerate]{leftmargin=*,itemsep=2pt}
+\definecolor{azulj}{HTML}{174778}
+\titleformat{\section}{\normalfont\Large\bfseries\color{azulj}}{\thesection.}{0.65em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection.}{0.65em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection.}{0.65em}{}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Analítica de Datos}
+\fancyhead[R]{\small Primera entrega}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\hypersetup{pdftitle={Análisis multifuente y predicción del hurto a personas en Bogotá},pdfauthor={Juan Diego Rojas y Sara Albarracín}}
+\renewcommand{\refname}{Referencias}
+
+\begin{document}
+\begin{titlepage}
+  \thispagestyle{empty}
+  \begin{center}
+    {\large\bfseries PONTIFICIA UNIVERSIDAD JAVERIANA\par}
+    \vspace{0.5cm}
+    {\large Ingeniería de Sistemas\par}
+    \vspace{0.2cm}
+    {\large Analítica de Datos\par}
+    \vfill
+    {\color{azulj}\rule{0.8\textwidth}{1.2pt}\par}
+    \vspace{0.6cm}
+    {\LARGE\bfseries Análisis multifuente y predicción del hurto a personas en Bogotá D.~C. mediante técnicas de minería de datos y aprendizaje automático\par}
+    \vspace{0.6cm}
+    {\color{azulj}\rule{0.8\textwidth}{1.2pt}\par}
+    \vspace{0.6cm}
+    {\large\bfseries Primera entrega\par}
+    {\normalsize Introducción, trabajos relacionados y recolección y entendimiento de datos\par}
+    \vfill
+    {\large\bfseries Presentado por:\par}
+    {\large Juan Diego Rojas\par}
+    {\large Sara Albarracín\par}
+    \vspace{0.8cm}
+    {\large\bfseries Profesor:\par}
+    {\large Ferney Maldonado López\par}
+    \vfill
+    Bogotá D.~C., Colombia\\
+    Noviembre de 2026
+  \end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% La sección 1 (Resumen ejecutivo) se desarrollará en la tercera entrega.
+% Se mantiene la numeración exigida por la guía del proyecto.
+\setcounter{section}{1}
+\section{Introducción}
+
+\subsection{Contextualización del problema}
+
+La seguridad ciudadana es un desafío importante para las grandes ciudades debido a sus repercusiones sobre la calidad de vida, la confianza institucional y la utilización del espacio público. Entre las distintas manifestaciones de criminalidad urbana, el hurto a personas afecta el patrimonio y el bienestar de las víctimas y puede modificar sus patrones de desplazamiento y percepción de seguridad.
+
+En Bogotá D.~C., este fenómeno puede examinarse mediante fuentes oficiales complementarias: las llamadas e incidentes tramitados por la Línea 123, los registros de hurto a personas de la Policía Nacional y las noticias criminales de la Fiscalía General de la Nación \cite{linea123,policia,fiscalia}. Aunque todas aportan evidencia sobre seguridad, no representan una misma unidad estadística: un incidente tramitado, una víctima registrada y un proceso judicial pueden referirse a acontecimientos relacionados, pero no deben sumarse como hechos independientes.
+
+La analítica de datos ofrece métodos para transformar registros históricos en información interpretable. Además del análisis descriptivo, los modelos predictivos permiten estimar resultados futuros a partir de regularidades observadas. Este enfoque es consistente con la importancia que \cite{provost2013} atribuyen a la formulación de problemas analíticos orientados a la toma de decisiones. Sin embargo, la utilidad de una predicción depende tanto del modelo como de la calidad, representatividad y disponibilidad temporal de sus datos.
+
+En Bogotá existen antecedentes de predicción delictiva mediante métodos estadísticos, aprendizaje automático y análisis espacial. \cite{riascos2020} estudian aplicaciones de analítica predictiva en la gestión de seguridad y \cite{martinez2025} examina patrones espacio-temporales del hurto a personas. Estos trabajos evidencian la pertinencia de comparar modelos bajo un procedimiento de evaluación transparente.
+
+Por lo anterior, este proyecto propone caracterizar registros de seguridad en Bogotá durante 2018--2025, estudiar su correspondencia temporal y territorial y, en etapas posteriores, evaluar modelos predictivos del hurto a personas. La selección de la fuente objetivo y el alcance final del modelamiento quedarán subordinados a la auditoría de cobertura y volumen de registros.
+
+\subsection{Planteamiento del problema}
+
+La existencia de registros históricos de criminalidad no garantiza por sí misma la generación de conocimiento útil. Los conteos de hurtos pueden presentar tendencias, estacionalidad, variaciones extraordinarias y cambios derivados de procesos de denuncia o actualización institucional. Por consiguiente, una variación observada no debe interpretarse automáticamente como un cambio equivalente en todos los delitos realmente ocurridos.
+
+Adicionalmente, las fuentes oficiales disponibles manejan diferentes niveles de agregación. En la base nacional consultada, cada registro de Bogotá contiene una fecha y un conteo municipal, sin barrio, coordenadas ni hora del hecho; en cambio, la fuente distrital permite comparar localidades mediante conteos anuales. Esta diferencia impide construir una serie diaria por barrio a partir de la combinación directa de ambas bases.
+
+El problema de investigación consiste en determinar hasta qué punto la historia de los conteos diarios permite anticipar nuevos registros y qué patrones territoriales complementarios pueden describirse de manera rigurosa. La pregunta principal es la siguiente:
+
+\begin{quote}
+\emph{¿En qué medida la integración y el análisis de fuentes oficiales de seguridad ciudadana permiten identificar patrones temporales y territoriales del hurto a personas en Bogotá y mejorar la capacidad predictiva de los modelos de aprendizaje automático?}
+\end{quote}
+
+Como pregunta complementaria, se plantea: \emph{¿qué diferencias de cobertura, granularidad y registro condicionan la comparación entre incidentes de la Línea 123, registros policiales y noticias criminales?}
+
+\subsection{Justificación}
+
+Desde la perspectiva social, caracterizar las variaciones de los hurtos registrados puede aportar evidencia para comprender la seguridad urbana. Desde la perspectiva tecnológica, la investigación permite aplicar herramientas de análisis temporal, preparación de datos, visualización y aprendizaje automático sobre información pública. Desde la perspectiva académica, plantea un problema reproducible en el que será posible comparar distintos métodos de predicción y discutir sus limitaciones.
+
+El valor del trabajo no reside en asegurar que se puede anticipar un delito individual, sino en cuantificar la capacidad predictiva de modelos sobre registros agregados. Asimismo, se busca evitar que un buen resultado estadístico sea interpretado como evidencia causal o como justificación automática de decisiones que afecten a comunidades específicas. Investigaciones sobre subregistro y equidad de modelos de criminalidad muestran la importancia de estas precauciones \cite{riascos2023,urcuqui2020}.
+
+\subsection{Objetivos}
+
+\subsubsection{Objetivo general}
+
+Analizar de manera multifuente el comportamiento histórico del hurto a personas en Bogotá D.~C. mediante técnicas de minería de datos y aprendizaje automático, con el fin de identificar patrones temporales y territoriales y evaluar posteriormente modelos predictivos sobre una variable objetivo claramente definida.
+
+\subsubsection{Objetivos específicos}
+
+\begin{enumerate}
+  \item Recolectar y documentar los datos oficiales de Línea 123, Policía Nacional y Fiscalía sobre seguridad y hurtos en Bogotá, sus variables, cobertura, unidades de observación y limitaciones.
+  \item Identificar tendencias y patrones de variación temporal mediante análisis exploratorio de los registros diarios.
+  \item Describir las diferencias territoriales y las relaciones entre fuentes en periodos y escalas comparables.
+  \item Implementar y comparar modelos predictivos sobre la serie objetivo seleccionada, incluyendo una línea base y métodos estadísticos y de aprendizaje automático.
+  \item Evaluar los pronósticos con métricas apropiadas y discutir su utilidad, sesgos potenciales y límites de interpretación.
+\end{enumerate}
+
+\subsection{Alcance y delimitación}
+
+El periodo principal de estudio será del 1 de enero de 2018 al 31 de diciembre de 2025. Se utilizarán los registros de la Línea 123 para contextualizar incidentes tramitados, los datos de la Policía Nacional para caracterizar hurtos y la información de Fiscalía para contrastar tendencias judiciales. El periodo se restringirá a años completos, y el nivel temporal y territorial de cada comparación dependerá de los campos efectivamente disponibles.
+
+No se busca identificar personas presuntamente responsables, anticipar víctimas individuales ni estimar la ocurrencia exacta de delitos a nivel de dirección. Tampoco se inferirán conteos diarios por localidad a partir de los totales anuales. La implementación, los resultados, la evaluación y las conclusiones definitivas se desarrollarán en las siguientes entregas.
+
+\section{Trabajos relacionados y estudios similares realizados}
+
+\subsection{Antecedentes específicos sobre hurto a personas}
+
+\subsubsection{Martínez Chitiva (2025)}
+
+En \emph{Análisis espacio-temporal para caracterización, predicción y mitigación del hurto a personas en Bogotá}, \cite{martinez2025} integra distintas fuentes y herramientas de información geográfica para estudiar la distribución del hurto y sus factores contextuales. La investigación identifica zonas de concentración delictiva y compara métodos predictivos, destacando el comportamiento de Random Forest frente a determinados enfoques estadísticos. Para este proyecto constituye un antecedente central por su temática y por la importancia que otorga a la validación del modelo y a la actualización de los datos.
+
+\subsubsection{Garzón Acosta (2025)}
+
+\cite{garzon2025} estudia la predicción del hurto a personas en Bogotá durante 2015--2024 mediante modelos de corrección de errores (MCE) y modelos vectoriales de corrección de errores (VECM). Su propuesta incorpora variables como desempleo, índice de precios al consumidor y capturas, y considera pruebas de estacionariedad y cointegración. Este antecedente muestra una alternativa econométrica para el pronóstico y fundamenta la necesidad de comparar modelos con supuestos y estructuras diferentes.
+
+\subsubsection{Campo Agredo (2017)}
+
+\cite{campo2017} desarrolla modelos de predicción del hurto a personas en Bogotá con énfasis en la selección de atributos, depuración, codificación y uso de métodos probabilísticos. Su contribución para nuestro trabajo radica en resaltar que el preprocesamiento y la pertinencia de las variables influyen en la validez de cualquier resultado predictivo.
+
+\subsubsection{Fonseca Vásquez (2019)}
+
+\cite{fonseca2019} analiza espacialmente el hurto a personas en la localidad de Los Mártires durante 2017--2018, con miras a apoyar las decisiones de los Comandos de Atención Inmediata (CAI). El estudio ofrece un antecedente a escala local y evidencia que la heterogeneidad espacial requiere una interpretación diferente de la utilizada para los totales agregados de toda la ciudad.
+
+\subsection{Antecedentes de modelamiento delictivo en Bogotá}
+
+\subsubsection{Riascos, Dulce, Moreno y Gómez (2020)}
+
+La nota de política \emph{Prediciendo el crimen en Bogotá} presenta resultados y aplicaciones potenciales de modelos de analítica predictiva para seguridad urbana, entre ellas el apoyo a decisiones sobre distribución de recursos y ubicación de infraestructura \cite{riascos2020}. Es relevante porque conecta el análisis estadístico con un problema público, aunque las aplicaciones institucionales requieren valoraciones adicionales a la precisión predictiva.
+
+\subsubsection{Urcuqui y colaboradores (2020)}
+
+\cite{urcuqui2020} proponen un modelo generativo adversarial condicional para la predicción de criminalidad, incluyendo una discusión sobre exactitud y equidad. El trabajo permite ampliar el marco conceptual del proyecto: un algoritmo no debe evaluarse únicamente por su desempeño medio, pues los sesgos de observación pueden tener consecuencias territoriales y sociales.
+
+\subsubsection{Riascos Villegas y colaboradores (2023)}
+
+\cite{riascos2023} abordan el modelamiento de eventos delictivos espacio-temporales cuando existe subregistro. Este antecedente es importante para interpretar el significado de la variable objetivo: el proyecto predice conteos oficiales registrados, no el número real e inobservable de todos los hurtos ocurridos.
+
+\subsection{Comparación de antecedentes}
+
+\begin{table}[H]
+\centering
+\caption{Síntesis de trabajos relacionados y su aporte a la investigación.}
+\label{tab:antecedentes}
+\small
+\begin{tabularx}{\textwidth}{@{}p{2.9cm}p{2.4cm}X@{}}
+\toprule
+\textbf{Estudio} & \textbf{Enfoque} & \textbf{Aporte para este proyecto} \\
+\midrule
+Martínez Chitiva (2025) & Espacio-temporal y ML & Patrones territoriales y comparación de modelos. \\
+Garzón Acosta (2025) & Econometría & Pronóstico temporal y diagnóstico de series. \\
+Campo Agredo (2017) & Probabilístico & Selección y preparación de variables. \\
+Fonseca Vásquez (2019) & Análisis espacial & Caracterización de una localidad bogotana. \\
+Riascos et al. (2020) & Analítica pública & Utilidad y límites para la toma de decisiones. \\
+Urcuqui et al. (2020) & Aprendizaje profundo & Exactitud y equidad de predicciones. \\
+Riascos Villegas et al. (2023) & Modelamiento estadístico & Efectos del subregistro y sesgos de observación. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Síntesis y contribución propuesta}
+
+La literatura revisada demuestra que la criminalidad en Bogotá ha sido estudiada mediante métodos espaciales, probabilísticos, econométricos y de aprendizaje automático. No obstante, la disponibilidad de datos a diferentes escalas, el subregistro y la necesidad de evaluaciones comparables siguen siendo desafíos relevantes.
+
+El presente trabajo propone un análisis reproducible de tres fuentes oficiales con unidades de observación distintas y, posteriormente, una comparación de modelos predictivos sobre la serie objetivo seleccionada. Su aporte esperado será la evaluación rigurosa de métodos sobre un periodo delimitado, el uso de una línea base explícita y la documentación de restricciones de los registros oficiales, sin afirmar que se desarrolla un algoritmo completamente novedoso.
+
+\section{Recolección y entendimiento de datos}
+
+\subsection{Fuentes y procedimiento de identificación}
+
+Se identificaron tres fuentes oficiales: (i) incidentes tramitados en el Centro de Comando, Control, Comunicaciones y Cómputo (C4) a partir de la Línea 123 \cite{linea123}; (ii) archivos anuales de hurto a personas de la Policía Nacional \cite{policia}; y (iii) \emph{Procesos Fiscalía V3}, con información anonimizada de noticias criminales \cite{fiscalia}. La estrategia consiste en conservar las descargas originales, registrar su fecha de extracción y documentar los filtros de Bogotá, tipo de delito y periodo 2018--2025.
+
+Los volúmenes preliminares de Línea 123 y Policía provienen de una revisión compartida por el equipo y \textbf{están pendientes de reproducción independiente con archivos congelados}. No se utilizará la suma de filas de fuentes distintas para afirmar el cumplimiento del requisito académico mínimo de 500.000 registros. Se identificará una tabla principal que supere este umbral por sí sola, o se aclarará con el profesor si admite un universo más amplio de incidentes de seguridad.
+
+\subsection{Fuente 1: incidentes tramitados por la Línea 123}
+
+\begin{table}[H]
+\centering
+\caption{Ficha preliminar de los datos de incidentes tramitados por Línea 123.}
+\begin{tabularx}{\textwidth}{@{}p{5.3cm}X@{}}
+\toprule
+\textbf{Característica} & \textbf{Valor} \\
+\midrule
+Nombre & Incidentes tramitados en el C4, Línea 123 \\
+Entidad publicadora & Distrito Capital, Datos Abiertos Bogotá \\
+Cobertura & Bogotá; serie publicada desde 2015 \\
+Periodo de interés & 2018-01-01 a 2025-12-31 \\
+Filas reportadas por el equipo (todos los incidentes) & 763.074; pendiente de reproducir \\
+Filas con tres categorías que contienen ``hurto'' & 25.144; pendiente de reproducir \\
+Suma reportada del campo de incidentes en esas categorías & 1.094.313; pendiente de verificar \\
+Unidad de observación & Registro de incidentes tramitados, posiblemente agregado \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Estos datos permiten estudiar frecuencias por fecha y territorio cuando los atributos lo permitan. La variable \texttt{CANT\_INCIDENTES} es un conteo que debe diferenciarse del número de filas. Aunque el archivo completo puede superar 500.000 registros, los incidentes clasificados como hurtos son un subconjunto menor. Su idoneidad como fuente predictiva principal depende de la definición final del problema.
+
+\subsection{Fuente 2: Policía Nacional, hurto a personas}
+
+\begin{table}[H]
+\centering
+\caption{Atributos de interés en los archivos anuales de la Policía Nacional.}
+\small
+\begin{tabularx}{\textwidth}{@{}p{3.0cm}p{2.3cm}X@{}}
+\toprule
+\textbf{Campo} & \textbf{Tipo} & \textbf{Descripción} \\
+\midrule
+Fecha del hecho & Fecha & Referencia temporal del registro. \\
+Municipio & Texto & Lugar de ocurrencia; se filtrará Bogotá D.~C. \\
+Arma o medio & Categórico & Medio consignado en el registro. \\
+Género & Categórico & Característica registrada de la víctima. \\
+Grupo de edad & Categórico & Rango de edad consignado. \\
+Cantidad & Numérico & Conteo registrado, según definición del archivo. \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+El portal ofrece archivos anuales, incluidos los periodos de 2018 a 2025. Una revisión preliminar del archivo 2025 realizada por el equipo reportó 123.364 filas filtradas para Bogotá; esta cifra requiere verificación reproducible. Se consolidarán años solamente después de homologar encabezados, formatos y unidades de observación, especialmente por posibles cambios institucionales en la producción estadística. No se asumirá que cada fila equivale automáticamente a una víctima distinta.
+
+\subsection{Fuente 3: Fiscalía General de la Nación, Procesos V3}
+
+El dataset \emph{Procesos Fiscalía V3} contiene noticias criminales del Sistema Penal Oral Acusatorio (SPOA). Su esquema incluye los campos \texttt{proceso\_anonimizado}, \texttt{cod\_dane\_hecho}, \texttt{municipio\_hecho}, \texttt{a\_o\_hecho}, \texttt{mes\_hecho}, \texttt{tipo\_delito}, \texttt{delito}, \texttt{estado} y \texttt{etapa}. Para la selección se filtrará Bogotá (código 11001), años de ocurrencia 2018--2025 y una definición explícita de categorías correspondientes a hurto. El volumen de filas resultantes y el número de procesos únicos \textbf{aún no están confirmados}.
+
+Algunas noticias criminales pueden incluir más de un delito, duplicidades asociadas a procesos conexos o actualizaciones de estado. Por tanto, se evaluará el conteo de identificadores distintos y se evitará equiparar automáticamente filas con hechos o víctimas. La granularidad temporal observada en la metadata corresponde a año, mes y trimestre, lo cual resulta más apropiado para contrastes mensuales que para pronósticos diarios.
+
+\subsection{Compatibilidad y restricciones de integración}
+
+\begin{table}[H]
+\centering
+\caption{Alcance y diferencias de las tres fuentes propuestas.}
+\small
+\begin{tabularx}{\textwidth}{@{}p{2.7cm}X X X@{}}
+\toprule
+\textbf{Característica} & \textbf{Línea 123} & \textbf{Policía} & \textbf{Fiscalía} \\
+\midrule
+Unidad & Incidente tramitado & Registro policial & Noticia criminal/delito \\
+Temporalidad & Según fecha disponible & Fecha del hecho & Mes/año del hecho \\
+Uso principal & Contexto territorial & Caracterización y predicción & Contraste de tendencias \\
+Precaución & Categorías diversas & Posibles revisiones & Procesos conexos \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+No se sumarán ni enlazarán filas de fuentes diferentes como si fuesen observaciones individuales nuevas. Cualquier cruce se realizará por periodos y territorios compatibles, con una definición documentada del conteo y de la disponibilidad de la información para predicción.
+
+\subsection{Variables derivadas previstas}
+
+En la segunda entrega se evaluará la construcción de variables de calendario (año, mes, día de la semana, cuando exista fecha diaria), rezagos y estadísticas móviles basadas únicamente en observaciones pasadas. Se diferenciarán los conteos policiales de incidentes 123 y procesos de Fiscalía para evitar filtración de información futura.
+
+Estas variables son propuestas metodológicas, no campos existentes en la base original. Su utilidad real se comprobará mediante el análisis exploratorio y la evaluación de modelos.
+
+\subsection{Criterios previstos de calidad de datos}
+
+Durante el preprocesamiento se comprobarán: \textit{completitud} (nulos y continuidad de fechas), \textit{unicidad} (filas repetidas por fecha y municipio), \textit{validez} (conteos no negativos y formatos), \textit{consistencia territorial} (códigos y nombres), \textit{valores atípicos} (picos o caídas de la serie), y \textit{comparabilidad} (cambios de registro y revisiones de cifras). Los valores extremos no se eliminarán automáticamente, pues pueden corresponder a hechos o circunstancias reales.
+
+También se analizarán localidades ausentes o categorías sin ubicación en las fuentes que las incorporen. Los registros pueden estar afectados por subdenuncia y cambios administrativos \cite{riascos2023}; por ello, las predicciones se interpretarán como proyecciones de conteos registrados y no de la totalidad de eventos ocurridos.
+
+\subsection{Análisis y productos previstos para las siguientes entregas}
+
+La segunda entrega incorporará tablas descriptivas, distribuciones de frecuencia y tendencias anuales y mensuales sobre las tres fuentes, identificando diferencias en categorías y cobertura. Posteriormente se compararán modelos de pronóstico con una línea base estacional y alternativas como SARIMA, Random Forest y XGBoost, sujetos a los resultados de la exploración y a la selección de la variable objetivo.
+
+La evaluación empleará una separación cronológica de entrenamiento y prueba, evitando mezclar observaciones futuras en el entrenamiento. Se considerarán métricas como error absoluto medio (MAE) y raíz del error cuadrático medio (RMSE). Esta sección establece el plan de análisis; \textbf{no presenta preprocesamiento ejecutado, modelos entrenados ni resultados predictivos}, pues estos corresponden a las siguientes entregas.
+
+\subsection{Consideraciones éticas y limitaciones}
+
+El proyecto utilizará fuentes públicas agregadas y no elaborará perfiles individuales. La identificación de zonas con mayores conteos no implica que sus habitantes sean responsables de los delitos. Las diferencias territoriales pueden reflejar, entre otros factores, densidad de población, actividades económicas, población flotante, subregistro o calidad de localización. Por tanto, se evitarán conclusiones causales o estigmatizantes y se documentarán los límites de extrapolación de los modelos.
+
+\clearpage
+\begin{thebibliography}{99}
+\setlength{\itemsep}{0.55em}
+
+\bibitem{campo2017}
+Campo Agredo, C. A. (2017). \emph{Desarrollo de modelos de predicción sobre el hurto a personas en Bogotá a partir del análisis y aplicación de algoritmos en bases de datos} [Trabajo de grado, Universidad de los Andes]. \url{https://repositorio.uniandes.edu.co/entities/publication/eb8371cc-80f2-4259-a53a-27d6680f253d}
+
+\bibitem{fonseca2019}
+Fonseca Vásquez, A. R. (2019). \emph{Análisis espacial del hurto a personas para la toma de decisiones del Comando de Atención Inmediata (CAI) en la localidad de Los Mártires Bogotá D. C. entre los años 2017--2018} [Trabajo de especialización, Universidad Militar Nueva Granada]. \url{https://repository.umng.edu.co/server/api/core/bitstreams/2e3a1b76-45f4-4348-82e1-ace03d817513/content}
+
+\bibitem{fiscalia}
+Fiscalía General de la Nación. (s. f.). \emph{Procesos Fiscalía V3} [Conjunto de datos]. Portal Nacional de Datos Abiertos. \url{https://www.datos.gov.co/d/dbdv-iihs}
+
+\bibitem{garzon2025}
+Garzón Acosta, J. J. (2025). \emph{Modelos de predicción del hurto a personas en Bogotá D. C. (2015--2024): Un enfoque comparativo entre MCE y VECM} [Trabajo de especialización, Fundación Universitaria Los Libertadores]. \url{https://repository.libertadores.edu.co/bitstreams/45b1a97c-3c66-4beb-988a-95e7dfb9c14b/download}
+
+\bibitem{martinez2025}
+Martínez Chitiva, A. V. (2025). \emph{Análisis espacio-temporal para caracterización, predicción y mitigación del hurto a personas en Bogotá} [Tesis de maestría, Universidad de Manizales]. \url{https://ridum.umanizales.edu.co/handle/20.500.12746/7648}
+
+\bibitem{linea123}
+Secretaría Distrital de Seguridad, Convivencia y Justicia. (s. f.). \emph{Incidentes tramitados en el C4 -- Número Único de Seguridad y Emergencias (NUSE), Línea 123} [Conjunto de datos]. Datos Abiertos Bogotá. \url{https://datosabiertos.bogota.gov.co/dataset/incidentes}
+
+\bibitem{policia}
+Policía Nacional de Colombia. (s. f.). \emph{Hurto a personas} [Archivos de datos anuales]. \url{https://www.policia.gov.co/delitos-de-impacto/hurto-personas}
+
+\bibitem{provost2013}
+Provost, F., \& Fawcett, T. (2013). \emph{Data science for business: What you need to know about data mining and data-analytic thinking}. O'Reilly Media.
+
+\bibitem{riascos2020}
+Riascos, A. J., Dulce, M., Moreno, J. S., \& Gómez, F. (2020). \emph{Prediciendo el crimen en Bogotá} (Nota de Política No. 38). Universidad de los Andes. \url{https://gobierno.uniandes.edu.co/wp-content/uploads/NP-38.pdf}
+
+\bibitem{riascos2023}
+Riascos Villegas, Á. J., Ñungo, J. S., Gómez Tobón, L., Dulce Rubio, M., \& Gómez, F. (2023). Modelling underreported spatio-temporal crime events. \emph{PLOS ONE, 18}(7), e0287776. \url{https://doi.org/10.1371/journal.pone.0287776}
+
+\bibitem{urcuqui2020}
+Urcuqui, C., Moreno, J., Montenegro, C., Riascos, A., \& Dulce, M. (2020). Accuracy and fairness in a conditional generative adversarial model of crime prediction. En \emph{2020 7th International Conference on Behavioural and Social Computing (BESC)} (pp. 1--6). IEEE. \url{https://www.alvaroriascos.com/crime/}
+
+\end{thebibliography}
+
+% Secciones para futuras versiones, NO incluidas en la primera entrega:
+% 1 Resumen ejecutivo; 5 Preprocesamiento; 6 Análisis exploratorio;
+% 7 Metodología; 8 Implementación; 9 Resultados y evaluación;
+% 10 Interpretación y hallazgos; 11 Conclusiones y trabajos futuros;
+% Apéndices.
+
+\end{document}
