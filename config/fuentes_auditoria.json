@@ -1,0 +1,28 @@
+{
+  "periodo": {"anio_min": 2018, "anio_max": 2025},
+  "fuentes": [
+    {
+      "id": "fiscalia",
+      "nombre": "Fiscalía General de la Nación — Procesos Fiscalía V3",
+      "url": "https://www.datos.gov.co/d/dbdv-iihs (API: $where=cod_dane_hecho='11001' AND capitulo_delito='Del Hurto', $order=:id)",
+      "fecha_extraccion": "2026-11-11",
+      "unidad_observacion": "Fila proceso–delito (noticia criminal); un proceso puede repetirse",
+      "archivos": ["data/raw/fiscalia/fiscalia_v3_bogota_hurto.csv"],
+      "lectura": {"encoding": "auto", "sep": ","},
+      "columnas": {
+        "anio": "a_o_hecho",
+        "mes": "mes_hecho",
+        "id": "proceso_anonimizado",
+        "delito": "delito",
+        "cantidad": null,
+        "localidad": null
+      },
+      "categoricas": ["capitulo_delito", "titulo_delito", "estado", "etapa", "tipo_noticia", "ley",
+                      "dir_hecho_rural_urbana", "grado_delito", "proceso_conexado", "fecha_corte_datos"],
+      "filtros": {
+        "bogota": {"columna": "cod_dane_hecho", "patron": "^11001$"},
+        "hurto": {"columna": "capitulo_delito", "patron": "^DEL HURTO$"}
+      }
+    }
+  ]
+}

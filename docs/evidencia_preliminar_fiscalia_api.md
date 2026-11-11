@@ -31,6 +31,15 @@ $group  = a_o_hecho
 | 2025 | 185.972 | 185.366 |
 | **Total 2018–2025** | **1.300.703** | **1.297.042** (consulta global `count(distinct)`) |
 
+Conteos complementarios de la API (`$select=count(*)`, 2026-11-11):
+
+| Filtro | Filas |
+|---|---:|
+| `cod_dane_hecho='11001'` (Bogotá, todos los delitos y años) | 5.701.020 |
+| `cod_dane_hecho='11001' AND capitulo_delito='Del Hurto'` (todos los años) | 2.002.177 |
+
+El conteo del dataset nacional completo no pudo obtenerse porque la consulta supera el tiempo límite de la API.
+
 Una consulta adicional con `$group=delito` sobre el mismo filtro devolvió 114 valores distintos de `delito`. Los principales son:
 
 | `delito` | Filas |

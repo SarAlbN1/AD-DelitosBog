@@ -1,0 +1,5 @@
+fuente,etapa,descripcion,filtro_aplicado,filas,filas_excluidas,suma_cantidad
+fiscalia,1_original,Original,True,2002177,,
+fiscalia,2_bogota,Bogotá,True,2002177,0.0,
+fiscalia,3_periodo,2018–2025,True,1300703,701474.0,
+fiscalia,4_hurto,Hurto,True,1300703,0.0,

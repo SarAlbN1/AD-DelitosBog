@@ -1,0 +1,5 @@
+fuente,tipo,etapa,filas,unicos,repetidas,valores_repetidos,max_repeticiones
+fiscalia,fila_exacta,original,2002177,2002177,0,0,1
+fiscalia,fila_exacta,final,1300703,1300703,0,0,1
+fiscalia,id:proceso_anonimizado,original,2002177,1996530,5647,4624,13
+fiscalia,id:proceso_anonimizado,final,1300703,1297042,3661,3094,9

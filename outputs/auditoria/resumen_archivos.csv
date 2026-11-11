@@ -1,0 +1,2 @@
+fuente,archivo,ruta,tamano_bytes,sha256,formato,codificacion,separador,filas,columnas
+fiscalia,fiscalia_v3_bogota_hurto.csv,data/raw/fiscalia/fiscalia_v3_bogota_hurto.csv,856092926,e2f30087b82544e448d0c3f9f04eabd760012b2143e2ab2af632e1d81ff8f2ae,csv,utf-8-sig,",",2002177,29
