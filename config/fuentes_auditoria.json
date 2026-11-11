@@ -1,14 +1,56 @@
 {
-  "periodo": {"anio_min": 2018, "anio_max": 2025},
+  "periodo": {
+    "anio_min": 2018,
+    "anio_max": 2025
+  },
   "fuentes": [
+    {
+      "id": "linea123",
+      "nombre": "Línea 123 — Llamadas tramitadas C4 Bogotá NUSE (enero 2015 - septiembre 2026)",
+      "url": "https://datosabiertos.bogota.gov.co/dataset/incidentes (recurso 30d65a8b-d0ed-4e95-977e-0d7cc2ea89ef, modificado 2026-10-22)",
+      "fecha_extraccion": "2026-11-11",
+      "unidad_observacion": "Agregado año × mes × localidad × UPZ × tipo de incidente; CANT_INCIDENTES = llamadas procedentes",
+      "archivos": [
+        "data/raw/linea123/datos-abiertllamadastramitadas-c4-bogota_numerounicodeseguridadyemergencias-nuse_linea-123os-nus.csv"
+      ],
+      "lectura": {
+        "encoding": "auto",
+        "sep": "auto"
+      },
+      "columnas": {
+        "anio": "ANIO",
+        "mes": "MES",
+        "id": "ID",
+        "cantidad": "CANT_INCIDENTES",
+        "localidad": "LOCALIDAD",
+        "delito": "TIPO_DETALLE"
+      },
+      "categoricas": [
+        "TIPO_INCIDENTE",
+        "TIPO_DETALLE",
+        "LOCALIDAD"
+      ],
+      "filtros": {
+        "bogota": null,
+        "hurto": {
+          "columna": "TIPO_DETALLE",
+          "patron": "HURTO"
+        }
+      }
+    },
     {
       "id": "fiscalia",
       "nombre": "Fiscalía General de la Nación — Procesos Fiscalía V3",
       "url": "https://www.datos.gov.co/d/dbdv-iihs (API: $where=cod_dane_hecho='11001' AND capitulo_delito='Del Hurto', $order=:id)",
       "fecha_extraccion": "2026-11-11",
       "unidad_observacion": "Fila proceso–delito (noticia criminal); un proceso puede repetirse",
-      "archivos": ["data/raw/fiscalia/fiscalia_v3_bogota_hurto.csv"],
-      "lectura": {"encoding": "auto", "sep": ","},
+      "archivos": [
+        "data/raw/fiscalia/fiscalia_v3_bogota_hurto.csv"
+      ],
+      "lectura": {
+        "encoding": "auto",
+        "sep": ","
+      },
       "columnas": {
         "anio": "a_o_hecho",
         "mes": "mes_hecho",
@@ -17,11 +59,27 @@
         "cantidad": null,
         "localidad": null
       },
-      "categoricas": ["capitulo_delito", "titulo_delito", "estado", "etapa", "tipo_noticia", "ley",
-                      "dir_hecho_rural_urbana", "grado_delito", "proceso_conexado", "fecha_corte_datos"],
+      "categoricas": [
+        "capitulo_delito",
+        "titulo_delito",
+        "estado",
+        "etapa",
+        "tipo_noticia",
+        "ley",
+        "dir_hecho_rural_urbana",
+        "grado_delito",
+        "proceso_conexado",
+        "fecha_corte_datos"
+      ],
       "filtros": {
-        "bogota": {"columna": "cod_dane_hecho", "patron": "^11001$"},
-        "hurto": {"columna": "capitulo_delito", "patron": "^DEL HURTO$"}
+        "bogota": {
+          "columna": "cod_dane_hecho",
+          "patron": "^11001$"
+        },
+        "hurto": {
+          "columna": "capitulo_delito",
+          "patron": "^DEL HURTO$"
+        }
       }
     }
   ]

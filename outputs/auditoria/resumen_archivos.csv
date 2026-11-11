@@ -1,2 +1,3 @@
 fuente,archivo,ruta,tamano_bytes,sha256,formato,codificacion,separador,filas,columnas
+linea123,datos-abiertllamadastramitadas-c4-bogota_numerounicodeseguridadyemergencias-nuse_linea-123os-nus.csv,data/raw/linea123/datos-abiertllamadastramitadas-c4-bogota_numerounicodeseguridadyemergencias-nuse_linea-123os-nus.csv,116322990,ceeee37729c83adaae6907272457998cc5a60eaf57c14a5ead17c6db2d3a4d61,csv,utf-8-sig,;,1117394,10
 fiscalia,fiscalia_v3_bogota_hurto.csv,data/raw/fiscalia/fiscalia_v3_bogota_hurto.csv,856092926,e2f30087b82544e448d0c3f9f04eabd760012b2143e2ab2af632e1d81ff8f2ae,csv,utf-8-sig,",",2002177,29

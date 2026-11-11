@@ -1,4 +1,8 @@
 fuente,tipo,etapa,filas,unicos,repetidas,valores_repetidos,max_repeticiones
+linea123,fila_exacta,original,1117394,1117394,0,0,1
+linea123,fila_exacta,final,25144,25144,0,0,1
+linea123,id:id,original,1117394,1114761,2633,2633,2
+linea123,id:id,final,25144,24978,166,166,2
 fiscalia,fila_exacta,original,2002177,2002177,0,0,1
 fiscalia,fila_exacta,final,1300703,1300703,0,0,1
 fiscalia,id:proceso_anonimizado,original,2002177,1996530,5647,4624,13

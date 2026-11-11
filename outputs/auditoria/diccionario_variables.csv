@@ -1,4 +1,14 @@
 fuente,columna,nombres_originales,archivos_con_columna,archivos_totales,tipo_inferido,valores_unicos,ejemplo
+linea123,id,ID,1,1,texto,>200000,20260999UPZ999977
+linea123,anio,ANIO,1,1,entero,12,2026
+linea123,mes,MES,1,1,entero,12,09
+linea123,tipo_incidente,TIPO_INCIDENTE,1,1,texto,107,977
+linea123,tipo_detalle,TIPO_DETALLE,1,1,texto,138,VEHÍCULO RECUPERADO
+linea123,cod_localidad,COD_LOCALIDAD,1,1,entero,22,99
+linea123,localidad,LOCALIDAD,1,1,texto,22,SIN LOCALIZACION
+linea123,cod_upz,COD_UPZ,1,1,texto,125,UPZ999
+linea123,upz,UPZ,1,1,texto,125,SIN LOCALIZACION
+linea123,cant_incidentes,CANT_INCIDENTES,1,1,entero,1568,1
 fiscalia,proceso_anonimizado,proceso_anonimizado,1,1,texto,>200000,F0AF25B048C7C8CF33B6EBF08C6C6A135DD98BFEC06C78E52E8CEC489D69BD9B
 fiscalia,proceso_conexado,proceso_conexado,1,1,texto,2,No
 fiscalia,proceso_con_conexidad,proceso_con_conexidad,1,1,texto,2,No

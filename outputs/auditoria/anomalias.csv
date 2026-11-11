@@ -2,3 +2,4 @@ fuente,archivo,tipo,columna,detalle,filas,ejemplo
 fiscalia,fiscalia_v3_bogota_hurto.csv,anio_invalido,a_o_hecho,,767,['Sin Información']
 fiscalia,fiscalia_v3_bogota_hurto.csv,fuera_de_periodo_2018_2025,a_o_hecho,No es un error: se excluyen en el filtro de periodo.,700707,
 fiscalia,fiscalia_v3_bogota_hurto.csv,mes_invalido,mes_hecho,,767,['Sin Información']
+linea123,datos-abiertllamadastramitadas-c4-bogota_numerounicodeseguridadyemergencias-nuse_linea-123os-nus.csv,fuera_de_periodo_2018_2025,anio,No es un error: se excluyen en el filtro de periodo.,354320,

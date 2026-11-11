@@ -1,4 +1,358 @@
 fuente,etapa,columna,valor,filas,pct,categorias_distintas
+linea123,original,tipo_incidente,934,18898,1.6913,107
+linea123,original,tipo_incidente,942,18756,1.6785,107
+linea123,original,tipo_incidente,935,18554,1.6605,107
+linea123,original,tipo_incidente,932,18419,1.6484,107
+linea123,original,tipo_incidente,905,18285,1.6364,107
+linea123,original,tipo_incidente,916,18285,1.6364,107
+linea123,original,tipo_incidente,613,17862,1.5985,107
+linea123,original,tipo_incidente,922,17859,1.5983,107
+linea123,original,tipo_incidente,904,17857,1.5981,107
+linea123,original,tipo_incidente,910,17808,1.5937,107
+linea123,original,tipo_incidente,611,17753,1.5888,107
+linea123,original,tipo_incidente,924,17641,1.5788,107
+linea123,original,tipo_incidente,604,17558,1.5713,107
+linea123,original,tipo_incidente,926,17475,1.5639,107
+linea123,original,tipo_incidente,802,17371,1.5546,107
+linea123,original,tipo_incidente,941,17313,1.5494,107
+linea123,original,tipo_incidente,617,17115,1.5317,107
+linea123,original,tipo_incidente,938,16979,1.5195,107
+linea123,original,tipo_incidente,605,16963,1.5181,107
+linea123,original,tipo_incidente,958,16944,1.5164,107
+linea123,original,tipo_incidente,914,16929,1.515,107
+linea123,original,tipo_incidente,919,16856,1.5085,107
+linea123,original,tipo_incidente,912,16847,1.5077,107
+linea123,original,tipo_incidente,933,16741,1.4982,107
+linea123,original,tipo_incidente,973,16703,1.4948,107
+linea123,original,tipo_incidente,601,16624,1.4877,107
+linea123,original,tipo_incidente,943,16531,1.4794,107
+linea123,original,tipo_incidente,918,16367,1.4647,107
+linea123,original,tipo_incidente,976,16301,1.4588,107
+linea123,original,tipo_incidente,608,16276,1.4566,107
+linea123,original,tipo_incidente,603,16208,1.4505,107
+linea123,original,tipo_incidente,911,16184,1.4484,107
+linea123,original,tipo_incidente,947,16168,1.4469,107
+linea123,original,tipo_incidente,923,16010,1.4328,107
+linea123,original,tipo_incidente,961,15878,1.421,107
+linea123,original,tipo_incidente,610,15868,1.4201,107
+linea123,original,tipo_incidente,602,15711,1.406,107
+linea123,original,tipo_incidente,969,15590,1.3952,107
+linea123,original,tipo_incidente,937,15548,1.3915,107
+linea123,original,tipo_incidente,927,15517,1.3887,107
+linea123,original,tipo_incidente,936,15425,1.3804,107
+linea123,original,tipo_incidente,915,15350,1.3737,107
+linea123,original,tipo_incidente,903,15018,1.344,107
+linea123,original,tipo_incidente,703,14992,1.3417,107
+linea123,original,tipo_incidente,708,14933,1.3364,107
+linea123,original,tipo_incidente,946,14927,1.3359,107
+linea123,original,tipo_incidente,535,14904,1.3338,107
+linea123,original,tipo_incidente,952,14437,1.292,107
+linea123,original,tipo_incidente,909,14011,1.2539,107
+linea123,original,tipo_incidente,906,13989,1.2519,107
+linea123,original,tipo_incidente,(otras categorías),288856,25.8509,107
+linea123,original,tipo_detalle,RIÑA,18898,1.6913,138
+linea123,original,tipo_detalle,VERIFICAR SITUACIÓN,18554,1.6605,138
+linea123,original,tipo_detalle,PERSONA O VEHÍCULO SOSPECHOSO,18285,1.6364,138
+linea123,original,tipo_detalle,NARCÓTICOS,17859,1.5983,138
+linea123,original,tipo_detalle,HURTO EFECTUADO,17857,1.5981,138
+linea123,original,tipo_detalle,LESIONES PERSONALES,17808,1.5937,138
+linea123,original,tipo_detalle,MALTRATO,17753,1.5888,138
+linea123,original,tipo_detalle,ENFERMO,17641,1.5788,138
+linea123,original,tipo_detalle,EVENTO RESPIRATORIO,17558,1.5713,138
+linea123,original,tipo_detalle,EMBRIAGUEZ,17475,1.5639,138
+linea123,original,tipo_detalle,TRASTORNO MENTAL,17313,1.5494,138
+linea123,original,tipo_detalle,SÍNTOMAS GASTROINTESTINALES,17115,1.5317,138
+linea123,original,tipo_detalle,ANIMAL PELIGROSO,16979,1.5195,138
+linea123,original,tipo_detalle,ACTOS CONTRA EL AMBIENTE,16944,1.5164,138
+linea123,original,tipo_detalle,PERSONA PIDIENDO AUXILIO,16856,1.5085,138
+linea123,original,tipo_detalle,DELINCUENTE CAPTURADO POR CIVIL,16741,1.4982,138
+linea123,original,tipo_detalle,ACCIDENTE CEREBRO VASCULAR,16624,1.4877,138
+linea123,original,tipo_detalle,INTENTO DE SUICIDIO,16367,1.4647,138
+linea123,original,tipo_detalle,CONVULSIÓN,16208,1.4505,138
+linea123,original,tipo_detalle,DISPAROS,16184,1.4484,138
+linea123,original,tipo_detalle,ALARMA,16168,1.4469,138
+linea123,original,tipo_detalle,HABITANTE DE LA CALLE,16010,1.4328,138
+linea123,original,tipo_detalle,INTOXICACIÓN,15868,1.4201,138
+linea123,original,tipo_detalle,CAÍDA DE ALTURA,15711,1.406,138
+linea123,original,tipo_detalle,PERSONA TENDIDA EN LA VÍA,15425,1.3804,138
+linea123,original,tipo_detalle,INFORMACIÓN CONFIDENCIAL,14904,1.3338,138
+linea123,original,tipo_detalle,VIOLENCIA SEXUAL,13989,1.2519,138
+linea123,original,tipo_detalle,PATOLOGÍA GINECOBSTÉTRICA,13690,1.2252,138
+linea123,original,tipo_detalle,SUPLANTACIÓN DE PROFESIÓN U OFICIO,13222,1.1833,138
+linea123,original,tipo_detalle,MUERTE NATURAL,12879,1.1526,138
+linea123,original,tipo_detalle,ACCIDENTE DE TRÁNSITO,11454,1.0251,138
+linea123,original,tipo_detalle,RUIDO,11131,0.9962,138
+linea123,original,tipo_detalle,HURTO EN PROCESO,11113,0.9945,138
+linea123,original,tipo_detalle,ANIMAL,10849,0.9709,138
+linea123,original,tipo_detalle,HERIDO,10781,0.9648,138
+linea123,original,tipo_detalle,INCONSCIENTE O PARO CARDIORESPIRATORIO,10771,0.9639,138
+linea123,original,tipo_detalle,INDEBIDO USO DE ESTABLECIMIENTO,10737,0.9609,138
+linea123,original,tipo_detalle,VEHÍCULO MAL ESTACIONADO,10693,0.957,138
+linea123,original,tipo_detalle,MANIOBRAS PELIGROSAS,10385,0.9294,138
+linea123,original,tipo_detalle,DOLOR TORÁXICO,10287,0.9206,138
+linea123,original,tipo_detalle,INCENDIO,10279,0.9199,138
+linea123,original,tipo_detalle,INVASIÓN DE TERRENO O EDIFICIO,10031,0.8977,138
+linea123,original,tipo_detalle,DAÑOS EN REDES DE SERVICIOS,9941,0.8897,138
+linea123,original,tipo_detalle,VEHÍCULO ABANDONADO,9882,0.8844,138
+linea123,original,tipo_detalle,DAÑOS EN PROPIEDAD PÚBLICA O PRIVADA,9856,0.8821,138
+linea123,original,tipo_detalle,MATERIALES PELIGROSOS,9814,0.8783,138
+linea123,original,tipo_detalle,CONGESTIÓN VEHICULAR,9693,0.8675,138
+linea123,original,tipo_detalle,EXTRAVIADO O DESAPARECIDO,9683,0.8666,138
+linea123,original,tipo_detalle,QUEMAS,9365,0.8381,138
+linea123,original,tipo_detalle,SOLICITUD DE APOYO O DESACATO,9359,0.8376,138
+linea123,original,tipo_detalle,(otras categorías),416405,37.2657,138
+linea123,original,localidad,KENNEDY,115373,10.3252,22
+linea123,original,localidad,SUBA,111563,9.9842,22
+linea123,original,localidad,USAQUÉN,88981,7.9633,22
+linea123,original,localidad,ENGATIVÁ,88030,7.8782,22
+linea123,original,localidad,CIUDAD BOLÍVAR,76764,6.8699,22
+linea123,original,localidad,FONTIBÓN,70190,6.2816,22
+linea123,original,localidad,USME,62878,5.6272,22
+linea123,original,localidad,SAN CRISTÓBAL,59283,5.3055,22
+linea123,original,localidad,TEUSAQUILLO,55983,5.0101,22
+linea123,original,localidad,BOSA,53103,4.7524,22
+linea123,original,localidad,RAFAEL URIBE URIBE,52840,4.7289,22
+linea123,original,localidad,CHAPINERO,52237,4.6749,22
+linea123,original,localidad,SANTA FE,50607,4.529,22
+linea123,original,localidad,PUENTE ARANDA,50453,4.5152,22
+linea123,original,localidad,BARRIOS UNIDOS,37930,3.3945,22
+linea123,original,localidad,LOS MÁRTIRES,23600,2.1121,22
+linea123,original,localidad,TUNJUELITO,23354,2.09,22
+linea123,original,localidad,ANTONIO NARIÑO,22387,2.0035,22
+linea123,original,localidad,CANDELARIA,11227,1.0047,22
+linea123,original,localidad,SIN LOCALIZACION,10195,0.9124,22
+linea123,original,localidad,SUMAPAZ,403,0.0361,22
+linea123,original,localidad,-,13,0.0012,22
+linea123,original,cod_upz,UPZ999,109450,9.7951,125
+linea123,original,cod_upz,UPZ28,10595,0.9482,125
+linea123,original,cod_upz,UPZ85,10473,0.9373,125
+linea123,original,cod_upz,UPZ102,10467,0.9367,125
+linea123,original,cod_upz,UPZ84,10395,0.9303,125
+linea123,original,cod_upz,UPZ75,10379,0.9289,125
+linea123,original,cod_upz,UPZ67,10368,0.9279,125
+linea123,original,cod_upz,UPR3,10348,0.9261,125
+linea123,original,cod_upz,UPZ42,10337,0.9251,125
+linea123,original,cod_upz,UPZ71,10329,0.9244,125
+linea123,original,cod_upz,UPZ47,10329,0.9244,125
+linea123,original,cod_upz,UPZ73,10277,0.9197,125
+linea123,original,cod_upz,UPZ30,10240,0.9164,125
+linea123,original,cod_upz,UPZ27,10195,0.9124,125
+linea123,original,cod_upz,UPZ97,10175,0.9106,125
+linea123,original,cod_upz,UPZ26,10116,0.9053,125
+linea123,original,cod_upz,UPZ98,10114,0.9051,125
+linea123,original,cod_upz,UPZ38,10063,0.9006,125
+linea123,original,cod_upz,UPZ39,10054,0.8998,125
+linea123,original,cod_upz,UPZ13,10044,0.8989,125
+linea123,original,cod_upz,UPZ69,9998,0.8948,125
+linea123,original,cod_upz,UPZ82,9920,0.8878,125
+linea123,original,cod_upz,UPZ46,9919,0.8877,125
+linea123,original,cod_upz,UPZ44,9902,0.8862,125
+linea123,original,cod_upz,UPZ45,9884,0.8846,125
+linea123,original,cod_upz,UPZ48,9852,0.8817,125
+linea123,original,cod_upz,UPZ74,9842,0.8808,125
+linea123,original,cod_upz,UPZ29,9824,0.8792,125
+linea123,original,cod_upz,UPZ93,9813,0.8782,125
+linea123,original,cod_upz,UPZ100,9812,0.8781,125
+linea123,original,cod_upz,UPZ22,9811,0.878,125
+linea123,original,cod_upz,UPZ99,9738,0.8715,125
+linea123,original,cod_upz,UPZ50,9734,0.8711,125
+linea123,original,cod_upz,UPZ95,9727,0.8705,125
+linea123,original,cod_upz,UPZ19,9717,0.8696,125
+linea123,original,cod_upz,UPZ40,9710,0.869,125
+linea123,original,cod_upz,UPZ57,9695,0.8676,125
+linea123,original,cod_upz,UPZ43,9690,0.8672,125
+linea123,original,cod_upz,UPZ16,9687,0.8669,125
+linea123,original,cod_upz,UPZ34,9675,0.8659,125
+linea123,original,cod_upz,UPZ9,9671,0.8655,125
+linea123,original,cod_upz,UPZ54,9657,0.8642,125
+linea123,original,cod_upz,UPZ101,9619,0.8608,125
+linea123,original,cod_upz,UPZ86,9596,0.8588,125
+linea123,original,cod_upz,UPZ11,9548,0.8545,125
+linea123,original,cod_upz,UPZ31,9515,0.8515,125
+linea123,original,cod_upz,UPZ32,9476,0.848,125
+linea123,original,cod_upz,UPZ24,9464,0.847,125
+linea123,original,cod_upz,UPZ37,9439,0.8447,125
+linea123,original,cod_upz,UPZ12,9435,0.8444,125
+linea123,original,cod_upz,(otras categorías),521276,46.651,125
+linea123,original,upz,SIN LOCALIZACION,109450,9.7951,125
+linea123,original,upz,EL RINCON,10595,0.9482,125
+linea123,original,upz,BOSA CENTRAL,10473,0.9373,125
+linea123,original,upz,LA SABANA,10467,0.9367,125
+linea123,original,upz,BOSA OCCIDENTAL,10395,0.9303,125
+linea123,original,upz,FONTIBON,10379,0.9289,125
+linea123,original,upz,LUCERO,10368,0.9279,125
+linea123,original,upz,UPR RIO TUNJUELO,10348,0.9261,125
+linea123,original,upz,VENECIA,10337,0.9251,125
+linea123,original,upz,TIBABUYES,10329,0.9244,125
+linea123,original,upz,KENNEDY CENTRAL,10329,0.9244,125
+linea123,original,upz,GARCES NAVAS,10277,0.9197,125
+linea123,original,upz,BOYACA REAL,10240,0.9164,125
+linea123,original,upz,SUBA,10195,0.9124,125
+linea123,original,upz,CHICO LAGO,10175,0.9106,125
+linea123,original,upz,LAS FERIAS,10116,0.9053,125
+linea123,original,upz,LOS ALCAZARES,10114,0.9051,125
+linea123,original,upz,RESTREPO,10063,0.9006,125
+linea123,original,upz,QUIROGA,10054,0.8998,125
+linea123,original,upz,LOS CEDROS,10044,0.8989,125
+linea123,original,upz,ISMAEL PERDOMO,9998,0.8948,125
+linea123,original,upz,PATIO BONITO,9920,0.8878,125
+linea123,original,upz,CASTILLA,9919,0.8877,125
+linea123,original,upz,AMERICAS,9902,0.8862,125
+linea123,original,upz,CARVAJAL,9884,0.8846,125
+linea123,original,upz,TIMIZA,9852,0.8817,125
+linea123,original,upz,ENGATIVA,9842,0.8808,125
+linea123,original,upz,MINUTO DE DIOS,9824,0.8792,125
+linea123,original,upz,LAS NIEVES,9813,0.8782,125
+linea123,original,upz,GALERIAS,9812,0.8781,125
+linea123,original,upz,DOCE DE OCTUBRE,9811,0.878,125
+linea123,original,upz,CHAPINERO,9738,0.8715,125
+linea123,original,upz,LA GLORIA,9734,0.8711,125
+linea123,original,upz,LAS CRUCES,9727,0.8705,125
+linea123,original,upz,EL PRADO,9717,0.8696,125
+linea123,original,upz,CIUDAD MONTES,9710,0.869,125
+linea123,original,upz,GRAN YOMASA,9695,0.8676,125
+linea123,original,upz,SAN RAFAEL,9690,0.8672,125
+linea123,original,upz,SANTA BARBARA,9687,0.8669,125
+linea123,original,upz,20 DE JULIO,9675,0.8659,125
+linea123,original,upz,VERBENAL,9671,0.8655,125
+linea123,original,upz,MARRUECOS,9657,0.8642,125
+linea123,original,upz,TEUSAQUILLO,9619,0.8608,125
+linea123,original,upz,EL PORVENIR,9596,0.8588,125
+linea123,original,upz,SAN CRISTOBAL NORTE,9548,0.8545,125
+linea123,original,upz,SANTA CECILIA,9515,0.8515,125
+linea123,original,upz,SAN BLAS,9476,0.848,125
+linea123,original,upz,NIZA,9464,0.847,125
+linea123,original,upz,SANTA ISABEL,9439,0.8447,125
+linea123,original,upz,TOBERIN,9435,0.8444,125
+linea123,original,upz,(otras categorías),521276,46.651,125
+linea123,final,tipo_incidente,905,12731,50.6324,2
+linea123,final,tipo_incidente,904,12413,49.3676,2
+linea123,final,tipo_detalle,HURTO EFECTUADO,12413,49.3676,3
+linea123,final,tipo_detalle,HURTO EN PROCESO,9898,39.3653,3
+linea123,final,tipo_detalle,ATRACO / HURTO EN PROCESO,2833,11.2671,3
+linea123,final,localidad,SUBA,2470,9.8234,21
+linea123,final,localidad,KENNEDY,2466,9.8075,21
+linea123,final,localidad,USAQUÉN,1995,7.9343,21
+linea123,final,localidad,ENGATIVÁ,1872,7.4451,21
+linea123,final,localidad,CIUDAD BOLÍVAR,1711,6.8048,21
+linea123,final,localidad,FONTIBÓN,1668,6.6338,21
+linea123,final,localidad,USME,1479,5.8821,21
+linea123,final,localidad,TEUSAQUILLO,1303,5.1822,21
+linea123,final,localidad,SAN CRISTÓBAL,1275,5.0708,21
+linea123,final,localidad,CHAPINERO,1208,4.8043,21
+linea123,final,localidad,SANTA FE,1203,4.7844,21
+linea123,final,localidad,RAFAEL URIBE URIBE,1172,4.6612,21
+linea123,final,localidad,BOSA,1118,4.4464,21
+linea123,final,localidad,PUENTE ARANDA,1111,4.4185,21
+linea123,final,localidad,BARRIOS UNIDOS,908,3.6112,21
+linea123,final,localidad,LOS MÁRTIRES,532,2.1158,21
+linea123,final,localidad,ANTONIO NARIÑO,530,2.1079,21
+linea123,final,localidad,TUNJUELITO,529,2.1039,21
+linea123,final,localidad,CANDELARIA,315,1.2528,21
+linea123,final,localidad,SIN LOCALIZACION,245,0.9744,21
+linea123,final,localidad,SUMAPAZ,34,0.1352,21
+linea123,final,cod_upz,UPZ999,3157,12.5557,125
+linea123,final,cod_upz,UPZ95,230,0.9147,125
+linea123,final,cod_upz,UPR3,212,0.8431,125
+linea123,final,cod_upz,UPZ69,194,0.7716,125
+linea123,final,cod_upz,UPZ65,194,0.7716,125
+linea123,final,cod_upz,UPZ41,194,0.7716,125
+linea123,final,cod_upz,UPZ40,194,0.7716,125
+linea123,final,cod_upz,UPZ35,194,0.7716,125
+linea123,final,cod_upz,UPZ102,194,0.7716,125
+linea123,final,cod_upz,UPZ107,194,0.7716,125
+linea123,final,cod_upz,UPZ100,194,0.7716,125
+linea123,final,cod_upz,UPZ98,194,0.7716,125
+linea123,final,cod_upz,UPZ71,194,0.7716,125
+linea123,final,cod_upz,UPZ28,194,0.7716,125
+linea123,final,cod_upz,UPZ27,194,0.7716,125
+linea123,final,cod_upz,UPZ18,194,0.7716,125
+linea123,final,cod_upz,UPZ30,194,0.7716,125
+linea123,final,cod_upz,UPZ82,194,0.7716,125
+linea123,final,cod_upz,UPZ79,194,0.7716,125
+linea123,final,cod_upz,UPZ48,194,0.7716,125
+linea123,final,cod_upz,UPZ47,194,0.7716,125
+linea123,final,cod_upz,UPZ46,194,0.7716,125
+linea123,final,cod_upz,UPZ45,194,0.7716,125
+linea123,final,cod_upz,UPZ113,194,0.7716,125
+linea123,final,cod_upz,UPZ86,194,0.7716,125
+linea123,final,cod_upz,UPZ85,194,0.7716,125
+linea123,final,cod_upz,UPZ84,194,0.7716,125
+linea123,final,cod_upz,UPZ93,194,0.7716,125
+linea123,final,cod_upz,UPZ99,194,0.7716,125
+linea123,final,cod_upz,UPZ97,194,0.7716,125
+linea123,final,cod_upz,UPZ11,194,0.7716,125
+linea123,final,cod_upz,UPZ70,193,0.7676,125
+linea123,final,cod_upz,UPZ67,193,0.7676,125
+linea123,final,cod_upz,UPZ66,193,0.7676,125
+linea123,final,cod_upz,UPZ54,193,0.7676,125
+linea123,final,cod_upz,UPZ53,193,0.7676,125
+linea123,final,cod_upz,UPZ39,193,0.7676,125
+linea123,final,cod_upz,UPZ36,193,0.7676,125
+linea123,final,cod_upz,UPZ43,193,0.7676,125
+linea123,final,cod_upz,UPZ108,193,0.7676,125
+linea123,final,cod_upz,UPZ38,193,0.7676,125
+linea123,final,cod_upz,UPZ109,193,0.7676,125
+linea123,final,cod_upz,UPZ106,193,0.7676,125
+linea123,final,cod_upz,UPZ22,193,0.7676,125
+linea123,final,cod_upz,UPZ21,193,0.7676,125
+linea123,final,cod_upz,UPZ24,193,0.7676,125
+linea123,final,cod_upz,UPZ23,193,0.7676,125
+linea123,final,cod_upz,UPZ20,193,0.7676,125
+linea123,final,cod_upz,UPZ19,193,0.7676,125
+linea123,final,cod_upz,UPZ17,193,0.7676,125
+linea123,final,cod_upz,(otras categorías),12446,49.4989,125
+linea123,final,upz,SIN LOCALIZACION,3157,12.5557,125
+linea123,final,upz,LAS CRUCES,230,0.9147,125
+linea123,final,upz,UPR RIO TUNJUELO,212,0.8431,125
+linea123,final,upz,ISMAEL PERDOMO,194,0.7716,125
+linea123,final,upz,ARBORIZADORA,194,0.7716,125
+linea123,final,upz,MUZU,194,0.7716,125
+linea123,final,upz,CIUDAD MONTES,194,0.7716,125
+linea123,final,upz,CIUDAD JARDIN,194,0.7716,125
+linea123,final,upz,LA SABANA,194,0.7716,125
+linea123,final,upz,QUINTA PAREDES,194,0.7716,125
+linea123,final,upz,GALERIAS,194,0.7716,125
+linea123,final,upz,LOS ALCAZARES,194,0.7716,125
+linea123,final,upz,TIBABUYES,194,0.7716,125
+linea123,final,upz,EL RINCON,194,0.7716,125
+linea123,final,upz,SUBA,194,0.7716,125
+linea123,final,upz,BRITALIA,194,0.7716,125
+linea123,final,upz,BOYACA REAL,194,0.7716,125
+linea123,final,upz,PATIO BONITO,194,0.7716,125
+linea123,final,upz,CALANDAIMA,194,0.7716,125
+linea123,final,upz,TIMIZA,194,0.7716,125
+linea123,final,upz,KENNEDY CENTRAL,194,0.7716,125
+linea123,final,upz,CASTILLA,194,0.7716,125
+linea123,final,upz,CARVAJAL,194,0.7716,125
+linea123,final,upz,BAVARIA,194,0.7716,125
+linea123,final,upz,EL PORVENIR,194,0.7716,125
+linea123,final,upz,BOSA CENTRAL,194,0.7716,125
+linea123,final,upz,BOSA OCCIDENTAL,194,0.7716,125
+linea123,final,upz,LAS NIEVES,194,0.7716,125
+linea123,final,upz,CHAPINERO,194,0.7716,125
+linea123,final,upz,CHICO LAGO,194,0.7716,125
+linea123,final,upz,SAN CRISTOBAL NORTE,194,0.7716,125
+linea123,final,upz,JERUSALEM,193,0.7676,125
+linea123,final,upz,LUCERO,193,0.7676,125
+linea123,final,upz,SAN FRANCISCO,193,0.7676,125
+linea123,final,upz,MARRUECOS,193,0.7676,125
+linea123,final,upz,MARCO FIDEL SUAREZ,193,0.7676,125
+linea123,final,upz,QUIROGA,193,0.7676,125
+linea123,final,upz,SAN JOSE,193,0.7676,125
+linea123,final,upz,SAN RAFAEL,193,0.7676,125
+linea123,final,upz,ZONA INDUSTRIAL,193,0.7676,125
+linea123,final,upz,RESTREPO,193,0.7676,125
+linea123,final,upz,CIUDAD SALITRE ORIENTAL,193,0.7676,125
+linea123,final,upz,LA ESMERALDA,193,0.7676,125
+linea123,final,upz,DOCE DE OCTUBRE,193,0.7676,125
+linea123,final,upz,LOS ANDES,193,0.7676,125
+linea123,final,upz,NIZA,193,0.7676,125
+linea123,final,upz,CASA BLANCA SUBA,193,0.7676,125
+linea123,final,upz,LA ALHAMBRA,193,0.7676,125
+linea123,final,upz,EL PRADO,193,0.7676,125
+linea123,final,upz,SAN JOSE DE BAVARIA,193,0.7676,125
+linea123,final,upz,(otras categorías),12446,49.4989,125
 fiscalia,original,proceso_conexado,No,1994921,99.6376,2
 fiscalia,original,proceso_conexado,Si,7256,0.3624,2
 fiscalia,original,proceso_con_conexidad,No,1997337,99.7583,2
