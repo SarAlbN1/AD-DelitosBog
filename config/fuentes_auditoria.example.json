@@ -1,0 +1,73 @@
+{
+  "_instrucciones": "Copie este archivo como config/fuentes_auditoria.json, complete fecha_extraccion y rutas, y verifique los nombres de columna contra los archivos reales (se comparan tras normalizar: minúsculas, sin tildes, espacios -> _). Las columnas marcadas VERIFICAR son supuestos que deben confirmarse con el primer archivo descargado.",
+  "periodo": {"anio_min": 2018, "anio_max": 2025},
+  "fuentes": [
+    {
+      "id": "linea123",
+      "nombre": "Línea 123 — Incidentes tramitados en el C4 (NUSE)",
+      "url": "https://datosabiertos.bogota.gov.co/dataset/incidentes",
+      "fecha_extraccion": "AAAA-MM-DD",
+      "unidad_observacion": "Fila de incidentes tramitados (VERIFICAR si es un incidente o un agregado con CANT_INCIDENTES)",
+      "archivos": ["data/raw/linea123/*.csv"],
+      "lectura": {"encoding": "auto", "sep": "auto", "fila_encabezado": 0},
+      "renombrar": {},
+      "columnas": {
+        "fecha": "FECHA_VERIFICAR",
+        "formato_fecha": null,
+        "dayfirst": false,
+        "localidad": "LOCALIDAD_VERIFICAR",
+        "delito": "TIPO_INCIDENTE_VERIFICAR",
+        "cantidad": "CANT_INCIDENTES",
+        "id": null
+      },
+      "filtros": {
+        "bogota": null,
+        "hurto": {"columna": "TIPO_INCIDENTE_VERIFICAR", "patron": "HURTO"}
+      }
+    },
+    {
+      "id": "policia",
+      "nombre": "Policía Nacional — Hurto a personas (archivos anuales)",
+      "url": "https://www.policia.gov.co/delitos-de-impacto/hurto-personas",
+      "fecha_extraccion": "AAAA-MM-DD",
+      "unidad_observacion": "Registro policial de hurto a personas (VERIFICAR relación con el campo CANTIDAD)",
+      "archivos": ["data/raw/policia/*.xlsx"],
+      "lectura": {"hoja": 0, "fila_encabezado": 0},
+      "renombrar": {"FECHA HECHO": "fecha_hecho", "FECHA": "fecha_hecho"},
+      "columnas": {
+        "fecha": "fecha_hecho",
+        "dayfirst": true,
+        "delito": null,
+        "cantidad": "CANTIDAD",
+        "localidad": null,
+        "id": null
+      },
+      "filtros": {
+        "bogota": {"columna": "MUNICIPIO_VERIFICAR", "patron": "BOGOTA"},
+        "hurto": null
+      }
+    },
+    {
+      "id": "fiscalia",
+      "nombre": "Fiscalía General de la Nación — Procesos Fiscalía V3",
+      "url": "https://www.datos.gov.co/d/dbdv-iihs",
+      "fecha_extraccion": "AAAA-MM-DD",
+      "unidad_observacion": "Fila proceso–delito (noticia criminal); un proceso puede repetirse",
+      "archivos": ["data/raw/fiscalia/*.csv"],
+      "lectura": {"encoding": "auto", "sep": ","},
+      "columnas": {
+        "anio": "a_o_hecho",
+        "mes": "mes_hecho",
+        "id": "proceso_anonimizado",
+        "delito": "delito",
+        "cantidad": null,
+        "localidad": null
+      },
+      "categoricas": ["capitulo_delito", "estado", "etapa", "tipo_noticia", "dir_hecho_rural_urbana"],
+      "filtros": {
+        "bogota": {"columna": "cod_dane_hecho", "patron": "^11001$"},
+        "hurto": {"columna": "capitulo_delito", "patron": "^DEL HURTO$"}
+      }
+    }
+  ]
+}
