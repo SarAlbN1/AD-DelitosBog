@@ -14,11 +14,10 @@ Proyecto de análisis de datos llevado por dos personas: Sara Albarracín (`SarA
 
 ## Estados del tablero
 
-Actualiza la tarjeta de la issue en el [tablero de AD-DelitosBog](https://github.com/users/SarAlbN1/projects/11) cuando cambie su situación. El campo `Status` tiene estos valores:
+Actualiza la tarjeta de la issue en el [tablero de AD-DelitosBog](https://github.com/users/SarAlbN1/projects/11) cuando cambie su situación. El campo `Status` tiene cinco valores y no hay más:
 
-- **To-do**. La tarjeta está en el backlog y todavía no se ha evaluado si puede iniciarse.
-- **Ready**. La tarea no tiene dependencias abiertas y puede tomarse.
-- **Blocked**. Una dependencia abierta impide avanzar. Registra en la issue qué dependencia la bloquea. Cuando se resuelva la última, pasa la tarjeta a **Ready** si el trabajo aún no comenzó, o al estado que corresponda según el avance real.
+- **To-do**. El backlog. La tarea no se ha empezado, tenga o no dependencias resueltas.
+- **Blocked**. Una dependencia abierta impide avanzar. Registra en la issue qué dependencia la bloquea. Cuando se resuelva la última, devuelve la tarjeta a **To-do** si el trabajo aún no comenzó, o al estado que corresponda según el avance real.
 - **In progress**. Mueve la tarjeta al comenzar el trabajo efectivo. Un PR en borrador mantiene este estado si el trabajo puede seguir.
 - **In review**. Mueve la tarjeta cuando haya un PR abierto, listo para revisión y vinculado a la entrega de la issue. Un PR parcial que solo referencia la issue no cambia el estado de la issue completa.
 - **Done**. Mueve la tarjeta cuando el cambio esté integrado, se hayan verificado los criterios y la issue esté cerrada.
@@ -59,5 +58,5 @@ Esta página es la fuente de las reglas de revisión, aprobación y fusión de A
 
 - Integra mediante **squash** con aprobación vigente del otro integrante, controles requeridos aprobados, conversaciones resueltas y sin solicitudes de cambio activas. Comprueba el commit antes de ejecutar la fusión.
 - Respeta las protecciones de GitHub. Las acciones administrativas, los cambios de reglas, la fusión automática, el `force push` y el borrado de `main` quedan fuera del flujo de integración.
-- Después de fusionar, registra la evidencia y actualiza el estado de la tarjeta. Comprueba qué dependencias quedaron desbloqueadas y mueve a **Ready** las tarjetas que ya no tengan dependencias abiertas.
+- Después de fusionar, registra la evidencia y actualiza el estado de la tarjeta. Comprueba qué dependencias quedaron desbloqueadas y devuelve a **To-do** las tarjetas que ya no tengan dependencias abiertas.
 - Publica el tag de entrega sobre el commit integrado y verificado, una vez cumplidos los criterios de calidad de #7 y autorizada la publicación. Una etiqueta por entrega.

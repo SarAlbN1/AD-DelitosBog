@@ -59,6 +59,6 @@ Cuando trabajes en una issue, consulta su tarjeta, sus dependencias y los PRs vi
 
 1. Al comenzar el trabajo efectivo, marca **In progress**. Si una dependencia impide avanzar, marca **Blocked** y registra en la issue cuál es.
 2. Al abrir un PR listo para revisión que entrega la issue, o al sacar ese PR de borrador, marca **In review**.
-3. Al confirmar que el cambio está integrado, que los criterios se verificaron y que la issue está cerrada, marca **Done**. Revisa después las tarjetas que dependían de ella y pasa a **Ready** las que se quedaron sin dependencias abiertas.
+3. Al confirmar que el cambio está integrado, que los criterios se verificaron y que la issue está cerrada, marca **Done**. Revisa después las tarjetas que dependían de ella y devuelve a **To-do** las que se quedaron sin dependencias abiertas.
 
 Verifica que el cambio de estado se guardó. Si faltan permisos, la tarjeta no está en el tablero o el vínculo entre la issue y el PR es ambiguo, informa el pendiente en el resumen de la tarea.
