@@ -43,7 +43,8 @@ Esto **no se declara cumplido** hasta ejecutar `scripts/auditoria_datasets.py` s
 1. ¿Basta con que **una** de las fuentes alcance 500.000 registros, o el mínimo se refiere al conjunto integrado?
 2. ¿Es aceptable acotar el periodo principal a **2020–2025**, ya que la Policía no publica 2018–2019 a nivel de registro? ¿O prefiere completar esos años con el agregado diario de MinDefensa?
 3. ¿Considera válido el **proceso penal de Fiscalía** como unidad de análisis complementaria, aunque no equivalga a un hecho?
-4. Si se eligiera Fiscalía como población, ¿habría que restringirla a la modalidad **«a personas»** para que sea comparable con Policía, o se acepta el capítulo completo de hurto? Hoy incluye automotores y residencias, y eso cambia el fenómeno que se modela.
+
+Son tres. La cuarta que se había planteado, sobre si restringir Fiscalía a la modalidad «a personas», **se retiró de esta lista**: no depende de cómo el profesor interprete el enunciado, sino de un campo que ya tenemos en los datos. Se resuelve en la decisión D-02.
 
 ### Condiciones acordadas por el equipo
 Las propuso Sara el 2026-11-11 y quedan pendientes de la respuesta del profesor:
@@ -61,3 +62,49 @@ _Pendiente._ Al recibir la respuesta, registrar aquí:
 - el texto o el resumen de la respuesta;
 - la opción elegida;
 - los cambios de alcance en #10, #15, #17 y en el informe.
+
+---
+
+## D-02 · Alcance de la modalidad de hurto en Fiscalía (#18, #22)
+
+**Estado:** Decidida por el equipo. No requiere consulta al profesor.
+**Fecha:** 2026-11-12.
+
+### Contexto
+Se había planteado como una cuarta pregunta al profesor. No lo es: el dato necesario para
+resolverla está en la propia fuente, así que es una decisión técnica del equipo que basta con
+justificar y documentar.
+
+El filtro de extracción de Fiscalía usa `capitulo_delito` = «Del Hurto». Ese capítulo agrupa todas
+las modalidades: hurto a personas, de automotores, a residencias y otras. La fuente Policía, en
+cambio, se filtra por `DELITOS` = `(05022) Hurto a personas`, una sola modalidad.
+
+### Evidencia
+- `capitulo_delito` tiene **un único valor** tras el filtro: «Del Hurto». No distingue modalidad.
+- `delito` tiene **118 valores distintos**, del tipo «Hurto Calificado Art. 240 C.P. Agravado». Ahí
+  sí está la modalidad.
+- Policía aporta 741.986 filas de hurto **a personas**; Fiscalía aporta 1.300.703 filas del capítulo
+  **completo**. Las dos cifras no describen el mismo fenómeno.
+
+Fuente: `outputs/auditoria/diccionario_variables.csv` y `docs/evidencia_policia_registro.md`.
+
+### Decisión
+**Si Fiscalía se usa como población principal o como fuente comparable con Policía, se restringe a
+la modalidad «a personas» usando `delito`.** El capítulo completo solo se usa para describir la
+respuesta judicial al hurto en general, y entonces se dice explícitamente que incluye otras
+modalidades.
+
+Motivo: el proyecto modela el hurto a personas. Comparar 741.986 hurtos a personas con 1.300.703
+procesos que incluyen automotores y residencias mezclaría dos fenómenos distintos y haría
+incomparables las series.
+
+### Lo que falta para aplicarla
+Listar cuáles de los 118 valores de `delito` corresponden a la modalidad «a personas» y volver a
+contar las filas con ese filtro. **Esto solo puede hacerlo quien tiene el CSV de Fiscalía en local**
+(Juan). Hasta entonces, la cifra de 1.300.703 debe citarse siempre como «capítulo completo del
+hurto» y nunca como «hurto a personas».
+
+### Consecuencia si la cifra restringida baja de 500.000
+Sería un resultado relevante, no un problema: significaría que Fiscalía no sostiene el mínimo con la
+población comparable y que la única fuente que lo hace es el registro de Policía. Eso simplificaría
+la decisión D-01 en lugar de complicarla.
