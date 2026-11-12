@@ -1,0 +1,9 @@
+fuente,etapa,descripcion,filtro_aplicado,filas,filas_excluidas,suma_cantidad
+policia_registro,1_original,Original,True,4829870,,4829870.0
+policia_registro,2_bogota,Bogotá,True,1406157,3423713.0,1406157.0
+policia_registro,3_periodo,2018–2025,True,1406157,0.0,1406157.0
+policia_registro,4_hurto,Hurto,True,741986,664171.0,741986.0
+policia_agregado,1_original,Original,True,2922,,975793.0
+policia_agregado,2_bogota,Bogotá,True,2922,0.0,975793.0
+policia_agregado,3_periodo,2018–2025,True,2922,0.0,975793.0
+policia_agregado,4_hurto,Hurto,False,2922,0.0,975793.0

@@ -1,0 +1,8 @@
+fuente,archivo,ruta,tamano_bytes,sha256,formato,codificacion,separador,filas,columnas
+policia_registro,delitos_registro_2020.csv,data/raw/policia_registro/csv/delitos_registro_2020.csv,89761340,aa2f39e87d899929d07daadfeca2480c0300a5bc0a6cfaa16665c1248fce95eb,csv,utf-8,",",651206,11
+policia_registro,delitos_registro_2021.csv,data/raw/policia_registro/csv/delitos_registro_2021.csv,108736152,952334b45f2c1ae8160686399c67724abc02af8fe5fbe8c0cc8007d48e73e278,csv,utf-8,",",792244,11
+policia_registro,delitos_registro_2022.csv,data/raw/policia_registro/csv/delitos_registro_2022.csv,116927234,8e22e2d1f40a3eed0c274fdc17d02e6afde9dff960eb72fc6398994a43d25385,csv,utf-8,",",862451,11
+policia_registro,delitos_registro_2023.csv,data/raw/policia_registro/csv/delitos_registro_2023.csv,119693738,d5d34adc3e3f9be79919ed9ae9468589150035dda640169927118efab135c615,csv,utf-8,",",917544,10
+policia_registro,delitos_registro_2024.csv,data/raw/policia_registro/csv/delitos_registro_2024.csv,115517990,621a8cd32b6d9194299dd5229404bb66318ebf4b66e14b21681cb4fd80d63c64,csv,utf-8,",",832475,11
+policia_registro,delitos_registro_2025.csv,data/raw/policia_registro/csv/delitos_registro_2025.csv,107524820,e8c80f134bc260693a7f1ce280372259a607bb41614c65c7df13fa43c7eeaff8,csv,utf-8,",",773950,11
+policia_agregado,hurto_bogota.csv,data/raw/hurto_bogota.csv,213332,32cda715025fc89c6d6ce7de9c36fcb8444e877e00ed5d333feffde7a295b8d6,csv,utf-8-sig,",",2922,6

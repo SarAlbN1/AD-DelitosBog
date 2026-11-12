@@ -5,6 +5,82 @@
   },
   "fuentes": [
     {
+      "id": "policia_registro",
+      "nombre": "Policía Nacional — Delitos a nivel de registro (hurto a personas)",
+      "url": "https://www.policia.gov.co/estadistica-delictiva (archivos anuales «INFORMACIÓN DE DELITOS A NIVEL DE REGISTRO», 2020-2025; 2022 y 2023 se publican en .zip) — el esquema varía entre años: encabezado en la fila 12 o 13, «ARMAS MEDIOS» o «ARMA MEDIO», y 2023 no trae la columna ICCS",
+      "fecha_extraccion": "2026-11-11",
+      "unidad_observacion": "Una fila por víctima o registro, con CANTIDAD = 1",
+      "archivos": [
+        "data/raw/policia_registro/csv/delitos_registro_*.csv"
+      ],
+      "lectura": {
+        "encoding": "utf-8",
+        "sep": ","
+      },
+      "renombrar": {
+        "ARMA MEDIO": "ARMAS MEDIOS"
+      },
+      "columnas": {
+        "fecha": "FECHA HECHO",
+        "formato_fecha": "%Y/%m/%d",
+        "dayfirst": false,
+        "mes": "MES",
+        "cantidad": "CANTIDAD",
+        "delito": "DELITOS",
+        "localidad": "MUNICIPIO",
+        "id": null
+      },
+      "categoricas": [
+        "DELITOS",
+        "ARMAS MEDIOS",
+        "GENERO",
+        "*AGRUPA EDAD PERSONA*",
+        "DEPARTAMENTO"
+      ],
+      "filtros": {
+        "bogota": {
+          "columna": "CODIGO DANE",
+          "patron": "^0*11001$"
+        },
+        "hurto": {
+          "columna": "DELITOS",
+          "patron": "\\(0*5022\\)"
+        }
+      }
+    },
+    {
+      "id": "policia_agregado",
+      "nombre": "MinDefensa 4rxi-8m8d — Hurto a personas, agregado diario (control de consistencia)",
+      "url": "https://www.datos.gov.co/d/4rxi-8m8d (API: $where=cod_muni='11001' AND fecha_hecho >= '2018-01-01T00:00:00' AND fecha_hecho < '2026-01-01T00:00:00')",
+      "fecha_extraccion": "2026-11-09",
+      "unidad_observacion": "Agregado fecha × municipio; cantidad = hurtos registrados ese día",
+      "archivos": [
+        "data/raw/hurto_bogota.csv"
+      ],
+      "lectura": {
+        "encoding": "auto",
+        "sep": "auto"
+      },
+      "columnas": {
+        "fecha": "fecha_hecho",
+        "cantidad": "cantidad",
+        "localidad": "municipio",
+        "id": null,
+        "delito": null
+      },
+      "categoricas": [
+        "departamento",
+        "municipio"
+      ],
+      "filtros": {
+        "bogota": {
+          "columna": "cod_muni",
+          "patron": "^0*11001$"
+        },
+        "hurto": null
+      }
+    },
+    {
       "id": "linea123",
       "nombre": "Línea 123 — Llamadas tramitadas C4 Bogotá NUSE (enero 2015 - septiembre 2026)",
       "url": "https://datosabiertos.bogota.gov.co/dataset/incidentes (recurso 30d65a8b-d0ed-4e95-977e-0d7cc2ea89ef, modificado 2026-10-22)",

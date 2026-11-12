@@ -1,0 +1,5 @@
+fuente,tipo,etapa,filas,unicos,repetidas,valores_repetidos,max_repeticiones
+policia_registro,fila_exacta,original,4829870,2315623,2514247,609396,302
+policia_registro,fila_exacta,final,741986,28642,713344,21933,302
+policia_agregado,fila_exacta,original,2922,2922,0,0,1
+policia_agregado,fila_exacta,final,2922,2922,0,0,1

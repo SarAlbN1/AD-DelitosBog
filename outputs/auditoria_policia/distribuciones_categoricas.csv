@@ -1,0 +1,184 @@
+fuente,etapa,columna,valor,filas,pct,categorias_distintas
+policia_registro,original,armas_medios,SIN EMPLEO DE ARMAS,2775478,57.4649,54
+policia_registro,original,armas_medios,CONTUNDENTES,598935,12.4006,54
+policia_registro,original,armas_medios,ARMA DE FUEGO,568284,11.766,54
+policia_registro,original,armas_medios,ARMA BLANCA / CORTOPUNZANTE,457260,9.4673,54
+policia_registro,original,armas_medios,NO REPORTADO,130371,2.6993,54
+policia_registro,original,armas_medios,VEHICULO,71026,1.4706,54
+policia_registro,original,armas_medios,LLAVE MAESTRA,61650,1.2764,54
+policia_registro,original,armas_medios,PALANCAS,41584,0.861,54
+policia_registro,original,armas_medios,MOTO,38541,0.798,54
+policia_registro,original,armas_medios,LLAMADA TELEFONICA,29714,0.6152,54
+policia_registro,original,armas_medios,ESCOPOLAMINA,18956,0.3925,54
+policia_registro,original,armas_medios,DIRECTA,13783,0.2854,54
+policia_registro,original,armas_medios,REDES SOCIALES,10942,0.2265,54
+policia_registro,original,armas_medios,CARTA EXTORSIVA,3239,0.0671,54
+policia_registro,original,armas_medios,ARMA TRAUMATICA,2508,0.0519,54
+policia_registro,original,armas_medios,ARTEFACTO EXPLOSIVO/CARGA DINAMITA,1835,0.038,54
+policia_registro,original,armas_medios,BICICLETA,1027,0.0213,54
+policia_registro,original,armas_medios,PERRO,894,0.0185,54
+policia_registro,original,armas_medios,ACIDO,850,0.0176,54
+policia_registro,original,armas_medios,COMBUSTIBLE,587,0.0122,54
+policia_registro,original,armas_medios,GRANADA DE MANO,364,0.0075,54
+policia_registro,original,armas_medios,MIXTA,336,0.007,54
+policia_registro,original,armas_medios,ARTEFACTO INCENDIARIO,217,0.0045,54
+policia_registro,original,armas_medios,AGUA CALIENTE,162,0.0034,54
+policia_registro,original,armas_medios,CINTAS/CINTURON,161,0.0033,54
+policia_registro,original,armas_medios,MINA ANTIPERSONA,151,0.0031,54
+policia_registro,original,armas_medios,DRON / EXPLOSIVO,124,0.0026,54
+policia_registro,original,armas_medios,GASES,114,0.0024,54
+policia_registro,original,armas_medios,QUIMICOS,113,0.0023,54
+policia_registro,original,armas_medios,CARRO BOMBA,100,0.0021,54
+policia_registro,original,armas_medios,POLVORA(FUEGOS PIROTECNICOS),94,0.0019,54
+policia_registro,original,armas_medios,SUSTANCIAS TOXICAS,90,0.0019,54
+policia_registro,original,armas_medios,MEDICAMENTOS,66,0.0014,54
+policia_registro,original,armas_medios,ALIMENTOS VENCIDOS,49,0.001,54
+policia_registro,original,armas_medios,JERINGA,45,0.0009,54
+policia_registro,original,armas_medios,PETARDO PLANFETARIO,32,0.0007,54
+policia_registro,original,armas_medios,ESPOSAS,27,0.0006,54
+policia_registro,original,armas_medios,MOTO BOMBA,22,0.0005,54
+policia_registro,original,armas_medios,LICOR ADULTERADO,21,0.0004,54
+policia_registro,original,armas_medios,CILINDRO BOMBA,20,0.0004,54
+policia_registro,original,armas_medios,VENENO,19,0.0004,54
+policia_registro,original,armas_medios,PAQUETE BOMBA,15,0.0003,54
+policia_registro,original,armas_medios,PAPA EXPLOSIVA,14,0.0003,54
+policia_registro,original,armas_medios,ALUCINOGENOS,10,0.0002,54
+policia_registro,original,armas_medios,GRANADA DE MORTERO,9,0.0002,54
+policia_registro,original,armas_medios,ALMOHADA,9,0.0002,54
+policia_registro,original,armas_medios,PRENDAS DE VESTIR,8,0.0002,54
+policia_registro,original,armas_medios,TREN,5,0.0001,54
+policia_registro,original,armas_medios,GRANADA DE FUSIL,4,0.0001,54
+policia_registro,original,armas_medios,BOLSA PLASTICA,1,0.0,54
+policia_registro,original,armas_medios,(otras categorías),4,0.0001,54
+policia_registro,original,departamento,CUNDINAMARCA,1487529,30.7985,33
+policia_registro,original,departamento,ANTIOQUIA,606022,12.5474,33
+policia_registro,original,departamento,VALLE,461154,9.548,33
+policia_registro,original,departamento,BOGOTA,240832,4.9863,33
+policia_registro,original,departamento,SANTANDER,210573,4.3598,33
+policia_registro,original,departamento,ATLÁNTICO,203464,4.2126,33
+policia_registro,original,departamento,BOLÍVAR,145155,3.0054,33
+policia_registro,original,departamento,TOLIMA,144465,2.9911,33
+policia_registro,original,departamento,META,129740,2.6862,33
+policia_registro,original,departamento,HUILA,124258,2.5727,33
+policia_registro,original,departamento,NARIÑO,120653,2.4981,33
+policia_registro,original,departamento,CAUCA,113755,2.3552,33
+policia_registro,original,departamento,BOYACÁ,103240,2.1375,33
+policia_registro,original,departamento,NORTE DE SANTANDER,99339,2.0568,33
+policia_registro,original,departamento,CESAR,93829,1.9427,33
+policia_registro,original,departamento,MAGDALENA,84263,1.7446,33
+policia_registro,original,departamento,RISARALDA,78070,1.6164,33
+policia_registro,original,departamento,CÓRDOBA,61708,1.2776,33
+policia_registro,original,departamento,CALDAS,52498,1.0869,33
+policia_registro,original,departamento,QUINDÍO,44503,0.9214,33
+policia_registro,original,departamento,SUCRE,43533,0.9013,33
+policia_registro,original,departamento,CASANARE,39103,0.8096,33
+policia_registro,original,departamento,GUAJIRA,36543,0.7566,33
+policia_registro,original,departamento,CAQUETÁ,26264,0.5438,33
+policia_registro,original,departamento,CHOCÓ,21796,0.4513,33
+policia_registro,original,departamento,PUTUMAYO,17855,0.3697,33
+policia_registro,original,departamento,ARAUCA,13994,0.2897,33
+policia_registro,original,departamento,GUAVIARE,7601,0.1574,33
+policia_registro,original,departamento,SAN ANDRÉS,7543,0.1562,33
+policia_registro,original,departamento,AMAZONAS,3447,0.0714,33
+policia_registro,original,departamento,VICHADA,2700,0.0559,33
+policia_registro,original,departamento,GUAINÍA,2482,0.0514,33
+policia_registro,original,departamento,VAUPÉS,1959,0.0406,33
+policia_registro,original,municipio,Bogotá D.C.,1406157,29.1138,1022
+policia_registro,original,municipio,Medellín,349643,7.2392,1022
+policia_registro,original,municipio,Cali,286058,5.9227,1022
+policia_registro,original,municipio,Barranquilla,130591,2.7038,1022
+policia_registro,original,municipio,Cartagena,100636,2.0836,1022
+policia_registro,original,municipio,Soacha,87718,1.8162,1022
+policia_registro,original,municipio,Villavicencio,85180,1.7636,1022
+policia_registro,original,municipio,Bucaramanga,84042,1.74,1022
+policia_registro,original,municipio,Ibagué,77485,1.6043,1022
+policia_registro,original,municipio,Pasto,70028,1.4499,1022
+policia_registro,original,municipio,Neiva,61678,1.277,1022
+policia_registro,original,municipio,Cúcuta,58922,1.22,1022
+policia_registro,original,municipio,Santa Marta,54317,1.1246,1022
+policia_registro,original,municipio,Popayán,52761,1.0924,1022
+policia_registro,original,municipio,Valledupar,50889,1.0536,1022
+policia_registro,original,municipio,Pereira,48551,1.0052,1022
+policia_registro,original,municipio,Bello,42376,0.8774,1022
+policia_registro,original,municipio,Soledad,37978,0.7863,1022
+policia_registro,original,municipio,Palmira,34814,0.7208,1022
+policia_registro,original,municipio,Montería,29866,0.6184,1022
+policia_registro,original,municipio,Barrancabermeja,29698,0.6149,1022
+policia_registro,original,municipio,Armenia,27180,0.5627,1022
+policia_registro,original,municipio,Manizales,25415,0.5262,1022
+policia_registro,original,municipio,Tunja,25256,0.5229,1022
+policia_registro,original,municipio,Itagui,24322,0.5036,1022
+policia_registro,original,municipio,Yopal,23098,0.4782,1022
+policia_registro,original,municipio,Floridablanca,22560,0.4671,1022
+policia_registro,original,municipio,Sincelejo,21609,0.4474,1022
+policia_registro,original,municipio,Fusagasugá,19056,0.3945,1022
+policia_registro,original,municipio,Envigado,18978,0.3929,1022
+policia_registro,original,municipio,Pitalito,18228,0.3774,1022
+policia_registro,original,municipio,Chía,17805,0.3686,1022
+policia_registro,original,municipio,Florencia,17524,0.3628,1022
+policia_registro,original,municipio,Girón,17404,0.3603,1022
+policia_registro,original,municipio,Mosquera,17386,0.36,1022
+policia_registro,original,municipio,Dosquebradas,17071,0.3534,1022
+policia_registro,original,municipio,Tuluá,16033,0.332,1022
+policia_registro,original,municipio,Girardot,15630,0.3236,1022
+policia_registro,original,municipio,Jamundí,15588,0.3227,1022
+policia_registro,original,municipio,Buenaventura,15474,0.3204,1022
+policia_registro,original,municipio,Madrid,14968,0.3099,1022
+policia_registro,original,municipio,Sogamoso,14839,0.3072,1022
+policia_registro,original,municipio,Rionegro,14565,0.3016,1022
+policia_registro,original,municipio,Facatativá,14519,0.3006,1022
+policia_registro,original,municipio,Ipiales,14476,0.2997,1022
+policia_registro,original,municipio,Piedecuesta,14358,0.2973,1022
+policia_registro,original,municipio,Riohacha,14277,0.2956,1022
+policia_registro,original,municipio,Quibdó,14093,0.2918,1022
+policia_registro,original,municipio,Funza,13946,0.2887,1022
+policia_registro,original,municipio,Zipaquirá,13653,0.2827,1022
+policia_registro,original,municipio,(otras categorías),1131171,23.4203,1022
+policia_registro,original,genero,MASCULINO,2490356,51.5616,3
+policia_registro,original,genero,FEMENINO,2084322,43.1548,3
+policia_registro,original,genero,(nulo),255192,5.2836,3
+policia_registro,original,agrupa_edad_persona,DE 18 AÑOS Y MÁS,4621838,95.6928,4
+policia_registro,original,agrupa_edad_persona,DE 14 A 17 AÑOS,114959,2.3802,4
+policia_registro,original,agrupa_edad_persona,DE 0 A 14 AÑOS,75603,1.5653,4
+policia_registro,original,agrupa_edad_persona,(nulo),17470,0.3617,4
+policia_registro,original,delitos,(05022) Hurto a personas,1837726,38.0492,18
+policia_registro,original,delitos,(02089) Otros actos dirigidos a inducir miedo o angustia emocional (Violencia intrafamiliar),753096,15.5925,18
+policia_registro,original,delitos,(02011) Agresión (Lesiones personales),547602,11.3378,18
+policia_registro,original,delitos,(02012) Amenaza,335149,6.9391,18
+policia_registro,original,delitos,(02019) Otras formas de agresiones y amenazas (Lesiones culposas en accidentes de tránsito),254469,5.2687,18
+policia_registro,original,delitos,(05023) Hurto a comercio,241547,5.0011,18
+policia_registro,original,delitos,(050212) Hurto a motocicletas,215617,4.4642,18
+policia_registro,original,delitos,(05010) Hurto a residencias,192534,3.9863,18
+policia_registro,original,delitos,(0301) Violación (Delitos sexuales),185824,3.8474,18
+policia_registro,original,delitos,(0101) Homicidio intencional,80318,1.6629,18
+policia_registro,original,delitos,(02051) Extorsión,64710,1.3398,18
+policia_registro,original,delitos,(050211) Hurto a automotores,63447,1.3136,18
+policia_registro,original,delitos,(10321) Homicidio por tránsito vehicular (Homicidios en accidentes de tránsito),41845,0.8664,18
+policia_registro,original,delitos,(05024) Abigeato (Hurto a cabezas de ganado),10978,0.2273,18
+policia_registro,original,delitos,(020222) Retención ilegal (Secuestro),1897,0.0393,18
+policia_registro,original,delitos,(0906) Terrorismo,1524,0.0316,18
+policia_registro,original,delitos,(05040) Hurto de objetos de valor o bienes en tránsito (Hurto pirateria terrestre),1030,0.0213,18
+policia_registro,original,delitos,(05030) Hurto a entidades financieras,557,0.0115,18
+policia_registro,final,armas_medios,SIN EMPLEO DE ARMAS,468806,63.1826,8
+policia_registro,final,armas_medios,ARMA BLANCA / CORTOPUNZANTE,151687,20.4434,8
+policia_registro,final,armas_medios,ARMA DE FUEGO,78303,10.5532,8
+policia_registro,final,armas_medios,CONTUNDENTES,21131,2.8479,8
+policia_registro,final,armas_medios,NO REPORTADO,15558,2.0968,8
+policia_registro,final,armas_medios,ESCOPOLAMINA,6449,0.8692,8
+policia_registro,final,armas_medios,LLAVE MAESTRA,51,0.0069,8
+policia_registro,final,armas_medios,PALANCAS,1,0.0001,8
+policia_registro,final,departamento,CUNDINAMARCA,618969,83.4206,2
+policia_registro,final,departamento,BOGOTA,123017,16.5794,2
+policia_registro,final,municipio,Bogotá D.C.,741986,100.0,1
+policia_registro,final,genero,MASCULINO,435289,58.6654,3
+policia_registro,final,genero,FEMENINO,306075,41.2508,3
+policia_registro,final,genero,(nulo),622,0.0838,3
+policia_registro,final,agrupa_edad_persona,DE 18 AÑOS Y MÁS,733946,98.9164,4
+policia_registro,final,agrupa_edad_persona,DE 14 A 17 AÑOS,6609,0.8907,4
+policia_registro,final,agrupa_edad_persona,DE 0 A 14 AÑOS,1039,0.14,4
+policia_registro,final,agrupa_edad_persona,(nulo),392,0.0528,4
+policia_registro,final,delitos,(05022) Hurto a personas,741986,100.0,1
+policia_agregado,original,departamento,BOGOTA D.C.,2922,100.0,1
+policia_agregado,original,municipio,BOGOTA D.C.,2922,100.0,1
+policia_agregado,final,departamento,BOGOTA D.C.,2922,100.0,1
+policia_agregado,final,municipio,BOGOTA D.C.,2922,100.0,1
