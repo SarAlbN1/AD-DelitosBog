@@ -254,25 +254,57 @@ El dataset \emph{Procesos Fiscalía V3} contiene noticias criminales del Sistema
 
 Algunas noticias criminales pueden incluir más de un delito, duplicidades asociadas a procesos conexos o actualizaciones de estado. Por tanto, se evaluará el conteo de identificadores distintos y se evitará equiparar automáticamente filas con hechos o víctimas. La granularidad temporal observada en la metadata corresponde a año, mes y trimestre, lo cual resulta más apropiado para contrastes mensuales que para pronósticos diarios.
 
-\subsection{Compatibilidad y restricciones de integración}
+\subsection{Unidades de observación y posibilidades de integración}
 
-\begin{table}[H]
-\centering
-\caption{Alcance y diferencias de las tres fuentes propuestas.}
-\small
-\begin{tabularx}{\textwidth}{@{}p{2.7cm}X X X@{}}
+Las tres fuentes describen fenómenos relacionados, pero cada fila representa algo distinto. La tabla~\ref{tab:compatibilidad} resume qué es una fila en cada fuente y con qué resolución temporal y territorial se publica. Las cifras de Línea 123 y Fiscalía provienen de la auditoría reproducible (\texttt{outputs/auditoria/}). Las de Policía provienen de la inspección del archivo 2024 a nivel de registro; los demás años se verificarán al completar su auditoría.
+
+{\small
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{4.2cm}>{\raggedright\arraybackslash}p{4.0cm}>{\raggedright\arraybackslash}p{4.2cm}@{}}
+\caption{Unidad de observación y granularidad de las fuentes.}\label{tab:compatibilidad}\\
 \toprule
-\textbf{Característica} & \textbf{Línea 123} & \textbf{Policía} & \textbf{Fiscalía} \\
+\textbf{Característica} & \textbf{Línea 123} & \textbf{Policía Nacional (registro)} & \textbf{Fiscalía (Procesos V3)} \\
 \midrule
-Unidad & Incidente tramitado & Registro policial & Noticia criminal/delito \\
-Temporalidad & Según fecha disponible & Fecha del hecho & Mes/año del hecho \\
-Uso principal & Contexto territorial & Caracterización y predicción & Contraste de tendencias \\
-Precaución & Categorías diversas & Posibles revisiones & Procesos conexos \\
+\endfirsthead
+\toprule
+\textbf{Característica} & \textbf{Línea 123} & \textbf{Policía Nacional (registro)} & \textbf{Fiscalía (Procesos V3)} \\
+\midrule
+\endhead
 \bottomrule
-\end{tabularx}
-\end{table}
+\endfoot
+Qué es una fila & Un agregado de llamadas procedentes por año, mes, localidad, UPZ y tipo de incidente & Un registro con \texttt{CANTIDAD} = 1 que trae el género y el grupo de edad de una persona, es decir, una víctima & Un par proceso--delito (noticia criminal); un mismo proceso puede ocupar varias filas \\
+\addlinespace
+Medida de conteo & Suma de \texttt{CANT\_INCIDENTES}, no número de filas: 25.144 filas de hurto suman 1.094.313 llamadas (2018--2025) & Número de filas, igual a la suma de \texttt{CANTIDAD}: 130.503 en 2024 & Filas o procesos únicos: 1.300.703 filas y 1.297.042 procesos (2018--2025) \\
+\addlinespace
+Resolución temporal & Año y mes & Fecha diaria del hecho & Año y mes del hecho (767 filas «Sin Información»); también año y mes de creación del proceso \\
+\addlinespace
+Resolución territorial & 22 localidades y 125 UPZ & Municipio (código DANE); sin localidad ni barrio & Municipio (todo 11001), zona urbana o rural y seccional; sin localidad \\
+\addlinespace
+Definición de hurto & Tipos de detalle que contienen «hurto»; uno cambia de nombre en 2019 y se homologa por código & \texttt{DELITOS} = «(05022) Hurto a personas» & Capítulo «Del Hurto»: incluye todas las modalidades (personas, automotores, residencias, etc.) \\
+\addlinespace
+Identificador & \texttt{ID}, no único: 2.633 identificadores repetidos en el archivo completo y 166 en las filas de hurto 2018--2025 & Sin identificador & \texttt{proceso\_anonimizado} \\
+\addlinespace
+Qué mide & Demanda ciudadana de atención (llamadas) & Hechos denunciados o conocidos por la Policía & Respuesta judicial (procesos abiertos) \\
+\end{longtable}
+}
 
-No se sumarán ni enlazarán filas de fuentes diferentes como si fuesen observaciones individuales nuevas. Cualquier cruce se realizará por periodos y territorios compatibles, con una definición documentada del conteo y de la disponibilidad de la información para predicción.
+\subsubsection{Llaves de integración}
+
+\begin{itemize}
+  \item \textbf{Mes $\times$ Bogotá.} Es la única resolución que comparten las tres fuentes: Línea 123 y Fiscalía publican año y mes, y la Policía puede agregarse de día a mes. Sobre esta llave se construirán series paralelas, una por fuente, para comparar tendencias y estudiar desfases (por ejemplo, entre la llamada, el registro policial y la apertura del proceso).
+  \item \textbf{Mes $\times$ localidad.} Solo está disponible en Línea 123, así que los análisis territoriales por localidad o UPZ se harán únicamente con esa fuente y no se contrastarán con las otras dos.
+  \item \textbf{Día $\times$ Bogotá.} Solo está disponible en la Policía. Permite estudiar estacionalidad semanal y festivos, sin contraparte en las demás fuentes.
+\end{itemize}
+
+\subsubsection{Cruces no válidos}
+
+\begin{itemize}
+  \item \textbf{Sumar filas o conteos de fuentes distintas.} Una misma situación puede generar una llamada, un registro policial y un proceso, de modo que la suma contaría varias veces el mismo hecho. Tampoco se suman entre fuentes para alcanzar el requisito de 500.000 registros.
+  \item \textbf{Enlazar registros individuales.} No hay un identificador común. La Policía no publica identificador y las fuentes no comparten ubicación precisa ni hora, así que no es posible quitar duplicados registro a registro, como en los estudios con microdatos georreferenciados.
+  \item \textbf{Comparar territorios sin equivalencia.} Por ejemplo, la distribución por localidad de Línea 123 con el total de la ciudad de las otras fuentes.
+  \item \textbf{Equiparar «hurto» entre fuentes sin homologar.} El capítulo «Del Hurto» de la Fiscalía incluye modalidades que no son hurto a personas, y las categorías de Línea 123 son tipificaciones operativas de la llamada.
+  \item \textbf{Usar la fecha de creación del proceso como fecha del hecho,} o datos que no estarían disponibles al momento de predecir. Los registros judiciales de un mes pueden completarse meses después, así que su uso como predictor exigirá controlar ese rezago.
+\end{itemize}
 
 \subsection{Variables derivadas previstas}
 
