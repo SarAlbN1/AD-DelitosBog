@@ -150,6 +150,26 @@ def detectar_separador(path: Path, codificacion: str, preferido: str = "auto", f
         return max(conteos, key=conteos.get)
 
 
+def recortar_pie(df: pd.DataFrame) -> tuple[pd.DataFrame, int, str | None]:
+    """Quita el bloque final de filas con a lo sumo una celda no vacía (notas, «Fecha de entrega», totales
+    escritos en una sola celda, filas en blanco). Solo actúa sobre el final del archivo; las filas vacías
+    intermedias se conservan y se reportan como anomalía en el procesamiento normal.
+    Devuelve (df_recortado, filas_descartadas, ejemplo_de_texto)."""
+    if df.empty or df.shape[1] < 2:
+        return df, 0, None
+    llenas = df.notna() & df.astype("string").apply(lambda s: s.str.strip().ne("")).fillna(False)
+    con_datos = llenas.sum(axis=1) >= 2
+    if not con_datos.any():
+        return df, 0, None
+    ultima = int(np.flatnonzero(con_datos.to_numpy())[-1])
+    pie = df.iloc[ultima + 1:]
+    if pie.empty:
+        return df, 0, None
+    textos = [str(v) for v in pie.to_numpy().ravel() if pd.notna(v) and str(v).strip()]
+    ejemplo = " | ".join(t.replace("\n", " ").strip() for t in textos[:2]) or None
+    return df.iloc[:ultima + 1], len(pie), ejemplo
+
+
 def iterar_bloques(path: Path, lectura: dict, chunksize: int):
     """Genera DataFrames de texto (dtype=str) por bloques y devuelve metadatos de lectura."""
     ext = path.suffix.lower()
@@ -173,7 +193,11 @@ def iterar_bloques(path: Path, lectura: dict, chunksize: int):
             df = pd.read_excel(path, sheet_name=hoja if hoja is not None else 0, header=fila_enc, dtype=str)
         except ImportError as e:
             raise ErrorAuditoria(f"{path}: falta el motor de Excel ({e}). Instale openpyxl (xlsx) o xlrd (xls).") from e
-        meta.update(codificacion="(excel)", separador="(excel)", hoja=str(hoja))
+        meta.update(codificacion="(excel)", separador="(excel)", hoja=str(hoja), filas_pie_descartadas=0)
+        if lectura.get("descartar_pie", True):
+            df, n_pie, ejemplo = recortar_pie(df)
+            meta["filas_pie_descartadas"] = n_pie
+            meta["_pie_ejemplo"] = ejemplo
         return meta, (df.iloc[i:i + chunksize] for i in range(0, max(len(df), 1), chunksize))
     raise ErrorAuditoria(f"{path}: formato no soportado '{ext}'. Use CSV, TXT, TSV, ZIP (con un CSV), XLSX o XLS.")
 
@@ -544,6 +568,13 @@ def auditar_fuente(fuente: dict, periodo, chunksize: int, base: Path) -> Auditor
         info = {"fuente": aud.id, "archivo": path.name, "ruta": ruta_relativa(path),
                 "tamano_bytes": path.stat().st_size, "sha256": sha256_archivo(path)}
         meta, bloques = iterar_bloques(path, fuente.get("lectura") or {}, chunksize)
+        pie_ejemplo = meta.pop("_pie_ejemplo", None)
+        if meta.get("filas_pie_descartadas"):
+            aud._anomalia(path.name, "pie_de_archivo_descartado", "*", meta["filas_pie_descartadas"], pie_ejemplo,
+                          detalle="Filas finales con a lo sumo una celda no vacía (notas, fecha de entrega, filas "
+                                  "en blanco). No se cuentan como filas originales. Desactivar con "
+                                  "\"lectura\": {\"descartar_pie\": false}.")
+            log.info("[%s] %s: %s filas de pie descartadas", aud.id, path.name, meta["filas_pie_descartadas"])
         filas = 0
         for i, bloque in enumerate(bloques):
             filas += aud.procesar_bloque(bloque, path.name, primero=(i == 0))

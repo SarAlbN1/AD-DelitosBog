@@ -132,6 +132,26 @@ def test_xlsx_con_encabezado_desplazado_y_renombrado(tmp_path):
     assert r["embudo"]["4_hurto"] == 4
 
 
+def test_xlsx_pie_de_archivo_se_descarta_y_registra(tmp_path):
+    p = tmp_path / "policia_pie.xlsx"
+    df = pd.DataFrame(FILAS, columns=COLS)
+    pie = pd.DataFrame([[None] * 5, [None] * 5, ["Fecha de entrega: 20 de agosto de 2026"] + [None] * 4,
+                        ["Nota: género y edad sin calidad validada."] + [None] * 4])
+    with pd.ExcelWriter(p) as w:
+        df.to_excel(w, index=False)
+        pie.to_excel(w, index=False, header=False, startrow=len(df) + 1)
+    a, r = correr(fuente(p), tmp_path)
+    assert r["embudo"]["1_original"] == 9            # las filas de pie no cuentan
+    assert a.archivos[0]["filas_pie_descartadas"] >= 2
+    an = [x for x in a.anomalias if x["tipo"] == "pie_de_archivo_descartado"]
+    assert an and an[0]["filas"] == a.archivos[0]["filas_pie_descartadas"]
+    assert "Fecha de entrega" in an[0]["ejemplo"]
+    # desactivable desde el manifiesto: las notas vuelven a contarse como filas
+    a2, r2 = correr(fuente(p, lectura={"descartar_pie": False}), tmp_path)
+    assert r2["embudo"]["1_original"] > 9
+    assert not [x for x in a2.anomalias if x["tipo"] == "pie_de_archivo_descartado"]
+
+
 def test_filtro_bogota_y_anio_mes(tmp_path):
     p = tmp_path / "f.csv"
     pd.DataFrame({"cod_dane_hecho": ["11001", "05001", "11001", "11001"],
