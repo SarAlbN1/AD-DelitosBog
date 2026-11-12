@@ -1,0 +1,18 @@
+fuente,columna,nombres_originales,archivos_con_columna,archivos_totales,tipo_inferido,valores_unicos,ejemplo
+policia_registro,armas_medios,ARMA MEDIO | ARMAS MEDIOS,6,6,texto,54,MOTO
+policia_registro,departamento,DEPARTAMENTO,6,6,texto,33,CAUCA
+policia_registro,municipio,MUNICIPIO,6,6,texto,1021,Santander de Quilichao
+policia_registro,fecha_hecho,FECHA HECHO,6,6,fecha,2192,2020/01/01
+policia_registro,genero,GENERO,6,6,texto,2,MASCULINO
+policia_registro,agrupa_edad_persona,*AGRUPA EDAD PERSONA*,6,6,texto,3,DE 18 AÑOS Y MÁS
+policia_registro,codigo_dane,CODIGO DANE,6,6,entero,1117,19698
+policia_registro,delitos,DELITOS,6,6,texto,18,(10321) Homicidio por tránsito vehicular (Homicidios en accidentes de tránsito)
+policia_registro,mes,MES,6,6,entero,12,01
+policia_registro,cantidad,CANTIDAD,6,6,entero,1,1
+policia_registro,iccs,ICCS,5,6,entero,18,10321
+policia_agregado,fecha_hecho,fecha_hecho,1,1,fecha,2922,2025-12-31T00:00:00.000
+policia_agregado,cod_depto,cod_depto,1,1,entero,1,11
+policia_agregado,departamento,departamento,1,1,texto,1,BOGOTA D.C.
+policia_agregado,cod_muni,cod_muni,1,1,entero,1,11001
+policia_agregado,municipio,municipio,1,1,texto,1,BOGOTA D.C.
+policia_agregado,cantidad,cantidad,1,1,entero,521,103

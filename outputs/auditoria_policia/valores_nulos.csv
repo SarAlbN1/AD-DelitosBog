@@ -1,0 +1,18 @@
+fuente,columna,filas_evaluadas,nulos,pct_nulos,nota
+policia_registro,armas_medios,4829870,0,0.0,
+policia_registro,departamento,4829870,0,0.0,
+policia_registro,municipio,4829870,26,0.0005,
+policia_registro,fecha_hecho,4829870,0,0.0,
+policia_registro,genero,4829870,255192,5.2836,
+policia_registro,agrupa_edad_persona,4829870,17470,0.3617,
+policia_registro,codigo_dane,4829870,0,0.0,
+policia_registro,delitos,4829870,0,0.0,
+policia_registro,mes,4829870,0,0.0,
+policia_registro,cantidad,4829870,0,0.0,
+policia_registro,iccs,3912326,0,0.0,columna ausente en algunos archivos: solo se cuentan filas de archivos que la contienen
+policia_agregado,fecha_hecho,2922,0,0.0,
+policia_agregado,cod_depto,2922,0,0.0,
+policia_agregado,departamento,2922,0,0.0,
+policia_agregado,cod_muni,2922,0,0.0,
+policia_agregado,municipio,2922,0,0.0,
+policia_agregado,cantidad,2922,0,0.0,

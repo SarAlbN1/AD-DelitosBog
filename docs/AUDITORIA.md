@@ -21,7 +21,43 @@ pytest -q tests          # 14 pruebas con datos sintéticos
 2. Copie `config/fuentes_auditoria.example.json` como `config/fuentes_auditoria.json`.
 3. Complete `fecha_extraccion` (AAAA-MM-DD) y la `url` exacta de cada recurso.
 4. Abra el primer archivo de cada fuente y reemplace los nombres marcados `VERIFICAR`. Los nombres se comparan **normalizados**: minúsculas, sin tildes y con `_` en lugar de espacios (`FECHA HECHO` → `fecha_hecho`).
-5. Para Policía, si los encabezados cambian entre años, unifíquelos con `renombrar`. Si el Excel trae filas de título, indique `lectura.fila_encabezado` (base 0).
+5. Para Policía, los encabezados **sí** cambian entre años: unifíquelos con `renombrar`. Si el Excel trae filas de título, indique `lectura.fila_encabezado`. Los detalles están más abajo.
+
+### Policía Nacional a nivel de registro
+
+Los archivos anuales de <https://www.policia.gov.co/estadistica-delictiva> traen todos los delitos
+juntos, una fila por víctima con `CANTIDAD = 1`. Están publicados 2020–2025; **2018 y 2019 no
+existen a este nivel**. Los de 2022 y 2023 se publican en `.zip`, y el lector solo admite un CSV
+dentro de un `.zip`, así que hay que descomprimirlos antes.
+
+No se auditan los `.xlsx` directamente: la rama de Excel de `iterar_bloques()` carga el archivo
+completo en memoria antes de trocearlo, y son del orden de 800.000 filas por año. Se convierten
+primero a CSV, en streaming y con memoria constante:
+
+```bash
+unzip -j data/raw/policia_registro/delitos_registro_2022.zip -d data/raw/policia_registro
+python scripts/policia_registro_a_csv.py \
+  --entrada data/raw/policia_registro --salida data/raw/policia_registro/csv
+```
+
+El conversor detecta la fila del encabezado, descarta el pie del archivo y escribe
+`data/raw/policia_registro/csv/conversion.json` con el SHA-256 del `.xlsx` de origen y del CSV
+producido, para poder demostrar de qué archivo descargado sale cada CSV auditado.
+
+**El esquema cambia entre años** y conviene no darlo por fijo:
+
+| Año | Fila del encabezado | Columna de arma | ¿Trae `ICCS`? |
+|---|---:|---|---|
+| 2020 | 12 | `ARMAS MEDIOS` | sí |
+| 2021 | **13** | **`ARMA MEDIO`** | sí |
+| 2022 | **13** | `ARMAS MEDIOS` | sí |
+| 2023 | 12 | `ARMAS MEDIOS` | **no** |
+| 2024 | 12 | `ARMAS MEDIOS` | sí |
+| 2025 | 12 | `ARMAS MEDIOS` | sí |
+
+Por eso el manifiesto unifica el nombre del arma con `renombrar` y filtra el hurto por `DELITOS`,
+que existe en los seis años con la etiqueta `(05022) Hurto a personas`, y no por `ICCS`, que falta
+en 2023.
 
 Fiscalía (descarga del subconjunto de Bogotá con la API Socrata; documente la consulta y la fecha):
 
