@@ -170,31 +170,87 @@ La nota de política \emph{Prediciendo el crimen en Bogotá} presenta resultados
 
 \citet{riascos2023} abordan el modelamiento de eventos delictivos espacio-temporales cuando existe subregistro. Este antecedente es importante para interpretar el significado de la variable objetivo: el proyecto predice conteos oficiales registrados, no el número real e inobservable de todos los hurtos ocurridos.
 
-\subsection{Comparación de antecedentes}
+\subsection{Matriz comparativa de antecedentes}
 
-\begin{table}[H]
-\centering
-\caption{Síntesis de trabajos relacionados y su aporte a la investigación.}
-\label{tab:antecedentes}
-\small
-\begin{tabularx}{\textwidth}{@{}p{2.9cm}p{2.4cm}X@{}}
+Las tablas~\ref{tab:matriz-datos} y~\ref{tab:matriz-resultados} comparan los siete estudios en dos partes. La primera recoge los datos, el periodo, la unidad de análisis y los métodos. La segunda recoge la validación, las métricas, los resultados, las limitaciones y la relación con este proyecto. Cada celda resume lo que declara el documento fuente; «no se precisa» indica que el documento revisado no contiene el dato. En \citet{urcuqui2020} solo se tuvo acceso al resumen publicado, porque el texto completo es de acceso restringido.
+
+{\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{2.2cm}>{\raggedright\arraybackslash}p{4.0cm}>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}p{3.0cm}@{}}
+\caption{Matriz de trabajos relacionados (parte 1): datos, periodo, unidad y métodos.}\label{tab:matriz-datos}\\
 \toprule
-\textbf{Estudio} & \textbf{Enfoque} & \textbf{Aporte para este proyecto} \\
+\textbf{Estudio} & \textbf{Datos y fuente} & \textbf{Periodo y territorio} & \textbf{Unidad o variable objetivo} & \textbf{Métodos} \\
 \midrule
-Martínez Chitiva (2025) & Espacio-temporal y ML & Patrones territoriales y comparación de modelos. \\
-Garzón Acosta (2025) & Econometría & Pronóstico temporal y diagnóstico de series. \\
-Campo Agredo (2017) & Probabilístico & Selección y preparación de variables. \\
-Fonseca Vásquez (2019) & Análisis espacial & Caracterización de una localidad bogotana. \\
-Riascos et al. (2020) & Analítica pública & Utilidad y límites para la toma de decisiones. \\
-Urcuqui et al. (2020) & Aprendizaje profundo & Exactitud y equidad de predicciones. \\
-Riascos Villegas et al. (2023) & Modelamiento estadístico & Efectos del subregistro y sesgos de observación. \\
+\endfirsthead
+\multicolumn{5}{@{}l}{\emph{Tabla~\ref{tab:matriz-datos} (continuación)}}\\
+\toprule
+\textbf{Estudio} & \textbf{Datos y fuente} & \textbf{Periodo y territorio} & \textbf{Unidad o variable objetivo} & \textbf{Métodos} \\
+\midrule
+\endhead
 \bottomrule
-\end{tabularx}
-\end{table}
+\endfoot
+\citet{campo2017} & Base de hurto a personas de la Policía Nacional publicada en Datos Abiertos Colombia: día, hora, barrio, arma, medio de transporte de la víctima, edad y sexo & 2010 a mediados de 2017, filtrada a Bogotá; validación en Chapinero (50 barrios) & Probabilidad de hurto por barrio según día, hora, sexo y edad & Densidad gaussiana multivariada por grupo (medio de transporte $\times$ arma); ruta más segura en un grafo de OpenStreetMap (Matlab) \\
+\addlinespace
+\citet{fonseca2019} & SIEDCO PLUS (Policía Nacional) y cartografía de cuadrantes y CAI; 7.441 hurtos, de los que se analizan 7.181 (260 inconsistentes, 3,4\,\%) & 2017--2018; localidad de Los Mártires & Hecho georreferenciado; densidad de hurtos por área & Índice del vecino más cercano y densidad kernel (ancho de banda de 11\,m) en ArcGIS \\
+\addlinespace
+\citet{garzon2025} & Series mensuales de hurto a personas, capturas, IPC y tasa de desempleo de Bogotá; no se precisa la fuente de cada serie & 2015--2024; Bogotá & Conteo mensual de hurtos de la ciudad (media de 8.293 por mes) & Pruebas ADF, Granger y de cointegración; modelo de corrección de errores (MCE) frente a VECM \\
+\addlinespace
+\citet{martinez2025} & SIEDCO (estadística delictiva de la Policía Nacional): 793.886 registros de hurto en Bogotá, 792.636 tras la depuración, más variables de contexto (estrato, población, CAI, paraderos del SITP, cámaras) & 2010 a enero de 2020; Bogotá. Los archivos desde 2021 no traían las variables requeridas y la información detallada fue negada por reservada & Conteo de hurtos por celda y periodo de un cubo espacio-temporal (malla de 280\,$\times$\,116 celdas) & Space-Time Cube, índice de Moran global y puntos calientes emergentes; regresión de Poisson y Random Forest (100 árboles) \\
+\addlinespace
+\citet{riascos2020} & SIEDCO, SIRDEC (Medicina Legal), infraestructura de Catastro, clima del IDEAM e imágenes del entorno visual & No se precisa en la nota; Bogotá & Puntos calientes de crimen; aplicaciones por cuadrante y turno & Modelos probabilísticos de puntos calientes e inteligencia artificial sobre imágenes (resultados preliminares) \\
+\addlinespace
+\citet{urcuqui2020} & Robos en Bogotá; el resumen no indica la fuente & No se precisa en el resumen & Mapas de intensidad del crimen (puntos calientes) & GAN condicional con capas ConvLSTM, condicionada a mapas pasados, día de la semana y festivos; comparada con un proceso puntual de Poisson espacio-temporal \\
+\addlinespace
+\citet{riascos2023} & SIEDCO y llamadas al NUSE (Línea 123), sin duplicados (misma categoría, a menos de 500\,m y de 8\,h); encuesta de victimización de la Cámara de Comercio de Bogotá & Enero de 2018 a diciembre de 2019; Bogotá & Tasas «reales» de incidencia y de subregistro por celda de 1\,km$^2$ (500 celdas con al menos un delito en 2018) & Bandido multibrazo combinatorio (UCB1, CUCB, LLR); datos simulados con un modelo de Poisson \\
+\end{longtable}
+
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{2.2cm}>{\raggedright\arraybackslash}p{3.1cm}>{\raggedright\arraybackslash}p{3.3cm}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{2.9cm}@{}}
+\caption{Matriz de trabajos relacionados (parte 2): validación, resultados, limitaciones y relación con este proyecto.}\label{tab:matriz-resultados}\\
+\toprule
+\textbf{Estudio} & \textbf{Validación y métricas} & \textbf{Resultados principales} & \textbf{Limitaciones declaradas} & \textbf{Relación con este proyecto} \\
+\midrule
+\endfirsthead
+\multicolumn{5}{@{}l}{\emph{Tabla~\ref{tab:matriz-resultados} (continuación)}}\\
+\toprule
+\textbf{Estudio} & \textbf{Validación y métricas} & \textbf{Resultados principales} & \textbf{Limitaciones declaradas} & \textbf{Relación con este proyecto} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\citet{campo2017} & Comparación cualitativa de rutas y contraste con estadísticas descriptivas; sin métrica cuantitativa de error & Las rutas cambian según día, hora, sexo y edad; el autor indica que no logró aplicar varios algoritmos & Errores en la base de datos; barrios no oficiales, sin área ni coordenadas exactas; recursos de cómputo & Muestra el peso de la depuración territorial y la necesidad de métricas cuantitativas \\
+\addlinespace
+\citet{fonseca2019} & Estudio descriptivo; sin modelo predictivo ni métricas & Concentración en Paloquemao, Ricaurte, El Listón, La Sabana, San Victorino y Voto Nacional; cuatro cuadrantes priorizados & No se declaran de forma explícita; el alcance es una localidad y dos años & Contrasta la escala local con los agregados de ciudad; calidad de la georreferenciación \\
+\addlinespace
+\citet{garzon2025} & Supuestos de los residuos (Box-Pierce, Jarque-Bera, Breusch-Pagan, Goldfeld-Quandt) y error cuadrático medio; pronóstico a 12 meses & El VECM obtiene menor error (0,0104 frente a 0,0189 del MCE) y explica cerca del 55\,\% de la variabilidad, frente al 28\,\% del MCE & Ruptura estructural por la COVID-19; el VECM no cumple normalidad ni homocedasticidad; recomienda ampliar la serie y añadir variables & Referente econométrico de la serie mensual de la ciudad y de diagnóstico de series \\
+\addlinespace
+\citet{martinez2025} & Partición 80/20 (72.793 y 18.199 observaciones); MAE y RMSE & Random Forest (MAE 7,13; RMSE 16,62) supera a Poisson (9,94; 21,10); puntos calientes en Chapinero, Kennedy y el centro & Datos solo hasta 2020; propone variables dinámicas y mayor precisión geográfica & Misma fuente (Policía) y fenómeno. La partición no se describe como temporal: aquí se usará validación temporal \\
+\addlinespace
+\citet{riascos2020} & No se detalla (nota de política) & En un patrullaje eficiente, el 5\,\% del área concentraría cerca del 42\,\% de los delitos del día; aplicaciones a despliegue policial, ubicación de CAI y monitoreo de cámaras & Subregistro, sesgo de retroalimentación y sesgo de discriminación & Marco para interpretar predicciones con fines de política pública \\
+\addlinespace
+\citet{urcuqui2020} & Área bajo la curva de tasa de acierto frente al porcentaje de área cubierta; prueba de calibración por nivel de ingreso & AUC de 0,86, superior a los modelos de referencia; una técnica de balance entre exactitud y equidad reduce el sesgo con un efecto marginal sobre la exactitud & Sesgo potencial con efectos heterogéneos sobre poblaciones vulnerables & Sustenta evaluar la equidad territorial además del error medio \\
+\addlinespace
+\citet{riascos2023} & Experimentos con parámetros conocidos; error medido como distancia euclídea; tiempos de cómputo & CUCB converge más rápido; la estrategia permite estimar el subregistro con frecuencia diaria & La evidencia se basa en datos simulados; supone que la encuesta mide bien el subregistro y que este es homogéneo dentro de cada jurisdicción; no modela la adaptación de los delincuentes & Antecedente directo para combinar Policía y Línea 123 sin doble conteo; la variable objetivo será el conteo registrado \\
+\end{longtable}
+}
 
 \subsection{Síntesis y contribución propuesta}
 
-La literatura revisada demuestra que la criminalidad en Bogotá ha sido estudiada mediante métodos espaciales, probabilísticos, econométricos y de aprendizaje automático. No obstante, la disponibilidad de datos a diferentes escalas, el subregistro y la necesidad de evaluaciones comparables siguen siendo desafíos relevantes.
+La literatura revisada demuestra que la criminalidad en Bogotá ha sido estudiada mediante métodos espaciales, probabilísticos, econométricos y de aprendizaje automático. La matriz permite precisar cuatro vacíos que orientan este proyecto:
+\begin{enumerate}
+  \item \textbf{Fuentes.} Los estudios revisados usan sobre todo registros de la Policía (SIEDCO). Solo \citet{riascos2023} combinan Policía y Línea 123, y ninguno incorpora los procesos de la Fiscalía.
+  \item \textbf{Periodo.} Los microdatos de \citet{campo2017} y \citet{martinez2025} terminan en 2017 y 2020, respectivamente, antes o al inicio de la pandemia. \citet{martinez2025} documenta además que los archivos posteriores a 2021 no traían las variables detalladas que necesitaba.
+  \item \textbf{Validación.} Los esquemas son heterogéneos:
+  \begin{itemize}
+    \item comparación cualitativa \citep{campo2017};
+    \item pruebas de supuestos y error cuadrático medio \citep{garzon2025};
+    \item partición 80/20 que no se describe como temporal \citep{martinez2025};
+    \item área bajo la curva de puntos calientes \citep{urcuqui2020};
+    \item experimentos con datos simulados \citep{riascos2023}.
+  \end{itemize}
+  Ninguno de los textos revisados compara sus modelos con un modelo ingenuo, como repetir el valor del mismo periodo anterior.
+  \item \textbf{Unidad de observación.} En general, los estudios no explicitan qué representa cada registro (hecho, víctima o llamada) ni cómo afecta eso a la comparación entre fuentes.
+\end{enumerate}
 
 El presente trabajo propone un análisis reproducible de tres fuentes oficiales con unidades de observación distintas y, posteriormente, una comparación de modelos predictivos sobre la serie objetivo seleccionada. Su aporte esperado será la evaluación rigurosa de métodos sobre un periodo delimitado, el uso de una línea base explícita y la documentación de restricciones de los registros oficiales, sin afirmar que se desarrolla un algoritmo completamente novedoso.
 
