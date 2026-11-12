@@ -43,6 +43,17 @@ Esto **no se declara cumplido** hasta ejecutar `scripts/auditoria_datasets.py` s
 1. ¿Basta con que **una** de las fuentes alcance 500.000 registros, o el mínimo se refiere al conjunto integrado?
 2. ¿Es aceptable acotar el periodo principal a **2020–2025**, ya que la Policía no publica 2018–2019 a nivel de registro? ¿O prefiere completar esos años con el agregado diario de MinDefensa?
 3. ¿Considera válido el **proceso penal de Fiscalía** como unidad de análisis complementaria, aunque no equivalga a un hecho?
+4. Si se eligiera Fiscalía como población, ¿habría que restringirla a la modalidad **«a personas»** para que sea comparable con Policía, o se acepta el capítulo completo de hurto? Hoy incluye automotores y residencias, y eso cambia el fenómeno que se modela.
+
+### Condiciones acordadas por el equipo
+Las propuso Sara el 2026-11-11 y quedan pendientes de la respuesta del profesor:
+- **Una sola unidad en el conteo.** Si el registro de Policía es la población principal, hay dos salidas para 2018–2019:
+  - el periodo principal pasa a 2020–2025; o
+  - esos dos años entran solo como agregado y **fuera** del conteo de filas.
+
+  Microdato y agregado no se mezclan en el conteo del mínimo.
+- **Coherencia del periodo.** Si el periodo cambia a 2020–2025, se actualizan el informe, `README`, `data/README.md` y los notebooks de la segunda entrega (#27). Se decide antes de redactar la sección 4.
+- **Concordancia A–B.** La diferencia de una fila en 2024 se rastreó día a día; el detalle está en `docs/evidencia_policia_registro.md`, §3.
 
 ### Decisión
 _Pendiente._ Al recibir la respuesta, registrar aquí:

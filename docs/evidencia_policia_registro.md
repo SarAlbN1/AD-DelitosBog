@@ -49,7 +49,33 @@ Consulta: `$where cod_muni='11001'`, agrupada por año, con `sum(cantidad)`.
 | 2025 | 123.017 | 365 | pendiente |
 | **Total** | **975.793** | **2.922** | |
 
-En 2024, A y B difieren en una sola unidad. Esto indica que B es la agregación diaria de A.
+En 2024, A y B difieren en una sola unidad.
+
+**Rastreo de la diferencia, día a día:** se compararon los 366 días de 2024.
+- 359 días coinciden exactamente.
+- 7 días de marzo difieren en ±1:
+
+| Día | A | B |
+|---|---:|---:|
+| 01/03 | 462 | 463 |
+| 02/03 | 422 | 421 |
+| 04/03 | 329 | 330 |
+| 07/03 | 358 | 357 |
+| 08/03 | 475 | 476 |
+| 25/03 | 177 | 176 |
+| 26/03 | 233 | 234 |
+
+La diferencia neta es +1 en B.
+
+Descartes:
+- No hay filas de hurto a personas en A con fecha nula.
+- No hay filas con municipio Bogotá y código DANE distinto de 11001.
+
+La explicación más probable es que A y B son **cortes distintos** de la misma base. A tiene «Fecha de entrega: 20 de agosto de 2026»; B se actualiza en otra fecha. Entre un corte y otro, unos pocos registros cambiaron de fecha de hecho y uno se añadió o se retiró.
+
+Formulación sugerida para el informe: «B es la agregación diaria de A; en 2024 coinciden en 359 de 366 días y en el total anual difieren en un registro (0,0008 %), atribuible a la diferencia de fecha de corte».
+
+Así se evita afirmar una igualdad exacta.
 
 ## 4. Implicaciones (por verificar, no son resultados)
 
@@ -62,6 +88,40 @@ En 2024, A y B difieren en una sola unidad. Esto indica que B es la agregación 
   3. Restringir el periodo de A a 2020–2025.
 
   Esta decisión va en #18.
-- **Script de auditoría (PR #63):** ya lee `.xlsx`, y con `"lectura": {"fila_encabezado": 11}` salta el membrete. Quedan dos limitaciones:
-  - Las filas de notas finales salen con el filtro de hurto, pero cuentan como «filas originales» y como nulos. Conviene descartarlas antes y registrar cuántas se quitaron.
-  - El `.zip` solo admite un CSV dentro. Los años 2022 y 2023 hay que descomprimirlos antes, o ampliar el lector.
+- **Script de auditoría (PR #63):**
+  - Ya lee `.xlsx`, y con `"lectura": {"fila_encabezado": 11}` salta el membrete.
+  - Desde el commit `e669553` descarta las notas del final y las registra en `anomalias.csv` como `pie_de_archivo_descartado`.
+  - El `.zip` sigue admitiendo solo un CSV dentro, así que los años 2022 y 2023 se descomprimen antes de auditar.
+
+## 5. Entrada de manifiesto verificada (#15)
+
+Se probó con el archivo 2024. La auditoría dio:
+- 832.475 filas originales;
+- 11 filas de pie descartadas;
+- 247.778 filas de Bogotá;
+- **130.503 filas de hurto a personas**, que suman 130.503 en `CANTIDAD`.
+
+La entrada sale de la propuesta de Sara, con tres correcciones contra el archivo real:
+- la columna se llama **`DELITOS`**, no `DELITO`;
+- la fecha viene como `AAAA/MM/DD`, así que se usa `formato_fecha` en lugar de `dayfirst`;
+- la URL de la página de descarga es la de estadística delictiva.
+
+```json
+{
+  "id": "policia_registro",
+  "nombre": "Policía Nacional — Información de delitos a nivel de registro (filtrado: hurto a personas)",
+  "url": "https://www.policia.gov.co/estadistica-delictiva",
+  "fecha_extraccion": "AAAA-MM-DD",
+  "unidad_observacion": "Una fila por víctima o registro (CANTIDAD = 1)",
+  "archivos": ["data/raw/policia_registro/*.xlsx"],
+  "lectura": {"hoja": 0, "fila_encabezado": 11},
+  "columnas": {"fecha": "FECHA HECHO", "formato_fecha": "%Y/%m/%d", "cantidad": "CANTIDAD",
+               "delito": "DELITOS", "localidad": "MUNICIPIO"},
+  "filtros": {
+    "bogota": {"columna": "CODIGO DANE", "patron": "^11001"},
+    "hurto": {"columna": "DELITOS", "patron": "05022|HURTO A PERSONAS"}
+  }
+}
+```
+
+Los encabezados de 2020–2023 y 2025 todavía no se han comprobado. Si cambian, el script se detiene y lista las columnas disponibles; en ese caso se usa `renombrar`.
