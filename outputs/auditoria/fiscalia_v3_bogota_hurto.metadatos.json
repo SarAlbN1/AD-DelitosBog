@@ -1,0 +1,24 @@
+{
+  "fuente": "Fiscalía General de la Nación — Procesos Fiscalía V3",
+  "url_dataset": "https://www.datos.gov.co/d/dbdv-iihs",
+  "endpoint": "https://www.datos.gov.co/resource/dbdv-iihs.csv",
+  "consulta": {
+    "$where": "cod_dane_hecho='11001' AND capitulo_delito='Del Hurto'",
+    "$order": ":id",
+    "pagina": 100000
+  },
+  "fecha_extraccion": "2026-11-11",
+  "inicio": "2026-11-11T14:33:39-05:00",
+  "fin": "2026-11-11T14:35:18-05:00",
+  "filas_count_api": 2002177,
+  "filas_descargadas": 2002177,
+  "fecha_corte_datos": [
+    {
+      "fecha_corte_datos": "31/10/2026",
+      "n": "2002177"
+    }
+  ],
+  "archivo": "fiscalia_v3_bogota_hurto.csv",
+  "tamano_bytes": 856092926,
+  "sha256": "e2f30087b82544e448d0c3f9f04eabd760012b2143e2ab2af632e1d81ff8f2ae"
+}

@@ -1,0 +1,10 @@
+# Entorno del proyecto AD-DelitosBog (probado con Python 3.11+)
+# Auditoría y análisis de datos
+pandas>=2.1
+numpy>=1.26
+matplotlib>=3.8
+openpyxl>=3.1      # lectura de .xlsx (Policía Nacional)
+xlrd>=2.0          # lectura de .xls antiguos, si los hay
+# Pruebas
+pytest>=8.0
+# Las dependencias de modelado (scikit-learn, statsmodels, xgboost…) se añadirán en la Entrega 3 (issue E3-1).

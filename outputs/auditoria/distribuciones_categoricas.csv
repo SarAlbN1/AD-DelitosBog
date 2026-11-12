@@ -1,0 +1,642 @@
+fuente,etapa,columna,valor,filas,pct,categorias_distintas
+linea123,original,tipo_incidente,934,18898,1.6913,107
+linea123,original,tipo_incidente,942,18756,1.6785,107
+linea123,original,tipo_incidente,935,18554,1.6605,107
+linea123,original,tipo_incidente,932,18419,1.6484,107
+linea123,original,tipo_incidente,905,18285,1.6364,107
+linea123,original,tipo_incidente,916,18285,1.6364,107
+linea123,original,tipo_incidente,613,17862,1.5985,107
+linea123,original,tipo_incidente,922,17859,1.5983,107
+linea123,original,tipo_incidente,904,17857,1.5981,107
+linea123,original,tipo_incidente,910,17808,1.5937,107
+linea123,original,tipo_incidente,611,17753,1.5888,107
+linea123,original,tipo_incidente,924,17641,1.5788,107
+linea123,original,tipo_incidente,604,17558,1.5713,107
+linea123,original,tipo_incidente,926,17475,1.5639,107
+linea123,original,tipo_incidente,802,17371,1.5546,107
+linea123,original,tipo_incidente,941,17313,1.5494,107
+linea123,original,tipo_incidente,617,17115,1.5317,107
+linea123,original,tipo_incidente,938,16979,1.5195,107
+linea123,original,tipo_incidente,605,16963,1.5181,107
+linea123,original,tipo_incidente,958,16944,1.5164,107
+linea123,original,tipo_incidente,914,16929,1.515,107
+linea123,original,tipo_incidente,919,16856,1.5085,107
+linea123,original,tipo_incidente,912,16847,1.5077,107
+linea123,original,tipo_incidente,933,16741,1.4982,107
+linea123,original,tipo_incidente,973,16703,1.4948,107
+linea123,original,tipo_incidente,601,16624,1.4877,107
+linea123,original,tipo_incidente,943,16531,1.4794,107
+linea123,original,tipo_incidente,918,16367,1.4647,107
+linea123,original,tipo_incidente,976,16301,1.4588,107
+linea123,original,tipo_incidente,608,16276,1.4566,107
+linea123,original,tipo_incidente,603,16208,1.4505,107
+linea123,original,tipo_incidente,911,16184,1.4484,107
+linea123,original,tipo_incidente,947,16168,1.4469,107
+linea123,original,tipo_incidente,923,16010,1.4328,107
+linea123,original,tipo_incidente,961,15878,1.421,107
+linea123,original,tipo_incidente,610,15868,1.4201,107
+linea123,original,tipo_incidente,602,15711,1.406,107
+linea123,original,tipo_incidente,969,15590,1.3952,107
+linea123,original,tipo_incidente,937,15548,1.3915,107
+linea123,original,tipo_incidente,927,15517,1.3887,107
+linea123,original,tipo_incidente,936,15425,1.3804,107
+linea123,original,tipo_incidente,915,15350,1.3737,107
+linea123,original,tipo_incidente,903,15018,1.344,107
+linea123,original,tipo_incidente,703,14992,1.3417,107
+linea123,original,tipo_incidente,708,14933,1.3364,107
+linea123,original,tipo_incidente,946,14927,1.3359,107
+linea123,original,tipo_incidente,535,14904,1.3338,107
+linea123,original,tipo_incidente,952,14437,1.292,107
+linea123,original,tipo_incidente,909,14011,1.2539,107
+linea123,original,tipo_incidente,906,13989,1.2519,107
+linea123,original,tipo_incidente,(otras categorías),288856,25.8509,107
+linea123,original,tipo_detalle,RIÑA,18898,1.6913,138
+linea123,original,tipo_detalle,VERIFICAR SITUACIÓN,18554,1.6605,138
+linea123,original,tipo_detalle,PERSONA O VEHÍCULO SOSPECHOSO,18285,1.6364,138
+linea123,original,tipo_detalle,NARCÓTICOS,17859,1.5983,138
+linea123,original,tipo_detalle,HURTO EFECTUADO,17857,1.5981,138
+linea123,original,tipo_detalle,LESIONES PERSONALES,17808,1.5937,138
+linea123,original,tipo_detalle,MALTRATO,17753,1.5888,138
+linea123,original,tipo_detalle,ENFERMO,17641,1.5788,138
+linea123,original,tipo_detalle,EVENTO RESPIRATORIO,17558,1.5713,138
+linea123,original,tipo_detalle,EMBRIAGUEZ,17475,1.5639,138
+linea123,original,tipo_detalle,TRASTORNO MENTAL,17313,1.5494,138
+linea123,original,tipo_detalle,SÍNTOMAS GASTROINTESTINALES,17115,1.5317,138
+linea123,original,tipo_detalle,ANIMAL PELIGROSO,16979,1.5195,138
+linea123,original,tipo_detalle,ACTOS CONTRA EL AMBIENTE,16944,1.5164,138
+linea123,original,tipo_detalle,PERSONA PIDIENDO AUXILIO,16856,1.5085,138
+linea123,original,tipo_detalle,DELINCUENTE CAPTURADO POR CIVIL,16741,1.4982,138
+linea123,original,tipo_detalle,ACCIDENTE CEREBRO VASCULAR,16624,1.4877,138
+linea123,original,tipo_detalle,INTENTO DE SUICIDIO,16367,1.4647,138
+linea123,original,tipo_detalle,CONVULSIÓN,16208,1.4505,138
+linea123,original,tipo_detalle,DISPAROS,16184,1.4484,138
+linea123,original,tipo_detalle,ALARMA,16168,1.4469,138
+linea123,original,tipo_detalle,HABITANTE DE LA CALLE,16010,1.4328,138
+linea123,original,tipo_detalle,INTOXICACIÓN,15868,1.4201,138
+linea123,original,tipo_detalle,CAÍDA DE ALTURA,15711,1.406,138
+linea123,original,tipo_detalle,PERSONA TENDIDA EN LA VÍA,15425,1.3804,138
+linea123,original,tipo_detalle,INFORMACIÓN CONFIDENCIAL,14904,1.3338,138
+linea123,original,tipo_detalle,VIOLENCIA SEXUAL,13989,1.2519,138
+linea123,original,tipo_detalle,PATOLOGÍA GINECOBSTÉTRICA,13690,1.2252,138
+linea123,original,tipo_detalle,SUPLANTACIÓN DE PROFESIÓN U OFICIO,13222,1.1833,138
+linea123,original,tipo_detalle,MUERTE NATURAL,12879,1.1526,138
+linea123,original,tipo_detalle,ACCIDENTE DE TRÁNSITO,11454,1.0251,138
+linea123,original,tipo_detalle,RUIDO,11131,0.9962,138
+linea123,original,tipo_detalle,HURTO EN PROCESO,11113,0.9945,138
+linea123,original,tipo_detalle,ANIMAL,10849,0.9709,138
+linea123,original,tipo_detalle,HERIDO,10781,0.9648,138
+linea123,original,tipo_detalle,INCONSCIENTE O PARO CARDIORESPIRATORIO,10771,0.9639,138
+linea123,original,tipo_detalle,INDEBIDO USO DE ESTABLECIMIENTO,10737,0.9609,138
+linea123,original,tipo_detalle,VEHÍCULO MAL ESTACIONADO,10693,0.957,138
+linea123,original,tipo_detalle,MANIOBRAS PELIGROSAS,10385,0.9294,138
+linea123,original,tipo_detalle,DOLOR TORÁXICO,10287,0.9206,138
+linea123,original,tipo_detalle,INCENDIO,10279,0.9199,138
+linea123,original,tipo_detalle,INVASIÓN DE TERRENO O EDIFICIO,10031,0.8977,138
+linea123,original,tipo_detalle,DAÑOS EN REDES DE SERVICIOS,9941,0.8897,138
+linea123,original,tipo_detalle,VEHÍCULO ABANDONADO,9882,0.8844,138
+linea123,original,tipo_detalle,DAÑOS EN PROPIEDAD PÚBLICA O PRIVADA,9856,0.8821,138
+linea123,original,tipo_detalle,MATERIALES PELIGROSOS,9814,0.8783,138
+linea123,original,tipo_detalle,CONGESTIÓN VEHICULAR,9693,0.8675,138
+linea123,original,tipo_detalle,EXTRAVIADO O DESAPARECIDO,9683,0.8666,138
+linea123,original,tipo_detalle,QUEMAS,9365,0.8381,138
+linea123,original,tipo_detalle,SOLICITUD DE APOYO O DESACATO,9359,0.8376,138
+linea123,original,tipo_detalle,(otras categorías),416405,37.2657,138
+linea123,original,localidad,KENNEDY,115373,10.3252,22
+linea123,original,localidad,SUBA,111563,9.9842,22
+linea123,original,localidad,USAQUÉN,88981,7.9633,22
+linea123,original,localidad,ENGATIVÁ,88030,7.8782,22
+linea123,original,localidad,CIUDAD BOLÍVAR,76764,6.8699,22
+linea123,original,localidad,FONTIBÓN,70190,6.2816,22
+linea123,original,localidad,USME,62878,5.6272,22
+linea123,original,localidad,SAN CRISTÓBAL,59283,5.3055,22
+linea123,original,localidad,TEUSAQUILLO,55983,5.0101,22
+linea123,original,localidad,BOSA,53103,4.7524,22
+linea123,original,localidad,RAFAEL URIBE URIBE,52840,4.7289,22
+linea123,original,localidad,CHAPINERO,52237,4.6749,22
+linea123,original,localidad,SANTA FE,50607,4.529,22
+linea123,original,localidad,PUENTE ARANDA,50453,4.5152,22
+linea123,original,localidad,BARRIOS UNIDOS,37930,3.3945,22
+linea123,original,localidad,LOS MÁRTIRES,23600,2.1121,22
+linea123,original,localidad,TUNJUELITO,23354,2.09,22
+linea123,original,localidad,ANTONIO NARIÑO,22387,2.0035,22
+linea123,original,localidad,CANDELARIA,11227,1.0047,22
+linea123,original,localidad,SIN LOCALIZACION,10195,0.9124,22
+linea123,original,localidad,SUMAPAZ,403,0.0361,22
+linea123,original,localidad,-,13,0.0012,22
+linea123,original,cod_upz,UPZ999,109450,9.7951,125
+linea123,original,cod_upz,UPZ28,10595,0.9482,125
+linea123,original,cod_upz,UPZ85,10473,0.9373,125
+linea123,original,cod_upz,UPZ102,10467,0.9367,125
+linea123,original,cod_upz,UPZ84,10395,0.9303,125
+linea123,original,cod_upz,UPZ75,10379,0.9289,125
+linea123,original,cod_upz,UPZ67,10368,0.9279,125
+linea123,original,cod_upz,UPR3,10348,0.9261,125
+linea123,original,cod_upz,UPZ42,10337,0.9251,125
+linea123,original,cod_upz,UPZ71,10329,0.9244,125
+linea123,original,cod_upz,UPZ47,10329,0.9244,125
+linea123,original,cod_upz,UPZ73,10277,0.9197,125
+linea123,original,cod_upz,UPZ30,10240,0.9164,125
+linea123,original,cod_upz,UPZ27,10195,0.9124,125
+linea123,original,cod_upz,UPZ97,10175,0.9106,125
+linea123,original,cod_upz,UPZ26,10116,0.9053,125
+linea123,original,cod_upz,UPZ98,10114,0.9051,125
+linea123,original,cod_upz,UPZ38,10063,0.9006,125
+linea123,original,cod_upz,UPZ39,10054,0.8998,125
+linea123,original,cod_upz,UPZ13,10044,0.8989,125
+linea123,original,cod_upz,UPZ69,9998,0.8948,125
+linea123,original,cod_upz,UPZ82,9920,0.8878,125
+linea123,original,cod_upz,UPZ46,9919,0.8877,125
+linea123,original,cod_upz,UPZ44,9902,0.8862,125
+linea123,original,cod_upz,UPZ45,9884,0.8846,125
+linea123,original,cod_upz,UPZ48,9852,0.8817,125
+linea123,original,cod_upz,UPZ74,9842,0.8808,125
+linea123,original,cod_upz,UPZ29,9824,0.8792,125
+linea123,original,cod_upz,UPZ93,9813,0.8782,125
+linea123,original,cod_upz,UPZ100,9812,0.8781,125
+linea123,original,cod_upz,UPZ22,9811,0.878,125
+linea123,original,cod_upz,UPZ99,9738,0.8715,125
+linea123,original,cod_upz,UPZ50,9734,0.8711,125
+linea123,original,cod_upz,UPZ95,9727,0.8705,125
+linea123,original,cod_upz,UPZ19,9717,0.8696,125
+linea123,original,cod_upz,UPZ40,9710,0.869,125
+linea123,original,cod_upz,UPZ57,9695,0.8676,125
+linea123,original,cod_upz,UPZ43,9690,0.8672,125
+linea123,original,cod_upz,UPZ16,9687,0.8669,125
+linea123,original,cod_upz,UPZ34,9675,0.8659,125
+linea123,original,cod_upz,UPZ9,9671,0.8655,125
+linea123,original,cod_upz,UPZ54,9657,0.8642,125
+linea123,original,cod_upz,UPZ101,9619,0.8608,125
+linea123,original,cod_upz,UPZ86,9596,0.8588,125
+linea123,original,cod_upz,UPZ11,9548,0.8545,125
+linea123,original,cod_upz,UPZ31,9515,0.8515,125
+linea123,original,cod_upz,UPZ32,9476,0.848,125
+linea123,original,cod_upz,UPZ24,9464,0.847,125
+linea123,original,cod_upz,UPZ37,9439,0.8447,125
+linea123,original,cod_upz,UPZ12,9435,0.8444,125
+linea123,original,cod_upz,(otras categorías),521276,46.651,125
+linea123,original,upz,SIN LOCALIZACION,109450,9.7951,125
+linea123,original,upz,EL RINCON,10595,0.9482,125
+linea123,original,upz,BOSA CENTRAL,10473,0.9373,125
+linea123,original,upz,LA SABANA,10467,0.9367,125
+linea123,original,upz,BOSA OCCIDENTAL,10395,0.9303,125
+linea123,original,upz,FONTIBON,10379,0.9289,125
+linea123,original,upz,LUCERO,10368,0.9279,125
+linea123,original,upz,UPR RIO TUNJUELO,10348,0.9261,125
+linea123,original,upz,VENECIA,10337,0.9251,125
+linea123,original,upz,TIBABUYES,10329,0.9244,125
+linea123,original,upz,KENNEDY CENTRAL,10329,0.9244,125
+linea123,original,upz,GARCES NAVAS,10277,0.9197,125
+linea123,original,upz,BOYACA REAL,10240,0.9164,125
+linea123,original,upz,SUBA,10195,0.9124,125
+linea123,original,upz,CHICO LAGO,10175,0.9106,125
+linea123,original,upz,LAS FERIAS,10116,0.9053,125
+linea123,original,upz,LOS ALCAZARES,10114,0.9051,125
+linea123,original,upz,RESTREPO,10063,0.9006,125
+linea123,original,upz,QUIROGA,10054,0.8998,125
+linea123,original,upz,LOS CEDROS,10044,0.8989,125
+linea123,original,upz,ISMAEL PERDOMO,9998,0.8948,125
+linea123,original,upz,PATIO BONITO,9920,0.8878,125
+linea123,original,upz,CASTILLA,9919,0.8877,125
+linea123,original,upz,AMERICAS,9902,0.8862,125
+linea123,original,upz,CARVAJAL,9884,0.8846,125
+linea123,original,upz,TIMIZA,9852,0.8817,125
+linea123,original,upz,ENGATIVA,9842,0.8808,125
+linea123,original,upz,MINUTO DE DIOS,9824,0.8792,125
+linea123,original,upz,LAS NIEVES,9813,0.8782,125
+linea123,original,upz,GALERIAS,9812,0.8781,125
+linea123,original,upz,DOCE DE OCTUBRE,9811,0.878,125
+linea123,original,upz,CHAPINERO,9738,0.8715,125
+linea123,original,upz,LA GLORIA,9734,0.8711,125
+linea123,original,upz,LAS CRUCES,9727,0.8705,125
+linea123,original,upz,EL PRADO,9717,0.8696,125
+linea123,original,upz,CIUDAD MONTES,9710,0.869,125
+linea123,original,upz,GRAN YOMASA,9695,0.8676,125
+linea123,original,upz,SAN RAFAEL,9690,0.8672,125
+linea123,original,upz,SANTA BARBARA,9687,0.8669,125
+linea123,original,upz,20 DE JULIO,9675,0.8659,125
+linea123,original,upz,VERBENAL,9671,0.8655,125
+linea123,original,upz,MARRUECOS,9657,0.8642,125
+linea123,original,upz,TEUSAQUILLO,9619,0.8608,125
+linea123,original,upz,EL PORVENIR,9596,0.8588,125
+linea123,original,upz,SAN CRISTOBAL NORTE,9548,0.8545,125
+linea123,original,upz,SANTA CECILIA,9515,0.8515,125
+linea123,original,upz,SAN BLAS,9476,0.848,125
+linea123,original,upz,NIZA,9464,0.847,125
+linea123,original,upz,SANTA ISABEL,9439,0.8447,125
+linea123,original,upz,TOBERIN,9435,0.8444,125
+linea123,original,upz,(otras categorías),521276,46.651,125
+linea123,final,tipo_incidente,905,12731,50.6324,2
+linea123,final,tipo_incidente,904,12413,49.3676,2
+linea123,final,tipo_detalle,HURTO EFECTUADO,12413,49.3676,3
+linea123,final,tipo_detalle,HURTO EN PROCESO,9898,39.3653,3
+linea123,final,tipo_detalle,ATRACO / HURTO EN PROCESO,2833,11.2671,3
+linea123,final,localidad,SUBA,2470,9.8234,21
+linea123,final,localidad,KENNEDY,2466,9.8075,21
+linea123,final,localidad,USAQUÉN,1995,7.9343,21
+linea123,final,localidad,ENGATIVÁ,1872,7.4451,21
+linea123,final,localidad,CIUDAD BOLÍVAR,1711,6.8048,21
+linea123,final,localidad,FONTIBÓN,1668,6.6338,21
+linea123,final,localidad,USME,1479,5.8821,21
+linea123,final,localidad,TEUSAQUILLO,1303,5.1822,21
+linea123,final,localidad,SAN CRISTÓBAL,1275,5.0708,21
+linea123,final,localidad,CHAPINERO,1208,4.8043,21
+linea123,final,localidad,SANTA FE,1203,4.7844,21
+linea123,final,localidad,RAFAEL URIBE URIBE,1172,4.6612,21
+linea123,final,localidad,BOSA,1118,4.4464,21
+linea123,final,localidad,PUENTE ARANDA,1111,4.4185,21
+linea123,final,localidad,BARRIOS UNIDOS,908,3.6112,21
+linea123,final,localidad,LOS MÁRTIRES,532,2.1158,21
+linea123,final,localidad,ANTONIO NARIÑO,530,2.1079,21
+linea123,final,localidad,TUNJUELITO,529,2.1039,21
+linea123,final,localidad,CANDELARIA,315,1.2528,21
+linea123,final,localidad,SIN LOCALIZACION,245,0.9744,21
+linea123,final,localidad,SUMAPAZ,34,0.1352,21
+linea123,final,cod_upz,UPZ999,3157,12.5557,125
+linea123,final,cod_upz,UPZ95,230,0.9147,125
+linea123,final,cod_upz,UPR3,212,0.8431,125
+linea123,final,cod_upz,UPZ69,194,0.7716,125
+linea123,final,cod_upz,UPZ65,194,0.7716,125
+linea123,final,cod_upz,UPZ41,194,0.7716,125
+linea123,final,cod_upz,UPZ40,194,0.7716,125
+linea123,final,cod_upz,UPZ35,194,0.7716,125
+linea123,final,cod_upz,UPZ102,194,0.7716,125
+linea123,final,cod_upz,UPZ107,194,0.7716,125
+linea123,final,cod_upz,UPZ100,194,0.7716,125
+linea123,final,cod_upz,UPZ98,194,0.7716,125
+linea123,final,cod_upz,UPZ71,194,0.7716,125
+linea123,final,cod_upz,UPZ28,194,0.7716,125
+linea123,final,cod_upz,UPZ27,194,0.7716,125
+linea123,final,cod_upz,UPZ18,194,0.7716,125
+linea123,final,cod_upz,UPZ30,194,0.7716,125
+linea123,final,cod_upz,UPZ82,194,0.7716,125
+linea123,final,cod_upz,UPZ79,194,0.7716,125
+linea123,final,cod_upz,UPZ48,194,0.7716,125
+linea123,final,cod_upz,UPZ47,194,0.7716,125
+linea123,final,cod_upz,UPZ46,194,0.7716,125
+linea123,final,cod_upz,UPZ45,194,0.7716,125
+linea123,final,cod_upz,UPZ113,194,0.7716,125
+linea123,final,cod_upz,UPZ86,194,0.7716,125
+linea123,final,cod_upz,UPZ85,194,0.7716,125
+linea123,final,cod_upz,UPZ84,194,0.7716,125
+linea123,final,cod_upz,UPZ93,194,0.7716,125
+linea123,final,cod_upz,UPZ99,194,0.7716,125
+linea123,final,cod_upz,UPZ97,194,0.7716,125
+linea123,final,cod_upz,UPZ11,194,0.7716,125
+linea123,final,cod_upz,UPZ70,193,0.7676,125
+linea123,final,cod_upz,UPZ67,193,0.7676,125
+linea123,final,cod_upz,UPZ66,193,0.7676,125
+linea123,final,cod_upz,UPZ54,193,0.7676,125
+linea123,final,cod_upz,UPZ53,193,0.7676,125
+linea123,final,cod_upz,UPZ39,193,0.7676,125
+linea123,final,cod_upz,UPZ36,193,0.7676,125
+linea123,final,cod_upz,UPZ43,193,0.7676,125
+linea123,final,cod_upz,UPZ108,193,0.7676,125
+linea123,final,cod_upz,UPZ38,193,0.7676,125
+linea123,final,cod_upz,UPZ109,193,0.7676,125
+linea123,final,cod_upz,UPZ106,193,0.7676,125
+linea123,final,cod_upz,UPZ22,193,0.7676,125
+linea123,final,cod_upz,UPZ21,193,0.7676,125
+linea123,final,cod_upz,UPZ24,193,0.7676,125
+linea123,final,cod_upz,UPZ23,193,0.7676,125
+linea123,final,cod_upz,UPZ20,193,0.7676,125
+linea123,final,cod_upz,UPZ19,193,0.7676,125
+linea123,final,cod_upz,UPZ17,193,0.7676,125
+linea123,final,cod_upz,(otras categorías),12446,49.4989,125
+linea123,final,upz,SIN LOCALIZACION,3157,12.5557,125
+linea123,final,upz,LAS CRUCES,230,0.9147,125
+linea123,final,upz,UPR RIO TUNJUELO,212,0.8431,125
+linea123,final,upz,ISMAEL PERDOMO,194,0.7716,125
+linea123,final,upz,ARBORIZADORA,194,0.7716,125
+linea123,final,upz,MUZU,194,0.7716,125
+linea123,final,upz,CIUDAD MONTES,194,0.7716,125
+linea123,final,upz,CIUDAD JARDIN,194,0.7716,125
+linea123,final,upz,LA SABANA,194,0.7716,125
+linea123,final,upz,QUINTA PAREDES,194,0.7716,125
+linea123,final,upz,GALERIAS,194,0.7716,125
+linea123,final,upz,LOS ALCAZARES,194,0.7716,125
+linea123,final,upz,TIBABUYES,194,0.7716,125
+linea123,final,upz,EL RINCON,194,0.7716,125
+linea123,final,upz,SUBA,194,0.7716,125
+linea123,final,upz,BRITALIA,194,0.7716,125
+linea123,final,upz,BOYACA REAL,194,0.7716,125
+linea123,final,upz,PATIO BONITO,194,0.7716,125
+linea123,final,upz,CALANDAIMA,194,0.7716,125
+linea123,final,upz,TIMIZA,194,0.7716,125
+linea123,final,upz,KENNEDY CENTRAL,194,0.7716,125
+linea123,final,upz,CASTILLA,194,0.7716,125
+linea123,final,upz,CARVAJAL,194,0.7716,125
+linea123,final,upz,BAVARIA,194,0.7716,125
+linea123,final,upz,EL PORVENIR,194,0.7716,125
+linea123,final,upz,BOSA CENTRAL,194,0.7716,125
+linea123,final,upz,BOSA OCCIDENTAL,194,0.7716,125
+linea123,final,upz,LAS NIEVES,194,0.7716,125
+linea123,final,upz,CHAPINERO,194,0.7716,125
+linea123,final,upz,CHICO LAGO,194,0.7716,125
+linea123,final,upz,SAN CRISTOBAL NORTE,194,0.7716,125
+linea123,final,upz,JERUSALEM,193,0.7676,125
+linea123,final,upz,LUCERO,193,0.7676,125
+linea123,final,upz,SAN FRANCISCO,193,0.7676,125
+linea123,final,upz,MARRUECOS,193,0.7676,125
+linea123,final,upz,MARCO FIDEL SUAREZ,193,0.7676,125
+linea123,final,upz,QUIROGA,193,0.7676,125
+linea123,final,upz,SAN JOSE,193,0.7676,125
+linea123,final,upz,SAN RAFAEL,193,0.7676,125
+linea123,final,upz,ZONA INDUSTRIAL,193,0.7676,125
+linea123,final,upz,RESTREPO,193,0.7676,125
+linea123,final,upz,CIUDAD SALITRE ORIENTAL,193,0.7676,125
+linea123,final,upz,LA ESMERALDA,193,0.7676,125
+linea123,final,upz,DOCE DE OCTUBRE,193,0.7676,125
+linea123,final,upz,LOS ANDES,193,0.7676,125
+linea123,final,upz,NIZA,193,0.7676,125
+linea123,final,upz,CASA BLANCA SUBA,193,0.7676,125
+linea123,final,upz,LA ALHAMBRA,193,0.7676,125
+linea123,final,upz,EL PRADO,193,0.7676,125
+linea123,final,upz,SAN JOSE DE BAVARIA,193,0.7676,125
+linea123,final,upz,(otras categorías),12446,49.4989,125
+fiscalia,original,proceso_conexado,No,1994921,99.6376,2
+fiscalia,original,proceso_conexado,Si,7256,0.3624,2
+fiscalia,original,proceso_con_conexidad,No,1997337,99.7583,2
+fiscalia,original,proceso_con_conexidad,Si,4840,0.2417,2
+fiscalia,original,es_ruptura,No,1993156,99.5494,2
+fiscalia,original,es_ruptura,Si,9021,0.4506,2
+fiscalia,original,estado,Inactivo,1759785,87.8936,2
+fiscalia,original,estado,Activo,242392,12.1064,2
+fiscalia,original,etapa,Indagación,1897152,94.7545,4
+fiscalia,original,etapa,Ejecución De Penas,67535,3.3731,4
+fiscalia,original,etapa,Juicio,33959,1.6961,4
+fiscalia,original,etapa,Investigación,3531,0.1764,4
+fiscalia,original,ley,Ley 906,1973530,98.5692,3
+fiscalia,original,ley,Ley 1098,28500,1.4235,3
+fiscalia,original,ley,Jurisdicción Menores,147,0.0073,3
+fiscalia,original,tipo_noticia,Denuncia,1620838,80.9538,8
+fiscalia,original,tipo_noticia,Querella,149781,7.4809,8
+fiscalia,original,tipo_noticia,De Oficio (Informes),131729,6.5793,8
+fiscalia,original,tipo_noticia,Actos Urgentes,97583,4.8738,8
+fiscalia,original,tipo_noticia,Compulsacion De Copias,1871,0.0934,8
+fiscalia,original,tipo_noticia,Asistencia Judicial,290,0.0145,8
+fiscalia,original,tipo_noticia,Peticion Especial,65,0.0032,8
+fiscalia,original,tipo_noticia,Asignacion Especial,20,0.001,8
+fiscalia,original,procedimiento_abreviado,Si,1453404,72.5912,2
+fiscalia,original,procedimiento_abreviado,No,548773,27.4088,2
+fiscalia,original,pais_hecho,Colombia,2002177,100.0,1
+fiscalia,original,departamento_hecho,"Bogotá, D. C.",2002177,100.0,1
+fiscalia,original,municipio_hecho,"Bogotá, D.C.",2002177,100.0,1
+fiscalia,original,dir_hecho_rural_urbana,Urbana,1608766,80.3508,3
+fiscalia,original,dir_hecho_rural_urbana,Sin Información,375595,18.7593,3
+fiscalia,original,dir_hecho_rural_urbana,Rural,17816,0.8898,3
+fiscalia,original,seccional,Dirección Seccional De Bogotá,1989880,99.3858,53
+fiscalia,original,seccional,Por Asignar,9576,0.4783,53
+fiscalia,original,seccional,Dirección Especializada Contra Organizaciones Criminales,849,0.0424,53
+fiscalia,original,seccional,Dirección Seccional De Cundinamarca,697,0.0348,53
+fiscalia,original,seccional,Dirección Seccional De Boyacá,238,0.0119,53
+fiscalia,original,seccional,Dirección Seccional De Meta,134,0.0067,53
+fiscalia,original,seccional,Dirección Seccional De Medellín,76,0.0038,53
+fiscalia,original,seccional,Dirección Seccional De Santander,70,0.0035,53
+fiscalia,original,seccional,Dirección Seccional De Tolima,69,0.0034,53
+fiscalia,original,seccional,Dirección Seccional De Atlántico,55,0.0027,53
+fiscalia,original,seccional,Delegada Contra La Criminalidad Organizada,45,0.0022,53
+fiscalia,original,seccional,Dirección Seccional De Cali,38,0.0019,53
+fiscalia,original,seccional,Direccion Especializada Contra Los Delitos Informaticos,34,0.0017,53
+fiscalia,original,seccional,Dirección Seccional De Huila,33,0.0016,53
+fiscalia,original,seccional,Dirección Especializada Contra Las Violaciones A Los Derechos Humanos,30,0.0015,53
+fiscalia,original,seccional,Dirección Seccional De Cesar,29,0.0014,53
+fiscalia,original,seccional,Dirección Seccional De Magdalena,29,0.0014,53
+fiscalia,original,seccional,Delegada Para La Seguridad Territorial,24,0.0012,53
+fiscalia,original,seccional,Dirección Seccional De Antioquia,20,0.001,53
+fiscalia,original,seccional,Dirección Seccional De Nariño,20,0.001,53
+fiscalia,original,seccional,Dirección Seccional De Norte De Santander,19,0.0009,53
+fiscalia,original,seccional,Dirección Seccional De Valle Del Cauca,18,0.0009,53
+fiscalia,original,seccional,Dirección Seccional De Bolívar,18,0.0009,53
+fiscalia,original,seccional,Dirección Seccional De Caldas,18,0.0009,53
+fiscalia,original,seccional,Dirección Seccional De Casanare,17,0.0008,53
+fiscalia,original,seccional,Dirección Seccional De Quindío,13,0.0006,53
+fiscalia,original,seccional,Dirección Seccional De Córdoba,12,0.0006,53
+fiscalia,original,seccional,Dirección Seccional De Caquetá,10,0.0005,53
+fiscalia,original,seccional,Dirección Seccional De Arauca,10,0.0005,53
+fiscalia,original,seccional,Direccion Especializada Contra La Corrupción,10,0.0005,53
+fiscalia,original,seccional,Dirección Seccional De Risaralda,9,0.0004,53
+fiscalia,original,seccional,Dirección Seccional De Cauca,9,0.0004,53
+fiscalia,original,seccional,Dirección Especializada Contra El Lavado De Activos,8,0.0004,53
+fiscalia,original,seccional,Dirección De Fiscalía Nacional Especializada Contra El Crimen Organizado,7,0.0003,53
+fiscalia,original,seccional,Dirección Especializada Contra Los Delitos Fiscales,7,0.0003,53
+fiscalia,original,seccional,Unidad Y Grupos - Nivel Central,7,0.0003,53
+fiscalia,original,seccional,Direccion Nacional Del Cuerpo Tecnico De Investigacion,6,0.0003,53
+fiscalia,original,seccional,Dirección Seccional De Putumayo,5,0.0002,53
+fiscalia,original,seccional,Dirección Seccional De Guaviare,4,0.0002,53
+fiscalia,original,seccional,Dirección Seccional De La Guajira,4,0.0002,53
+fiscalia,original,seccional,Dirección Seccional De Sucre,3,0.0001,53
+fiscalia,original,seccional,Dirección Especializada Contra El Narcotrafico,2,0.0001,53
+fiscalia,original,seccional,Dirección Especializada De Investigaciones Financieras - Deif,2,0.0001,53
+fiscalia,original,seccional,Dirección Seccional De Guainía,2,0.0001,53
+fiscalia,original,seccional,Dirección Seccional De Chocó,2,0.0001,53
+fiscalia,original,seccional,Delegada Ante La Corte Suprema De Justicia,2,0.0001,53
+fiscalia,original,seccional,Dirección Seccional Vaupés,1,0.0,53
+fiscalia,original,seccional,Dirección Seccional De Amazonas,1,0.0,53
+fiscalia,original,seccional,Dirección Seccional De Vichada,1,0.0,53
+fiscalia,original,seccional,Nivel Central Fiscalias,1,0.0,53
+fiscalia,original,seccional,(otras categorías),3,0.0001,53
+fiscalia,original,trimestre_hecho,Tercer Trimestre,519261,25.9348,5
+fiscalia,original,trimestre_hecho,Cuarto Trimestre,506368,25.2909,5
+fiscalia,original,trimestre_hecho,Primer Trimestre,491199,24.5332,5
+fiscalia,original,trimestre_hecho,Segundo Trimestre,484582,24.2028,5
+fiscalia,original,trimestre_hecho,Sin Información,767,0.0383,5
+fiscalia,original,trimestre_creacion,Tercer Trimestre,512510,25.5976,4
+fiscalia,original,trimestre_creacion,Cuarto Trimestre,506943,25.3196,4
+fiscalia,original,trimestre_creacion,Segundo Trimestre,498456,24.8957,4
+fiscalia,original,trimestre_creacion,Primer Trimestre,484268,24.1871,4
+fiscalia,original,tipo_delito,Reparto,1985718,99.1779,2
+fiscalia,original,tipo_delito,Concurso,16459,0.8221,2
+fiscalia,original,delito,Hurto. Art. 239 C.P.,1291040,64.4818,118
+fiscalia,original,delito,Hurto Art. 239 C.P. Menor Cuantia,168012,8.3915,118
+fiscalia,original,delito,Hurto. Art. 239 C.P. Agravado Cuando Lo Hurtado Son Medios Motorizados O Lo Que Estos Transporten  Art. 241 C.P. N.6,87586,4.3745,118
+fiscalia,original,delito,Hurto Calificado Art. 240 C.P. Menor Cuantia,83604,4.1757,118
+fiscalia,original,delito,Hurto Calificado. Art. 240 C.P.,79798,3.9856,118
+fiscalia,original,delito,Hurto Agravado Art. 239 C.P. Menor Cuantia,50271,2.5108,118
+fiscalia,original,delito,Hurto Menor Cuantia. Art. 239 C.P. Agravado Por Establecimiento Publico Art. 241 C.P. N.11,37827,1.8893,118
+fiscalia,original,delito,Hurto Calificado Art. 240 C.P.  Agravado Por La Destreza Art. 241 C.P. N.10,32192,1.6078,118
+fiscalia,original,delito,Hurto. Art. 239 C.P. Agravado Por Establecimiento Publico Art. 241 C.P. N.11,25450,1.2711,118
+fiscalia,original,delito,Hurto Menor Cuantia. Art. 239 C.P. Agravado Por La Destreza Art. 241 C.P. N.10,23481,1.1728,118
+fiscalia,original,delito,Hurto Calificado Menor Cuantia Art. 240 C.P.  Agravado Por La Destreza Art. 241 C.P. N.10,19902,0.994,118
+fiscalia,original,delito,Hurto Calificado Art. 240 C.P.  Agravado Cuando Lo Hurtado Son Medios Motorizados O Lo Que Estos Transporten  Art. 241 C,18546,0.9263,118
+fiscalia,original,delito,Hurto Art. 239 C.P. De Automotor Menor Cuantia,12328,0.6157,118
+fiscalia,original,delito,Hurto Calificado Art. 240 C.P.  Agravado Por Establecimiento Publico Art. 241 C.P. N.11,10423,0.5206,118
+fiscalia,original,delito,Hurto. Art. 239 C.P. Agravado Por La Destreza Art. 241 C.P. N.10,10006,0.4998,118
+fiscalia,original,delito,Hurto. Art. 239 C.P. Agravado Por La Confianza Art. 241 C.P. N.2,6268,0.3131,118
+fiscalia,original,delito,Hurto Calificado Menor Cuantia Art. 240 C.P.  Agravado Por Establecimiento Publico Art. 241 C.P. N.11,5832,0.2913,118
+fiscalia,original,delito,Hurto Art. 239 C.P. Mayor Cuantia,4563,0.2279,118
+fiscalia,original,delito,Hurto Menor Cuantia. Art. 239 C.P. Agravado Por La Confianza Art. 241 C.P. N.2,4138,0.2067,118
+fiscalia,original,delito,Hurto Calificado Art. 240 C.P. Agravado Por La Confianza Art. 241 C.P. N.2,3657,0.1827,118
+fiscalia,original,delito,Hurto Menor Cuantia. Art. 239 C.P. Agravado Cuando Lo Hurtado Es Objeto Expuesto A La Confianza Publica Art. 241 C.P. N.7,2568,0.1283,118
+fiscalia,original,delito,Hurto Calificado Art. 240 C.P. Mayor Cuantia,2459,0.1228,118
+fiscalia,original,delito,Hurto Calificado De Automotor Menor Cuantia  Art. 240 C.P.  Agravado Por La Destreza Art. 241 C.P. N.10,2384,0.1191,118
+fiscalia,original,delito,Hurto Art. 239 C.P. Automotor Mayor Cuantia,2367,0.1182,118
+fiscalia,original,delito,Hurto Calificado Menor Cuantia Art. 240 C.P.  Agravado Cuando Lo Hurtado Es Objeto Expuesto A La Confianza Publica Art. 241 C.P. N.7,2005,0.1001,118
+fiscalia,original,delito,Hurto Calificado Art. 240 C.P.  Agravado Cuando Lo Hurtado Es Objeto Expuesto A La Confianza Publica Art. 241 C.P. N.7,1396,0.0697,118
+fiscalia,original,delito,Hurto. Art. 239 C.P. Agravado Cuando Lo Hurtado Es Objeto Expuesto A La Confianza Publica Art. 241 C.P. N.7,1245,0.0622,118
+fiscalia,original,delito,Hurto Calificado Mayor Cuantia Art. 240 C.P.  Agravado Por La Destreza Art. 241 C.P. N.10,1085,0.0542,118
+fiscalia,original,delito,Hurto Mayor Cuantia. Art. 239 C.P. Agravado Por Establecimiento Publico Art. 241 C.P. N.11,1047,0.0523,118
+fiscalia,original,delito,Hurto Calificado Menor Cuantia Art. 240 C.P. Agravado Por La Confianza Art. 241 C.P. N.2,799,0.0399,118
+fiscalia,original,delito,Hurto Calificado Art. 240 C.P.  Agravado Por Lugar Despoblado Art. 241 C.P. N.9,720,0.036,118
+fiscalia,original,delito,Hurto Mayor Cuantia. Art. 239 C.P. Agravado Por La Destreza Art. 241 C.P. N.10,686,0.0343,118
+fiscalia,original,delito,Hurto Calificado Mayor Cuantia Art. 240 C.P.  Agravado Por Establecimiento Publico Art. 241 C.P. N.11,679,0.0339,118
+fiscalia,original,delito,Hurto Mayor Cuantia. Art. 239 C.P. Agravado Por La Confianza Art. 241 C.P. N.2,653,0.0326,118
+fiscalia,original,delito,Hurto Calificado Automotor Art. 240 C.P. Mayor Cuantia,471,0.0235,118
+fiscalia,original,delito,Hurto Calificado De Automotor Menor Cuantia  Art. 240 C.P. Agravado Por La Confianza Art. 241 C.P. N.2,401,0.02,118
+fiscalia,original,delito,Hurto Calificado De Automotor Mayor Cuantia  Art. 240 C.P.  Agravado Por La Destreza Art. 241 C.P. N.10,388,0.0194,118
+fiscalia,original,delito,Hurto  Menor Cuantia Art. 239 C.P. Atenuado Con El Fin De Usarlo Y Se Restituye Art.242 C.P.Inciso1,388,0.0194,118
+fiscalia,original,delito,Hurto Calificado Art. 240 C.P.  De Automotor Mayor Cuantia,348,0.0174,118
+fiscalia,original,delito,Hurto Calificado Art. 240 C.P.  Agravado Por Simular Autoridad Art. 241 C.P. N.4,326,0.0163,118
+fiscalia,original,delito,Hurto Calificado Art. 240 C.P.  Agravado Cuando Lo Hurtado Es Equipaje Art. 241 C.P. N.5,324,0.0162,118
+fiscalia,original,delito,Hurto Automotor Menor Cuantia Art. 239 C.P. Atenuado Con El Fin De Usarlo Y Se Restituye Art.242 C.P.Inciso1,321,0.016,118
+fiscalia,original,delito,Hurto Art. 239 C.P.  Automotor Menor Cuantia,287,0.0143,118
+fiscalia,original,delito,Hurto Calificado Menor Cuantia Art. 240 C.P.  Agravado Por Lugar Despoblado Art. 241 C.P. N.9,234,0.0117,118
+fiscalia,original,delito,Hurto Menor Cuantia Art. 239 C.P. Atenuado Entre Condueños Art. 242 C.P. Inciso 2,220,0.011,118
+fiscalia,original,delito,Hurto Calificado Mayor Cuantia Art. 240 C.P. Agravado Por La Confianza Art. 241 C.P. N.2,203,0.0101,118
+fiscalia,original,delito,Hurto Menor Cuantia. Art. 239 C.P. Agravado Por Lugar Despoblado Art. 241 C.P. N.9,197,0.0098,118
+fiscalia,original,delito,Hurto. Art. 239 C.P. Agravado Cuando Lo Hurtado Es Equipaje Art. 241 C.P. N.5,185,0.0092,118
+fiscalia,original,delito,Hurto  Mayor Cuantia Art. 239 C.P. Atenuado Con El Fin De Usarlo Y Se Restituye Art.242 C.P.Inciso1,177,0.0088,118
+fiscalia,original,delito,Hurto Mayor Cuantia. Art. 239 C.P. Agravado Cuando Lo Hurtado Es Objeto Expuesto A La Confianza Publica Art. 241 C.P. N.7,166,0.0083,118
+fiscalia,original,delito,(otras categorías),2524,0.1261,118
+fiscalia,original,titulo_delito,Delitos Contra El Patrimonio Economico,2002177,100.0,1
+fiscalia,original,capitulo_delito,Del Hurto,2002177,100.0,1
+fiscalia,original,grado_delito,Ninguno,1837451,91.7727,5
+fiscalia,original,grado_delito,Agravado,145668,7.2755,5
+fiscalia,original,grado_delito,Tentativa,13117,0.6551,5
+fiscalia,original,grado_delito,Tentativa/Agravado,5939,0.2966,5
+fiscalia,original,grado_delito,Sin Información,2,0.0001,5
+fiscalia,original,delito_querellable,No,1821617,90.9818,2
+fiscalia,original,delito_querellable,Si,180560,9.0182,2
+fiscalia,original,fecha_corte_datos,31/10/2026,2002177,100.0,1
+fiscalia,final,proceso_conexado,No,1295931,99.6331,2
+fiscalia,final,proceso_conexado,Si,4772,0.3669,2
+fiscalia,final,proceso_con_conexidad,No,1297573,99.7594,2
+fiscalia,final,proceso_con_conexidad,Si,3130,0.2406,2
+fiscalia,final,es_ruptura,No,1296271,99.6593,2
+fiscalia,final,es_ruptura,Si,4432,0.3407,2
+fiscalia,final,estado,Inactivo,1161860,89.3255,2
+fiscalia,final,estado,Activo,138843,10.6745,2
+fiscalia,final,etapa,Indagación,1256918,96.6337,4
+fiscalia,final,etapa,Ejecución De Penas,26660,2.0497,4
+fiscalia,final,etapa,Juicio,16686,1.2828,4
+fiscalia,final,etapa,Investigación,439,0.0338,4
+fiscalia,final,ley,Ley 906,1293313,99.4318,3
+fiscalia,final,ley,Ley 1098,7364,0.5662,3
+fiscalia,final,ley,Jurisdicción Menores,26,0.002,3
+fiscalia,final,tipo_noticia,Denuncia,1094246,84.1273,8
+fiscalia,final,tipo_noticia,Querella,108809,8.3654,8
+fiscalia,final,tipo_noticia,Actos Urgentes,62765,4.8255,8
+fiscalia,final,tipo_noticia,De Oficio (Informes),34080,2.6201,8
+fiscalia,final,tipo_noticia,Compulsacion De Copias,612,0.0471,8
+fiscalia,final,tipo_noticia,Asistencia Judicial,158,0.0121,8
+fiscalia,final,tipo_noticia,Asignacion Especial,18,0.0014,8
+fiscalia,final,tipo_noticia,Peticion Especial,15,0.0012,8
+fiscalia,final,procedimiento_abreviado,Si,1238967,95.2536,2
+fiscalia,final,procedimiento_abreviado,No,61736,4.7464,2
+fiscalia,final,pais_hecho,Colombia,1300703,100.0,1
+fiscalia,final,departamento_hecho,"Bogotá, D. C.",1300703,100.0,1
+fiscalia,final,municipio_hecho,"Bogotá, D.C.",1300703,100.0,1
+fiscalia,final,dir_hecho_rural_urbana,Urbana,1284678,98.768,3
+fiscalia,final,dir_hecho_rural_urbana,Rural,12638,0.9716,3
+fiscalia,final,dir_hecho_rural_urbana,Sin Información,3387,0.2604,3
+fiscalia,final,seccional,Dirección Seccional De Bogotá,1299264,99.8894,32
+fiscalia,final,seccional,Dirección Especializada Contra Organizaciones Criminales,465,0.0357,32
+fiscalia,final,seccional,Por Asignar,454,0.0349,32
+fiscalia,final,seccional,Dirección Seccional De Boyacá,196,0.0151,32
+fiscalia,final,seccional,Dirección Seccional De Cundinamarca,148,0.0114,32
+fiscalia,final,seccional,Direccion Especializada Contra Los Delitos Informaticos,24,0.0018,32
+fiscalia,final,seccional,Dirección Seccional De Meta,22,0.0017,32
+fiscalia,final,seccional,Delegada Contra La Criminalidad Organizada,18,0.0014,32
+fiscalia,final,seccional,Delegada Para La Seguridad Territorial,15,0.0012,32
+fiscalia,final,seccional,Dirección Especializada Contra Las Violaciones A Los Derechos Humanos,14,0.0011,32
+fiscalia,final,seccional,Dirección Seccional De Medellín,12,0.0009,32
+fiscalia,final,seccional,Dirección Seccional De Magdalena,9,0.0007,32
+fiscalia,final,seccional,Dirección Seccional De Atlántico,8,0.0006,32
+fiscalia,final,seccional,Dirección Seccional De Cali,8,0.0006,32
+fiscalia,final,seccional,Unidad Y Grupos - Nivel Central,7,0.0005,32
+fiscalia,final,seccional,Dirección Especializada Contra Los Delitos Fiscales,6,0.0005,32
+fiscalia,final,seccional,Dirección Seccional De Tolima,4,0.0003,32
+fiscalia,final,seccional,Dirección Seccional De Huila,4,0.0003,32
+fiscalia,final,seccional,Dirección Seccional De La Guajira,3,0.0002,32
+fiscalia,final,seccional,Dirección Seccional De Cauca,3,0.0002,32
+fiscalia,final,seccional,Dirección Especializada Contra El Lavado De Activos,3,0.0002,32
+fiscalia,final,seccional,Dirección Seccional De Nariño,2,0.0002,32
+fiscalia,final,seccional,Dirección Seccional De Risaralda,2,0.0002,32
+fiscalia,final,seccional,Dirección Seccional De Arauca,2,0.0002,32
+fiscalia,final,seccional,Dirección Seccional De Santander,2,0.0002,32
+fiscalia,final,seccional,Delegada Ante La Corte Suprema De Justicia,2,0.0002,32
+fiscalia,final,seccional,Dirección Seccional De Guainía,1,0.0001,32
+fiscalia,final,seccional,Dirección Seccional De Antioquia,1,0.0001,32
+fiscalia,final,seccional,Dirección Seccional De Caquetá,1,0.0001,32
+fiscalia,final,seccional,Dirección Seccional De Valle Del Cauca,1,0.0001,32
+fiscalia,final,seccional,Dir.De Apoyo Territorial,1,0.0001,32
+fiscalia,final,seccional,Dirección Seccional De Norte De Santander,1,0.0001,32
+fiscalia,final,trimestre_hecho,Cuarto Trimestre,348379,26.7839,4
+fiscalia,final,trimestre_hecho,Tercer Trimestre,335214,25.7718,4
+fiscalia,final,trimestre_hecho,Primer Trimestre,311368,23.9384,4
+fiscalia,final,trimestre_hecho,Segundo Trimestre,305742,23.5059,4
+fiscalia,final,trimestre_creacion,Cuarto Trimestre,347869,26.7447,4
+fiscalia,final,trimestre_creacion,Tercer Trimestre,326613,25.1105,4
+fiscalia,final,trimestre_creacion,Segundo Trimestre,315347,24.2444,4
+fiscalia,final,trimestre_creacion,Primer Trimestre,310874,23.9005,4
+fiscalia,final,tipo_delito,Reparto,1289368,99.1285,2
+fiscalia,final,tipo_delito,Concurso,11335,0.8715,2
+fiscalia,final,delito,Hurto. Art. 239 C.P.,938566,72.1584,114
+fiscalia,final,delito,Hurto Art. 239 C.P. Menor Cuantia,107498,8.2646,114
+fiscalia,final,delito,Hurto. Art. 239 C.P. Agravado Cuando Lo Hurtado Son Medios Motorizados O Lo Que Estos Transporten  Art. 241 C.P. N.6,50017,3.8454,114
+fiscalia,final,delito,Hurto Menor Cuantia. Art. 239 C.P. Agravado Por Establecimiento Publico Art. 241 C.P. N.11,27368,2.1041,114
+fiscalia,final,delito,Hurto Calificado Art. 240 C.P. Menor Cuantia,24952,1.9183,114
+fiscalia,final,delito,Hurto Calificado. Art. 240 C.P.,21784,1.6748,114
+fiscalia,final,delito,Hurto Menor Cuantia. Art. 239 C.P. Agravado Por La Destreza Art. 241 C.P. N.10,17384,1.3365,114
+fiscalia,final,delito,Hurto Calificado Menor Cuantia Art. 240 C.P.  Agravado Por La Destreza Art. 241 C.P. N.10,16015,1.2313,114
+fiscalia,final,delito,Hurto. Art. 239 C.P. Agravado Por Establecimiento Publico Art. 241 C.P. N.11,14181,1.0903,114
+fiscalia,final,delito,Hurto Calificado Art. 240 C.P.  Agravado Por La Destreza Art. 241 C.P. N.10,13601,1.0457,114
+fiscalia,final,delito,Hurto Agravado Art. 239 C.P. Menor Cuantia,12650,0.9726,114
+fiscalia,final,delito,Hurto Calificado Art. 240 C.P.  Agravado Cuando Lo Hurtado Son Medios Motorizados O Lo Que Estos Transporten  Art. 241 C,9599,0.738,114
+fiscalia,final,delito,Hurto Art. 239 C.P. De Automotor Menor Cuantia,6747,0.5187,114
+fiscalia,final,delito,Hurto Calificado Art. 240 C.P.  Agravado Por Establecimiento Publico Art. 241 C.P. N.11,6187,0.4757,114
+fiscalia,final,delito,Hurto Calificado Menor Cuantia Art. 240 C.P.  Agravado Por Establecimiento Publico Art. 241 C.P. N.11,4530,0.3483,114
+fiscalia,final,delito,Hurto. Art. 239 C.P. Agravado Por La Destreza Art. 241 C.P. N.10,4259,0.3274,114
+fiscalia,final,delito,Hurto. Art. 239 C.P. Agravado Por La Confianza Art. 241 C.P. N.2,3221,0.2476,114
+fiscalia,final,delito,Hurto Menor Cuantia. Art. 239 C.P. Agravado Por La Confianza Art. 241 C.P. N.2,3055,0.2349,114
+fiscalia,final,delito,Hurto Art. 239 C.P. Mayor Cuantia,2191,0.1684,114
+fiscalia,final,delito,Hurto Calificado Art. 240 C.P. Agravado Por La Confianza Art. 241 C.P. N.2,2065,0.1588,114
+fiscalia,final,delito,Hurto Menor Cuantia. Art. 239 C.P. Agravado Cuando Lo Hurtado Es Objeto Expuesto A La Confianza Publica Art. 241 C.P. N.7,2053,0.1578,114
+fiscalia,final,delito,Hurto Calificado Menor Cuantia Art. 240 C.P.  Agravado Cuando Lo Hurtado Es Objeto Expuesto A La Confianza Publica Art. 241 C.P. N.7,1940,0.1492,114
+fiscalia,final,delito,Hurto Calificado De Automotor Menor Cuantia  Art. 240 C.P.  Agravado Por La Destreza Art. 241 C.P. N.10,1721,0.1323,114
+fiscalia,final,delito,Hurto Calificado Art. 240 C.P.  Agravado Cuando Lo Hurtado Es Objeto Expuesto A La Confianza Publica Art. 241 C.P. N.7,836,0.0643,114
+fiscalia,final,delito,Hurto Calificado Art. 240 C.P. Mayor Cuantia,757,0.0582,114
+fiscalia,final,delito,Hurto Art. 239 C.P. Automotor Mayor Cuantia,715,0.055,114
+fiscalia,final,delito,Hurto Mayor Cuantia. Art. 239 C.P. Agravado Por Establecimiento Publico Art. 241 C.P. N.11,523,0.0402,114
+fiscalia,final,delito,Hurto Calificado Mayor Cuantia Art. 240 C.P.  Agravado Por La Destreza Art. 241 C.P. N.10,503,0.0387,114
+fiscalia,final,delito,Hurto Calificado Menor Cuantia Art. 240 C.P. Agravado Por La Confianza Art. 241 C.P. N.2,497,0.0382,114
+fiscalia,final,delito,Hurto Calificado Mayor Cuantia Art. 240 C.P.  Agravado Por Establecimiento Publico Art. 241 C.P. N.11,373,0.0287,114
+fiscalia,final,delito,Hurto Mayor Cuantia. Art. 239 C.P. Agravado Por La Confianza Art. 241 C.P. N.2,350,0.0269,114
+fiscalia,final,delito,Hurto Calificado Art. 240 C.P.  Agravado Por Lugar Despoblado Art. 241 C.P. N.9,302,0.0232,114
+fiscalia,final,delito,Hurto Mayor Cuantia. Art. 239 C.P. Agravado Por La Destreza Art. 241 C.P. N.10,298,0.0229,114
+fiscalia,final,delito,Hurto. Art. 239 C.P. Agravado Cuando Lo Hurtado Es Objeto Expuesto A La Confianza Publica Art. 241 C.P. N.7,258,0.0198,114
+fiscalia,final,delito,Hurto  Menor Cuantia Art. 239 C.P. Atenuado Con El Fin De Usarlo Y Se Restituye Art.242 C.P.Inciso1,227,0.0175,114
+fiscalia,final,delito,Hurto Calificado De Automotor Menor Cuantia  Art. 240 C.P. Agravado Por La Confianza Art. 241 C.P. N.2,225,0.0173,114
+fiscalia,final,delito,Hurto Calificado De Automotor Mayor Cuantia  Art. 240 C.P.  Agravado Por La Destreza Art. 241 C.P. N.10,223,0.0171,114
+fiscalia,final,delito,Hurto Calificado Automotor Art. 240 C.P. Mayor Cuantia,211,0.0162,114
+fiscalia,final,delito,Hurto Automotor Menor Cuantia Art. 239 C.P. Atenuado Con El Fin De Usarlo Y Se Restituye Art.242 C.P.Inciso1,211,0.0162,114
+fiscalia,final,delito,Hurto Calificado Menor Cuantia Art. 240 C.P.  Agravado Por Lugar Despoblado Art. 241 C.P. N.9,177,0.0136,114
+fiscalia,final,delito,Hurto Calificado Art. 240 C.P.  Agravado Por Simular Autoridad Art. 241 C.P. N.4,169,0.013,114
+fiscalia,final,delito,Hurto Menor Cuantia. Art. 239 C.P. Agravado Por Lugar Despoblado Art. 241 C.P. N.9,163,0.0125,114
+fiscalia,final,delito,Hurto Menor Cuantia Art. 239 C.P. Atenuado Entre Condueños Art. 242 C.P. Inciso 2,146,0.0112,114
+fiscalia,final,delito,Hurto Calificado Art. 240 C.P.  De Automotor Mayor Cuantia,145,0.0111,114
+fiscalia,final,delito,Hurto Calificado Art. 240 C.P.  Agravado Cuando Lo Hurtado Es Equipaje Art. 241 C.P. N.5,135,0.0104,114
+fiscalia,final,delito,Hurto Mayor Cuantia. Art. 239 C.P. Agravado Cuando Lo Hurtado Es Objeto Expuesto A La Confianza Publica Art. 241 C.P. N.7,122,0.0094,114
+fiscalia,final,delito,Hurto Calificado Mayor Cuantia Art. 240 C.P.  Agravado Cuando Lo Hurtado Es Objeto Expuesto A La Confianza Publica Art. 241 C.P. N.7,99,0.0076,114
+fiscalia,final,delito,Hurto Calificado De Automotor Menor Cuantia  Art. 240 C.P.  Agravado Por Lugar Despoblado Art. 241 C.P. N.9,97,0.0075,114
+fiscalia,final,delito,Hurto Menor Cuantia. Art. 239 C.P. Agravado Cuando Lo Hurtado Es Equipaje Art. 241 C.P. N.5,95,0.0073,114
+fiscalia,final,delito,Hurto Mayor Cuantia. Art. 239 C.P. Agravado Por Lugar Despoblado Art. 241 C.P. N.9,94,0.0072,114
+fiscalia,final,delito,(otras categorías),1168,0.0898,114
+fiscalia,final,titulo_delito,Delitos Contra El Patrimonio Economico,1300703,100.0,1
+fiscalia,final,capitulo_delito,Del Hurto,1300703,100.0,1
+fiscalia,final,grado_delito,Ninguno,1209762,93.0083,4
+fiscalia,final,grado_delito,Agravado,80678,6.2026,4
+fiscalia,final,grado_delito,Tentativa,6005,0.4617,4
+fiscalia,final,grado_delito,Tentativa/Agravado,4258,0.3274,4
+fiscalia,final,delito_querellable,No,1186444,91.2156,2
+fiscalia,final,delito_querellable,Si,114259,8.7844,2
+fiscalia,final,fecha_corte_datos,31/10/2026,1300703,100.0,1

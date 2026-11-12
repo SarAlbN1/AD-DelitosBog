@@ -1,0 +1,492 @@
+{
+  "metadatos": {
+    "fecha_ejecucion": "2026-11-11T14:46:26-05:00",
+    "comando": "python scripts/auditoria_datasets.py --config config/fuentes_auditoria.json --chunksize 100000",
+    "config": "config/fuentes_auditoria.json",
+    "config_sha256": "88efea7199cf0dd2be2f1dc371e835e90923b1243acd6d4f186428ca98bf87c0",
+    "periodo": [
+      2018,
+      2025
+    ],
+    "chunksize": 100000,
+    "semilla": 42,
+    "minimo_registros": 500000,
+    "versiones": {
+      "python": "3.14.5",
+      "plataforma": "Windows-11-10.0.26300-SP0",
+      "pandas": "3.1.1",
+      "numpy": "2.5.4",
+      "script": "0.1.0",
+      "matplotlib": "3.11.2",
+      "openpyxl": "3.1.5",
+      "xlrd": "2.0.2"
+    }
+  },
+  "resumen_fuentes": [
+    {
+      "fuente": "linea123",
+      "nombre": "Línea 123 — Llamadas tramitadas C4 Bogotá NUSE (enero 2015 - septiembre 2026)",
+      "url": "https://datosabiertos.bogota.gov.co/dataset/incidentes (recurso 30d65a8b-d0ed-4e95-977e-0d7cc2ea89ef, modificado 2026-10-22)",
+      "fecha_extraccion": "2026-11-11",
+      "unidad_observacion": "Agregado año × mes × localidad × UPZ × tipo de incidente; CANT_INCIDENTES = llamadas procedentes",
+      "n_archivos": 1,
+      "filas_originales": 1117394,
+      "filas_bogota": 1117394,
+      "filas_periodo": 763074,
+      "filas_hurto": 25144,
+      "filtro_bogota_aplicado": false,
+      "filtro_hurto_aplicado": true,
+      "columna_cantidad": "cant_incidentes",
+      "suma_cantidad_hurto": 1094313.0,
+      "columna_id": "id",
+      "ids_unicos_hurto": 24978,
+      "duplicados_exactos_hurto": 0,
+      "filas_hurto_>=_500000": false,
+      "estado": "verificado: calculado sobre los archivos listados en resumen_archivos.csv"
+    },
+    {
+      "fuente": "fiscalia",
+      "nombre": "Fiscalía General de la Nación — Procesos Fiscalía V3",
+      "url": "https://www.datos.gov.co/d/dbdv-iihs (API: $where=cod_dane_hecho='11001' AND capitulo_delito='Del Hurto', $order=:id)",
+      "fecha_extraccion": "2026-11-11",
+      "unidad_observacion": "Fila proceso–delito (noticia criminal); un proceso puede repetirse",
+      "n_archivos": 1,
+      "filas_originales": 2002177,
+      "filas_bogota": 2002177,
+      "filas_periodo": 1300703,
+      "filas_hurto": 1300703,
+      "filtro_bogota_aplicado": true,
+      "filtro_hurto_aplicado": true,
+      "columna_cantidad": "",
+      "suma_cantidad_hurto": null,
+      "columna_id": "proceso_anonimizado",
+      "ids_unicos_hurto": 1297042,
+      "duplicados_exactos_hurto": 0,
+      "filas_hurto_>=_500000": true,
+      "estado": "verificado: calculado sobre los archivos listados en resumen_archivos.csv"
+    }
+  ],
+  "archivos": [
+    {
+      "fuente": "linea123",
+      "archivo": "datos-abiertllamadastramitadas-c4-bogota_numerounicodeseguridadyemergencias-nuse_linea-123os-nus.csv",
+      "ruta": "data/raw/linea123/datos-abiertllamadastramitadas-c4-bogota_numerounicodeseguridadyemergencias-nuse_linea-123os-nus.csv",
+      "tamano_bytes": 116322990,
+      "sha256": "ceeee37729c83adaae6907272457998cc5a60eaf57c14a5ead17c6db2d3a4d61",
+      "formato": "csv",
+      "codificacion": "utf-8-sig",
+      "separador": ";",
+      "filas": 1117394,
+      "columnas": 10
+    },
+    {
+      "fuente": "fiscalia",
+      "archivo": "fiscalia_v3_bogota_hurto.csv",
+      "ruta": "data/raw/fiscalia/fiscalia_v3_bogota_hurto.csv",
+      "tamano_bytes": 856092926,
+      "sha256": "e2f30087b82544e448d0c3f9f04eabd760012b2143e2ab2af632e1d81ff8f2ae",
+      "formato": "csv",
+      "codificacion": "utf-8-sig",
+      "separador": ",",
+      "filas": 2002177,
+      "columnas": 29
+    }
+  ],
+  "embudo": [
+    {
+      "fuente": "linea123",
+      "etapa": "1_original",
+      "descripcion": "Original",
+      "filtro_aplicado": true,
+      "filas": 1117394,
+      "filas_excluidas": null,
+      "suma_cantidad": 33079787.0
+    },
+    {
+      "fuente": "linea123",
+      "etapa": "2_bogota",
+      "descripcion": "Bogotá",
+      "filtro_aplicado": false,
+      "filas": 1117394,
+      "filas_excluidas": 0,
+      "suma_cantidad": 33079787.0
+    },
+    {
+      "fuente": "linea123",
+      "etapa": "3_periodo",
+      "descripcion": "2018–2025",
+      "filtro_aplicado": true,
+      "filas": 763074,
+      "filas_excluidas": 354320,
+      "suma_cantidad": 20996584.0
+    },
+    {
+      "fuente": "linea123",
+      "etapa": "4_hurto",
+      "descripcion": "Hurto",
+      "filtro_aplicado": true,
+      "filas": 25144,
+      "filas_excluidas": 737930,
+      "suma_cantidad": 1094313.0
+    },
+    {
+      "fuente": "fiscalia",
+      "etapa": "1_original",
+      "descripcion": "Original",
+      "filtro_aplicado": true,
+      "filas": 2002177,
+      "filas_excluidas": null,
+      "suma_cantidad": null
+    },
+    {
+      "fuente": "fiscalia",
+      "etapa": "2_bogota",
+      "descripcion": "Bogotá",
+      "filtro_aplicado": true,
+      "filas": 2002177,
+      "filas_excluidas": 0,
+      "suma_cantidad": null
+    },
+    {
+      "fuente": "fiscalia",
+      "etapa": "3_periodo",
+      "descripcion": "2018–2025",
+      "filtro_aplicado": true,
+      "filas": 1300703,
+      "filas_excluidas": 701474,
+      "suma_cantidad": null
+    },
+    {
+      "fuente": "fiscalia",
+      "etapa": "4_hurto",
+      "descripcion": "Hurto",
+      "filtro_aplicado": true,
+      "filas": 1300703,
+      "filas_excluidas": 0,
+      "suma_cantidad": null
+    }
+  ],
+  "detalle": {
+    "linea123": {
+      "id": "linea123",
+      "embudo": {
+        "1_original": 1117394,
+        "2_bogota": 1117394,
+        "3_periodo": 763074,
+        "4_hurto": 25144
+      },
+      "suma_cantidad_embudo": {
+        "1_original": 33079787.0,
+        "2_bogota": 33079787.0,
+        "3_periodo": 20996584.0,
+        "4_hurto": 1094313.0
+      },
+      "duplicados": {
+        "exactos_original": {
+          "filas": 1117394,
+          "unicos": 1117394,
+          "repetidas": 0,
+          "valores_repetidos": 0,
+          "max_repeticiones": 1
+        },
+        "exactos_final": {
+          "filas": 25144,
+          "unicos": 25144,
+          "repetidas": 0,
+          "valores_repetidos": 0,
+          "max_repeticiones": 1
+        },
+        "id_original": {
+          "filas": 1117394,
+          "unicos": 1114761,
+          "repetidas": 2633,
+          "valores_repetidos": 2633,
+          "max_repeticiones": 2
+        },
+        "id_final": {
+          "filas": 25144,
+          "unicos": 24978,
+          "repetidas": 166,
+          "valores_repetidos": 166,
+          "max_repeticiones": 2
+        }
+      },
+      "fechas": {
+        "min": "2015",
+        "max": "2026",
+        "invalidas": 0,
+        "fuera_periodo": 354320,
+        "validas": 1117394
+      },
+      "numericas": {
+        "anio": {
+          "n_validos": 1117394,
+          "no_numericos": 0,
+          "suma": 2257606729.0,
+          "min": 2015.0,
+          "max": 2026.0,
+          "media": 2020.4213813569788,
+          "negativos": 0,
+          "ceros": 0,
+          "desv_est": 3.390230711731903,
+          "p25": 2017.0,
+          "mediana": 2020.0,
+          "p75": 2023.0,
+          "p99": 2026.0,
+          "cuantiles_exactos": true
+        },
+        "mes": {
+          "n_validos": 1117394,
+          "no_numericos": 0,
+          "suma": 7197783.0,
+          "min": 1.0,
+          "max": 12.0,
+          "media": 6.441580140935068,
+          "negativos": 0,
+          "ceros": 0,
+          "desv_est": 3.4259466386231376,
+          "p25": 3.0,
+          "mediana": 6.0,
+          "p75": 9.0,
+          "p99": 12.0,
+          "cuantiles_exactos": true
+        },
+        "cod_localidad": {
+          "n_validos": 1117381,
+          "no_numericos": 13,
+          "suma": 11345082.0,
+          "min": 1.0,
+          "max": 99.0,
+          "media": 10.153279857094402,
+          "negativos": 0,
+          "ceros": 0,
+          "desv_est": 10.036666274192397,
+          "p25": 5.0,
+          "mediana": 9.0,
+          "p75": 13.0,
+          "p99": 19.0,
+          "cuantiles_exactos": true
+        },
+        "cant_incidentes": {
+          "n_validos": 1117394,
+          "no_numericos": 0,
+          "suma": 33079787.0,
+          "min": 1.0,
+          "max": 10285.0,
+          "media": 29.604407218939784,
+          "negativos": 0,
+          "ceros": 0,
+          "desv_est": 83.9398530328592,
+          "p25": 3.0,
+          "mediana": 8.0,
+          "p75": 23.0,
+          "p99": 383.0,
+          "cuantiles_exactos": true
+        }
+      },
+      "localidad": {
+        "original": {
+          "KENNEDY": 115373,
+          "SUBA": 111563,
+          "USAQUÉN": 88981,
+          "ENGATIVÁ": 88030,
+          "CIUDAD BOLÍVAR": 76764,
+          "FONTIBÓN": 70190,
+          "USME": 62878,
+          "SAN CRISTÓBAL": 59283,
+          "TEUSAQUILLO": 55983,
+          "BOSA": 53103,
+          "RAFAEL URIBE URIBE": 52840,
+          "CHAPINERO": 52237,
+          "SANTA FE": 50607,
+          "PUENTE ARANDA": 50453,
+          "BARRIOS UNIDOS": 37930,
+          "LOS MÁRTIRES": 23600,
+          "TUNJUELITO": 23354,
+          "ANTONIO NARIÑO": 22387,
+          "CANDELARIA": 11227,
+          "SIN LOCALIZACION": 10195,
+          "SUMAPAZ": 403,
+          "-": 13
+        },
+        "final": {
+          "SUBA": 2470,
+          "KENNEDY": 2466,
+          "USAQUÉN": 1995,
+          "ENGATIVÁ": 1872,
+          "CIUDAD BOLÍVAR": 1711,
+          "FONTIBÓN": 1668,
+          "USME": 1479,
+          "TEUSAQUILLO": 1303,
+          "SAN CRISTÓBAL": 1275,
+          "CHAPINERO": 1208,
+          "SANTA FE": 1203,
+          "RAFAEL URIBE URIBE": 1172,
+          "BOSA": 1118,
+          "PUENTE ARANDA": 1111,
+          "BARRIOS UNIDOS": 908,
+          "LOS MÁRTIRES": 532,
+          "ANTONIO NARIÑO": 530,
+          "TUNJUELITO": 529,
+          "CANDELARIA": 315,
+          "SIN LOCALIZACION": 245,
+          "SUMAPAZ": 34
+        }
+      }
+    },
+    "fiscalia": {
+      "id": "fiscalia",
+      "embudo": {
+        "1_original": 2002177,
+        "2_bogota": 2002177,
+        "3_periodo": 1300703,
+        "4_hurto": 1300703
+      },
+      "suma_cantidad_embudo": {
+        "1_original": 0.0,
+        "2_bogota": 0.0,
+        "3_periodo": 0.0,
+        "4_hurto": 0.0
+      },
+      "duplicados": {
+        "exactos_original": {
+          "filas": 2002177,
+          "unicos": 2002177,
+          "repetidas": 0,
+          "valores_repetidos": 0,
+          "max_repeticiones": 1
+        },
+        "exactos_final": {
+          "filas": 1300703,
+          "unicos": 1300703,
+          "repetidas": 0,
+          "valores_repetidos": 0,
+          "max_repeticiones": 1
+        },
+        "id_original": {
+          "filas": 2002177,
+          "unicos": 1996530,
+          "repetidas": 5647,
+          "valores_repetidos": 4624,
+          "max_repeticiones": 13
+        },
+        "id_final": {
+          "filas": 1300703,
+          "unicos": 1297042,
+          "repetidas": 3661,
+          "valores_repetidos": 3094,
+          "max_repeticiones": 9
+        }
+      },
+      "fechas": {
+        "min": "2004",
+        "max": "2026",
+        "invalidas": 767,
+        "fuera_periodo": 700707,
+        "validas": 2001410
+      },
+      "numericas": {
+        "cod_dane_hecho": {
+          "n_validos": 2002177,
+          "no_numericos": 0,
+          "suma": 22025949177.0,
+          "min": 11001.0,
+          "max": 11001.0,
+          "media": 11001.0,
+          "negativos": 0,
+          "ceros": 0,
+          "desv_est": 0.0,
+          "p25": 11001.0,
+          "mediana": 11001.0,
+          "p75": 11001.0,
+          "p99": 11001.0,
+          "cuantiles_exactos": true
+        },
+        "a_o_hecho": {
+          "n_validos": 2001410,
+          "no_numericos": 767,
+          "suma": 4042344907.0,
+          "min": 2004.0,
+          "max": 2026.0,
+          "media": 2019.748530785796,
+          "negativos": 0,
+          "ceros": 0,
+          "desv_est": 4.46301373234199,
+          "p25": 2017.0,
+          "mediana": 2021.0,
+          "p75": 2023.0,
+          "p99": 2026.0,
+          "cuantiles_exactos": true
+        },
+        "mes_hecho": {
+          "n_validos": 2001410,
+          "no_numericos": 767,
+          "suma": 13130870.0,
+          "min": 1.0,
+          "max": 12.0,
+          "media": 6.5608096292114055,
+          "negativos": 0,
+          "ceros": 0,
+          "desv_est": 3.4319164027807494,
+          "p25": 4.0,
+          "mediana": 7.0,
+          "p75": 10.0,
+          "p99": 12.0,
+          "cuantiles_exactos": true
+        },
+        "a_o_creacion_proceso": {
+          "n_validos": 2002177,
+          "no_numericos": 0,
+          "suma": 4044029008.0,
+          "min": 2010.0,
+          "max": 2026.0,
+          "media": 2019.8159343554541,
+          "negativos": 0,
+          "ceros": 0,
+          "desv_est": 4.455766036282275,
+          "p25": 2017.0,
+          "mediana": 2021.0,
+          "p75": 2023.0,
+          "p99": 2026.0,
+          "cuantiles_exactos": true
+        },
+        "mes_creacion_proceso": {
+          "n_validos": 2002177,
+          "no_numericos": 0,
+          "suma": 13130848.0,
+          "min": 1.0,
+          "max": 12.0,
+          "media": 6.558285306443936,
+          "negativos": 0,
+          "ceros": 0,
+          "desv_est": 3.418053254474945,
+          "p25": 4.0,
+          "mediana": 7.0,
+          "p75": 10.0,
+          "p99": 12.0,
+          "cuantiles_exactos": true
+        },
+        "deli_id": {
+          "n_validos": 2002177,
+          "no_numericos": 0,
+          "suma": 970969039.0,
+          "min": 181.0,
+          "max": 1747.0,
+          "media": 484.95664419279615,
+          "negativos": 0,
+          "ceros": 0,
+          "desv_est": 248.70689298082092,
+          "p25": 331.0,
+          "mediana": 331.0,
+          "p75": 677.0,
+          "p99": 1212.0,
+          "cuantiles_exactos": true
+        }
+      },
+      "localidad": {
+        "original": {},
+        "final": {}
+      }
+    }
+  }
+}

@@ -1,0 +1,40 @@
+fuente,columna,nombres_originales,archivos_con_columna,archivos_totales,tipo_inferido,valores_unicos,ejemplo
+linea123,id,ID,1,1,texto,>200000,20260999UPZ999977
+linea123,anio,ANIO,1,1,entero,12,2026
+linea123,mes,MES,1,1,entero,12,09
+linea123,tipo_incidente,TIPO_INCIDENTE,1,1,texto,107,977
+linea123,tipo_detalle,TIPO_DETALLE,1,1,texto,138,VEHÍCULO RECUPERADO
+linea123,cod_localidad,COD_LOCALIDAD,1,1,entero,22,99
+linea123,localidad,LOCALIDAD,1,1,texto,22,SIN LOCALIZACION
+linea123,cod_upz,COD_UPZ,1,1,texto,125,UPZ999
+linea123,upz,UPZ,1,1,texto,125,SIN LOCALIZACION
+linea123,cant_incidentes,CANT_INCIDENTES,1,1,entero,1568,1
+fiscalia,proceso_anonimizado,proceso_anonimizado,1,1,texto,>200000,F0AF25B048C7C8CF33B6EBF08C6C6A135DD98BFEC06C78E52E8CEC489D69BD9B
+fiscalia,proceso_conexado,proceso_conexado,1,1,texto,2,No
+fiscalia,proceso_con_conexidad,proceso_con_conexidad,1,1,texto,2,No
+fiscalia,es_ruptura,es_ruptura,1,1,texto,2,No
+fiscalia,estado,estado,1,1,texto,2,Inactivo
+fiscalia,etapa,etapa,1,1,texto,4,Ejecución De Penas
+fiscalia,ley,ley,1,1,texto,3,Ley 906
+fiscalia,tipo_noticia,tipo_noticia,1,1,texto,8,De Oficio (Informes)
+fiscalia,procedimiento_abreviado,procedimiento_abreviado,1,1,texto,2,No
+fiscalia,pais_hecho,pais_hecho,1,1,texto,1,Colombia
+fiscalia,departamento_hecho,departamento_hecho,1,1,texto,1,"Bogotá, D. C."
+fiscalia,municipio_hecho,municipio_hecho,1,1,texto,1,"Bogotá, D.C."
+fiscalia,cod_dane_hecho,cod_dane_hecho,1,1,entero,1,11001
+fiscalia,dir_hecho_rural_urbana,dir_hecho_rural_urbana,1,1,texto,3,Sin Información
+fiscalia,seccional,seccional,1,1,texto,53,Dirección Seccional De Bogotá
+fiscalia,a_o_hecho,a_o_hecho,1,1,entero,24,2010
+fiscalia,mes_hecho,mes_hecho,1,1,entero,13,01
+fiscalia,trimestre_hecho,trimestre_hecho,1,1,texto,5,Primer Trimestre
+fiscalia,a_o_creacion_proceso,a_o_creacion_proceso,1,1,entero,17,2010
+fiscalia,mes_creacion_proceso,mes_creacion_proceso,1,1,entero,12,1
+fiscalia,trimestre_creacion,trimestre_creacion,1,1,texto,4,Primer Trimestre
+fiscalia,tipo_delito,tipo_delito,1,1,texto,2,Reparto
+fiscalia,deli_id,deli_id,1,1,entero,119,691
+fiscalia,delito,delito,1,1,texto,118,Hurto Calificado Art. 240 C.P.  Agravado Por La Destreza Art. 241 C.P. N.10
+fiscalia,titulo_delito,titulo_delito,1,1,texto,1,Delitos Contra El Patrimonio Economico
+fiscalia,capitulo_delito,capitulo_delito,1,1,texto,1,Del Hurto
+fiscalia,grado_delito,grado_delito,1,1,texto,5,Ninguno
+fiscalia,delito_querellable,delito_querellable,1,1,texto,2,No
+fiscalia,fecha_corte_datos,fecha_corte_datos,1,1,fecha,1,31/10/2026
