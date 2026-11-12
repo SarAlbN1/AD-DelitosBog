@@ -44,7 +44,7 @@ Esto **no se declara cumplido** hasta ejecutar `scripts/auditoria_datasets.py` s
 2. ¿Es aceptable acotar el periodo principal a **2020–2025**, ya que la Policía no publica 2018–2019 a nivel de registro? ¿O prefiere completar esos años con el agregado diario de MinDefensa?
 3. ¿Considera válido el **proceso penal de Fiscalía** como unidad de análisis complementaria, aunque no equivalga a un hecho?
 
-Son tres. La cuarta que se había planteado, sobre si restringir Fiscalía a la modalidad «a personas», **se retiró de esta lista**: no depende de cómo el profesor interprete el enunciado, sino de un campo que ya tenemos en los datos. Se resuelve en la decisión D-02.
+Son tres. La cuarta que se había planteado, sobre si restringir Fiscalía a la modalidad «a personas», **se retiró de esta lista**: no depende de cómo el profesor interprete el enunciado, sino de un campo que ya tenemos en los datos. Se resuelve en la decisión D-03.
 
 ### Condiciones acordadas por el equipo
 Las propuso Sara el 2026-11-11 y quedan pendientes de la respuesta del profesor:
@@ -65,7 +65,7 @@ _Pendiente._ Al recibir la respuesta, registrar aquí:
 
 ---
 
-## D-02 · Alcance de la modalidad de hurto en Fiscalía (#18, #22)
+## D-03 · Alcance de la modalidad de hurto en Fiscalía (#18, #22)
 
 **Estado:** Decidida por el equipo. No requiere consulta al profesor.
 **Fecha:** 2026-11-12.
