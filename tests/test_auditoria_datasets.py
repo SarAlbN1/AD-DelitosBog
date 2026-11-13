@@ -207,3 +207,24 @@ def test_main_genera_todas_las_salidas(tmp_path):
 
 def test_main_codigo_error(tmp_path):
     assert aud.main(["--config", str(tmp_path / "no.json")]) == 2
+
+
+def test_fuentes_no_borra_resultados_de_otras_sin_forzar(tmp_path):
+    p = tmp_path / "d.csv"
+    escribir_csv(p)
+    otra = dict(fuente(p), id="otra")
+    cfg = tmp_path / "manifiesto.json"
+    cfg.write_text(json.dumps({"periodo": {"anio_min": 2018, "anio_max": 2025}, "fuentes": [fuente(p), otra]}),
+                   encoding="utf-8")
+    salida = tmp_path / "out"
+    base = ["--config", str(cfg), "--salida", str(salida), "--sin-figuras"]
+    assert aud.main(base) == 0
+    antes = (salida / "resumen_fuentes.csv").read_bytes()
+    # Solo una fuente sobre una carpeta que tiene dos: se niega y no toca nada.
+    assert aud.main(base + ["--fuentes", "sintetica"]) == 2
+    assert (salida / "resumen_fuentes.csv").read_bytes() == antes
+    # Regenerar todas las fuentes presentes no necesita --forzar.
+    assert aud.main(base + ["--fuentes", "sintetica", "otra"]) == 0
+    # Con --forzar se sustituye a propósito.
+    assert aud.main(base + ["--fuentes", "sintetica", "--forzar"]) == 0
+    assert set(pd.read_csv(salida / "resumen_fuentes.csv")["fuente"]) == {"sintetica"}

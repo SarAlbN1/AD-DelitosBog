@@ -845,9 +845,35 @@ def construir_parser() -> argparse.ArgumentParser:
     o.add_argument("--chunksize", type=int, default=200_000, help="Filas por bloque (por defecto 200000).")
     o.add_argument("--minimo", type=int, default=MINIMO_REGISTROS)
     o.add_argument("--sin-figuras", action="store_true")
+    o.add_argument("--forzar", action="store_true",
+                   help="Sobrescribir --salida aunque tenga resultados de fuentes que no se van a regenerar.")
     o.add_argument("-v", "--verbose", action="store_true")
     p.add_argument("--version", action="version", version=__version__)
     return p
+
+
+def fuentes_ya_auditadas(salida: Path) -> set[str]:
+    """Ids de las fuentes cuyos resultados ya están en `salida`, según su resumen_fuentes.csv."""
+    resumen = salida / "resumen_fuentes.csv"
+    if not resumen.exists():
+        return set()
+    try:
+        return set(pd.read_csv(resumen, usecols=["fuente"], dtype=str)["fuente"].dropna())
+    except (ValueError, pd.errors.ParserError, pd.errors.EmptyDataError):
+        return set()
+
+
+def comprobar_salida(salida: Path, ids: list[str], forzar: bool) -> None:
+    """Impide sobrescribir los resultados de fuentes que esta ejecución no va a regenerar.
+
+    Las salidas se escriben completas en cada ejecución, así que correr con --fuentes sobre una carpeta
+    que ya tiene otras fuentes borraría sus resultados. Se exige --forzar para hacerlo a propósito.
+    """
+    perdidas = sorted(fuentes_ya_auditadas(salida) - set(ids))
+    if perdidas and not forzar:
+        raise ErrorAuditoria(
+            f"{salida} ya contiene resultados de {', '.join(perdidas)}, que esta ejecución no regenera y "
+            f"se perderían. Use otra --salida, incluya esas fuentes en --fuentes o añada --forzar.")
 
 
 def main(argv=None) -> int:
@@ -878,6 +904,7 @@ def main(argv=None) -> int:
             raise ErrorAuditoria(f"Hay ids de fuente repetidos: {ids}")
         if args.chunksize < 1:
             raise ErrorAuditoria("--chunksize debe ser positivo.")
+        comprobar_salida(Path(args.salida), ids, args.forzar)
         auditores = [auditar_fuente(f, periodo, args.chunksize, base) for f in fuentes]
         meta = {"fecha_ejecucion": dt.datetime.now().astimezone().isoformat(timespec="seconds"),
                 "comando": " ".join(["python", "scripts/auditoria_datasets.py", *(argv if argv is not None else sys.argv[1:])]),

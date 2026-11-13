@@ -26,7 +26,7 @@ Fiscalía arranca en 2010 (700.707 filas). Son datos válidos que el filtro excl
 
 | Fuente | Nivel más fino | Categorías |
 |---|---|---|
-| Línea 123 | **UPZ** | 22 localidades y 125 UPZ, incluida «SIN LOCALIZACION» |
+| Línea 123 | **UPZ** | 20 localidades y 116 UPZ, más valores sin ubicación («SIN LOCALIZACION», «SIN UPZ …», «-») |
 | Policía, registro | Municipio | Bogotá es un único valor: sin desglose interno |
 | Policía, agregado | Municipio | Ídem |
 | Fiscalía | Municipio | Ídem, más zona urbana/rural y 53 seccionales |
