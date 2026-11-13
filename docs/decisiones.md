@@ -98,5 +98,5 @@ Las propuso Sara el 2026-11-11 y quedan pendientes de la respuesta del profesor:
 
 **Cambios de alcance:**
 - El informe usa 2020–2025 en el título, el alcance, los objetivos y la sección 4.
-- Los notebooks de la segunda entrega deben pasar a la serie del registro 2020–2025; queda en un issue aparte.
-- Hay que verificar la caída de noviembre y diciembre de 2025 antes de usar esos meses para evaluar modelos; queda en un issue aparte.
+- Los notebooks de la segunda entrega deben pasar a la serie del registro 2020–2025 (#87).
+- Hay que verificar la caída de noviembre y diciembre de 2025 antes de usar esos meses para evaluar modelos (#86).
