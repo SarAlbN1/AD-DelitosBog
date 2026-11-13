@@ -1,0 +1,66 @@
+variable,valor,filas,pct
+grado_delito,Ninguno,1209762,93.008
+grado_delito,Agravado,80678,6.203
+grado_delito,Tentativa,6005,0.462
+grado_delito,Tentativa/Agravado,4258,0.327
+seccional,Dirección Seccional De Bogotá,1299264,99.889
+seccional,Dirección Especializada Contra Organizaciones Criminales,465,0.036
+seccional,Por Asignar,454,0.035
+seccional,Dirección Seccional De Boyacá,196,0.015
+seccional,Dirección Seccional De Cundinamarca,148,0.011
+seccional,Direccion Especializada Contra Los Delitos Informaticos,24,0.002
+seccional,Dirección Seccional De Meta,22,0.002
+seccional,Delegada Contra La Criminalidad Organizada,18,0.001
+seccional,Delegada Para La Seguridad Territorial,15,0.001
+seccional,Dirección Especializada Contra Las Violaciones A Los Derechos Humanos,14,0.001
+seccional,Dirección Seccional De Medellín,12,0.001
+seccional,Dirección Seccional De Magdalena,9,0.001
+seccional,Dirección Seccional De Atlántico,8,0.001
+seccional,Dirección Seccional De Cali,8,0.001
+seccional,Unidad Y Grupos - Nivel Central,7,0.001
+seccional,Dirección Especializada Contra Los Delitos Fiscales,6,0.0
+seccional,Dirección Seccional De Tolima,4,0.0
+seccional,Dirección Seccional De Huila,4,0.0
+seccional,Dirección Seccional De La Guajira,3,0.0
+seccional,Dirección Seccional De Cauca,3,0.0
+seccional,Dirección Especializada Contra El Lavado De Activos,3,0.0
+seccional,Dirección Seccional De Risaralda,2,0.0
+seccional,Dirección Seccional De Nariño,2,0.0
+seccional,Dirección Seccional De Arauca,2,0.0
+seccional,Dirección Seccional De Santander,2,0.0
+seccional,Delegada Ante La Corte Suprema De Justicia,2,0.0
+seccional,Dirección Seccional De Guainía,1,0.0
+seccional,Dirección Seccional De Antioquia,1,0.0
+seccional,Dirección Seccional De Caquetá,1,0.0
+seccional,Dirección Seccional De Valle Del Cauca,1,0.0
+seccional,Dir.De Apoyo Territorial,1,0.0
+seccional,Dirección Seccional De Norte De Santander,1,0.0
+delito_querellable,No,1186444,91.216
+delito_querellable,Si,114259,8.784
+proceso_conexado,No,1295931,99.633
+proceso_conexado,Si,4772,0.367
+proceso_con_conexidad,No,1297573,99.759
+proceso_con_conexidad,Si,3130,0.241
+es_ruptura,No,1296271,99.659
+es_ruptura,Si,4432,0.341
+procedimiento_abreviado,Si,1238967,95.254
+procedimiento_abreviado,No,61736,4.746
+tipo_delito,Reparto,1289368,99.129
+tipo_delito,Concurso,11335,0.871
+ley,Ley 906,1293313,99.432
+ley,Ley 1098,7364,0.566
+ley,Jurisdicción Menores,26,0.002
+estado,Inactivo,1161860,89.326
+estado,Activo,138843,10.674
+etapa,Indagación,1256918,96.634
+etapa,Ejecución De Penas,26660,2.05
+etapa,Juicio,16686,1.283
+etapa,Investigación,439,0.034
+tipo_noticia,Denuncia,1094246,84.127
+tipo_noticia,Querella,108809,8.365
+tipo_noticia,Actos Urgentes,62765,4.825
+tipo_noticia,De Oficio (Informes),34080,2.62
+tipo_noticia,Compulsacion De Copias,612,0.047
+tipo_noticia,Asistencia Judicial,158,0.012
+tipo_noticia,Asignacion Especial,18,0.001
+tipo_noticia,Peticion Especial,15,0.001
