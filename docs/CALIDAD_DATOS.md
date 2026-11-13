@@ -38,7 +38,7 @@ registro individual.
 
 | Hallazgo | Magnitud | Causa probable | Tratamiento propuesto |
 |---|---|---|---|
-| Sin nulos, sin duplicados, sin anomalías | 2.922 filas | Es un recurso agregado y validado en el portal | Ninguno |
+| Sin nulos, sin duplicados, sin anomalías | 2.922 filas | Es un recurso agregado publicado por la entidad | Ninguno |
 | Riesgo de interpretación: `cantidad` suma 975.793 con solo 2.922 filas | — | Confundir la suma de la columna con el número de registros sobreestima el dataset en dos órdenes de magnitud | Documentado en `data/README.md` y en el reporte de auditoría. **El mínimo se mide en filas**, nunca por la suma de una columna de conteo |
 
 Es la fuente más limpia de las cuatro, pero la que menos aporta en volumen.
@@ -49,7 +49,7 @@ Es la fuente más limpia de las cuatro, pero la que menos aporta en volumen.
 |---|---|---|---|
 | **354.320 filas fuera de 2018–2025** | 32 % del archivo | **No es un error.** El recurso publica 2015–2026 y el proyecto analiza 2018–2025 | Se excluyen en el filtro de periodo, que queda documentado en `embudo_filtros.csv`. Debe decirse en el informe para que las 1.117.394 filas originales no se confundan con las 763.074 del periodo |
 | **`ID` no es único:** 2.633 identificadores repetidos en el archivo completo y 166 en las filas de hurto del periodo, máximo 2 repeticiones | 0,24 % | Probablemente la clave se construye concatenando año, UPZ y un consecutivo, y colisiona en algunos casos (por confirmar) | **No usar `ID` como clave primaria** ni para deduplicar. Si hace falta una clave, construirla con año, mes, localidad, UPZ y tipo. Importa para #32 |
-| Categoría «SIN LOCALIZACION» en `LOCALIDAD` y `UPZ` | Una de las 22 localidades y de las 125 UPZ | Incidentes sin ubicación asignada al tramitar la llamada | **No es una localidad.** Separarla antes de cualquier análisis territorial y reportar su peso, porque si se trata como una localidad más distorsiona los mapas (#35) |
+| Valores sin ubicación en `LOCALIDAD` y `UPZ`: «SIN LOCALIZACION», «-» y, en `UPZ`, siete «SIN UPZ <localidad>» | 2 de los 22 valores de `LOCALIDAD` (10.195 y 13 filas) y 9 de los 125 de `UPZ` (121.254 filas) | Incidentes sin ubicación asignada al tramitar la llamada | **No es una localidad.** Separarla antes de cualquier análisis territorial y reportar su peso, porque si se trata como una localidad más distorsiona los mapas (#35) |
 | Cero nulos y cero filas duplicadas exactas | — | — | Ninguno |
 
 **Advertencia de interpretación:** `TIPO_DETALLE` es la tipificación operativa de la llamada, no una
@@ -61,7 +61,7 @@ calificación jurídica. Las categorías con «HURTO» no equivalen al delito de
 |---|---|---|---|
 | **767 filas con «Sin Información» en `a_o_hecho` y `mes_hecho`** | 0,04 % | El proceso se registró sin fecha del hecho conocida | **Excluir del análisis temporal** y reportar el número. No imputar: inventar una fecha del hecho sesgaría las series. La auditoría ya las marca como `anio_invalido` y `mes_invalido` |
 | **700.707 filas fuera de 2018–2025** | 35 % del archivo | **No es un error.** El recurso cubre desde 2010 | Se excluyen en el filtro de periodo |
-| El mismo proceso aparece en varias filas: 1.300.703 filas frente a 1.297.042 procesos distintos; 3.661 repetidos, hasta 9 veces | 0,28 % | **Es el diseño de la fuente.** La unidad es el par proceso–delito: un proceso con varios delitos ocupa varias filas | **No deduplicar.** Reportar siempre las dos cifras, filas y procesos únicos, porque responden a preguntas distintas |
+| El mismo proceso aparece en varias filas: 1.300.703 filas frente a 1.297.042 procesos distintos; 3.661 filas repetidas, de 3.094 procesos, hasta 9 veces | 0,28 % | **Es el diseño de la fuente.** La unidad es el par proceso–delito: un proceso con varios delitos ocupa varias filas | **No deduplicar.** Reportar siempre las dos cifras, filas y procesos únicos, porque responden a preguntas distintas |
 | Cero nulos y cero filas duplicadas exactas | — | — | Ninguno |
 | `capitulo_delito` = «Del Hurto» incluye modalidades distintas del hurto a personas | — | El capítulo agrupa personas, automotores, residencias y otras | **Restringir a la modalidad comparable** si se quiere contrastar con Policía, usando `delito` (118 variantes). Es una de las preguntas abiertas de #18 |
 | Variables que dependen del tiempo transcurrido: `a_o_creacion_proceso`, `mes_creacion_proceso`, `etapa` y `estado` | — | Un proceso puede abrirse meses después del hecho y su etapa avanza con el tiempo | **No usarlas como predictoras.** Son fuga de información. Importa para #33 |

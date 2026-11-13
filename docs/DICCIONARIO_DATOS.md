@@ -32,7 +32,7 @@ Fuente principal propuesta. Seis archivos anuales, 2020–2025. **Una fila = una
 | `fecha_hecho` | `FECHA HECHO` | fecha | 2.192 | Fecha en que ocurrió el hecho, formato `AAAA/MM/DD`. Son 2.192 días distintos, que es exactamente el número de días de 2020–2025. No hay huecos de días completos | objetivo |
 | `cantidad` | `CANTIDAD` | entero | **1** | Siempre vale 1. Confirma que la fila es un registro individual y no un conteo. Contar filas y sumar esta columna dan el mismo número | trazabilidad |
 | `delitos` | `DELITOS` | texto | 18 | Delito con su código ICCS en el texto, p. ej. `(05022) Hurto a personas`. La etiqueta es idéntica en los seis años | filtro |
-| `codigo_dane` | `CODIGO DANE` | entero | 1.117 | Código DANE del municipio del hecho. Bogotá es 11001. Conserva el cero inicial en los municipios de departamentos con código bajo (`05001`) | filtro |
+| `codigo_dane` | `CODIGO DANE` | entero | 1.117 | Código DANE del municipio del hecho. Bogotá es 11001 | filtro |
 | `municipio` | `MUNICIPIO` | texto | 1.021 | Municipio del hecho. **No hay localidad ni barrio**: en Bogotá todas las filas caen en un único municipio, así que esta fuente no permite análisis territorial interno | no se usa |
 | `departamento` | `DEPARTAMENTO` | texto | 33 | Departamento del hecho | no se usa |
 | `mes` | `MES` | entero | 12 | Mes del hecho, redundante con `fecha_hecho` | no se usa |
@@ -74,9 +74,9 @@ filas, de las que 25.144 son de hurto dentro de 2018–2025.
 | `mes` | `MES` | entero | 12 | Mes del incidente. La resolución temporal máxima de esta fuente es el mes | predictora |
 | `tipo_detalle` | `TIPO_DETALLE` | texto | 138 | Tipificación operativa del incidente. El filtro de hurto busca «HURTO» aquí. **Es la tipificación de la llamada, no una calificación jurídica**, así que no equivale al delito de las otras fuentes | filtro |
 | `tipo_incidente` | `TIPO_INCIDENTE` | texto | 107 | Categoría superior del incidente | no se usa |
-| `localidad` | `LOCALIDAD` | texto | 22 | Localidad de Bogotá. **Única fuente con desglose territorial interno.** Incluye la categoría «SIN LOCALIZACION», que no es una localidad y hay que tratar aparte | predictora |
+| `localidad` | `LOCALIDAD` | texto | 22 | Localidad de Bogotá. **Única fuente con desglose territorial interno.** Los 22 valores son las 20 localidades más «SIN LOCALIZACION» y «-» (13 filas), que no son localidades y hay que tratar aparte | predictora |
 | `cod_localidad` | `COD_LOCALIDAD` | entero | 22 | Código de la localidad | trazabilidad |
-| `upz` / `cod_upz` | `UPZ`, `COD_UPZ` | texto | 125 | Unidad de planeamiento zonal. También trae «SIN LOCALIZACION» | predictora |
+| `upz` / `cod_upz` | `UPZ`, `COD_UPZ` | texto | 125 | Unidad de planeamiento zonal. 116 UPZ más 9 valores sin ubicación («SIN LOCALIZACION», siete «SIN UPZ <localidad>» y «-»), que suman 121.254 filas del archivo completo | predictora |
 | `id` | `ID` | texto | >200.000 | **No es único.** 2.633 identificadores se repiten en el archivo completo y 166 en las filas de hurto del periodo, con un máximo de 2 repeticiones. No sirve como clave primaria | no se usa |
 
 ## 4. Fiscalía — Procesos V3 (`fiscalia`)
