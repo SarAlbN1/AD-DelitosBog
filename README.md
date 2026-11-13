@@ -2,9 +2,14 @@
 
 Proyecto de Analítica de Datos de Ingeniería de Sistemas, Pontificia Universidad Javeriana. Sara Albarracín y Juan Diego Rojas.
 
-¿Cuánto mejora el pronóstico de hurtos registrados para el día siguiente en Bogotá al usar calendario y rezagos frente a repetir el conteo del mismo día de la semana anterior? La comparación se hará sobre las mismas fechas de evaluación. La variable objetivo es el número diario de hurtos registrados entre 2018 y 2025. Como pregunta complementaria, se describe cómo se distribuyen los conteos anuales entre localidades.
+¿Cuánto mejora el pronóstico de hurtos registrados para el día siguiente en Bogotá al usar calendario y rezagos frente a repetir el conteo del mismo día de la semana anterior? La comparación se hará sobre las mismas fechas de evaluación. La variable objetivo es el número diario de víctimas de hurto a personas registradas por la Policía en Bogotá entre 2020 y 2025 (D-01, [docs/decisiones.md](docs/decisiones.md)). Como pregunta complementaria, se describe la distribución de las llamadas de hurto a la Línea 123 entre localidades.
 
-El proyecto usa tres fuentes de delito, descritas en [data/README.md](data/README.md): **Policía / MinDefensa** (conteo diario de hurtos en Bogotá, la base de la variable objetivo), **Fiscalía** (procesos por hurto, una fila por proceso–delito) y **Línea 123** (incidentes tramitados, una perspectiva separada). Las tres tienen unidades de observación distintas y no se suman entre sí.
+El proyecto usa tres fuentes de delito, descritas en [data/README.md](data/README.md):
+- **Policía, registro:** una fila por víctima. Es la fuente principal y la base de la variable objetivo. El agregado diario de MinDefensa solo cubre 2018–2019 como contexto.
+- **Fiscalía:** procesos por hurto en todas sus modalidades, una fila por proceso–delito. Es complementaria.
+- **Línea 123:** llamadas tramitadas. Es complementaria.
+
+Las tres tienen unidades de observación distintas y no se suman entre sí.
 
 ## Reproducción
 

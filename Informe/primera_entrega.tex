@@ -40,7 +40,7 @@
 \fancyhead[R]{\small Primera entrega}
 \fancyfoot[C]{\thepage}
 \renewcommand{\headrulewidth}{0.3pt}
-\hypersetup{pdftitle={Análisis multifuente y predicción del hurto a personas en Bogotá},pdfauthor={Juan Diego Rojas y Sara Albarracín}}
+\hypersetup{pdftitle={Análisis multifuente y predicción del hurto a personas en Bogotá, 2020--2025},pdfauthor={Juan Diego Rojas y Sara Albarracín}}
 \renewcommand{\refname}{Referencias}
 
 \begin{document}
@@ -55,7 +55,7 @@
     \vfill
     {\color{azulj}\rule{0.8\textwidth}{1.2pt}\par}
     \vspace{0.6cm}
-    {\LARGE\bfseries Análisis multifuente y predicción del hurto a personas en Bogotá D.~C. mediante técnicas de minería de datos y aprendizaje automático\par}
+    {\LARGE\bfseries Análisis multifuente y predicción del hurto a personas en Bogotá D.~C., 2020--2025, mediante técnicas de minería de datos y aprendizaje automático\par}
     \vspace{0.6cm}
     {\color{azulj}\rule{0.8\textwidth}{1.2pt}\par}
     \vspace{0.6cm}
@@ -92,18 +92,18 @@ La analítica de datos ofrece métodos para transformar registros históricos en
 
 En Bogotá existen antecedentes de predicción delictiva mediante métodos estadísticos, aprendizaje automático y análisis espacial. \citet{riascos2020} estudian aplicaciones de analítica predictiva en la gestión de seguridad y \citet{martinez2025} examina patrones espacio-temporales del hurto a personas. Estos trabajos evidencian la pertinencia de comparar modelos bajo un procedimiento de evaluación transparente.
 
-Por lo anterior, este proyecto propone caracterizar registros de seguridad en Bogotá durante 2018--2025, estudiar su correspondencia temporal y territorial y, en etapas posteriores, evaluar modelos predictivos del hurto a personas. La selección de la fuente objetivo y el alcance final del modelamiento quedarán subordinados a la auditoría de cobertura y volumen de registros.
+Por lo anterior, este proyecto propone caracterizar el hurto a personas en Bogotá durante 2020--2025 a partir de tres fuentes oficiales, estudiar su correspondencia temporal y, en etapas posteriores, evaluar modelos que pronostiquen el número diario de víctimas registradas por la Policía Nacional. La auditoría de las fuentes (sección~\ref{sec:datos}) confirmó que el registro de la Policía alcanza por sí solo el volumen exigido, de modo que es la fuente principal y la de la variable objetivo; la Fiscalía y la Línea 123 se usan como fuentes complementarias.
 
 \subsection{Planteamiento del problema}
 
 La existencia de registros históricos de criminalidad no garantiza por sí misma la generación de conocimiento útil. Los conteos de hurtos pueden presentar tendencias, estacionalidad, variaciones extraordinarias y cambios derivados de procesos de denuncia o actualización institucional. Por consiguiente, una variación observada no debe interpretarse automáticamente como un cambio equivalente en todos los delitos realmente ocurridos.
 
-Adicionalmente, las fuentes oficiales disponibles manejan diferentes niveles de agregación. En la base nacional consultada, cada registro de Bogotá contiene una fecha y un conteo municipal, sin barrio, coordenadas ni hora del hecho; en cambio, la fuente distrital permite comparar localidades mediante conteos anuales. Esta diferencia impide construir una serie diaria por barrio a partir de la combinación directa de ambas bases.
+Adicionalmente, las tres fuentes manejan niveles de agregación distintos. El registro de la Policía Nacional trae una fila por víctima con la fecha diaria del hecho, pero solo identifica el municipio: no incluye localidad, barrio, coordenadas ni hora. La Línea 123 permite comparar localidades y UPZ, pero publica conteos mensuales de llamadas. La Fiscalía publica el año y el mes del hecho, sin localidad. Por eso no es posible construir una serie diaria por localidad combinando las fuentes, y cada una se analiza en la resolución que efectivamente publica.
 
-El problema de investigación consiste en determinar hasta qué punto la historia de los conteos diarios permite anticipar nuevos registros y qué patrones territoriales complementarios pueden describirse de manera rigurosa. La pregunta principal es la siguiente:
+El problema de investigación consiste en determinar hasta qué punto la historia del número diario de víctimas de hurto a personas registradas por la Policía permite anticipar los registros de los días siguientes, y qué aportan las fuentes complementarias a la descripción del fenómeno. La pregunta principal es la siguiente:
 
 \begin{quote}
-\emph{¿En qué medida la integración y el análisis de fuentes oficiales de seguridad ciudadana permiten identificar patrones temporales y territoriales del hurto a personas en Bogotá y mejorar la capacidad predictiva de los modelos de aprendizaje automático?}
+\emph{¿En qué medida el análisis de fuentes oficiales de seguridad ciudadana permite identificar patrones temporales del hurto a personas en Bogotá entre 2020 y 2025 y pronosticar el número diario de víctimas registradas con menor error que una línea base ingenua?}
 \end{quote}
 
 Como pregunta complementaria, se plantea: \emph{¿qué diferencias de cobertura, granularidad y registro condicionan la comparación entre incidentes de la Línea 123, registros policiales y noticias criminales?}
@@ -123,18 +123,26 @@ Analizar de manera multifuente el comportamiento histórico del hurto a personas
 \subsubsection{Objetivos específicos}
 
 \begin{enumerate}
-  \item Recolectar y documentar los datos oficiales de Línea 123, Policía Nacional y Fiscalía sobre seguridad y hurtos en Bogotá, sus variables, cobertura, unidades de observación y limitaciones.
-  \item Identificar tendencias y patrones de variación temporal mediante análisis exploratorio de los registros diarios.
-  \item Describir las diferencias territoriales y las relaciones entre fuentes en periodos y escalas comparables.
-  \item Implementar y comparar modelos predictivos sobre la serie objetivo seleccionada, incluyendo una línea base y métodos estadísticos y de aprendizaje automático.
-  \item Evaluar los pronósticos con métricas apropiadas y discutir su utilidad, sesgos potenciales y límites de interpretación.
+  \item Recolectar y auditar los datos oficiales de la Policía Nacional, la Fiscalía y la Línea 123 sobre hurto en Bogotá, y documentar para cada fuente sus variables, su cobertura, su unidad de observación y sus limitaciones.
+  \item Construir la serie diaria de víctimas de hurto a personas registradas por la Policía entre 2020 y 2025 y describir su tendencia, su estacionalidad semanal y anual y sus valores atípicos.
+  \item Comparar las tendencias mensuales de las tres fuentes sin sumar sus conteos, y describir la distribución por localidad de las llamadas de la Línea 123.
+  \item Implementar y comparar modelos de pronóstico de la serie diaria, incluidos una línea base ingenua y métodos estadísticos y de aprendizaje automático, con validación temporal.
+  \item Evaluar los pronósticos con MAE y RMSE frente a la línea base, y discutir su utilidad, sus sesgos potenciales y sus límites de interpretación.
 \end{enumerate}
 
 \subsection{Alcance y delimitación}
 
-El periodo principal de estudio será del 1 de enero de 2018 al 31 de diciembre de 2025. Se utilizarán los registros de la Línea 123 para contextualizar incidentes tramitados, los datos de la Policía Nacional para caracterizar hurtos y la información de Fiscalía para contrastar tendencias judiciales. El periodo se restringirá a años completos, y el nivel temporal y territorial de cada comparación dependerá de los campos efectivamente disponibles.
+El periodo principal de estudio va del 1 de enero de 2020 al 31 de diciembre de 2025, los años que la Policía Nacional publica a nivel de registro. Cada fuente cumple una función distinta:
+\begin{itemize}
+  \item \textbf{Policía Nacional, fuente principal.} Sus 741.986 registros de hurto a personas en Bogotá sostienen por sí solos el requisito de 500.000 registros y, agregados por día, forman la variable objetivo.
+  \item \textbf{Fiscalía, fuente complementaria.} Sus 1.300.703 registros proceso--delito de 2018--2025 describen la respuesta judicial al hurto en todas sus modalidades. No se interpretan como víctimas ni como hechos.
+  \item \textbf{Línea 123, fuente complementaria.} Sus conteos mensuales de llamadas por localidad y UPZ describen la demanda ciudadana de atención.
+\end{itemize}
+Los años 2018 y 2019 solo se usan como contexto histórico, mediante el agregado diario del Ministerio de Defensa, y no entran en el conteo de registros ni en la serie objetivo.
 
-No se busca identificar personas presuntamente responsables, anticipar víctimas individuales ni estimar la ocurrencia exacta de delitos a nivel de dirección. Tampoco se inferirán conteos diarios por localidad a partir de los totales anuales. La implementación, los resultados, la evaluación y las conclusiones definitivas se desarrollarán en las siguientes entregas.
+No se busca identificar personas presuntamente responsables, anticipar víctimas individuales ni estimar la ocurrencia de delitos a nivel de dirección. El pronóstico es para el total de Bogotá: el registro de la Policía no identifica la localidad, y no se inferirán conteos diarios por localidad a partir de otras fuentes. La implementación, los resultados, la evaluación y las conclusiones se desarrollarán en las siguientes entregas.
+
+Las limitaciones principales son tres. Los registros miden hechos denunciados o conocidos por la autoridad, no la totalidad de los ocurridos, y están afectados por el subregistro \citep{riascos2023}. Las tres fuentes usan unidades de observación distintas, así que sus conteos no se suman. Y la Policía advierte que el género y el grupo de edad de la víctima no tienen calidad validada en completitud.
 
 \section{Trabajos relacionados y estudios similares realizados}
 
@@ -254,68 +262,218 @@ La literatura revisada demuestra que la criminalidad en Bogotá ha sido estudiad
 
 El presente trabajo propone un análisis reproducible de tres fuentes oficiales con unidades de observación distintas y, posteriormente, una comparación de modelos predictivos sobre la serie objetivo seleccionada. Su aporte esperado será la evaluación rigurosa de métodos sobre un periodo delimitado, el uso de una línea base explícita y la documentación de restricciones de los registros oficiales, sin afirmar que se desarrolla un algoritmo completamente novedoso.
 
-\section{Recolección y entendimiento de datos}
+\section{Recolección y entendimiento de datos}\label{sec:datos}
 
-\subsection{Fuentes y procedimiento de identificación}
+\subsection{Fuentes y procedimiento de recolección}
 
-Se identificaron tres fuentes oficiales: (i) incidentes tramitados en el Centro de Comando, Control, Comunicaciones y Cómputo (C4) a partir de la Línea 123 \citep{linea123}; (ii) archivos anuales de hurto a personas de la Policía Nacional \citep{policia}; y (iii) \emph{Procesos Fiscalía V3}, con información anonimizada de noticias criminales \citep{fiscalia}. La estrategia consiste en conservar las descargas originales, registrar su fecha de extracción y documentar los filtros de Bogotá, tipo de delito y periodo 2018--2025.
+Se usan tres fuentes oficiales, cada una con una función distinta en el proyecto (tabla~\ref{tab:fuentes}): los archivos anuales de delitos a nivel de registro de la Policía Nacional \citep{policia}, el conjunto \emph{Procesos Fiscalía V3} \citep{fiscalia} y las llamadas tramitadas por la Línea 123 \citep{linea123}. Los archivos se descargaron sin modificar entre el 9 y el 12 de noviembre de 2026 y se conservan fuera del repositorio. Para cada uno se registran la URL, la fecha de extracción y el SHA-256.
 
-Los volúmenes preliminares de Línea 123 y Policía provienen de una revisión compartida por el equipo y \textbf{están pendientes de reproducción independiente con archivos congelados}. No se utilizará la suma de filas de fuentes distintas para afirmar el cumplimiento del requisito académico mínimo de 500.000 registros. Se identificará una tabla principal que supere este umbral por sí sola, o se aclarará con el profesor si admite un universo más amplio de incidentes de seguridad.
+Todas las cifras de esta sección provienen de scripts versionados en el repositorio del proyecto:
+\begin{itemize}
+  \item \texttt{scripts/auditoria\_datasets.py} calcula el embudo de filtros, los nulos, los duplicados y la cobertura (\texttt{outputs/auditoria/} y \texttt{outputs/auditoria\_policia/});
+  \item \texttt{scripts/serie\_objetivo\_policia.py} construye la serie objetivo (\texttt{outputs/serie\_objetivo/});
+  \item \texttt{scripts/fiscalia\_modalidades.py} y \texttt{scripts/figuras\_informe.py} producen las tablas y figuras complementarias (\texttt{outputs/informe/}).
+\end{itemize}
+El procedimiento para reproducirlas está en \texttt{docs/AUDITORIA.md}.
 
-\subsection{Fuente 1: incidentes tramitados por la Línea 123}
+{\small
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{3.3cm}>{\raggedright\arraybackslash}p{3.8cm}>{\raggedright\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}p{3.2cm}@{}}
+\caption{Fuentes del proyecto y función de cada una.}\label{tab:fuentes}\\
+\toprule
+\textbf{Fuente} & \textbf{Función} & \textbf{Unidad de la fila} & \textbf{Periodo} & \textbf{Filas de hurto en Bogotá} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Fuente} & \textbf{Función} & \textbf{Unidad de la fila} & \textbf{Periodo} & \textbf{Filas de hurto en Bogotá} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Policía Nacional, registro & Principal: requisito de volumen y variable objetivo & Una víctima de hurto a personas (\texttt{CANTIDAD} = 1) & 2020--2025 & 741.986 \\
+\addlinespace
+Fiscalía, Procesos V3 & Complementaria: respuesta judicial & Un par proceso--delito, capítulo «Del Hurto», todas las modalidades & 2018--2025 & 1.300.703 (991.471 en 2020--2025) \\
+\addlinespace
+Línea 123 & Complementaria: demanda ciudadana y territorio & Conteo de llamadas por año, mes, localidad, UPZ y tipo de incidente & 2018--2025 & 25.144 filas que suman 1.094.313 llamadas (19.286 y 821.304 en 2020--2025) \\
+\addlinespace
+MinDefensa, agregado diario & Contexto 2018--2019 y control de consistencia & Conteo de hurtos por día y municipio & 2018--2025 & 2.922 días que suman 975.793 hurtos \\
+\end{longtable}
+}
+
+\subsection{Requisito mínimo de 500.000 registros}
+
+El requisito se cumple con una sola fuente y una sola unidad de observación: el registro de hurto a personas de la Policía Nacional, en el que cada fila es una víctima. La tabla~\ref{tab:embudo} muestra el embudo de filtros sobre los seis archivos anuales. Las filas de fuentes distintas no se suman, porque una misma situación puede generar a la vez una llamada, un registro policial y un proceso judicial.
 
 \begin{table}[H]
 \centering
-\caption{Ficha preliminar de los datos de incidentes tramitados por Línea 123.}
-\begin{tabularx}{\textwidth}{@{}p{5.3cm}X@{}}
+\caption{Embudo de filtros del registro de la Policía Nacional, 2020--2025.}\label{tab:embudo}
+\begin{tabular}{@{}lr@{}}
 \toprule
-\textbf{Característica} & \textbf{Valor} \\
+\textbf{Etapa} & \textbf{Filas} \\
 \midrule
-Nombre & Incidentes tramitados en el C4, Línea 123 \\
-Entidad publicadora & Distrito Capital, Datos Abiertos Bogotá \\
-Cobertura & Bogotá; serie publicada desde 2015 \\
-Periodo de interés & 2018-01-01 a 2025-12-31 \\
-Filas reportadas por el equipo (todos los incidentes) & 763.074; pendiente de reproducir \\
-Filas con tres categorías que contienen ``hurto'' & 25.144; pendiente de reproducir \\
-Suma reportada del campo de incidentes en esas categorías & 1.094.313; pendiente de verificar \\
-Unidad de observación & Registro de incidentes tramitados, posiblemente agregado \\
+Seis archivos anuales, todo el país y todos los delitos & 4.829.870 \\
+Bogotá (\texttt{CODIGO DANE} = 11001) & 1.406.157 \\
+Hurto a personas (\texttt{DELITOS} = «(05022) Hurto a personas») & \textbf{741.986} \\
 \bottomrule
-\end{tabularx}
+\end{tabular}
 \end{table}
 
-Estos datos permiten estudiar frecuencias por fecha y territorio cuando los atributos lo permitan. La variable \texttt{CANT\_INCIDENTES} es un conteo que debe diferenciarse del número de filas. Aunque el archivo completo puede superar 500.000 registros, los incidentes clasificados como hurtos son un subconjunto menor. Su idoneidad como fuente predictiva principal depende de la definición final del problema.
+La cifra está verificada de tres maneras:
+\begin{enumerate}
+  \item \textbf{Dos descargas independientes.} Los seis archivos, descargados por separado el 11 y el 12 de noviembre de 2026, tienen el mismo SHA-256. Las dos ejecuciones de la auditoría producen el mismo embudo, los mismos nulos y los mismos duplicados.
+  \item \textbf{La unidad es individual.} \texttt{CANTIDAD} vale 1 en todas las filas, así que el número de filas coincide con la suma de víctimas.
+  \item \textbf{Concordancia con el agregado de MinDefensa.} En 2020--2025 el agregado diario suma 741.987 hurtos: cinco de los seis años coinciden exactamente, y la diferencia de un registro se concentra en siete días de marzo de 2024 que se compensan entre sí.
+\end{enumerate}
 
-\subsection{Fuente 2: Policía Nacional, hurto a personas}
+Conviene distinguir dos cantidades que se documentan por separado:
+\begin{itemize}
+  \item el \textbf{conjunto original}, de 741.986 filas, es el que sostiene el requisito;
+  \item el \textbf{conjunto de modelamiento} es la serie diaria obtenida al agregar esas filas: 2.192 observaciones (sección~\ref{sec:objetivo}).
+\end{itemize}
+Que la serie tenga menos de 500.000 observaciones no cambia el volumen de la fuente.
 
 \begin{table}[H]
 \centering
-\caption{Atributos de interés en los archivos anuales de la Policía Nacional.}
+\caption{Víctimas de hurto a personas registradas en Bogotá por año.}\label{tab:anual}
+\begin{tabular}{@{}lrrrrrr@{}}
+\toprule
+ & \textbf{2020} & \textbf{2021} & \textbf{2022} & \textbf{2023} & \textbf{2024} & \textbf{2025} \\
+\midrule
+Registros (víctimas) & 83.136 & 109.428 & 137.157 & 158.745 & 130.503 & 123.017 \\
+Media diaria & 227,15 & 299,80 & 375,77 & 434,92 & 356,57 & 337,03 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Fuente principal: Policía Nacional, delitos a nivel de registro}
+
+La Policía publica un archivo anual con todos los delitos del país, una fila por víctima. Los años 2020 a 2025 están disponibles a este nivel; 2018 y 2019 no. El formato cambia entre años: el encabezado está en la fila 12 o en la 13, la columna del arma se llama \texttt{ARMA MEDIO} en 2021, y el archivo de 2023 no trae la columna \texttt{ICCS}. El conversor detecta el encabezado, descarta las 25.207 filas de notas del pie y unifica el nombre del arma. El filtro de hurto usa \texttt{DELITOS}, que existe en los seis años con la misma etiqueta. La tabla~\ref{tab:variables-policia} resume las variables tal como aparecen en los archivos y su perfil dentro de la población de 741.986 filas.
+
+{\small
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{3.3cm}>{\raggedright\arraybackslash}p{1.8cm}>{\raggedright\arraybackslash}p{10.2cm}@{}}
+\caption{Variables del registro de la Policía en la población de hurto a personas en Bogotá.}\label{tab:variables-policia}\\
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Contenido y perfil} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Columna} & \textbf{Tipo} & \textbf{Contenido y perfil} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\texttt{FECHA HECHO} & Fecha & Día del hecho (AAAA/MM/DD), sin hora. Sin nulos; los 2.192 días del periodo tienen al menos un registro. \\
+\texttt{DEPARTAMENTO}, \texttt{MUNICIPIO}, \texttt{CODIGO DANE} & Texto & Ubicación hasta el municipio. No hay localidad, barrio ni coordenadas. \\
+\texttt{DELITOS} & Categórico & Tipo de delito; el filtro conserva «(05022) Hurto a personas». \\
+\texttt{ARMAS MEDIOS} & Categórico & Ocho categorías, sin nulos: sin empleo de armas (468.806; 63,2\,\%), arma blanca o cortopunzante (151.687; 20,4\,\%), arma de fuego (78.303; 10,6\,\%), contundentes (21.131), no reportado (15.558), escopolamina (6.449) y dos residuales. \\
+\texttt{GENERO} & Categórico & Masculino (435.289; 58,7\,\%) y femenino (306.075; 41,3\,\%); 622 nulos (0,08\,\%). \\
+\texttt{*AGRUPA EDAD PERSONA*} & Categórico & Tres grupos: 18 años y más (733.946; 98,9\,\%), 14 a 17 (6.609) y 0 a 14 (1.039); 392 nulos (0,05\,\%). \\
+\texttt{MES} & Numérico & Mes del hecho, redundante con la fecha. \\
+\texttt{CANTIDAD} & Numérico & Vale 1 en todas las filas. \\
+\texttt{ICCS} & Texto & Código de la clasificación internacional del delito; ausente en 2023, no se usa. \\
+\end{longtable}
+}
+
+Dos rasgos de esta fuente condicionan su tratamiento:
+\begin{itemize}
+  \item \textbf{Filas idénticas legítimas.} El archivo no publica identificador de víctima ni de hecho, así que dos víctimas del mismo día con el mismo arma, género y grupo de edad producen filas idénticas. Por eso 713.344 de las 741.986 filas repiten otra fila, y \textbf{no se eliminan}: quitarlas dejaría 28.642 filas y borraría víctimas reales. El control de consistencia de esta fuente es el agregado de MinDefensa, no la unicidad de filas.
+  \item \textbf{Variables de la víctima sin validar.} El pie del archivo advierte que el género y la edad no tienen calidad validada en completitud. En Bogotá sus nulos son mínimos, pero la advertencia se mantiene como limitación.
+\end{itemize}
+
+\subsection{Fuente complementaria: Fiscalía, Procesos V3}
+
+El conjunto \emph{Procesos Fiscalía V3} contiene las noticias criminales del Sistema Penal Oral Acusatorio. Se descargó con la API de datos.gov.co filtrando Bogotá (\texttt{cod\_dane\_hecho} = 11001) y el capítulo «Del Hurto». La auditoría da 2.002.177 filas en total y 1.300.703 con año del hecho entre 2018 y 2025. Esas filas corresponden a 1.297.042 procesos distintos, porque un proceso puede tener varios delitos: hay 3.661 filas repetidas, de 3.094 procesos.
+
+La columna \texttt{delito} registra el tipo penal, es decir, el artículo del Código Penal, la cuantía y, si la hay, la circunstancia de agravación. No registra la víctima. Por eso \textbf{no es posible aislar el hurto a personas en esta fuente} (tabla~\ref{tab:fiscalia}):
+\begin{itemize}
+  \item el texto solo permite excluir 123.506 filas de modalidades identificables, como los vehículos o los establecimientos públicos;
+  \item de las 1.177.197 restantes, 1.108.399 (94,2\,\%) son tipos genéricos, como «Hurto. Art. 239 C.P.», en los que van juntos el hurto a personas, a residencias y a comercio.
+\end{itemize}
+
+\begin{table}[H]
+\centering
 \small
-\begin{tabularx}{\textwidth}{@{}p{3.0cm}p{2.3cm}X@{}}
+\caption{Filas de Fiscalía 2018--2025 según la modalidad que nombra la columna \texttt{delito}.}\label{tab:fiscalia}
+\begin{tabularx}{\textwidth}{@{}Xrr@{}}
 \toprule
-\textbf{Campo} & \textbf{Tipo} & \textbf{Descripción} \\
+\textbf{Grupo} & \textbf{Filas} & \textbf{\%} \\
 \midrule
-Fecha del hecho & Fecha & Referencia temporal del registro. \\
-Municipio & Texto & Lugar de ocurrencia; se filtrará Bogotá D.~C. \\
-Arma o medio & Categórico & Medio consignado en el registro. \\
-Género & Categórico & Característica registrada de la víctima. \\
-Grupo de edad & Categórico & Rango de edad consignado. \\
-Cantidad & Numérico & Conteo registrado, según definición del archivo. \\
+Tipos genéricos sin modalidad (art. 239 y 240, con o sin cuantía) & 1.108.399 & 85,22 \\
+Otros tipos no excluibles (agravantes que no nombran el objeto) & 68.798 & 5,29 \\
+Medios motorizados o lo que transporten (art. 241, num. 6) & 59.616 & 4,58 \\
+Establecimiento público (art. 241, num. 11) & 53.162 & 4,09 \\
+Automotores & 10.558 & 0,81 \\
+Abigeato, predio rural, objetos especiales y sin detalle & 170 & 0,01 \\
+\midrule
+Total & 1.300.703 & 100,00 \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-El portal ofrece archivos anuales, incluidos los periodos de 2018 a 2025. Una revisión preliminar del archivo 2025 realizada por el equipo reportó 123.364 filas filtradas para Bogotá; esta cifra requiere verificación reproducible. Se consolidarán años solamente después de homologar encabezados, formatos y unidades de observación, especialmente por posibles cambios institucionales en la producción estadística. No se asumirá que cada fila equivale automáticamente a una víctima distinta.
+En consecuencia, las cifras de Fiscalía se citan siempre como «hurto en todas sus modalidades» y no se comparan en magnitud con el hurto a personas de la Policía. Esta fuente se usa para comparar tendencias, analizar la evolución de las noticias criminales y estudiar las diferencias entre el registro policial y el judicial. Sus filas no se interpretan como víctimas ni como hechos únicos. La fecha que se usa es la del hecho (año y mes). Del total descargado, 767 filas no la traen y quedan fuera del periodo; la fecha de creación del proceso no la sustituye.
 
-\subsection{Fuente 3: Fiscalía General de la Nación, Procesos V3}
+\subsection{Fuente complementaria: Línea 123}
 
-El dataset \emph{Procesos Fiscalía V3} contiene noticias criminales del Sistema Penal Oral Acusatorio (SPOA). Su esquema incluye los campos \texttt{proceso\_anonimizado}, \texttt{cod\_dane\_hecho}, \texttt{municipio\_hecho}, \texttt{a\_o\_hecho}, \texttt{mes\_hecho}, \texttt{tipo\_delito}, \texttt{delito}, \texttt{estado} y \texttt{etapa}. Para la selección se filtrará Bogotá (código 11001), años de ocurrencia 2018--2025 y una definición explícita de categorías correspondientes a hurto. El volumen de filas resultantes y el número de procesos únicos \textbf{aún no están confirmados}.
+El recurso de llamadas tramitadas del C4 publica conteos agregados: cada fila suma las llamadas de un año, un mes, una localidad, una UPZ y un tipo de incidente en la columna \texttt{CANT\_INCIDENTES}. El archivo tiene 1.117.394 filas de 2015 a 2026, 763.074 de ellas en 2018--2025. Las de tipos de incidente con «HURTO» son 25.144 y suman 1.094.313 llamadas. En el periodo principal son 19.286 filas que suman 821.304 llamadas.
 
-Algunas noticias criminales pueden incluir más de un delito, duplicidades asociadas a procesos conexos o actualizaciones de estado. Por tanto, se evaluará el conteo de identificadores distintos y se evitará equiparar automáticamente filas con hechos o víctimas. La granularidad temporal observada en la metadata corresponde a año, mes y trimestre, lo cual resulta más apropiado para contrastes mensuales que para pronósticos diarios.
+En esta fuente el volumen es la suma de \texttt{CANT\_INCIDENTES}, no el número de filas, y la columna \texttt{ID} no es única (166 identificadores repetidos entre las filas de hurto). Es la única fuente con resolución territorial dentro de la ciudad: 20 localidades y 116 UPZ, más valores sin ubicación («SIN LOCALIZACION», «SIN UPZ \ldots» y «-»). La figura~\ref{fig:localidad} muestra la distribución por localidad. Kennedy, Engativá y Suba concentran el 34,9\,\% de las llamadas de hurto de 2020--2025, y las llamadas sin localización son el 0,69\,\%. Esta distribución describe la demanda de atención y no se contrasta con las otras fuentes, que no identifican la localidad.
+
+\begin{figure}[H]
+\centering
+\IfFileExists{figuras/linea123_localidad.pdf}{\includegraphics[width=0.78\textwidth]{figuras/linea123_localidad.pdf}}{\fbox{Figura pendiente: \texttt{figuras/linea123\_localidad.pdf}}}
+\caption{Llamadas de hurto a la Línea 123 por localidad, 2020--2025 (suma de \texttt{CANT\_INCIDENTES}). Fuente: \texttt{outputs/informe/linea123\_localidad\_2020\_2025.csv}.}\label{fig:localidad}
+\end{figure}
+
+\subsection{Calidad de los datos}
+
+La tabla~\ref{tab:calidad} resume los hallazgos de calidad de la población que usa cada fuente. Lo que la auditoría marca como anomalía no siempre es un error: varias marcas son rasgos de la fuente que se documentan, no se corrigen.
+
+{\small
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{2.2cm}>{\raggedright\arraybackslash}p{6.6cm}>{\raggedright\arraybackslash}p{6.5cm}@{}}
+\caption{Hallazgos de calidad y tratamiento previsto.}\label{tab:calidad}\\
+\toprule
+\textbf{Fuente} & \textbf{Hallazgo} & \textbf{Tratamiento} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Fuente} & \textbf{Hallazgo} & \textbf{Tratamiento} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Policía & 713.344 filas idénticas a otra, por falta de identificador & No deduplicar; controlar con el agregado diario \\
+\addlinespace
+Policía & Nulos: 622 en género (0,08\,\%) y 392 en grupo de edad (0,05\,\%); ninguno en fecha ni en arma & No imputar; tratar el nulo como categoría «no reportado» \\
+\addlinespace
+Policía & Caída abrupta en noviembre y diciembre de 2025: 5.416 y 5.700 víctimas, frente a 12.228 en octubre. Las mismas cifras aparecen en el agregado de MinDefensa y en los cuadros de salida validados de la Policía, y el hurto a residencias y a comercio de Bogotá cae en los mismos meses & Causa no establecida (issue \#86). Hasta aclararla, esos meses no se usan para evaluar modelos y no se interpretan como un descenso real \\
+\addlinespace
+Fiscalía & 3.661 filas repetidas, de 3.094 procesos con varios delitos & Contar filas o procesos según el análisis, declarándolo \\
+\addlinespace
+Fiscalía & 767 filas del total descargado sin fecha del hecho & Quedan fuera del periodo; no se imputan \\
+\addlinespace
+Fiscalía & Modalidad no identificable en el 94,2\,\% de las filas no excluibles & Citar como hurto en todas sus modalidades \\
+\addlinespace
+Línea 123 & \texttt{ID} repetido en 166 filas de hurto & No usar \texttt{ID} como clave \\
+\addlinespace
+Línea 123 & Valores sin ubicación en localidad y UPZ & Separarlos antes de cualquier análisis territorial \\
+\end{longtable}
+}
+
+\subsection{Cobertura temporal}
+
+La figura~\ref{fig:series} compara las series mensuales de las tres fuentes, cada una en su unidad. Las tres caen en abril de 2020, durante el aislamiento obligatorio, y suben hasta 2022--2023. El tramo de 2018--2019 aparece solo como contexto: para la Policía corresponde al agregado de MinDefensa, porque no hay registros individuales de esos años. La caída de la Policía en noviembre y diciembre de 2025 es la anomalía señalada en la tabla~\ref{tab:calidad}; la Fiscalía también baja en noviembre, de 18.687 a 10.505 filas, pero se recupera en diciembre. Las tres series se comparan en tendencia, no en magnitud: sus unidades son distintas y sus valores no se suman.
+
+\begin{figure}[H]
+\centering
+\IfFileExists{figuras/series_mensuales_fuentes.pdf}{\includegraphics[width=\textwidth]{figuras/series_mensuales_fuentes.pdf}}{\fbox{Figura pendiente: \texttt{figuras/series\_mensuales\_fuentes.pdf}}}
+\caption{Series mensuales de las tres fuentes, cada una en su propia unidad. Fuente: \texttt{outputs/informe/series\_mensuales\_fuentes.csv}.}\label{fig:series}
+\end{figure}
 
 \subsection{Unidades de observación y posibilidades de integración}
 
-Las tres fuentes describen fenómenos relacionados, pero cada fila representa algo distinto. La tabla~\ref{tab:compatibilidad} resume qué es una fila en cada fuente y con qué resolución temporal y territorial se publica. Las cifras de Línea 123 y Fiscalía provienen de la auditoría reproducible (\texttt{outputs/auditoria/}). Las de Policía provienen de la inspección del archivo 2024 a nivel de registro; los demás años se verificarán al completar su auditoría.
+Las tres fuentes describen fenómenos relacionados, pero cada fila representa algo distinto. La tabla~\ref{tab:compatibilidad} resume qué es una fila en cada fuente y con qué resolución temporal y territorial se publica. Las cifras de Línea 123 y Fiscalía provienen de \texttt{outputs/auditoria/}, y las de la Policía, de la auditoría de los seis archivos anuales (\texttt{outputs/auditoria\_policia/}).
 
 {\small
 \setlength{\tabcolsep}{4pt}
@@ -333,9 +491,9 @@ Las tres fuentes describen fenómenos relacionados, pero cada fila representa al
 \endfoot
 Qué es una fila & Un agregado de llamadas procedentes por año, mes, localidad, UPZ y tipo de incidente & Un registro con \texttt{CANTIDAD} = 1 que trae el género y el grupo de edad de una persona, es decir, una víctima & Un par proceso--delito (noticia criminal); un mismo proceso puede ocupar varias filas \\
 \addlinespace
-Medida de conteo & Suma de \texttt{CANT\_INCIDENTES}, no número de filas: 25.144 filas de hurto suman 1.094.313 llamadas (2018--2025) & Número de filas, igual a la suma de \texttt{CANTIDAD}: 130.503 en 2024 & Filas o procesos únicos: 1.300.703 filas y 1.297.042 procesos (2018--2025) \\
+Medida de conteo & Suma de \texttt{CANT\_INCIDENTES}, no número de filas: 25.144 filas de hurto suman 1.094.313 llamadas (2018--2025) & Número de filas, igual a la suma de \texttt{CANTIDAD}: 741.986 en 2020--2025 & Filas o procesos únicos: 1.300.703 filas y 1.297.042 procesos (2018--2025) \\
 \addlinespace
-Resolución temporal & Año y mes & Fecha diaria del hecho & Año y mes del hecho (767 filas «Sin Información»); también año y mes de creación del proceso \\
+Resolución temporal & Año y mes & Fecha diaria del hecho & Año y mes del hecho (767 filas del total descargado no lo traen); también año y mes de creación del proceso \\
 \addlinespace
 Resolución territorial & 20 localidades y 116 UPZ, más valores sin ubicación («SIN LOCALIZACION», «SIN UPZ \ldots» y «-»), que suman 121.254 filas de UPZ & Municipio (código DANE); sin localidad ni barrio & Municipio (todo 11001), zona urbana o rural y seccional; sin localidad \\
 \addlinespace
@@ -365,9 +523,51 @@ Qué mide & Demanda ciudadana de atención (llamadas) & Hechos denunciados o con
   \item \textbf{Usar la fecha de creación del proceso como fecha del hecho,} o datos que no estarían disponibles al momento de predecir. Los registros judiciales de un mes pueden completarse meses después, así que su uso como predictor exigirá controlar ese rezago.
 \end{itemize}
 
+\subsection{Variable objetivo y conjunto de modelamiento}\label{sec:objetivo}
+
+La variable objetivo es el \textbf{número diario de víctimas de hurto a personas registradas por la Policía Nacional en Bogotá}. Se obtiene contando, para cada fecha del hecho, las filas del registro que pasan los filtros de la tabla~\ref{tab:embudo}. El resultado es una serie de 2.192 días, del 1 de enero de 2020 al 31 de diciembre de 2025, que suma las 741.986 víctimas. Ningún día queda vacío, así que no hay que imputar valores. La tabla~\ref{tab:serie} resume la serie y la figura~\ref{fig:serie} la muestra.
+
+\begin{table}[H]
+\centering
+\caption{Estadísticas descriptivas de la serie diaria objetivo, 2020--2025.}\label{tab:serie}
+\begin{tabular}{@{}lr@{}}
+\toprule
+\textbf{Estadístico} & \textbf{Valor} \\
+\midrule
+Días (observaciones del conjunto de modelamiento) & 2.192 \\
+Días sin registros & 0 \\
+Media de víctimas por día & 338,50 \\
+Mediana & 337 \\
+Desviación estándar & 115,61 \\
+Mínimo & 25 (22 de marzo de 2020) \\
+Máximo & 718 (23 de septiembre de 2022) \\
+Media del día de la semana con más víctimas (viernes) & 398,22 \\
+Media del día de la semana con menos víctimas (domingo) & 242,29 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\IfFileExists{figuras/serie_diaria_policia.pdf}{\includegraphics[width=\textwidth]{figuras/serie_diaria_policia.pdf}}{\fbox{Figura pendiente: \texttt{figuras/serie\_diaria\_policia.pdf}}}
+\caption{Víctimas diarias de hurto a personas registradas en Bogotá y media móvil de 28 días. Fuente: \texttt{outputs/serie\_objetivo/serie\_diaria\_policia.csv}.}\label{fig:serie}
+\end{figure}
+
+La serie muestra cuatro rasgos que el modelamiento deberá tener en cuenta:
+\begin{itemize}
+  \item un mínimo durante el aislamiento obligatorio de 2020;
+  \item una recuperación hasta un máximo en el segundo semestre de 2022;
+  \item una estacionalidad semanal marcada, con más registros de martes a sábado que el domingo y el lunes;
+  \item la caída de noviembre y diciembre de 2025 descrita en la tabla~\ref{tab:calidad}.
+\end{itemize}
+
+Las demás fuentes solo podrán entrar al modelo como variables explicativas si están disponibles antes del día que se pronostica y tienen una justificación metodológica. La Línea 123 y la Fiscalía publican por mes y con rezago, así que su uso en un pronóstico diario exigirá rezagos de al menos un mes. Se evaluará en la segunda entrega.
+
+El pronóstico es para el total de la ciudad. Un pronóstico por localidad no es viable con esta fuente, porque el registro no identifica la localidad.
+
 \subsection{Variables derivadas previstas}
 
-En la segunda entrega se evaluará la construcción de variables de calendario (año, mes, día de la semana, cuando exista fecha diaria), rezagos y estadísticas móviles basadas únicamente en observaciones pasadas. Se diferenciarán los conteos policiales de incidentes 123 y procesos de Fiscalía para evitar filtración de información futura.
+En la segunda entrega se construirán, sobre la serie diaria, variables de calendario (año, mes, día de la semana y festivos), rezagos y estadísticas móviles calculadas solo con observaciones pasadas. Las series de la Línea 123 y de la Fiscalía solo se usarán con el rezago con que estarían disponibles al momento de pronosticar, para evitar filtrar información futura.
 
 Estas variables son propuestas metodológicas, no campos existentes en la base original. Su utilidad real se comprobará mediante el análisis exploratorio y la evaluación de modelos.
 
@@ -379,13 +579,13 @@ También se analizarán localidades ausentes o categorías sin ubicación en las
 
 \subsection{Análisis y productos previstos para las siguientes entregas}
 
-La segunda entrega incorporará tablas descriptivas, distribuciones de frecuencia y tendencias anuales y mensuales sobre las tres fuentes, identificando diferencias en categorías y cobertura. Posteriormente se compararán modelos de pronóstico con una línea base estacional y alternativas como SARIMA, Random Forest y XGBoost, sujetos a los resultados de la exploración y a la selección de la variable objetivo.
+La segunda entrega profundizará el análisis exploratorio de la serie objetivo (tendencia, estacionalidad y valores atípicos) y la comparación de tendencias entre fuentes. La tercera comparará modelos de pronóstico de la serie diaria con una línea base estacional ingenua, como repetir el valor del mismo día de la semana anterior, y alternativas como SARIMA, Random Forest y XGBoost.
 
 La evaluación empleará una separación cronológica de entrenamiento y prueba, evitando mezclar observaciones futuras en el entrenamiento. Se considerarán métricas como error absoluto medio (MAE) y raíz del error cuadrático medio (RMSE). Esta sección establece el plan de análisis; \textbf{no presenta preprocesamiento ejecutado, modelos entrenados ni resultados predictivos}, pues estos corresponden a las siguientes entregas.
 
 \subsection{Consideraciones éticas y limitaciones}
 
-El proyecto utilizará fuentes públicas agregadas y no elaborará perfiles individuales. La identificación de zonas con mayores conteos no implica que sus habitantes sean responsables de los delitos. Las diferencias territoriales pueden reflejar, entre otros factores, densidad de población, actividades económicas, población flotante, subregistro o calidad de localización. Por tanto, se evitarán conclusiones causales o estigmatizantes y se documentarán los límites de extrapolación de los modelos.
+El proyecto utilizará fuentes públicas anonimizadas y no elaborará perfiles individuales. La identificación de zonas con mayores conteos no implica que sus habitantes sean responsables de los delitos. Las diferencias territoriales pueden reflejar, entre otros factores, densidad de población, actividades económicas, población flotante, subregistro o calidad de localización. Por tanto, se evitarán conclusiones causales o estigmatizantes y se documentarán los límites de extrapolación de los modelos.
 
 \clearpage
 \begin{thebibliography}{}
@@ -409,8 +609,8 @@ Garzón Acosta, J. J. (2025). \emph{Modelos de predicción del hurto a personas 
 Martínez Chitiva, A. V. (2025). \emph{Análisis espacio-temporal para caracterización, predicción y mitigación del hurto a personas en Bogotá} [Tesis de maestría, Universidad de Manizales]. Repositorio Institucional RIDUM. \url{https://ridum.umanizales.edu.co/handle/20.500.12746/7648}
 
 \bibitem[{Policía Nacional de Colombia}(2026)]{policia}
-% PENDIENTE (issues #10 y #18): ajustar el título y los años al recurso finalmente usado.
-Policía Nacional de Colombia. (2026). \emph{Información de delitos a nivel de registro} [Conjunto de datos; archivos anuales]. Dirección de Investigación Criminal e INTERPOL. Recuperado el 11 de noviembre de 2026, de \url{https://www.policia.gov.co/estadistica-delictiva}
+% Recurso usado (D-01, issue #18): archivos anuales 2020--2025 a nivel de registro.
+Policía Nacional de Colombia. (2026). \emph{Información de delitos a nivel de registro} [Conjunto de datos; archivos anuales 2020--2025]. Dirección de Investigación Criminal e INTERPOL. Recuperado el 11 de noviembre de 2026, de \url{https://www.policia.gov.co/estadistica-delictiva}
 
 \bibitem[Provost y Fawcett(2013)]{provost2013}
 Provost, F., y Fawcett, T. (2013). \emph{Data science for business: What you need to know about data mining and data-analytic thinking}. O'Reilly Media.
