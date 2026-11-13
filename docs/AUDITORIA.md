@@ -86,6 +86,8 @@ python scripts/auditoria_datasets.py --archivo "data/raw/policia/*.xlsx" --fuent
 
 Opciones útiles: `--chunksize 100000` (memoria), `--salida outputs/auditoria`, `--sin-figuras`, `--minimo 500000` y `-v`.
 
+**`--fuentes` y la carpeta de salida.** Cada ejecución reescribe todas las salidas de `--salida`. Si esa carpeta ya tiene resultados de fuentes que no están en `--fuentes`, el script se detiene con el código `2` en lugar de borrarlos. Use otra `--salida`, incluya esas fuentes o, si quiere sustituirlos a propósito, añada `--forzar`.
+
 Códigos de salida: `0` correcto · `2` error de configuración o de datos (el mensaje indica qué corregir) · `3` archivo inaccesible.
 
 ## Salidas (`outputs/auditoria/`)

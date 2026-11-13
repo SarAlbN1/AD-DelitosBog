@@ -9,7 +9,8 @@ constante, y deja un CSV que la auditoría sí procesa por bloques.
 
 Qué hace, además de convertir:
 
-- Salta el membrete. El encabezado de estos archivos está en la fila 12 (`--fila-encabezado 12`).
+- Salta el membrete. La fila del encabezado cambia entre años (12 o 13), así que por defecto se
+  detecta (`--fila-encabezado auto`); puede fijarse con `--fila-encabezado <n>`.
 - Descarta el pie del archivo con el mismo criterio que `recortar_pie()` de la auditoría: el bloque
   final de filas con, a lo sumo, una celda no vacía (notas, «Fecha de entrega», filas en blanco).
   No lo hace en silencio: cuenta las filas descartadas y guarda su texto.
