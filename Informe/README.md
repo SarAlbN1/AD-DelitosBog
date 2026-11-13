@@ -1,33 +1,42 @@
 # Informe — Analítica de Datos
 
-**Proyecto:** Análisis multifuente y predicción del hurto a personas en Bogotá D. C. mediante técnicas de minería de datos y aprendizaje automático.
+**Proyecto:** Análisis multifuente y predicción del hurto a personas en Bogotá D. C., 2020–2025, mediante técnicas de minería de datos y aprendizaje automático.
 
 **Autores:** Juan Diego Rojas y Sara Albarracín. **Profesor:** Ferney Maldonado López.
 
 ## Primera entrega
 
-Archivo: [primera_entrega.tex](primera_entrega.tex). Secciones 2 (Introducción), 3 (Trabajos relacionados) y 4 (Recolección y entendimiento de datos). Es autocontenido y puede compilarse en Overleaf con pdfLaTeX. La sección 1 y las secciones 5–11 corresponden a entregas posteriores.
+Archivo: [primera_entrega.tex](primera_entrega.tex). Contiene las secciones 2 (Introducción), 3 (Trabajos relacionados) y 4 (Recolección y entendimiento de datos). La sección 1 y las secciones 5–11 corresponden a entregas posteriores.
 
-## Fuentes acordadas
+Se compila en Overleaf con pdfLaTeX. Hay que subir también la carpeta [`figuras/`](figuras/). Si falta una figura, el informe compila igual y muestra un recuadro «Figura pendiente».
 
-1. [Línea 123 — incidentes tramitados](https://datosabiertos.bogota.gov.co/dataset/incidentes).
-2. [Policía Nacional — hurto a personas, archivos anuales](https://www.policia.gov.co/delitos-de-impacto/hurto-personas).
-3. [Fiscalía — Procesos Fiscalía V3](https://www.datos.gov.co/d/dbdv-iihs).
+## Fuentes y función de cada una
 
-## Evidencia pendiente para el requisito de al menos 500.000 registros
+Las decisiones están en [`docs/decisiones.md`](../docs/decisiones.md), D-01.
 
-No sumar filas de datasets institucionales distintos para alcanzar el mínimo. Para cada fuente registrar en un archivo de auditoría:
+| Fuente | Función | Filas de hurto en Bogotá |
+|---|---|---:|
+| [Policía Nacional — delitos a nivel de registro](https://www.policia.gov.co/estadistica-delictiva) | Principal: requisito de 500.000 y variable objetivo | 741.986 (2020–2025) |
+| [Fiscalía — Procesos Fiscalía V3](https://www.datos.gov.co/d/dbdv-iihs) | Complementaria; hurto en todas sus modalidades | 1.300.703 (2018–2025) |
+| [Línea 123 — llamadas tramitadas](https://datosabiertos.bogota.gov.co/dataset/incidentes) | Complementaria; demanda ciudadana y localidad | 25.144 filas, 1.094.313 llamadas (2018–2025) |
 
-- URL exacta, nombre del archivo, fecha de descarga, tamaño y SHA-256.
-- Filas del archivo completo, filas de Bogotá (código DANE 11001), filas 2018–2025 y filas de categorías pertinentes a hurto.
-- Número de registros únicos de acuerdo con la unidad de observación, valores nulos, duplicados, y criterio de filtrado de delitos.
-- En Línea 123 diferenciar **número de filas** de suma de **CANT_INCIDENTES**. En Fiscalía distinguir fila, proceso anonimizado y tipo de delito. En Policía verificar si cada fila corresponde a un registro, un hecho o un conteo agregado.
-- Dejar el conjunto que cumple el umbral de manera independiente claramente identificado; si la fuente supera 500.000 filas solo incluyendo categorías ajenas al hurto, consultar al profesor si ese universo es válido.
+Las filas de fuentes distintas no se suman.
 
-Los volúmenes preliminares compartidos por el equipo (Línea 123: 763.074 filas de todos los incidentes para 2018–2025; 25.144 filas con categorías que contienen «hurto»; Policía 2025: 123.364 filas Bogotá) **no se presentan como cifras finales auditadas**.
+## De dónde sale cada cifra y figura de la sección 4
 
-## Coordinación
+| Salida | Script |
+|---|---|
+| `outputs/auditoria/`, `outputs/auditoria_policia/` | `scripts/auditoria_datasets.py` ([docs/AUDITORIA.md](../docs/AUDITORIA.md)) |
+| `outputs/serie_objetivo/` y `figuras/serie_diaria_policia.pdf` | `scripts/serie_objetivo_policia.py` |
+| `outputs/informe/fiscalia_*.csv` | `scripts/fiscalia_modalidades.py` |
+| `outputs/informe/series_mensuales_fuentes.csv`, `linea123_localidad_2020_2025.csv` y sus figuras | `scripts/figuras_informe.py` |
 
-Sara: cuando tengas listo el trabajo de segunda entrega en local, publícalo en una rama propia o avisa antes de integrarlo a `main`; comparte los CSV/diccionarios filtrados y el resumen de conteos verificables para actualizar la sección 4.
+Las figuras de `figuras/` son copias de las de `outputs/`. Si se regeneran, hay que volver a copiarlas.
 
-Juan Diego: actualizar `Informe/primera_entrega.tex` con las cifras definitivas, metodología de extracción y cualquier ajuste de objetivos que surja de la auditoría, preservando el trabajo de la segunda entrega.
+```bash
+python scripts/policia_registro_a_csv.py --entrada data/raw/policia_registro --salida data/raw/policia_registro/csv
+python scripts/serie_objetivo_policia.py
+python scripts/fiscalia_modalidades.py
+python scripts/figuras_informe.py
+cp outputs/serie_objetivo/figuras/serie_diaria_policia.pdf outputs/informe/figuras/series_mensuales_fuentes.pdf outputs/informe/figuras/linea123_localidad.pdf Informe/figuras/
+```
