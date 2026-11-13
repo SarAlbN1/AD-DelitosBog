@@ -7,7 +7,9 @@ Proyecto de Analítica de Datos de Ingeniería de Sistemas, Pontificia Universid
 El proyecto usa tres fuentes de delito, descritas en [data/README.md](data/README.md):
 - **Policía, registro:** una fila por víctima. Es la fuente principal y la base de la variable objetivo. El agregado diario de MinDefensa solo cubre 2018–2019 como contexto.
 - **Fiscalía:** procesos por hurto en todas sus modalidades, una fila por proceso–delito. Es complementaria.
-- **Línea 123:** llamadas tramitadas. Es complementaria. Las tres tienen unidades de observación distintas y no se suman entre sí.
+- **Línea 123:** llamadas tramitadas. Es complementaria.
+
+Las tres tienen unidades de observación distintas y no se suman entre sí.
 
 ## Reproducción
 
