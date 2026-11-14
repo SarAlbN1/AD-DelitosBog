@@ -160,7 +160,10 @@ def construir(serie: pd.DataFrame, objetivo: str = "victimas") -> pd.DataFrame:
     X["festivo"] = es_festivo.astype(int)
     X["vispera_de_festivo"] = es_festivo.shift(-1, fill_value=False).astype(int)
     X["dia_despues_de_festivo"] = es_festivo.shift(1, fill_value=False).astype(int)
-    # Puente: festivo en lunes, o lunes laboral entre domingo y festivo en martes.
+    # Puente: festivo que cae en lunes. La Ley Emiliani traslada al lunes la mayoría de los
+    # festivos movibles, así que esta condición cubre los puentes reales del calendario
+    # colombiano. No se marca el caso del lunes laboral entre domingo y un festivo en martes,
+    # que con el traslado al lunes casi no ocurre.
     X["puente"] = (es_festivo.to_numpy() & (idx.dayofweek == 0)).astype(int)
 
     # ---- pasado: solo valores anteriores a t
