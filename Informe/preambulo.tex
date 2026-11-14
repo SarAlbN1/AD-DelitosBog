@@ -1,0 +1,43 @@
+% Preámbulo del informe · Se incluye desde informe.tex.
+% Compilar con pdfLaTeX en Overleaf.
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[round,semicolon,authoryear]{natbib}
+\setlength{\bibhang}{1.27cm}  % sangría francesa APA (0,5 in)
+\setlength{\bibsep}{0.55em}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\usepackage{enumitem}
+
+\geometry{left=2.8cm,right=2.8cm,top=2.7cm,bottom=2.7cm}
+\onehalfspacing
+\setlength{\parindent}{1.15cm}
+\setlength{\parskip}{0.25em}
+\setlist[itemize]{leftmargin=*,itemsep=2pt}
+\setlist[enumerate]{leftmargin=*,itemsep=2pt}
+\definecolor{azulj}{HTML}{174778}
+\titleformat{\section}{\normalfont\Large\bfseries\color{azulj}}{\thesection.}{0.65em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection.}{0.65em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection.}{0.65em}{}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Analítica de Datos}
+\fancyhead[R]{\small\entregaactual}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\hypersetup{pdftitle={Análisis multifuente y predicción del hurto a personas en Bogotá, 2020--2025},pdfauthor={Juan Diego Rojas y Sara Albarracín}}
+\renewcommand{\refname}{Referencias}

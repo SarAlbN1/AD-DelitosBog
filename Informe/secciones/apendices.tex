@@ -1,0 +1,171 @@
+% Apéndices, Juan Diego (#51) · Se incluye desde informe.tex después de \appendix.
+% Fuentes de cada tabla:
+%   ap:diccionario  docs/DICCIONARIO_DATOS.md (secciones 2 a 4)
+%   ap:archivos     outputs/auditoria/resumen_archivos.csv, outputs/auditoria_policia/resumen_archivos.csv
+%                   y las fechas de descarga de data/README.md
+%   ap:localidad    outputs/informe/linea123_localidad_2020_2025.csv
+
+\section{Diccionario de datos}\label{ap:diccionario}
+
+Este apéndice resume las variables de las fuentes complementarias y del agregado de control. Las del registro de la Policía están en la tabla~\ref{tab:variables-policia}. El diccionario completo, con el tipo, el número de valores distintos y el nombre original de cada columna, está en \texttt{docs/DICCIONARIO\_\allowbreak{}DATOS.md}. Las definiciones de Fiscalía siguen la ficha oficial del conjunto \citep{fiscalia}.
+
+La columna \emph{Uso} indica el papel previsto en el proyecto: \emph{objetivo}, \emph{predictora}, \emph{filtro}, \emph{trazabilidad}, \emph{descriptiva} (se analiza pero no entra en el modelo) o \emph{no se usa}.
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{4.2cm}>{\raggedright\arraybackslash}p{8.6cm}>{\raggedright\arraybackslash}p{2.2cm}@{}}
+\caption{Variables del agregado diario de MinDefensa (una fila por día y municipio).}\label{tab:dic-agregado}\\
+\toprule
+\textbf{Variable} & \textbf{Descripción} & \textbf{Uso} \\
+\midrule
+\endhead
+\texttt{fecha\_\allowbreak{}hecho} & Fecha del hecho; un valor por día del periodo & trazabilidad \\
+\texttt{cantidad} & Número de hurtos registrados ese día, no una fila por hecho. Suma 975.793 en 2018--2025 & trazabilidad \\
+\texttt{cod\_\allowbreak{}muni} & Código DANE del municipio; 11001 tras el filtro & filtro \\
+\texttt{municipio}, \texttt{departamento}, \texttt{cod\_\allowbreak{}depto} & Constantes tras el filtro de Bogotá & no se usa \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{4.2cm}>{\raggedright\arraybackslash}p{8.6cm}>{\raggedright\arraybackslash}p{2.2cm}@{}}
+\caption{Variables de la Línea 123 (una fila por año, mes, localidad, UPZ y tipo de incidente).}\label{tab:dic-linea123}\\
+\toprule
+\textbf{Variable} & \textbf{Descripción} & \textbf{Uso} \\
+\midrule
+\endfirsthead
+\multicolumn{3}{@{}l}{\emph{Tabla~\ref{tab:dic-linea123} (continuación)}}\\
+\toprule
+\textbf{Variable} & \textbf{Descripción} & \textbf{Uso} \\
+\midrule
+\endhead
+\texttt{cant\_\allowbreak{}incidentes} & Número de llamadas tramitadas del grupo, no de hechos. Las 25.144 filas de hurto de 2018--2025 suman 1.094.313 & trazabilidad \\
+\texttt{anio} & Año del incidente; el archivo cubre 2015--2026 & filtro \\
+\texttt{mes} & Mes del incidente, la resolución temporal máxima de la fuente & predictora \\
+\texttt{tipo\_\allowbreak{}detalle} & Tipificación operativa de la llamada, no una calificación jurídica. El filtro de hurto busca «HURTO» aquí & filtro \\
+\texttt{tipo\_\allowbreak{}incidente} & Categoría superior del incidente & no se usa \\
+\texttt{localidad} & Localidad de Bogotá: las 20 localidades más «SIN LOCALIZACION» y «-» & predictora \\
+\texttt{cod\_\allowbreak{}localidad} & Código de la localidad & trazabilidad \\
+\texttt{upz}, \texttt{cod\_\allowbreak{}upz} & Unidad de planeamiento zonal: 116 UPZ más 9 valores sin ubicación & predictora \\
+\texttt{id} & No es único: 2.633 identificadores se repiten en el archivo y 166 en las filas de hurto del periodo. No sirve como clave & no se usa \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{4.2cm}>{\raggedright\arraybackslash}p{8.6cm}>{\raggedright\arraybackslash}p{2.2cm}@{}}
+\caption{Variables de Procesos Fiscalía V3 (una fila por par proceso--delito).}\label{tab:dic-fiscalia}\\
+\toprule
+\textbf{Variable} & \textbf{Descripción} & \textbf{Uso} \\
+\midrule
+\endfirsthead
+\multicolumn{3}{@{}l}{\emph{Tabla~\ref{tab:dic-fiscalia} (continuación)}}\\
+\toprule
+\textbf{Variable} & \textbf{Descripción} & \textbf{Uso} \\
+\midrule
+\endhead
+\texttt{proceso\_\allowbreak{}anonimizado} & Identificador anonimizado del proceso; permite contar procesos distintos frente a filas & trazabilidad \\
+\texttt{a\_\allowbreak{}o\_\allowbreak{}hecho}, \texttt{mes\_\allowbreak{}hecho} & Año y mes del hecho. Las 767 filas con mes «Sin Información» no traen año y quedan fuera de 2018--2025 & filtro \\
+\texttt{a\_\allowbreak{}o\_\allowbreak{}creacion\_\allowbreak{}proceso}, \texttt{mes\_\allowbreak{}creacion\_\allowbreak{}proceso} & Año y mes de creación del proceso. No es la fecha del hecho: usarla como tal introduce fuga de información & no se usa \\
+\texttt{delito} & Tipo penal: artículo, cuantía y agravación. No codifica la víctima, así que no aísla el hurto a personas (tabla~\ref{tab:fiscalia}) & descriptiva \\
+\texttt{capitulo\_\allowbreak{}delito} & «Del Hurto» tras el filtro; incluye todas las modalidades & filtro \\
+\texttt{titulo\_\allowbreak{}delito} & «Delitos Contra El Patrimonio Economico»; constante tras el filtro & no se usa \\
+\texttt{grado\_\allowbreak{}delito} & Distingue la tentativa del delito consumado. En 2018--2025: Ninguno (1.209.762), Agravado (80.678), Tentativa (6.005) y Tentativa/Agravado (4.258) & descriptiva \\
+\texttt{estado} & Situación de la investigación «al momento de la consulta»: Activo o Inactivo. Es fuga de información & no se usa \\
+\texttt{etapa} & Macroetapa procesal: Indagación, Investigación, Juicio y Ejecución de Penas. Depende del tiempo transcurrido; es fuga de información & no se usa \\
+\texttt{tipo\_\allowbreak{}noticia} & Fuente por la que se inicia la investigación, por ejemplo denuncia, de oficio o querella & descriptiva \\
+\texttt{dir\_\allowbreak{}hecho\_\allowbreak{}rural\_\allowbreak{}urbana} & Zona del hecho; incluye «Sin Información» & descriptiva \\
+\texttt{seccional} & Dependencia de la Fiscalía asignada, no ubicación del hecho. El 99,89\,\% de las filas de 2018--2025 es la Dirección Seccional de Bogotá & no se usa \\
+\texttt{cod\_\allowbreak{}dane\_\allowbreak{}hecho} & 11001 tras el filtro & filtro \\
+\texttt{delito\_\allowbreak{}querellable} & Si el delito es querellable; Sí en 114.259 filas & descriptiva \\
+\texttt{proceso\_\allowbreak{}conexado} & Si el proceso fue fusionado a otro (art.~51 del CPP); Sí en 4.772 filas & trazabilidad \\
+\texttt{proceso\_\allowbreak{}con\_\allowbreak{}conexidad} & Si el proceso recibe información de otros (art.~51 del CPP); Sí en 3.130 filas & trazabilidad \\
+\texttt{es\_\allowbreak{}ruptura} & Si hubo ruptura de la unidad procesal (art.~53 del CPP), que genera un nuevo proceso sobre los mismos hechos; Sí en 4.432 filas & trazabilidad \\
+\texttt{procedimiento\_\allowbreak{}abreviado} & Si se tramita por el procedimiento abreviado de la Ley 1826 de 2017; Sí en 1.238.967 filas & descriptiva \\
+\texttt{tipo\_\allowbreak{}delito} & «Reparto» (conducta principal, 1.289.368 filas) o «Concurso» (adicional, 11.335) & descriptiva \\
+\texttt{ley} & Norma procesal: Ley 906 (1.293.313), Ley 1098 (7.364) y Jurisdicción Menores (26) & descriptiva \\
+\texttt{deli\_\allowbreak{}id} & Código interno del delito, redundante con \texttt{delito} & no se usa \\
+\texttt{trimestre\_\allowbreak{}hecho}, \texttt{trimestre\_\allowbreak{}creacion} & Trimestre, redundante con el mes & no se usa \\
+\texttt{pais\_\allowbreak{}hecho}, \texttt{departamento\_\allowbreak{}hecho}, \texttt{municipio\_\allowbreak{}hecho} & Constantes tras el filtro de Bogotá & no se usa \\
+\texttt{fecha\_\allowbreak{}corte\_\allowbreak{}datos} & Fecha de corte de la extracción: 31/10/2026 & trazabilidad \\
+\bottomrule
+\end{longtable}
+}
+
+\section{Archivos de origen y su integridad}\label{ap:archivos}
+
+La tabla~\ref{tab:archivos} identifica cada archivo analizado con su fecha de descarga, su número de filas y su huella SHA-256. Un archivo descargado de nuevo con la misma huella es idéntico al usado en el informe. Los portales actualizan los recursos, así que una descarga posterior puede tener otra huella y otras cifras sin que eso sea un error.
+
+Las huellas de la Policía corresponden a los CSV convertidos desde los \texttt{.xlsx} publicados, que es lo que lee la auditoría. El conversor guarda la huella de cada \texttt{.xlsx} de origen en \texttt{data/raw/policia\_\allowbreak{}registro/csv/conversion.json}, fuera del repositorio. El archivo de la Línea 123 se identifica en \texttt{outputs/auditoria/resumen\_\allowbreak{}archivos.csv} con su nombre completo.
+
+{\scriptsize
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{2.4cm}cr>{\ttfamily}l@{}}
+\caption{Archivos de origen: fecha de descarga, filas y SHA-256.}\label{tab:archivos}\\
+\toprule
+\textbf{Archivo} & \textbf{Descarga} & \textbf{Filas} & \normalfont\textbf{SHA-256} \\
+\midrule
+\endhead
+Línea 123, CSV oficial & 2026-11-09 & 1.117.394 & ceeee37729c83adaae6907272457998cc5a60eaf57c14a5ead17c6db2d3a4d61 \\
+\texttt{fiscalia\_\allowbreak{}v3\_\allowbreak{}bogota\_\allowbreak{}hurto.csv} & 2026-11-11 & 2.002.177 & e2f30087b82544e448d0c3f9f04eabd760012b2143e2ab2af632e1d81ff8f2ae \\
+\texttt{delitos\_\allowbreak{}registro\_\allowbreak{}2020.csv} & 2026-11-11 & 651.206 & aa2f39e87d899929d07daadfeca2480c0300a5bc0a6cfaa16665c1248fce95eb \\
+\texttt{delitos\_\allowbreak{}registro\_\allowbreak{}2021.csv} & 2026-11-11 & 792.244 & 952334b45f2c1ae8160686399c67724abc02af8fe5fbe8c0cc8007d48e73e278 \\
+\texttt{delitos\_\allowbreak{}registro\_\allowbreak{}2022.csv} & 2026-11-11 & 862.451 & 8e22e2d1f40a3eed0c274fdc17d02e6afde9dff960eb72fc6398994a43d25385 \\
+\texttt{delitos\_\allowbreak{}registro\_\allowbreak{}2023.csv} & 2026-11-11 & 917.544 & d5d34adc3e3f9be79919ed9ae9468589150035dda640169927118efab135c615 \\
+\texttt{delitos\_\allowbreak{}registro\_\allowbreak{}2024.csv} & 2026-11-11 & 832.475 & 621a8cd32b6d9194299dd5229404bb66318ebf4b66e14b21681cb4fd80d63c64 \\
+\texttt{delitos\_\allowbreak{}registro\_\allowbreak{}2025.csv} & 2026-11-11 & 773.950 & e8c80f134bc260693a7f1ce280372259a607bb41614c65c7df13fa43c7eeaff8 \\
+\texttt{hurto\_\allowbreak{}bogota.csv} (MinDefensa) & 2026-11-09 & 2.922 & 32cda715025fc89c6d6ce7de9c36fcb8444e877e00ed5d333feffde7a295b8d6 \\
+\bottomrule
+\end{longtable}
+}
+
+Las filas de los archivos de la Policía son las de todo el país, antes de los filtros de la tabla~\ref{tab:embudo}; suman 4.829.870. Las de Fiscalía son las descargadas con el filtro de Bogotá y del capítulo «Del Hurto», antes de restringir el periodo.
+
+\section{Reproducibilidad}\label{ap:reproducibilidad}
+
+El código, los resultados agregados y el informe están en el repositorio \url{https://github.com/SarAlbN1/AD-DelitosBog}. La versión de la primera entrega es la etiqueta \texttt{entrega-1}. Los datos no se publican en el repositorio: se descargan con las instrucciones de \texttt{data/README.md}, y la guía completa está en \texttt{docs/REPRODUCIBILIDAD.md}. Esa guía distingue dos modos:
+\begin{itemize}
+  \item \textbf{copia congelada:} con los mismos archivos que usó el equipo, deben coincidir las huellas de la tabla~\ref{tab:archivos} y todas las cifras de \texttt{outputs/auditoria/};
+  \item \textbf{descarga nueva:} con los datos del día, se reproduce el procedimiento, pero las huellas y las cifras pueden cambiar.
+\end{itemize}
+
+Las cifras y figuras de la sección~\ref{sec:datos} se regeneran en este orden:
+\begin{enumerate}
+  \item \texttt{scripts/policia\_\allowbreak{}registro\_\allowbreak{}a\_\allowbreak{}csv.py} convierte los archivos anuales de la Policía a CSV;
+  \item \texttt{scripts/\allowbreak{}auditoria\_\allowbreak{}datasets.py} produce dos carpetas: \texttt{outputs/auditoria/}, con la Línea 123 y Fiscalía, y \texttt{outputs/auditoria\_\allowbreak{}policia/}, con el registro de la Policía y el agregado de MinDefensa;
+  \item \texttt{scripts/serie\_\allowbreak{}objetivo\_\allowbreak{}policia.py} construye la serie objetivo en \texttt{outputs/serie\_\allowbreak{}objetivo/};
+  \item \texttt{scripts/fiscalia\_\allowbreak{}modalidades.py} y \texttt{scripts/figuras\_\allowbreak{}informe.py} producen las tablas y figuras de \texttt{outputs/informe/}.
+\end{enumerate}
+Las figuras de \texttt{Informe/figuras/} son copias de las de \texttt{outputs/} y hay que volver a copiarlas si se regeneran.
+
+\section{Tablas complementarias}\label{ap:tablas}
+
+La tabla~\ref{tab:localidad-ap} da los valores de la figura~\ref{fig:localidad}. Las filas son agregados de la fuente y las llamadas son la suma de \texttt{CANT\_\allowbreak{}INCIDENTES}; los porcentajes se calculan sobre las llamadas y, redondeados, suman 99,99.
+
+{\small
+\begin{longtable}{@{}lrrr@{}}
+\caption{Llamadas de hurto a la Línea 123 por localidad, 2020--2025.}\label{tab:localidad-ap}\\
+\toprule
+\textbf{Localidad} & \textbf{Filas} & \textbf{Llamadas} & \textbf{\% de llamadas} \\
+\midrule
+\endhead
+Kennedy & 1.872 & 99.525 & 12,12 \\
+Engativá & 1.435 & 93.654 & 11,40 \\
+Suba & 1.875 & 93.132 & 11,34 \\
+Bosa & 864 & 52.210 & 6,36 \\
+Usaquén & 1.506 & 50.245 & 6,12 \\
+Ciudad Bolívar & 1.277 & 48.636 & 5,92 \\
+Puente Aranda & 863 & 42.313 & 5,15 \\
+Fontibón & 1.281 & 40.371 & 4,92 \\
+Rafael Uribe Uribe & 926 & 37.524 & 4,57 \\
+San Cristóbal & 958 & 36.998 & 4,50 \\
+Teusaquillo & 1.007 & 33.702 & 4,10 \\
+Chapinero & 920 & 33.584 & 4,09 \\
+Barrios Unidos & 710 & 30.974 & 3,77 \\
+Los Mártires & 432 & 29.033 & 3,53 \\
+Santa Fe & 908 & 25.991 & 3,16 \\
+Usme & 1.100 & 25.890 & 3,15 \\
+Antonio Nariño & 429 & 19.521 & 2,38 \\
+Tunjuelito & 431 & 18.446 & 2,25 \\
+Sin localización & 195 & 5.683 & 0,69 \\
+Candelaria & 264 & 3.834 & 0,47 \\
+Sumapaz & 33 & 38 & 0,00 \\
+\midrule
+\textbf{Total} & \textbf{19.286} & \textbf{821.304} & \textbf{100} \\
+\bottomrule
+\end{longtable}
+}
