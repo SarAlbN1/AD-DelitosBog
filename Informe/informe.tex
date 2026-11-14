@@ -1,0 +1,43 @@
+\documentclass[12pt,letterpaper]{article}
+
+% Archivo maestro del informe (issue #39). Compilar este archivo con pdfLaTeX en Overleaf,
+% subiendo también preambulo.tex, portada.tex, referencias.tex y las carpetas secciones/ y figuras/.
+% primera_entrega.tex se conserva como la versión entregada (etiqueta entrega-1) y no se edita.
+
+\newcommand{\entregaactual}{Segunda entrega}
+\newcommand{\entregasubtitulo}{Versión en preparación}
+
+\input{preambulo}
+
+\begin{document}
+\input{portada}
+
+\tableofcontents
+\newpage
+
+% Sección 1 (Resumen ejecutivo): tercera entrega (#50). Se conserva la numeración de la guía.
+\setcounter{section}{1}
+
+\input{secciones/02_introduccion}       % Juan Diego
+\input{secciones/03_trabajos_relacionados} % Juan Diego
+\input{secciones/04_datos}               % Juan Diego
+
+% Secciones de la segunda entrega, a cargo de Sara (#30, #34, #38). Cada una va en su
+% archivo de secciones/ y se activa quitando el % cuando exista:
+% \input{secciones/05_preprocesamiento}
+% \input{secciones/06_analisis_exploratorio}
+% \input{secciones/07_metodologia}
+
+% Secciones de la tercera entrega:
+% \input{secciones/08_implementacion}
+% \input{secciones/09_resultados}
+% \input{secciones/10_interpretacion}
+% \input{secciones/11_conclusiones}
+
+\input{referencias}
+
+\clearpage
+\appendix
+\input{secciones/apendices}            % Juan Diego (#51)
+
+\end{document}

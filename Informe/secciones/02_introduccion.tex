@@ -1,0 +1,65 @@
+% Sección 2, Juan Diego · Se incluye desde informe.tex. Parte de primera_entrega.tex (etiqueta entrega-1).
+
+\section{Introducción}
+
+\subsection{Contextualización del problema}
+
+La seguridad ciudadana es un desafío importante para las grandes ciudades debido a sus repercusiones sobre la calidad de vida, la confianza institucional y la utilización del espacio público. Entre las distintas manifestaciones de criminalidad urbana, el hurto a personas afecta el patrimonio y el bienestar de las víctimas y puede modificar sus patrones de desplazamiento y percepción de seguridad.
+
+En Bogotá D.~C., este fenómeno puede examinarse mediante fuentes oficiales complementarias: las llamadas e incidentes tramitados por la Línea 123, los registros de hurto a personas de la Policía Nacional y las noticias criminales de la Fiscalía General de la Nación \citep{linea123,policia,fiscalia}. Aunque todas aportan evidencia sobre seguridad, no representan una misma unidad estadística: un incidente tramitado, una víctima registrada y un proceso judicial pueden referirse a acontecimientos relacionados, pero no deben sumarse como hechos independientes.
+
+La analítica de datos ofrece métodos para transformar registros históricos en información interpretable. Además del análisis descriptivo, los modelos predictivos permiten estimar resultados futuros a partir de regularidades observadas. Este enfoque es consistente con la importancia que \citet{provost2013} atribuyen a la formulación de problemas analíticos orientados a la toma de decisiones. Sin embargo, la utilidad de una predicción depende tanto del modelo como de la calidad, representatividad y disponibilidad temporal de sus datos.
+
+En Bogotá existen antecedentes de predicción delictiva mediante métodos estadísticos, aprendizaje automático y análisis espacial. \citet{riascos2020} estudian aplicaciones de analítica predictiva en la gestión de seguridad y \citet{martinez2025} examina patrones espacio-temporales del hurto a personas. Estos trabajos evidencian la pertinencia de comparar modelos bajo un procedimiento de evaluación transparente.
+
+Por lo anterior, este proyecto propone caracterizar el hurto a personas en Bogotá durante 2020--2025 a partir de tres fuentes oficiales, estudiar su correspondencia temporal y, en etapas posteriores, evaluar modelos que pronostiquen el número diario de víctimas registradas por la Policía Nacional. La auditoría de las fuentes (sección~\ref{sec:datos}) confirmó que el registro de la Policía alcanza por sí solo el volumen exigido, de modo que es la fuente principal y la de la variable objetivo; la Fiscalía y la Línea 123 se usan como fuentes complementarias.
+
+\subsection{Planteamiento del problema}
+
+La existencia de registros históricos de criminalidad no garantiza por sí misma la generación de conocimiento útil. Los conteos de hurtos pueden presentar tendencias, estacionalidad, variaciones extraordinarias y cambios derivados de procesos de denuncia o actualización institucional. Por consiguiente, una variación observada no debe interpretarse automáticamente como un cambio equivalente en todos los delitos realmente ocurridos.
+
+Adicionalmente, las tres fuentes manejan niveles de agregación distintos. El registro de la Policía Nacional trae una fila por víctima con la fecha diaria del hecho, pero solo identifica el municipio: no incluye localidad, barrio, coordenadas ni hora. La Línea 123 permite comparar localidades y UPZ, pero publica conteos mensuales de llamadas. La Fiscalía publica el año y el mes del hecho, sin localidad. Por eso no es posible construir una serie diaria por localidad combinando las fuentes, y cada una se analiza en la resolución que efectivamente publica.
+
+El problema de investigación consiste en determinar hasta qué punto la historia del número diario de víctimas de hurto a personas registradas por la Policía permite anticipar los registros de los días siguientes, y qué aportan las fuentes complementarias a la descripción del fenómeno. La pregunta principal es la siguiente:
+
+\begin{quote}
+\emph{¿En qué medida el análisis de fuentes oficiales de seguridad ciudadana permite identificar patrones temporales del hurto a personas en Bogotá entre 2020 y 2025 y pronosticar el número diario de víctimas registradas con menor error que una línea base ingenua?}
+\end{quote}
+
+Como pregunta complementaria, se plantea: \emph{¿qué diferencias de cobertura, granularidad y registro condicionan la comparación entre incidentes de la Línea 123, registros policiales y noticias criminales?}
+
+\subsection{Justificación}
+
+Desde la perspectiva social, caracterizar las variaciones de los hurtos registrados puede aportar evidencia para comprender la seguridad urbana. Desde la perspectiva tecnológica, la investigación permite aplicar herramientas de análisis temporal, preparación de datos, visualización y aprendizaje automático sobre información pública. Desde la perspectiva académica, plantea un problema reproducible en el que será posible comparar distintos métodos de predicción y discutir sus limitaciones.
+
+El valor del trabajo no reside en asegurar que se puede anticipar un delito individual, sino en cuantificar la capacidad predictiva de modelos sobre registros agregados. Asimismo, se busca evitar que un buen resultado estadístico sea interpretado como evidencia causal o como justificación automática de decisiones que afecten a comunidades específicas. Investigaciones sobre subregistro y equidad de modelos de criminalidad muestran la importancia de estas precauciones \citep{riascos2023,urcuqui2020}.
+
+\subsection{Objetivos}
+
+\subsubsection{Objetivo general}
+
+Analizar de manera multifuente el comportamiento histórico del hurto a personas en Bogotá D.~C. mediante técnicas de minería de datos y aprendizaje automático, con el fin de identificar patrones temporales y territoriales y evaluar posteriormente modelos predictivos sobre una variable objetivo claramente definida.
+
+\subsubsection{Objetivos específicos}
+
+\begin{enumerate}
+  \item Recolectar y auditar los datos oficiales de la Policía Nacional, la Fiscalía y la Línea 123 sobre hurto en Bogotá, y documentar para cada fuente sus variables, su cobertura, su unidad de observación y sus limitaciones.
+  \item Construir la serie diaria de víctimas de hurto a personas registradas por la Policía entre 2020 y 2025 y describir su tendencia, su estacionalidad semanal y anual y sus valores atípicos.
+  \item Comparar las tendencias mensuales de las tres fuentes sin sumar sus conteos, y describir la distribución por localidad de las llamadas de la Línea 123.
+  \item Implementar y comparar modelos de pronóstico de la serie diaria, incluidos una línea base ingenua y métodos estadísticos y de aprendizaje automático, con validación temporal.
+  \item Evaluar los pronósticos con MAE y RMSE frente a la línea base, y discutir su utilidad, sus sesgos potenciales y sus límites de interpretación.
+\end{enumerate}
+
+\subsection{Alcance y delimitación}
+
+El periodo principal de estudio va del 1 de enero de 2020 al 31 de diciembre de 2025, los años que la Policía Nacional publica a nivel de registro. Cada fuente cumple una función distinta:
+\begin{itemize}
+  \item \textbf{Policía Nacional, fuente principal.} Sus 741.986 registros de hurto a personas en Bogotá sostienen por sí solos el requisito de 500.000 registros y, agregados por día, forman la variable objetivo.
+  \item \textbf{Fiscalía, fuente complementaria.} Sus 1.300.703 registros proceso--delito de 2018--2025 describen la respuesta judicial al hurto en todas sus modalidades. No se interpretan como víctimas ni como hechos.
+  \item \textbf{Línea 123, fuente complementaria.} Sus conteos mensuales de llamadas por localidad y UPZ describen la demanda ciudadana de atención.
+\end{itemize}
+Los años 2018 y 2019 solo se usan como contexto histórico, mediante el agregado diario del Ministerio de Defensa, y no entran en el conteo de registros ni en la serie objetivo.
+
+No se busca identificar personas presuntamente responsables, anticipar víctimas individuales ni estimar la ocurrencia de delitos a nivel de dirección. El pronóstico es para el total de Bogotá: el registro de la Policía no identifica la localidad, y no se inferirán conteos diarios por localidad a partir de otras fuentes. La implementación, los resultados, la evaluación y las conclusiones se desarrollarán en las siguientes entregas.
+
+Las limitaciones principales son tres. Los registros miden hechos denunciados o conocidos por la autoridad, no la totalidad de los ocurridos, y están afectados por el subregistro \citep{riascos2023}. Las tres fuentes usan unidades de observación distintas, así que sus conteos no se suman. Y la Policía advierte que el género y el grupo de edad de la víctima no tienen calidad validada en completitud.
