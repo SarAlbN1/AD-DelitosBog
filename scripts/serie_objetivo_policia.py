@@ -94,7 +94,13 @@ def leer(archivos: list[Path], chunksize: int) -> tuple[pd.DataFrame, dict]:
     return pd.concat(conteos, ignore_index=True), meta
 
 
-def construir(registros: pd.DataFrame, meta: dict, inicio: str = INICIO, fin: str = FIN) -> tuple[pd.DataFrame, dict]:
+def construir(registros: pd.DataFrame, meta: dict, inicio: str | None = None,
+              fin: str | None = None) -> tuple[pd.DataFrame, dict]:
+    # Se resuelven aquí y no como valores por defecto del parámetro: así siguen funcionando
+    # las pruebas que sustituyen las constantes del módulo, y la línea de órdenes puede
+    # pasar otro rango.
+    inicio = INICIO if inicio is None else inicio
+    fin = FIN if fin is None else fin
     fechas_invalidas = int(registros["fecha"].isna().sum())
     fuera = registros["fecha"].notna() & ~registros["fecha"].between(inicio, fin)
     validos = registros[registros["fecha"].notna() & ~fuera]
