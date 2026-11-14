@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Comprueba si la caída del hurto registrado en noviembre y diciembre de 2025 es real (#86).
+"""Comprueba si la caída del hurto registrado en noviembre y diciembre de 2025 es del fenómeno (#86).
 
 El registro de la Policía muestra en esos dos meses algo más de la mitad de las víctimas de los
 meses anteriores. Antes de usarlos para entrenar o evaluar un modelo hay que saber si el fenómeno
@@ -137,9 +137,10 @@ def main(argv=None) -> int:
     independiente_cae = any(v >= UMBRAL_CAIDA for v in caida_123.values())
 
     if registro_cae and not independiente_cae:
-        veredicto = "artefacto"
-        explicacion = ("El registro cae pero la fuente independiente no. La caída no es del fenómeno: "
-                       "esos meses están incompletos en el archivo de la Policía.")
+        veredicto = "no_es_del_fenomeno"
+        explicacion = ("El registro cae pero la fuente independiente no, así que la caída no es del "
+                       "fenómeno. Esos meses están incompletos o afectados por un cambio de "
+                       "registro; la causa no se establece aquí y la exclusión no depende de ella.")
     elif registro_cae and independiente_cae:
         veredicto = "real"
         explicacion = "Las dos fuentes caen a la vez, así que la caída es del fenómeno."
@@ -158,7 +159,7 @@ def main(argv=None) -> int:
         "caida_linea123": {k: round(v, 4) for k, v in caida_123.items()},
         "dias_con_datos_en_meses_sospechosos": dias_con_datos,
         "nacional_todos_los_delitos": {m: nacional.get(m, 0) for m in ("2025/10",) + MESES_SOSPECHOSOS},
-        "corte_recomendado": "2025-10-31" if veredicto == "artefacto" else None,
+        "corte_recomendado": "2025-10-31" if veredicto == "no_es_del_fenomeno" else None,
         "meses": filas,
     }
     (a.salida / "veredicto.json").write_text(json.dumps(doc, ensure_ascii=False, indent=2), encoding="utf-8")

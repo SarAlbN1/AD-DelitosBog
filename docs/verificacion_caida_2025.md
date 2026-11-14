@@ -1,15 +1,17 @@
-# La caída de noviembre y diciembre de 2025 es un artefacto (#86)
+# Los dos últimos meses de 2025 no son comparables y quedan fuera de la serie (#86)
 
 Fecha de verificación: 2026-11-13. Reproducible con `python scripts/verificar_caida_2025.py`.
 Salidas en `outputs/verificacion_caida_2025/`.
 
 ## Conclusión
 
-**Los dos últimos meses del registro de la Policía están incompletos. La caída no es del fenómeno.**
+**Noviembre y diciembre de 2025 están incompletos o afectados por un cambio de registro. La causa
+no está establecida, y la decisión de excluirlos no depende de ella.**
 
-El registro muestra en noviembre y diciembre de 2025 algo más de la mitad de las víctimas de los
-meses anteriores. **Línea 123, que es una fuente independiente, no cae.** Si el hurto hubiera bajado
-a la mitad en Bogotá, las llamadas al 123 lo habrían reflejado.
+Lo que sí está demostrado es que **la caída no es del fenómeno**: el registro muestra en esos dos
+meses algo más de la mitad de las víctimas de los meses anteriores, mientras **Línea 123, que es
+una fuente independiente y mide la demanda ciudadana, no cae**. Si el hurto hubiera bajado a la
+mitad en Bogotá, las llamadas al 123 lo habrían reflejado.
 
 **La serie objetivo se corta en 2025-10-31.** Noviembre y diciembre de 2025 no se usan para entrenar
 ni para evaluar, y la serie pasa de 2.192 a **2.131 días**.
@@ -25,20 +27,20 @@ captura y otra entidad.
 
 ## La evidencia
 
-| Mes | Registro Policía | Agregado MinDefensa | Línea 123 (incidentes) |
-|---|---:|---:|---:|
-| 2025/01 | 9.790 | 9.790 | 10.494 |
-| 2025/02 | 11.287 | 11.287 | 11.313 |
-| 2025/03 | 11.653 | 11.653 | 12.142 |
-| 2025/04 | 11.677 | 11.677 | 11.837 |
-| 2025/05 | 9.789 | 9.789 | 12.194 |
-| 2025/06 | 10.777 | 10.777 | 12.112 |
-| 2025/07 | 11.869 | 11.869 | 12.702 |
-| 2025/08 | 11.274 | 11.274 | 13.219 |
-| 2025/09 | 11.557 | 11.557 | 13.106 |
-| 2025/10 | 12.228 | 12.228 | 12.750 |
-| **2025/11** | **5.416** | **5.416** | **12.314** |
-| **2025/12** | **5.700** | **5.700** | **11.529** |
+| Mes | Registro Policía | Agregado MinDefensa | Línea 123 (incidentes) | Fiscalía (filas) |
+|---|---:|---:|---:|---:|
+| 2025/01 | 9.790 | 9.790 | 10.494 | 13.456 |
+| 2025/02 | 11.287 | 11.287 | 11.313 | 14.676 |
+| 2025/03 | 11.653 | 11.653 | 12.142 | 16.243 |
+| 2025/04 | 11.677 | 11.677 | 11.837 | 14.997 |
+| 2025/05 | 9.789 | 9.789 | 12.194 | 16.525 |
+| 2025/06 | 10.777 | 10.777 | 12.112 | 15.778 |
+| 2025/07 | 11.869 | 11.869 | 12.702 | 16.965 |
+| 2025/08 | 11.274 | 11.274 | 13.219 | 17.057 |
+| 2025/09 | 11.557 | 11.557 | 13.106 | 17.633 |
+| 2025/10 | 12.228 | 12.228 | 12.750 | 18.687 |
+| **2025/11** | **5.416** | **5.416** | **12.314** | **10.505** |
+| **2025/12** | **5.700** | **5.700** | **11.529** | 13.450 |
 
 Frente a la media de los diez primeros meses:
 
@@ -66,9 +68,19 @@ archivo se vacía: todos los días están, pero a la mitad del nivel.
 | 2025/11/03 | 133 |
 | 2025/11/04 | 217 |
 
-El nivel pasa de 270–330 diarios a 130–240 a partir del 2 de noviembre. Eso descarta un truncado
-del archivo y apunta a que los registros de esos meses **se siguen consolidando**: llegan con
-retraso al momento del corte de publicación.
+El nivel pasa de 270–330 diarios a 130–240 a partir del 2 de noviembre. Eso **descarta un truncado
+del archivo**, pero no identifica la causa. Hay dos explicaciones compatibles con lo observado y no
+tenemos evidencia para elegir entre ellas:
+
+- **Consolidación incompleta**: los registros de esos meses seguirían llegando después del corte.
+  En contra: el pie del archivo declara «Fecha de entrega: 20 de agosto de 2026», nueve meses
+  después de diciembre de 2025, y los cuadros de salida validados dan las mismas cifras. Un retraso
+  de más de nueve meses es posible, pero no está demostrado.
+- **Cambio en el registro** a partir de noviembre. Encaja con que la caída nacional empeore de
+  noviembre a diciembre en lugar de recuperarse.
+
+**La decisión de excluir esos meses no depende de cuál sea la causa**, así que no se afirma
+ninguna.
 
 ## Afecta a todo el archivo, no solo a Bogotá
 
@@ -97,8 +109,20 @@ un problema de la ciudad ni del delito.
 4. Al redescargar el archivo de 2025 más adelante, conviene **repetir esta comprobación**: si los
    meses se completaron, el corte puede moverse.
 
-## Límite de esta verificación
+## Qué dice Fiscalía, y por qué no cambia la conclusión
 
-Queda sin comprobar con Fiscalía, que sería un tercer contraste independiente, porque su CSV no
-está en esta copia local. No cambia la conclusión: basta con que una fuente independiente no caiga
-para descartar que el fenómeno lo hiciera.
+Fiscalía es una tercera fuente, y **también cae en noviembre**: de 18.687 filas proceso–delito en
+octubre a 10.505, un 44 % menos. En diciembre se recupera a 13.450.
+
+Esto no contradice la conclusión, pero matiza el cuadro:
+
+- **Dos fuentes de registro caen en noviembre**, Policía y Fiscalía, cada una con su propio circuito
+  institucional. Eso refuerza que lo ocurrido afecta al **registro** y no al delito.
+- **Línea 123, que no registra sino que recibe llamadas, no cae.** Sigue siendo la comparación más
+  limpia, porque mide demanda ciudadana y no actividad administrativa.
+- **En diciembre solo sigue caída la Policía.** Fiscalía vuelve a su nivel, lo que apunta a que el
+  problema de diciembre es específico del archivo de la Policía.
+
+Por eso Fiscalía no se usa para concluir que la caída no es real: al medir hechos registrados,
+aunque por la vía judicial, comparte la vulnerabilidad del registro. La fuente que sostiene la
+conclusión es Línea 123.

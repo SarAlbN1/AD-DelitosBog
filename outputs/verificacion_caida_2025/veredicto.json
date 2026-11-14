@@ -1,6 +1,6 @@
 {
-  "veredicto": "artefacto",
-  "explicacion": "El registro cae pero la fuente independiente no. La caída no es del fenómeno: esos meses están incompletos en el archivo de la Policía.",
+  "veredicto": "no_es_del_fenomeno",
+  "explicacion": "El registro cae pero la fuente independiente no, así que la caída no es del fenómeno. Esos meses están incompletos o afectados por un cambio de registro; la causa no se establece aquí y la exclusión no depende de ella.",
   "umbral_caida": 0.3,
   "media_mensual_de_referencia": {
     "registro": 11190.1,
