@@ -1,0 +1,167 @@
+{
+  "serie": {
+    "periodo": [
+      "2020-01-01",
+      "2025-10-31"
+    ],
+    "dias": 2131,
+    "media": 343.0
+  },
+  "temporal": {
+    "anual": {
+      "2020": {
+        "victimas": 83136.0,
+        "media_diaria": 227.1475409836,
+        "dias": 366,
+        "anio_completo": true
+      },
+      "2021": {
+        "victimas": 109428.0,
+        "media_diaria": 299.802739726,
+        "dias": 365,
+        "anio_completo": true
+      },
+      "2022": {
+        "victimas": 137157.0,
+        "media_diaria": 375.7726027397,
+        "dias": 365,
+        "anio_completo": true
+      },
+      "2023": {
+        "victimas": 158745.0,
+        "media_diaria": 434.9178082192,
+        "dias": 365,
+        "anio_completo": true
+      },
+      "2024": {
+        "victimas": 130503.0,
+        "media_diaria": 356.5655737705,
+        "dias": 366,
+        "anio_completo": true
+      },
+      "2025": {
+        "victimas": 111901.0,
+        "media_diaria": 368.0953947368,
+        "dias": 304,
+        "anio_completo": false
+      }
+    },
+    "por_dia_semana": {
+      "lunes": 299.0,
+      "martes": 351.1,
+      "miércoles": 365.0,
+      "jueves": 364.8,
+      "viernes": 403.1,
+      "sábado": 372.5,
+      "domingo": 245.0
+    },
+    "por_mes": {
+      "ene": 325.9,
+      "feb": 355.0,
+      "mar": 336.8,
+      "abr": 312.7,
+      "may": 315.2,
+      "jun": 316.6,
+      "jul": 327.5,
+      "ago": 345.8,
+      "sep": 374.2,
+      "oct": 386.9,
+      "nov": 382.1,
+      "dic": 344.9
+    },
+    "festivos": {
+      "media_en_festivo": 203.6,
+      "media_en_no_festivo": 350.1,
+      "n_festivos": 103,
+      "media_lunes_festivo": 201.5,
+      "media_lunes_laborable": 323.9,
+      "n_lunes_festivo": 62,
+      "diferencia_lunes_pct": -37.8
+    },
+    "nota_2020": "2020 no es comparable: el nivel está deprimido por las restricciones de movilidad",
+    "nota_2025": "2025 está truncado el 2025-10-31 (#86): su total anual no es comparable"
+  },
+  "territorial": {
+    "total_con_localidad": 1087886,
+    "sin_localidad": {
+      "incidentes_sin_localidad": 6427,
+      "pct_sin_localidad": 0.59
+    },
+    "top5": [
+      {
+        "localidad": "KENNEDY",
+        "incidentes": 133250,
+        "pct": 12.25
+      },
+      {
+        "localidad": "SUBA",
+        "incidentes": 125987,
+        "pct": 11.58
+      },
+      {
+        "localidad": "ENGATIVÁ",
+        "incidentes": 121838,
+        "pct": 11.2
+      },
+      {
+        "localidad": "USAQUÉN",
+        "incidentes": 71743,
+        "pct": 6.59
+      },
+      {
+        "localidad": "BOSA",
+        "incidentes": 69953,
+        "pct": 6.43
+      }
+    ],
+    "tasas_por_poblacion": "no calculadas: falta una fuente de población por localidad. Los conteos absolutos no se deben leer como riesgo: las localidades más pobladas acumulan más incidentes"
+  },
+  "entre_fuentes": {
+    "periodo": [
+      "2020-01",
+      "2025-10"
+    ],
+    "meses": 70,
+    "pearson": {
+      "Policía (víctimas)": {
+        "Policía (víctimas)": 1.0,
+        "Línea 123 (llamadas)": 0.601,
+        "Fiscalía (proceso–delito)": 0.962
+      },
+      "Línea 123 (llamadas)": {
+        "Policía (víctimas)": 0.601,
+        "Línea 123 (llamadas)": 1.0,
+        "Fiscalía (proceso–delito)": 0.633
+      },
+      "Fiscalía (proceso–delito)": {
+        "Policía (víctimas)": 0.962,
+        "Línea 123 (llamadas)": 0.633,
+        "Fiscalía (proceso–delito)": 1.0
+      }
+    },
+    "spearman": {
+      "Policía (víctimas)": {
+        "Policía (víctimas)": 1.0,
+        "Línea 123 (llamadas)": 0.47,
+        "Fiscalía (proceso–delito)": 0.947
+      },
+      "Línea 123 (llamadas)": {
+        "Policía (víctimas)": 0.47,
+        "Línea 123 (llamadas)": 1.0,
+        "Fiscalía (proceso–delito)": 0.537
+      },
+      "Fiscalía (proceso–delito)": {
+        "Policía (víctimas)": 0.947,
+        "Línea 123 (llamadas)": 0.537,
+        "Fiscalía (proceso–delito)": 1.0
+      }
+    },
+    "nota": "resolución mes × Bogotá, la única común; las fuentes no se suman entre sí"
+  },
+  "figuras": [
+    "eda_dia_semana",
+    "eda_estacionalidad_mensual",
+    "eda_localidad",
+    "eda_fuentes_normalizadas"
+  ]
+}
