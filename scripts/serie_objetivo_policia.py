@@ -37,7 +37,11 @@ from pathlib import Path
 import pandas as pd
 
 INICIO = "2020-01-01"
-FIN = "2025-12-31"
+#: Fin de la serie. No es 2025-12-31: noviembre y diciembre de 2025 están incompletos en el
+#: archivo de la Policía y la caída que muestran es un artefacto (issue #86,
+#: docs/verificacion_caida_2025.md). Incluirlos haría que cualquier modelo pareciera acertar
+#: una caída que no existió.
+FIN = "2025-10-31"
 PATRON_BOGOTA = re.compile(r"^0*11001$")
 PATRON_HURTO = r"\(0*5022\)"
 COLUMNAS = ["FECHA HECHO", "CODIGO DANE", "DELITOS", "CANTIDAD"]
@@ -90,12 +94,18 @@ def leer(archivos: list[Path], chunksize: int) -> tuple[pd.DataFrame, dict]:
     return pd.concat(conteos, ignore_index=True), meta
 
 
-def construir(registros: pd.DataFrame, meta: dict) -> tuple[pd.DataFrame, dict]:
+def construir(registros: pd.DataFrame, meta: dict, inicio: str | None = None,
+              fin: str | None = None) -> tuple[pd.DataFrame, dict]:
+    # Se resuelven aquí y no como valores por defecto del parámetro: así siguen funcionando
+    # las pruebas que sustituyen las constantes del módulo, y la línea de órdenes puede
+    # pasar otro rango.
+    inicio = INICIO if inicio is None else inicio
+    fin = FIN if fin is None else fin
     fechas_invalidas = int(registros["fecha"].isna().sum())
-    fuera = registros["fecha"].notna() & ~registros["fecha"].between(INICIO, FIN)
+    fuera = registros["fecha"].notna() & ~registros["fecha"].between(inicio, fin)
     validos = registros[registros["fecha"].notna() & ~fuera]
     diaria = validos.groupby("fecha").agg(victimas=("filas", "sum"), suma_cantidad=("cantidad", "sum"))
-    calendario = pd.date_range(INICIO, FIN, freq="D", name="fecha")
+    calendario = pd.date_range(inicio, fin, freq="D", name="fecha")
     diaria = diaria.reindex(calendario, fill_value=0)
 
     v = diaria["victimas"]
@@ -105,7 +115,7 @@ def construir(registros: pd.DataFrame, meta: dict) -> tuple[pd.DataFrame, dict]:
     resumen = {
         **meta,
         "variable_objetivo": "victimas de hurto a personas registradas por dia en Bogota D. C.",
-        "periodo": [INICIO, FIN],
+        "periodo": [inicio, fin],
         "fechas_invalidas": fechas_invalidas,
         "filas_fuera_del_periodo": int(fuera.sum()),
         "filas_en_la_serie": int(v.sum()),
@@ -153,6 +163,9 @@ def main() -> None:
     p.add_argument("--patron", default="delitos_registro_*.csv")
     p.add_argument("--salida", default="outputs/serie_objetivo")
     p.add_argument("--chunksize", type=int, default=200_000)
+    p.add_argument("--inicio", default=INICIO, help=f"Primer día de la serie (por defecto {INICIO}).")
+    p.add_argument("--fin", default=FIN,
+                   help=f"Último día de la serie (por defecto {FIN}; ver issue #86).")
     p.add_argument("--sin-figura", action="store_true")
     a = p.parse_args()
 
@@ -160,7 +173,7 @@ def main() -> None:
     if not archivos:
         raise SystemExit(f"No hay archivos {a.patron} en {a.entrada}. Conviértalos con scripts/policia_registro_a_csv.py.")
     registros, meta = leer(archivos, a.chunksize)
-    serie, resumen = construir(registros, meta)
+    serie, resumen = construir(registros, meta, a.inicio, a.fin)
 
     salida = Path(a.salida)
     salida.mkdir(parents=True, exist_ok=True)
