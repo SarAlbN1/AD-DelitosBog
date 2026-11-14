@@ -1,0 +1,137 @@
+{
+  "veredicto": "no_es_del_fenomeno",
+  "explicacion": "El registro cae pero la fuente independiente no, así que la caída no es del fenómeno. Esos meses están incompletos o afectados por un cambio de registro; la causa no se establece aquí y la exclusión no depende de ella.",
+  "umbral_caida": 0.3,
+  "media_mensual_de_referencia": {
+    "registro": 11190.1,
+    "linea123": 12186.9
+  },
+  "caida_registro": {
+    "2025/11": 0.516,
+    "2025/12": 0.4906
+  },
+  "caida_linea123": {
+    "2025/11": -0.0104,
+    "2025/12": 0.054
+  },
+  "dias_con_datos_en_meses_sospechosos": {
+    "2025/11": 30,
+    "2025/12": 31
+  },
+  "nacional_todos_los_delitos": {
+    "2025/10": 72896,
+    "2025/11": 60288,
+    "2025/12": 48125
+  },
+  "corte_recomendado": "2025-10-31",
+  "meses": [
+    {
+      "mes": "2025/01",
+      "registro_policia": 9790,
+      "agregado_mindefensa": 9790,
+      "linea123_incidentes": 10494,
+      "nacional_todos_los_delitos": 62377,
+      "var_registro_vs_media": -0.1251,
+      "var_linea123_vs_media": -0.1389
+    },
+    {
+      "mes": "2025/02",
+      "registro_policia": 11287,
+      "agregado_mindefensa": 11287,
+      "linea123_incidentes": 11313,
+      "nacional_todos_los_delitos": 59057,
+      "var_registro_vs_media": 0.0087,
+      "var_linea123_vs_media": -0.0717
+    },
+    {
+      "mes": "2025/03",
+      "registro_policia": 11653,
+      "agregado_mindefensa": 11653,
+      "linea123_incidentes": 12142,
+      "nacional_todos_los_delitos": 66395,
+      "var_registro_vs_media": 0.0414,
+      "var_linea123_vs_media": -0.0037
+    },
+    {
+      "mes": "2025/04",
+      "registro_policia": 11677,
+      "agregado_mindefensa": 11677,
+      "linea123_incidentes": 11837,
+      "nacional_todos_los_delitos": 65149,
+      "var_registro_vs_media": 0.0435,
+      "var_linea123_vs_media": -0.0287
+    },
+    {
+      "mes": "2025/05",
+      "registro_policia": 9789,
+      "agregado_mindefensa": 9789,
+      "linea123_incidentes": 12194,
+      "nacional_todos_los_delitos": 62367,
+      "var_registro_vs_media": -0.1252,
+      "var_linea123_vs_media": 0.0006
+    },
+    {
+      "mes": "2025/06",
+      "registro_policia": 10777,
+      "agregado_mindefensa": 10777,
+      "linea123_incidentes": 12112,
+      "nacional_todos_los_delitos": 63597,
+      "var_registro_vs_media": -0.0369,
+      "var_linea123_vs_media": -0.0061
+    },
+    {
+      "mes": "2025/07",
+      "registro_policia": 11869,
+      "agregado_mindefensa": 11869,
+      "linea123_incidentes": 12702,
+      "nacional_todos_los_delitos": 71559,
+      "var_registro_vs_media": 0.0607,
+      "var_linea123_vs_media": 0.0423
+    },
+    {
+      "mes": "2025/08",
+      "registro_policia": 11274,
+      "agregado_mindefensa": 11274,
+      "linea123_incidentes": 13219,
+      "nacional_todos_los_delitos": 71190,
+      "var_registro_vs_media": 0.0075,
+      "var_linea123_vs_media": 0.0847
+    },
+    {
+      "mes": "2025/09",
+      "registro_policia": 11557,
+      "agregado_mindefensa": 11557,
+      "linea123_incidentes": 13106,
+      "nacional_todos_los_delitos": 70950,
+      "var_registro_vs_media": 0.0328,
+      "var_linea123_vs_media": 0.0754
+    },
+    {
+      "mes": "2025/10",
+      "registro_policia": 12228,
+      "agregado_mindefensa": 12228,
+      "linea123_incidentes": 12750,
+      "nacional_todos_los_delitos": 72896,
+      "var_registro_vs_media": 0.0928,
+      "var_linea123_vs_media": 0.0462
+    },
+    {
+      "mes": "2025/11",
+      "registro_policia": 5416,
+      "agregado_mindefensa": 5416,
+      "linea123_incidentes": 12314,
+      "nacional_todos_los_delitos": 60288,
+      "var_registro_vs_media": -0.516,
+      "var_linea123_vs_media": 0.0104
+    },
+    {
+      "mes": "2025/12",
+      "registro_policia": 5700,
+      "agregado_mindefensa": 5700,
+      "linea123_incidentes": 11529,
+      "nacional_todos_los_delitos": 48125,
+      "var_registro_vs_media": -0.4906,
+      "var_linea123_vs_media": -0.054
+    }
+  ]
+}
