@@ -26,3 +26,36 @@ Las tres tienen unidades de observación distintas y no se suman entre sí.
 4. Consulte [la segunda entrega](docs/segunda_entrega.md) para ver la auditoría, los hallazgos y el protocolo de evaluación de la tercera entrega.
 
 Python y pandas permiten reproducir la limpieza, construir atributos y calcular estadística descriptiva. Matplotlib genera las gráficas, GeoPandas maneja las geometrías distritales y scikit-learn se usará para la regresión lineal, el árbol y la evaluación cronológica.
+
+## Estructura del repositorio
+
+```
+AD-DelitosBog/
+├── config/          Manifiesto de fuentes de la auditoría
+├── data/
+│   ├── raw/         Archivos originales, sin modificar. Ignorado por Git
+│   └── processed/   Salidas intermedias de los notebooks. Ignorado por Git
+├── docs/            Documentación: auditoría, decisiones, diccionario, bitácora
+├── Informe/         Informe académico en LaTeX
+├── notebooks/       Preprocesamiento y análisis exploratorio
+├── outputs/
+│   ├── auditoria/           Resultados de la auditoría, con sus figuras
+│   └── auditoria_policia/   Resultados del registro de Policía
+├── scripts/         Auditoría, descarga y conversión de fuentes
+└── tests/           Pruebas del script de auditoría
+```
+
+Dos reglas sobre qué entra en Git:
+
+- **Los datos no se versionan.** `data/raw/`, `data/processed/` y `DataSet/` están en `.gitignore`,
+  junto con las cachés, los entornos virtuales y los temporales. Los datos se reproducen con las
+  instrucciones de [`data/README.md`](data/README.md).
+- **La evidencia sí se versiona.** `outputs/` contiene las salidas de la auditoría, que son ligeras
+  y sostienen las cifras del informe, así que se versionan para poder comparar entre ejecuciones.
+
+Para comprobar que un archivo de datos queda excluido:
+
+```sh
+git check-ignore -v data/raw/ejemplo.csv
+# .gitignore:3:/data/raw/	data/raw/ejemplo.csv
+```
