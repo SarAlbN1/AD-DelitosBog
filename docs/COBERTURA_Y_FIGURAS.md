@@ -54,22 +54,35 @@ de 2020 coincide con el año de las restricciones de movilidad por la pandemia, 
 tener presente: el primer año de la serie no es un año típico y puede afectar al entrenamiento de
 los modelos de la tercera entrega.
 
-### Distribución territorial (Línea 123, filas de hurto 2018–2025)
+### Distribución territorial (Línea 123, incidentes de hurto 2018–2025)
 
-| Localidad | Filas | % |
-|---|---:|---:|
-| Suba | 2.470 | 9,8 % |
-| Kennedy | 2.466 | 9,8 % |
-| Usaquén | 1.995 | 7,9 % |
-| Engativá | 1.872 | 7,4 % |
-| Ciudad Bolívar | 1.711 | 6,8 % |
-| Fontibón | 1.668 | 6,6 % |
-| Usme | 1.479 | 5,9 % |
-| Teusaquillo | 1.303 | 5,2 % |
+Se mide con la **suma de `CANT_INCIDENTES`**, no con el número de filas. Las filas de esta fuente
+son grupos agregados, así que contarlas pondera igual a un grupo de 1 incidente y a uno de 500.
 
-Son filas agregadas, no incidentes. La concentración en Suba y Kennedy es coherente con que son las
-localidades más pobladas, lo que refuerza la necesidad de **tasas por población** y no solo conteos
-absolutos, para no producir una lectura estigmatizante.
+| Localidad | Incidentes | % | (Filas) | (% filas) |
+|---|---:|---:|---:|---:|
+| Kennedy | 133.250 | 12,2 % | 2.466 | 9,8 % |
+| Suba | 125.987 | 11,5 % | 2.470 | 9,8 % |
+| Engativá | 121.838 | 11,1 % | 1.872 | 7,4 % |
+| Usaquén | 71.743 | 6,6 % | 1.995 | 7,9 % |
+| Bosa | 69.953 | 6,4 % | 1.118 | 4,4 % |
+| Ciudad Bolívar | 64.714 | 5,9 % | 1.711 | 6,8 % |
+| Puente Aranda | 55.731 | 5,1 % | 1.111 | 4,4 % |
+| Fontibón | 52.337 | 4,8 % | 1.668 | 6,6 % |
+| Rafael Uribe Uribe | 49.729 | 4,5 % | 1.172 | 4,7 % |
+| San Cristóbal | 48.298 | 4,4 % | 1.275 | 5,1 % |
+
+Total: 1.094.313 incidentes en 25.144 filas.
+
+**Las dos columnas dan rankings distintos, y por eso importa cuál se usa.** Por filas, Suba y
+Kennedy empatan y Engativá aparece cuarta con el 7,4 %. Por incidentes, Kennedy es la primera y
+Engativá sube a la tercera posición con el 11,1 %, mientras que Bosa y Puente Aranda entran en las
+primeras posiciones y Usme y Teusaquillo salen. La medida correcta es la suma de incidentes: contar
+filas mide cuántos grupos distintos se reportaron, no cuántos incidentes hubo.
+
+La concentración en Kennedy, Suba y Engativá es coherente con que son las localidades más pobladas,
+lo que refuerza la necesidad de **tasas por población** y no solo conteos absolutos, para no
+producir una lectura estigmatizante.
 
 ## 4. Figuras seleccionadas para el informe
 
@@ -104,11 +117,15 @@ del informe y no porque quede bien.
 
 `outputs/auditoria/figuras/linea123_localidad.pdf`
 
-> Distribución por localidad de las filas de hurto de Línea 123 entre 2018 y 2025. Es la única
+> Distribución por localidad de los incidentes de hurto de Línea 123 entre 2018 y 2025, medida con la suma de `CANT_INCIDENTES`. Es la única
 > figura territorial posible del proyecto: ni el registro de la Policía ni Fiscalía publican nada
-> por debajo del municipio, así que todo el análisis por localidad depende de esta fuente. Suba y
-> Kennedy concentran cerca del 10 % cada una, lo que es coherente con que sean las localidades más
-> pobladas de la ciudad. Por eso la lectura correcta exige tasas por población y no conteos
+> por debajo del municipio, así que todo el análisis por localidad depende de esta fuente. Kennedy,
+> Suba y Engativá concentran entre el 11 % y el 12 % de los incidentes cada una, lo que es coherente
+> con que sean de las localidades más pobladas de la ciudad. La figura se construye sumando
+> `CANT_INCIDENTES` y no contando filas, porque las filas de esta fuente son grupos agregados y
+> contarlas pondera igual a un grupo de un incidente y a uno de quinientos: con filas, Engativá
+> aparecería cuarta con el 7,4 % en lugar de tercera con el 11,1 %. Por eso la lectura correcta
+> exige además tasas por población y no conteos
 > absolutos: un conteo alto en una localidad grande no indica mayor riesgo individual, y
 > presentarlo así produciría una interpretación estigmatizante. La figura incluye además la
 > categoría «SIN LOCALIZACION», que no es una localidad sino la ausencia de ubicación asignada al
