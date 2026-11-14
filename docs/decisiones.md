@@ -100,3 +100,62 @@ Las propuso Sara el 2026-11-11 y quedan pendientes de la respuesta del profesor:
 - El informe usa 2020–2025 en el título, el alcance, los objetivos y la sección 4.
 - Los notebooks de la segunda entrega deben pasar a la serie del registro 2020–2025 (#87).
 - Hay que verificar la caída de noviembre y diciembre de 2025 antes de usar esos meses para evaluar modelos (#86).
+
+---
+
+## D-04 · Horizonte, comparadores y protocolo de evaluación (#37)
+
+**Estado:** Aprobada por el equipo. Propuesta por Sara el 2026-11-13, aprobada por Juan Diego el
+2026-11-14 con un cambio en la barra a batir.
+**Fecha:** 2026-11-14.
+
+### Contexto
+D-01 fijó la variable objetivo y la unidad: víctimas de hurto a personas registradas por día en
+Bogotá, del registro de la Policía. Faltaban el horizonte, la barra a batir, las métricas y la
+partición.
+
+### Decisiones
+
+| Tema | Decisión |
+|---|---|
+| **Horizonte** | Un día: se predice `t+1`. Es lo que plantea la pregunta de investigación y el único horizonte en el que todas las predictoras están disponibles sin supuestos adicionales |
+| **Barra a batir** | El **mejor de los cuatro comparadores triviales sobre el mismo conjunto de evaluación del modelo**. No se fija un comparador a priori |
+| **Métricas** | MAE principal, RMSE secundaria, MAPE informativa |
+| **Partición** | Entrenamiento 2020-01-01 → 2025-04-30 (1.947 días); evaluación 2025-05-01 → 2025-10-31 (184 días). Validación de origen móvil dentro del entrenamiento |
+| **2020** | Se conserva, con un indicador explícito de año atípico, y se comprueba la sensibilidad entrenando también sin él |
+
+### Por qué la barra es «el mejor de los cuatro» y no un comparador fijo
+
+La propuesta inicial fijaba la persistencia `t-1` como barra, a partir de una tabla calculada sobre
+los últimos 365 días. Juan Diego señaló que la ventana de evaluación es otra, y que **el orden de
+los comparadores cambia con la ventana**:
+
+| Comparador | Últimos 365 días | Ventana de evaluación (2025-05-01 → 2025-10-31) |
+|---|---|---|
+| Persistencia `t-1` | MAE **55,2** · RMSE 72,3 | MAE 52,9 · RMSE 68,4 |
+| Mismo día semana anterior `t-7` | MAE 57,5 · RMSE 77,1 | MAE **49,0** · RMSE **61,4** |
+| Media previa de 7 días | MAE 56,0 · RMSE **70,5** | MAE 49,4 · RMSE 61,9 |
+| Media previa de 28 días | MAE 64,8 · RMSE 82,9 | MAE 55,8 · RMSE 70,7 |
+
+En los últimos 365 días gana la persistencia; en la ventana de evaluación gana el rezago 7. Fijar un
+comparador a priori habría puesto la barra en el sitio equivocado, así que **la barra se calcula
+sobre el mismo conjunto en el que se evalúa el modelo**. Con la partición acordada, eso significa
+batir el rezago 7: MAE 49,0 y RMSE 61,4.
+
+Se reportan los cuatro comparadores, no solo el ganador. La media de la serie en la ventana de
+evaluación es 366,8 víctimas al día; la de toda la serie es 343,0.
+
+### Un comparador débil no sirve como barra
+La pregunta del `README` propone batir «el mismo día de la semana anterior». Sobre los últimos 365
+días ese comparador es **peor** que la persistencia simple, así que superarlo no habría demostrado
+nada. De ahí la regla: la barra es el mejor de los triviales, no el que la pregunta mencione.
+
+### El corte de la serie es parte de esta decisión
+La serie termina el **2025-10-31** y no el 31 de diciembre, porque noviembre y diciembre de 2025 no
+son comparables (#86, `docs/verificacion_caida_2025.md`). Importa aquí: esos dos meses habrían caído
+en el conjunto de evaluación de cualquier partición considerada, y habrían hecho que cualquier
+modelo pareciera acertar un descenso que no ocurrió.
+
+### Evidencia
+Cifras calculadas sobre `data/processed/serie_objetivo_diaria.csv` (2.131 días), verificadas de
+forma independiente por las dos personas del equipo.
