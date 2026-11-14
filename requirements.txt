@@ -3,6 +3,7 @@
 pandas>=2.1
 numpy>=1.26
 matplotlib>=3.8
+geopandas>=0.14   # mapas por localidad en el notebook 02 (#35)
 openpyxl>=3.1      # lectura de .xlsx (Policía Nacional)
 xlrd>=2.0          # lectura de .xls antiguos, si los hay
 # Pruebas

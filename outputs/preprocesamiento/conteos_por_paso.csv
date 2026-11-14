@@ -1,0 +1,9 @@
+fuente,paso,filas_antes,filas_despues,excluidas,motivo
+policia_registro,original,4829870,4829870,0,todos los delitos del país
+policia_registro,filtro Bogotá,4829870,1406157,3423713,CODIGO DANE = 11001
+policia_registro,filtro hurto a personas,1406157,741986,664171,DELITOS contiene (05022)
+policia_registro,periodo 2020-01-01 a 2025-10-31,741986,730870,11116,11116 fuera del periodo; el fin es 2025-10-31 porque noviembre y diciembre de 2025 están incompletos (#86)
+linea123,original,1117394,1117394,0,archivo histórico 2015-2026
+linea123,periodo 2018-2025,1117394,763074,354320,el recurso cubre 2015-2026
+linea123,filtro hurto,763074,25144,737930,"TIPO_DETALLE contiene HURTO; es la tipificación de la llamada, no una calificación jurídica"
+linea123,localidad asignada,25144,24899,245,se separan 245 filas sin localidad: «SIN LOCALIZACION» no es una localidad
