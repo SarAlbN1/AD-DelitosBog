@@ -1,0 +1,117 @@
+{
+  "particion": {
+    "entrenamiento": [
+      "2020-01-01",
+      "2025-04-30"
+    ],
+    "evaluacion": [
+      "2025-05-01",
+      "2025-10-31"
+    ],
+    "dias_entrenamiento": 1947,
+    "dias_evaluacion": 184,
+    "media_evaluacion": 366.8,
+    "sin_barajar": true
+  },
+  "denominador_mase": 53.2,
+  "comparadores": {
+    "ingenuo": {
+      "n": 184,
+      "MAE": 52.92,
+      "RMSE": 68.41,
+      "MAPE": 15.62,
+      "MASE": 0.995
+    },
+    "ingenuo_estacional": {
+      "n": 184,
+      "MAE": 49.04,
+      "RMSE": 61.44,
+      "MAPE": 14.39,
+      "MASE": 0.922
+    },
+    "media_movil_7": {
+      "n": 184,
+      "MAE": 49.42,
+      "RMSE": 61.86,
+      "MAPE": 14.59,
+      "MASE": 0.929
+    },
+    "media_movil_28": {
+      "n": 184,
+      "MAE": 55.83,
+      "RMSE": 70.72,
+      "MAPE": 16.75,
+      "MASE": 1.05
+    }
+  },
+  "barra": {
+    "criterio": "el mejor de los cuatro comparadores sobre el conjunto de evaluación (D-04)",
+    "mejor_por_MAE": "ingenuo_estacional",
+    "MAE": 49.04,
+    "mejor_por_RMSE": "ingenuo_estacional",
+    "RMSE": 61.44,
+    "MASE_a_superar": 0.922
+  },
+  "validacion_rodante": [
+    {
+      "fin_entrenamiento": "2023-11-07",
+      "fin_evaluacion": "2024-02-05",
+      "dias_entrenamiento": 1407,
+      "dias_evaluacion": 90,
+      "ingenuo": 75.48,
+      "ingenuo_estacional": 75.57,
+      "media_movil_7": 76.38,
+      "media_movil_28": 82.0
+    },
+    {
+      "fin_entrenamiento": "2024-02-05",
+      "fin_evaluacion": "2024-05-05",
+      "dias_entrenamiento": 1497,
+      "dias_evaluacion": 90,
+      "ingenuo": 54.83,
+      "ingenuo_estacional": 58.27,
+      "media_movil_7": 55.57,
+      "media_movil_28": 62.6
+    },
+    {
+      "fin_entrenamiento": "2024-05-05",
+      "fin_evaluacion": "2024-08-03",
+      "dias_entrenamiento": 1587,
+      "dias_evaluacion": 90,
+      "ingenuo": 49.87,
+      "ingenuo_estacional": 40.5,
+      "media_movil_7": 45.0,
+      "media_movil_28": 47.17
+    },
+    {
+      "fin_entrenamiento": "2024-08-03",
+      "fin_evaluacion": "2024-11-01",
+      "dias_entrenamiento": 1677,
+      "dias_evaluacion": 90,
+      "ingenuo": 54.93,
+      "ingenuo_estacional": 43.09,
+      "media_movil_7": 50.59,
+      "media_movil_28": 51.3
+    },
+    {
+      "fin_entrenamiento": "2024-11-01",
+      "fin_evaluacion": "2025-01-30",
+      "dias_entrenamiento": 1767,
+      "dias_evaluacion": 90,
+      "ingenuo": 52.63,
+      "ingenuo_estacional": 69.68,
+      "media_movil_7": 57.19,
+      "media_movil_28": 77.52
+    },
+    {
+      "fin_entrenamiento": "2025-01-30",
+      "fin_evaluacion": "2025-04-30",
+      "dias_entrenamiento": 1857,
+      "dias_evaluacion": 90,
+      "ingenuo": 62.43,
+      "ingenuo_estacional": 62.71,
+      "media_movil_7": 67.97,
+      "media_movil_28": 70.15
+    }
+  ]
+}
