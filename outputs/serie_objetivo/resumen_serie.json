@@ -87,18 +87,18 @@
   "variable_objetivo": "victimas de hurto a personas registradas por dia en Bogota D. C.",
   "periodo": [
     "2020-01-01",
-    "2025-12-31"
+    "2025-10-31"
   ],
   "fechas_invalidas": 0,
-  "filas_fuera_del_periodo": 0,
-  "filas_en_la_serie": 741986,
-  "suma_cantidad_en_la_serie": 741986.0,
+  "filas_fuera_del_periodo": 11116,
+  "filas_en_la_serie": 730870,
+  "suma_cantidad_en_la_serie": 730870.0,
   "cantidad_distinta_de_1": 0,
-  "dias": 2192,
+  "dias": 2131,
   "dias_sin_registros": 0,
-  "media": 338.5,
-  "mediana": 337.0,
-  "desviacion_estandar": 115.61,
+  "media": 342.97,
+  "mediana": 341.0,
+  "desviacion_estandar": 113.73,
   "minimo": {
     "fecha": "2020-03-22",
     "victimas": 25
@@ -113,7 +113,7 @@
     "2022": 137157,
     "2023": 158745,
     "2024": 130503,
-    "2025": 123017
+    "2025": 111901
   },
   "media_diaria_por_anio": {
     "2020": 227.15,
@@ -121,15 +121,15 @@
     "2022": 375.77,
     "2023": 434.92,
     "2024": 356.57,
-    "2025": 337.03
+    "2025": 368.1
   },
   "media_por_dia_semana": {
-    "lunes": 294.68,
-    "martes": 346.31,
-    "miercoles": 359.7,
-    "jueves": 360.19,
-    "viernes": 398.22,
-    "sabado": 368.03,
-    "domingo": 242.29
+    "lunes": 298.97,
+    "martes": 351.14,
+    "miercoles": 364.95,
+    "jueves": 364.83,
+    "viernes": 403.09,
+    "sabado": 372.5,
+    "domingo": 244.96
   }
 }

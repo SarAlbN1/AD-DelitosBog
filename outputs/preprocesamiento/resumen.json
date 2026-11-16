@@ -1,0 +1,176 @@
+{
+  "serie_objetivo": {
+    "archivos": [
+      {
+        "archivo": "data/raw/policia_registro/csv/delitos_registro_2020.csv",
+        "sha256": "aa2f39e87d899929d07daadfeca2480c0300a5bc0a6cfaa16665c1248fce95eb",
+        "filas": 651206,
+        "filas_bogota": 184105,
+        "filas_hurto": 83136
+      },
+      {
+        "archivo": "data/raw/policia_registro/csv/delitos_registro_2021.csv",
+        "sha256": "952334b45f2c1ae8160686399c67724abc02af8fe5fbe8c0cc8007d48e73e278",
+        "filas": 792244,
+        "filas_bogota": 221488,
+        "filas_hurto": 109428
+      },
+      {
+        "archivo": "data/raw/policia_registro/csv/delitos_registro_2022.csv",
+        "sha256": "8e22e2d1f40a3eed0c274fdc17d02e6afde9dff960eb72fc6398994a43d25385",
+        "filas": 862451,
+        "filas_bogota": 241557,
+        "filas_hurto": 137157
+      },
+      {
+        "archivo": "data/raw/policia_registro/csv/delitos_registro_2023.csv",
+        "sha256": "d5d34adc3e3f9be79919ed9ae9468589150035dda640169927118efab135c615",
+        "filas": 917544,
+        "filas_bogota": 270397,
+        "filas_hurto": 158745
+      },
+      {
+        "archivo": "data/raw/policia_registro/csv/delitos_registro_2024.csv",
+        "sha256": "621a8cd32b6d9194299dd5229404bb66318ebf4b66e14b21681cb4fd80d63c64",
+        "filas": 832475,
+        "filas_bogota": 247778,
+        "filas_hurto": 130503
+      },
+      {
+        "archivo": "data/raw/policia_registro/csv/delitos_registro_2025.csv",
+        "sha256": "e8c80f134bc260693a7f1ce280372259a607bb41614c65c7df13fa43c7eeaff8",
+        "filas": 773950,
+        "filas_bogota": 240832,
+        "filas_hurto": 123017
+      }
+    ],
+    "filas_entrada": 4829870,
+    "filas_bogota": 1406157,
+    "filas_hurto": 741986,
+    "perfil_poblacion": {
+      "ARMAS MEDIOS": {
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "categorias": 8,
+        "frecuencias": {
+          "SIN EMPLEO DE ARMAS": 468806,
+          "ARMA BLANCA / CORTOPUNZANTE": 151687,
+          "ARMA DE FUEGO": 78303,
+          "CONTUNDENTES": 21131,
+          "NO REPORTADO": 15558,
+          "ESCOPOLAMINA": 6449,
+          "LLAVE MAESTRA": 51,
+          "PALANCAS": 1
+        }
+      },
+      "GENERO": {
+        "nulos": 622,
+        "pct_nulos": 0.08,
+        "categorias": 2,
+        "frecuencias": {
+          "MASCULINO": 435289,
+          "FEMENINO": 306075,
+          "nan": 622
+        }
+      },
+      "*AGRUPA EDAD PERSONA*": {
+        "nulos": 392,
+        "pct_nulos": 0.05,
+        "categorias": 3,
+        "frecuencias": {
+          "DE 18 AÑOS Y MÁS": 733946,
+          "DE 14 A 17 AÑOS": 6609,
+          "DE 0 A 14 AÑOS": 1039,
+          "nan": 392
+        }
+      }
+    },
+    "variable_objetivo": "victimas de hurto a personas registradas por dia en Bogota D. C.",
+    "periodo": [
+      "2020-01-01",
+      "2025-10-31"
+    ],
+    "fechas_invalidas": 0,
+    "filas_fuera_del_periodo": 11116,
+    "filas_en_la_serie": 730870,
+    "suma_cantidad_en_la_serie": 730870.0,
+    "cantidad_distinta_de_1": 0,
+    "dias": 2131,
+    "dias_sin_registros": 0,
+    "media": 342.97,
+    "mediana": 341.0,
+    "desviacion_estandar": 113.73,
+    "minimo": {
+      "fecha": "2020-03-22",
+      "victimas": 25
+    },
+    "maximo": {
+      "fecha": "2022-09-23",
+      "victimas": 718
+    },
+    "total_por_anio": {
+      "2020": 83136,
+      "2021": 109428,
+      "2022": 137157,
+      "2023": 158745,
+      "2024": 130503,
+      "2025": 111901
+    },
+    "media_diaria_por_anio": {
+      "2020": 227.15,
+      "2021": 299.8,
+      "2022": 375.77,
+      "2023": 434.92,
+      "2024": 356.57,
+      "2025": 368.1
+    },
+    "media_por_dia_semana": {
+      "lunes": 298.97,
+      "martes": 351.14,
+      "miercoles": 364.95,
+      "jueves": 364.83,
+      "viernes": 403.09,
+      "sabado": 372.5,
+      "domingo": 244.96
+    }
+  },
+  "linea123": {
+    "archivo": "data/raw/linea123.csv",
+    "sha256": "ceeee37729c83adaae6907272457998cc5a60eaf57c14a5ead17c6db2d3a4d61",
+    "filas_originales": 1117394,
+    "filas_hurto_en_periodo": 25144,
+    "incidentes_hurto_en_periodo": 1094313,
+    "incidentes_con_localidad": 1087886,
+    "filas_sin_localidad": 245,
+    "localidades": [
+      "ANTONIO NARIÑO",
+      "BARRIOS UNIDOS",
+      "BOSA",
+      "CANDELARIA",
+      "CHAPINERO",
+      "CIUDAD BOLÍVAR",
+      "ENGATIVÁ",
+      "FONTIBÓN",
+      "KENNEDY",
+      "LOS MÁRTIRES",
+      "PUENTE ARANDA",
+      "RAFAEL URIBE URIBE",
+      "SAN CRISTÓBAL",
+      "SANTA FE",
+      "SUBA",
+      "SUMAPAZ",
+      "TEUSAQUILLO",
+      "TUNJUELITO",
+      "USAQUÉN",
+      "USME"
+    ],
+    "nota_medida": "el agregado suma CANT_INCIDENTES y no cuenta filas: las filas son grupos agregados y contarlas cambia el ranking territorial"
+  },
+  "reglas_respetadas": [
+    "el registro de la Policía no se deduplica por fila exacta",
+    "el ID de Línea 123 no se usa como clave",
+    "Línea 123 se agrega sumando CANT_INCIDENTES, no contando filas",
+    "«SIN LOCALIZACION» se separa del desglose territorial",
+    "las fuentes no se suman entre sí: cada una en su propio archivo"
+  ]
+}
