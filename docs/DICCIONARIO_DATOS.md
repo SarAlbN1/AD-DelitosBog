@@ -19,7 +19,8 @@ Columnas de cada tabla:
 > Estado: **completo para la primera entrega.**
 > - Las entradas de Fiscalía «(por confirmar)» se resolvieron con la ficha oficial del conjunto en datos.gov.co.
 > - La columna «Uso» sigue la decisión D-01 ([decisiones.md](decisiones.md)).
-> - Lo que sigue abierto está en la sección 6.
+> - Las variables derivadas de la serie objetivo están en la sección 5.
+> - Lo que sigue abierto está en la sección 7.
 
 ---
 
@@ -118,7 +119,52 @@ localidad.
 
 ---
 
-## 5. Lo que este diccionario deja claro
+## 5. Variables derivadas de la serie objetivo (#33)
+
+No vienen en ninguna fuente: las construye `scripts/features.py` sobre la serie diaria de
+`outputs/serie_objetivo/serie_diaria_policia.csv` (2.131 días, del 2020-01-01 al 2025-10-31). La
+lista y la regla de disponibilidad de cada una están en `outputs/features/diccionario_features.json`,
+que el script genera. El script falla si una variable no declara su regla.
+
+**Regla de disponibilidad.** Para predecir el día `t` (horizonte `t+1`, D-04) solo se usa lo que se
+conoce al cerrar `t-1`:
+- **calendario:** se conoce con años de antelación;
+- **pasado:** usa solo valores de la serie hasta `t-1`.
+
+La prueba `tests/test_features.py` perturba la serie desde `t` en adelante, reconstruye las
+variables y exige que la fila `t` no cambie.
+
+| Variable | Disponibilidad | Descripción |
+|---|---|---|
+| `victimas` | objetivo | Víctimas registradas el día `t`. Nunca es predictora |
+| `anio`, `mes`, `dia_del_mes` | calendario | Componentes de la fecha |
+| `dia_semana` | calendario | 0 = lunes … 6 = domingo |
+| `fin_de_semana` | calendario | 1 si es sábado o domingo |
+| `semana_del_anio` | calendario | Semana ISO |
+| `quincena` | calendario | 1 el día 15 y el último día del mes |
+| `festivo` | calendario | 1 si es festivo en Colombia. Los festivos se calculan con los días fijos, los que la Ley 51 de 1983 traslada al lunes y los que dependen de la Pascua |
+| `vispera_de_festivo` | calendario | 1 si el día siguiente es festivo. Depende de `t+1`, pero el calendario se conoce de antemano |
+| `dia_despues_de_festivo` | calendario | 1 si el día anterior fue festivo |
+| `puente` | calendario | 1 si es un festivo que cae en lunes |
+| `rezago_1`, `rezago_7`, `rezago_14`, `rezago_28` | pasado | Valor de la serie en `t-1`, `t-7`, `t-14` y `t-28` |
+| `media_previa_7`, `media_previa_28` | pasado | Media de `t-1` a `t-7` y de `t-1` a `t-28` |
+| `desv_previa_7`, `desv_previa_28` | pasado | Desviación estándar en las mismas ventanas |
+| `tendencia_7_28` | pasado | Cociente entre `media_previa_7` y `media_previa_28` |
+
+Son 20 predictoras. Los primeros 28 días tienen nulos porque los rezagos y las ventanas necesitan
+historia; la primera fila completa es el 2020-01-29. Se conservan, y descartarlas es una decisión del
+modelado.
+
+**Variables excluidas por fuga de información**, listadas en el script para que nadie las añada:
+- `a_o_creacion_proceso` y `mes_creacion_proceso` de Fiscalía: el proceso puede abrirse meses después
+  del hecho;
+- `etapa` y `estado` de Fiscalía: dependen del tiempo transcurrido y de la fecha de consulta;
+- un indicador de pico calculado con percentiles de toda la serie: incluye el futuro;
+- una media móvil centrada en `t`: usa días posteriores.
+
+D-04 prevé además un indicador de 2020 como año atípico. Todavía no está en `scripts/features.py`.
+
+## 6. Lo que este diccionario deja claro
 
 1. **Las cuatro fuentes miden cosas distintas** y sus columnas de conteo no son comparables:
    `CANTIDAD` = 1 por víctima, `cantidad` = hurtos por día, `CANT_INCIDENTES` = llamadas, y en
@@ -133,7 +179,7 @@ localidad.
 5. **Dos fuentes no tienen clave primaria utilizable**: el `ID` de Línea 123 se repite y Policía no
    publica identificador.
 
-## 6. Lo que falta por completar
+## 7. Lo que falta por completar
 
 Esta es la primera versión. Queda pendiente:
 
@@ -148,4 +194,4 @@ Esta es la primera versión. Queda pendiente:
   - el pie del archivo habla de las variables de género y edad de las personas.
 
   El informe lo presenta como inferencia de esa evidencia.
-- **Sigue abierto:** añadir las variables derivadas de la segunda entrega cuando se decidan (#33).
+- **Hecho: variables derivadas (#33).** Están en la sección 5.
