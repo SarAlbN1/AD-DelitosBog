@@ -1,7 +1,7 @@
 """Construye la serie objetivo diaria a partir del registro de la Policía Nacional.
 
 Variable objetivo (decisiones.md, D-01): número diario de víctimas de hurto a personas
-registradas en Bogotá D. C., 2020-01-01 a 2025-12-31.
+registradas en Bogotá D. C., 2020-01-01 a 2025-10-31 (el corte se explica en ``FIN``).
 
 Entrada: los CSV que produce ``scripts/policia_registro_a_csv.py`` (una fila por víctima,
 ``CANTIDAD = 1``). Se aplican los mismos filtros que el manifiesto de auditoría

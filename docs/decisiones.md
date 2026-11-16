@@ -88,7 +88,7 @@ Las propuso Sara el 2026-11-11 y quedan pendientes de la respuesta del profesor:
 
    Sus variables solo entran al modelo con justificación metodológica y con el rezago con que estarían disponibles al pronosticar.
 6. **Variable objetivo: número diario de víctimas de hurto a personas registradas en Bogotá** (Policía, 2020–2025).
-   - Conjunto original: 741.986 filas. Conjunto de modelamiento: serie diaria de 2.192 días, sin días vacíos (`scripts/serie_objetivo_policia.py`, `outputs/serie_objetivo/`). Las dos cantidades se documentan por separado.
+   - Conjunto original: 741.986 filas. Conjunto de modelamiento: serie diaria de 2.131 días, del 2020-01-01 al 2025-10-31, con 730.870 víctimas y sin días vacíos (`scripts/serie_objetivo_policia.py`, `outputs/serie_objetivo/`). La serie era de 2.192 días hasta que el #86 excluyó noviembre y diciembre de 2025 (`docs/verificacion_caida_2025.md`). Las dos cantidades se documentan por separado.
    - Un pronóstico por localidad no es viable con esta fuente, porque el registro no identifica la localidad.
    - El horizonte del pronóstico queda abierto en #37.
 
