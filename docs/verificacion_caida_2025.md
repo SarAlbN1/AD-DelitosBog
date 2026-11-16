@@ -93,8 +93,8 @@ Contando **todos los delitos del país**, el mismo archivo cae:
 | 2025/12 | 48.125 |
 
 La caída nacional es del 17 % en noviembre y del 34 % en diciembre, menor que el 50 % del hurto en
-Bogotá, pero en la misma dirección. Es un patrón de consolidación incompleta de todo el archivo, no
-un problema de la ciudad ni del delito.
+Bogotá, pero en la misma dirección. Es un patrón de todo el archivo, no un problema de la ciudad ni
+del delito.
 
 ## Consecuencias
 

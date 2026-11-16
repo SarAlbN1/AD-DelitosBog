@@ -51,14 +51,14 @@ Comparando lunes con lunes, que es la comparación correcta:
 | | Media | n |
 |---|---:|---:|
 | Lunes festivo | **201,5** | 62 |
-| Lunes laborable | 323,9 | 243 |
+| Lunes laborable | 323,9 | 242 |
 | **Diferencia** | **−37,8 %** | |
 
 El efecto se sostiene al controlar el día de la semana: **en un lunes festivo se registran un 38 %
 menos de víctimas que en un lunes laborable.** El festivo debe ser una predictora del modelo, y el
 calendario de festivos se conoce de antemano, así que no introduce fuga.
 
-Hay 103 festivos en el periodo.
+Hay 103 festivos en el periodo, y 304 lunes: 62 festivos y 242 laborables. El script emite esos conteos para que no se escriban a mano.
 
 ## 4. Estacionalidad mensual
 
@@ -77,31 +77,71 @@ promedio de los noviembres de 2020 a 2024.
 ## 5. Distribución territorial
 
 Solo Línea 123 tiene resolución dentro de la ciudad. Medido **sumando `CANT_INCIDENTES`**, no
-contando filas.
+contando filas, y acotado a **2020–2025** para que coincida con el periodo de la serie objetivo y
+con la tabla de la sección 4. Los porcentajes se calculan sobre el total del periodo, 821.304
+incidentes, incluidos los que no tienen localidad.
+
+### Por conteo
 
 | Localidad | Incidentes | % |
 |---|---:|---:|
-| Kennedy | 133.250 | 12,25 % |
-| Suba | 125.987 | 11,58 % |
-| Engativá | 121.838 | 11,20 % |
-| Usaquén | 71.743 | 6,59 % |
-| Bosa | 69.953 | 6,43 % |
+| Kennedy | 99.525 | 12,12 % |
+| Engativá | 93.654 | 11,40 % |
+| Suba | 93.132 | 11,34 % |
+| Bosa | 52.210 | 6,36 % |
+| Ciudad Bolívar | 48.636 | 5,92 % |
 
-Las tres primeras concentran el 35 % de los incidentes. Los incidentes **sin localidad asignada**
-son 6.427, el **0,59 %** del total: un peso bajo, pero se separan igualmente porque «SIN
-LOCALIZACION» no es una localidad.
+Los incidentes **sin localidad asignada** son 5.683, el **0,69 %**. Se separan porque «SIN
+LOCALIZACION» no es una localidad y porque no tienen población con la que calcular una tasa.
 
-### Lo que estos conteos no dicen
+### Por tasa, que es otra historia
 
-**No hay tasas por población, así que estos números no miden riesgo.** Kennedy, Suba y Engativá
-son también de las localidades más pobladas de Bogotá, de modo que un conteo alto es lo esperable
-antes de mirar nada más. Presentar este orden como un ranking de peligrosidad sería una lectura
-estigmatizante y no se sostiene con los datos que hay.
+Tasa de **llamadas tramitadas por 100.000 habitantes**, con la población de cada año (proyecciones
+de la SDP, marzo de 2025).
 
-Falta una fuente de población por localidad. El geojson de localidades que usamos trae conteos de
-delitos y geometría, pero no población. `scripts/eda.py` acepta `--poblacion` con un CSV de
-`localidad,habitantes` y calcula la tasa por 100.000 en cuanto exista esa fuente. **Hasta
-entonces, el informe no debe comparar localidades entre sí.**
+| Localidad | Incidentes | Puesto por conteo | Tasa por 100.000 | Puesto por tasa | Cambio |
+|---|---:|---:|---:|---:|---:|
+| Los Mártires | 29.033 | 14 | **5.736** | **1** | +13 |
+| Antonio Nariño | 19.521 | 17 | 4.036 | 2 | +15 |
+| Santa Fe | 25.991 | 15 | 3.896 | 3 | +12 |
+| Barrios Unidos | 30.974 | 13 | 3.675 | 4 | +9 |
+| Teusaquillo | 33.702 | 11 | 3.578 | 5 | +6 |
+| Chapinero | 33.584 | 12 | 3.379 | 6 | +6 |
+
+Y las que caen al normalizar:
+
+| Localidad | Incidentes | Puesto por conteo | Tasa por 100.000 | Puesto por tasa |
+|---|---:|---:|---:|---:|
+| Kennedy | 99.525 | **1** | 1.552 | **12** |
+| Engativá | 93.654 | 2 | 1.891 | 8 |
+| Suba | 93.132 | 3 | 1.255 | 15 |
+| Bosa | 52.210 | 4 | 1.164 | 17 |
+| Ciudad Bolívar | 48.636 | 6 | 1.223 | 16 |
+
+**El orden se da la vuelta.** Kennedy pasa del puesto 1 por conteo al 12 por tasa. Los Mártires,
+que era el 14 por conteo, es el **primero** por tasa, con una tasa 3,7 veces la de Kennedy. Antonio
+Nariño sube 15 puestos.
+
+Esto confirma lo que el conteo no podía decir: **el conteo mide tamaño de población, no intensidad
+del fenómeno.** Si el informe hubiera presentado el orden por conteo como un ranking, habría
+señalado a las localidades más pobladas y habría pasado por alto las que concentran más llamadas
+por habitante.
+
+### Lo que esta tasa no es, y hay que decirlo
+
+1. **No es una tasa de hurtos.** Línea 123 cuenta llamadas tramitadas, así que la tasa mide
+   **demanda de atención** por habitante, no victimización.
+2. **No capta la población flotante.** Los Mártires, Santa Fe, La Candelaria, Chapinero y
+   Teusaquillo reciben cada día a mucha gente que no vive allí: trabajo, comercio, transporte. Su
+   tasa por residente sale inflada, y es muy probable que eso explique buena parte de que encabecen
+   la tabla. **Sin una medida de población flotante esa parte no se puede separar.**
+3. **Sumapaz es inestable.** Es rural, tiene la menor población de la ciudad y muy pocas llamadas en
+   todo el periodo, así que su tasa de 213 por 100.000 se mueve mucho con pocos casos.
+4. **El orden cambia, pero no es un ranking de peligrosidad.** Ni por conteo ni por tasa. Las dos
+   medidas describen dónde se pide atención, con sesgos distintos.
+
+Se presentan **las dos cosas**, conteo y tasa, precisamente para que se vea cuánto cambia el orden
+al normalizar.
 
 ## 6. Relación entre las tres fuentes
 
@@ -139,4 +179,6 @@ Esto respalda dos decisiones ya tomadas:
 3. **La estacionalidad mensual es débil** frente a la semanal.
 4. **2020 debe entrar marcado**, no como un año más.
 5. **Comparar medias diarias, no totales**, mientras 2025 esté truncado.
-6. **Nada de comparaciones entre localidades** hasta tener población.
+6. **Las comparaciones entre localidades se hacen por tasa, no por conteo.** El orden cambia por
+   completo al normalizar: Kennedy pasa del puesto 1 al 12. Y ni siquiera la tasa es un ranking de
+   peligrosidad, porque no capta la población flotante.

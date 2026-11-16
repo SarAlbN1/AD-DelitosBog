@@ -76,45 +76,94 @@
       "media_lunes_festivo": 201.5,
       "media_lunes_laborable": 323.9,
       "n_lunes_festivo": 62,
+      "n_lunes_laborable": 242,
+      "n_lunes_total": 304,
       "diferencia_lunes_pct": -37.8
     },
     "nota_2020": "2020 no es comparable: el nivel está deprimido por las restricciones de movilidad",
     "nota_2025": "2025 está truncado el 2025-10-31 (#86): su total anual no es comparable"
   },
   "territorial": {
-    "total_con_localidad": 1087886,
+    "periodo": [
+      2020,
+      2025
+    ],
+    "total_con_localidad": 815621,
     "sin_localidad": {
-      "incidentes_sin_localidad": 6427,
-      "pct_sin_localidad": 0.59
+      "incidentes_sin_localidad": 5683,
+      "pct_sin_localidad": 0.69
     },
-    "top5": [
+    "top5_conteo": [
       {
         "localidad": "KENNEDY",
-        "incidentes": 133250,
-        "pct": 12.25
-      },
-      {
-        "localidad": "SUBA",
-        "incidentes": 125987,
-        "pct": 11.58
+        "incidentes": 99525,
+        "pct": 12.12
       },
       {
         "localidad": "ENGATIVÁ",
-        "incidentes": 121838,
-        "pct": 11.2
+        "incidentes": 93654,
+        "pct": 11.4
       },
       {
-        "localidad": "USAQUÉN",
-        "incidentes": 71743,
-        "pct": 6.59
+        "localidad": "SUBA",
+        "incidentes": 93132,
+        "pct": 11.34
       },
       {
         "localidad": "BOSA",
-        "incidentes": 69953,
-        "pct": 6.43
+        "incidentes": 52210,
+        "pct": 6.36
+      },
+      {
+        "localidad": "USAQUÉN",
+        "incidentes": 50245,
+        "pct": 6.12
       }
     ],
-    "tasas_por_poblacion": "no calculadas: falta una fuente de población por localidad. Los conteos absolutos no se deben leer como riesgo: las localidades más pobladas acumulan más incidentes"
+    "nota_tasas": "tasa de llamadas tramitadas por 100.000 habitantes, 2020-2025, con la población de cada año; no es una tasa de hurtos; sin población y por tanto sin tasa: CANDELARIA",
+    "top5_tasa": [
+      {
+        "clave": "LOS MARTIRES",
+        "incidentes": 29033,
+        "personas_anio": 506159.0,
+        "tasa_100k_periodo": 5735.9,
+        "localidad": "LOS MÁRTIRES"
+      },
+      {
+        "clave": "ANTONIO NARINO",
+        "incidentes": 19521,
+        "personas_anio": 483662.0,
+        "tasa_100k_periodo": 4036.1,
+        "localidad": "ANTONIO NARIÑO"
+      },
+      {
+        "clave": "SANTA FE",
+        "incidentes": 25991,
+        "personas_anio": 667201.0,
+        "tasa_100k_periodo": 3895.5,
+        "localidad": "SANTA FE"
+      },
+      {
+        "clave": "BARRIOS UNIDOS",
+        "incidentes": 30974,
+        "personas_anio": 842802.0,
+        "tasa_100k_periodo": 3675.1,
+        "localidad": "BARRIOS UNIDOS"
+      },
+      {
+        "clave": "TEUSAQUILLO",
+        "incidentes": 33702,
+        "personas_anio": 941870.0,
+        "tasa_100k_periodo": 3578.2,
+        "localidad": "TEUSAQUILLO"
+      }
+    ],
+    "advertencias": [
+      "la tasa es de llamadas tramitadas por 100.000 habitantes, no de hurtos: mide demanda de atención",
+      "Sumapaz es rural y con muy poca población, así que su tasa es inestable",
+      "la población de residencia no capta la población flotante: Chapinero, Santa Fe y La Candelaria reciben gente que no vive en ellas y su tasa por residente sale inflada",
+      "el orden cambia al normalizar, pero no se presenta como un ranking de peligrosidad"
+    ]
   },
   "entre_fuentes": {
     "periodo": [
@@ -162,6 +211,7 @@
     "eda_dia_semana",
     "eda_estacionalidad_mensual",
     "eda_localidad",
+    "eda_localidad_tasa",
     "eda_fuentes_normalizadas"
   ]
 }

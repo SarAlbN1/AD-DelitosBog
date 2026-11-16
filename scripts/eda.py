@@ -80,29 +80,90 @@ def bloque_temporal(s: pd.Series, festivos: set) -> dict:
             "media_lunes_festivo": round(float(festivo_lunes.mean()), 1),
             "media_lunes_laborable": round(float(laborable_lunes.mean()), 1),
             "n_lunes_festivo": int(len(festivo_lunes)),
+            "n_lunes_laborable": int(len(laborable_lunes)),
+            "n_lunes_total": int(lunes.sum()),
             "diferencia_lunes_pct": round(
                 100 * (festivo_lunes.mean() / laborable_lunes.mean() - 1), 1),
         },
     }
 
 
-def bloque_territorial(ruta: Path, ruta_mensual: Path) -> dict | None:
+def bloque_territorial(ruta: Path, ruta_mensual: Path, anio_min: int, anio_max: int,
+                       ruta_poblacion: Path | None) -> dict | None:
+    """Agrega Línea 123 por localidad y, si hay población, calcula tasas por 100.000.
+
+    El periodo se acota a `anio_min`–`anio_max` para que coincida con el de la serie objetivo y con
+    el que usa el informe. La tabla anterior sumaba 2018–2025 y no era comparable con la sección 4.
+    """
     if not ruta.is_file():
         log.warning("no existe %s: se omite el bloque territorial", ruta)
         return None
     por_loc = pd.read_csv(ruta)
+    por_loc = por_loc[por_loc["anio"].between(anio_min, anio_max)]
     total_con_loc = int(por_loc["incidentes"].sum())
     resumen = (por_loc.groupby("localidad", as_index=False)["incidentes"].sum()
                .sort_values("incidentes", ascending=False))
-    resumen["pct"] = (100 * resumen["incidentes"] / total_con_loc).round(2)
 
     sin_loc = None
+    total_todo = total_con_loc
     if ruta_mensual.is_file():
-        total_todo = int(pd.read_csv(ruta_mensual)["incidentes"].sum())
+        men = pd.read_csv(ruta_mensual)
+        men = men[men["anio"].between(anio_min, anio_max)]
+        total_todo = int(men["incidentes"].sum())
         sin_loc = {"incidentes_sin_localidad": total_todo - total_con_loc,
                    "pct_sin_localidad": round(100 * (total_todo - total_con_loc) / total_todo, 2)}
 
-    return {"resumen": resumen, "total_con_localidad": total_con_loc, "sin_localidad": sin_loc}
+    # El porcentaje se calcula sobre el total del periodo, incluidos los incidentes sin localidad,
+    # para que coincida con la tabla de la sección 4 del informe. Calcularlo solo sobre los
+    # localizados daría cifras ligeramente más altas y dos números distintos en el proyecto.
+    resumen["pct"] = (100 * resumen["incidentes"] / total_todo).round(2)
+
+    tasas = None
+    nota_tasas = ("no calculadas: falta una fuente de población por localidad. Los conteos "
+                  "absolutos no se deben leer como riesgo")
+    if ruta_poblacion and ruta_poblacion.is_file():
+        tasas, nota_tasas = _tasas(por_loc, ruta_poblacion, anio_min, anio_max)
+
+    return {"resumen": resumen, "total_con_localidad": total_con_loc, "sin_localidad": sin_loc,
+            "periodo": [anio_min, anio_max], "tasas": tasas, "nota_tasas": nota_tasas}
+
+
+def _clave(serie: pd.Series) -> pd.Series:
+    """Normaliza el nombre de la localidad para cruzar las dos fuentes."""
+    return (serie.astype(str).str.normalize("NFKD").str.encode("ascii", "ignore")
+            .str.decode("ascii").str.upper().str.strip())
+
+
+def _tasas(por_loc: pd.DataFrame, ruta_poblacion: Path, anio_min: int, anio_max: int):
+    """Tasa de llamadas por 100.000 habitantes, con la población del mismo año (regla 1).
+
+    No es una tasa de hurtos: Línea 123 cuenta llamadas tramitadas, así que mide demanda de
+    atención (regla 5). «SIN LOCALIZACION» ya quedó fuera antes de llegar aquí (regla 3).
+    """
+    pob = pd.read_csv(ruta_poblacion)
+    pob["clave"] = _clave(pob["localidad"] if "localidad" in pob else pob["clave"])
+    inc = por_loc.copy()
+    inc["clave"] = _clave(inc["localidad"])
+
+    # Regla 1: cada año contra la población de su propio año.
+    anual = inc.groupby(["clave", "anio"], as_index=False)["incidentes"].sum()
+    cruce = anual.merge(pob[["clave", "anio", "habitantes"]], on=["clave", "anio"], how="left")
+    sin_pob = sorted(cruce.loc[cruce["habitantes"].isna(), "clave"].unique().tolist())
+    cruce = cruce.dropna(subset=["habitantes"])
+    cruce["tasa_100k"] = 100_000 * cruce["incidentes"] / cruce["habitantes"]
+
+    # Agregado del periodo: suma de incidentes sobre la suma de población-año (personas-año).
+    agg = cruce.groupby("clave", as_index=False).agg(
+        incidentes=("incidentes", "sum"), personas_anio=("habitantes", "sum"))
+    agg["tasa_100k_periodo"] = (100_000 * agg["incidentes"] / agg["personas_anio"]).round(1)
+    nombres = inc.drop_duplicates("clave")[["clave", "localidad"]]
+    agg = agg.merge(nombres, on="clave", how="left").sort_values("tasa_100k_periodo", ascending=False)
+
+    nota = (f"tasa de llamadas tramitadas por 100.000 habitantes, {anio_min}-{anio_max}, con la "
+            f"población de cada año; no es una tasa de hurtos")
+    if sin_pob:
+        nota += f"; sin población y por tanto sin tasa: {', '.join(sin_pob)}"
+    return {"por_anio": cruce, "periodo": agg, "sin_poblacion": sin_pob}, nota
 
 
 def bloque_entre_fuentes(ruta: Path) -> dict | None:
@@ -163,6 +224,20 @@ def figuras(temporal: dict, territorial: dict | None, fuentes: dict | None, carp
                title="Línea 123 · 15 localidades con más incidentes")
         guardar(fig, "eda_localidad")
 
+    if territorial is not None and territorial["tasas"]:
+        t = territorial["tasas"]["periodo"].copy()
+        orden_conteo = t.sort_values("incidentes", ascending=False)["localidad"].tolist()
+        t["puesto_conteo"] = t["localidad"].map({l: i + 1 for i, l in enumerate(orden_conteo)})
+        t = t.sort_values("tasa_100k_periodo", ascending=False).reset_index(drop=True)
+        t["puesto_tasa"] = t.index + 1
+        fig, ax = plt.subplots(figsize=(7.5, 5))
+        etiquetas = [f"{l.title()} ({c}\u2192{r})" for l, c, r
+                     in zip(t["localidad"], t["puesto_conteo"], t["puesto_tasa"])]
+        ax.barh(etiquetas[::-1], t["tasa_100k_periodo"].to_numpy()[::-1], color="#8172B3")
+        ax.set(xlabel="llamadas tramitadas por 100.000 habitantes (2020-2025)",
+               title="Línea 123 · tasa por habitante\n(entre paréntesis: puesto por conteo \u2192 por tasa)")
+        guardar(fig, "eda_localidad_tasa")
+
     if fuentes is not None:
         fig, ax = plt.subplots(figsize=(8, 3.4))
         for col in fuentes["series"].columns:
@@ -184,8 +259,12 @@ def main(argv=None) -> int:
     p.add_argument("--linea123-mensual", type=Path,
                    default=Path("data/processed/linea123_hurto_mensual.csv"))
     p.add_argument("--fuentes", type=Path, default=Path("outputs/informe/series_mensuales_fuentes.csv"))
-    p.add_argument("--poblacion", type=Path, default=None,
-                   help="CSV con localidad,habitantes para calcular tasas por 100.000.")
+    p.add_argument("--poblacion", type=Path,
+                   default=Path("outputs/poblacion/poblacion_localidad_2020_2025.csv"),
+                   help="CSV con localidad, anio y habitantes (proyecciones de la SDP).")
+    p.add_argument("--anio-min", type=int, default=2020,
+                   help="Primer año del bloque territorial; 2020 para cuadrar con la serie.")
+    p.add_argument("--anio-max", type=int, default=2025)
     p.add_argument("--salida", type=Path, default=Path("outputs/eda"))
     a = p.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
@@ -201,7 +280,8 @@ def main(argv=None) -> int:
     fs = ft.calendario_festivos(s.index.min(), s.index.max())
 
     temporal = bloque_temporal(s, fs)
-    territorial = bloque_territorial(a.localidad, a.linea123_mensual)
+    territorial = bloque_territorial(a.localidad, a.linea123_mensual, a.anio_min, a.anio_max,
+                                     a.poblacion)
     fuentes = bloque_entre_fuentes(a.fuentes)
 
     a.salida.mkdir(parents=True, exist_ok=True)
@@ -214,16 +294,10 @@ def main(argv=None) -> int:
         fuentes["correlacion_pearson"].to_csv(a.salida / "fuentes_correlacion_pearson.csv")
         fuentes["correlacion_spearman"].to_csv(a.salida / "fuentes_correlacion_spearman.csv")
 
-    tasas = None
-    if a.poblacion and a.poblacion.is_file() and territorial:
-        pob = pd.read_csv(a.poblacion)
-        r = territorial["resumen"].merge(pob, on="localidad", how="left")
-        r["tasa_100k"] = (100_000 * r["incidentes"] / r["habitantes"]).round(1)
-        r.to_csv(a.salida / "territorial_tasas.csv", index=False)
-        tasas = "calculadas"
-    elif territorial:
-        tasas = ("no calculadas: falta una fuente de población por localidad. Los conteos absolutos "
-                 "no se deben leer como riesgo: las localidades más pobladas acumulan más incidentes")
+    if territorial and territorial["tasas"]:
+        t = territorial["tasas"]
+        t["periodo"].to_csv(a.salida / "territorial_tasas.csv", index=False)
+        t["por_anio"].to_csv(a.salida / "territorial_tasas_por_anio.csv", index=False)
 
     hechas = figuras(temporal, territorial, fuentes, a.salida / "figuras")
 
@@ -239,10 +313,22 @@ def main(argv=None) -> int:
             "nota_2025": "2025 está truncado el 2025-10-31 (#86): su total anual no es comparable",
         },
         "territorial": None if not territorial else {
+            "periodo": territorial["periodo"],
             "total_con_localidad": territorial["total_con_localidad"],
             "sin_localidad": territorial["sin_localidad"],
-            "top5": territorial["resumen"].head(5).to_dict("records"),
-            "tasas_por_poblacion": tasas,
+            "top5_conteo": territorial["resumen"].head(5).to_dict("records"),
+            "nota_tasas": territorial["nota_tasas"],
+            "top5_tasa": (None if not territorial["tasas"] else
+                          territorial["tasas"]["periodo"].head(5).to_dict("records")),
+            "advertencias": [
+                "la tasa es de llamadas tramitadas por 100.000 habitantes, no de hurtos: mide "
+                "demanda de atención",
+                "Sumapaz es rural y con muy poca población, así que su tasa es inestable",
+                "la población de residencia no capta la población flotante: Chapinero, Santa Fe y "
+                "La Candelaria reciben gente que no vive en ellas y su tasa por residente sale "
+                "inflada",
+                "el orden cambia al normalizar, pero no se presenta como un ranking de peligrosidad",
+            ],
         },
         "entre_fuentes": None if not fuentes else {
             "periodo": fuentes["periodo"], "meses": fuentes["meses"],
@@ -262,6 +348,11 @@ def main(argv=None) -> int:
              temporal["por_dia_semana"].idxmin(), temporal["por_dia_semana"].min())
     log.info("lunes festivo %.1f vs lunes laborable %.1f (%+.1f %%)",
              f["media_lunes_festivo"], f["media_lunes_laborable"], f["diferencia_lunes_pct"])
+    if territorial and territorial["tasas"]:
+        t = territorial["tasas"]["periodo"]
+        log.info("tasa más alta: %s (%.1f por 100.000) · más baja: %s (%.1f)",
+                 t.iloc[0]["localidad"], t.iloc[0]["tasa_100k_periodo"],
+                 t.iloc[-1]["localidad"], t.iloc[-1]["tasa_100k_periodo"])
     if fuentes:
         log.info("correlación Policía–Línea 123 (mensual): %.3f",
                  fuentes["correlacion_pearson"].iloc[0, 1])

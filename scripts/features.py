@@ -72,6 +72,7 @@ DISPONIBILIDAD: dict[str, str] = {
     "semana_del_anio": "calendario",
     "quincena": "calendario",
     "festivo": "calendario",
+    "anio_atipico_2020": "calendario — el año se conoce de antemano (D-04)",
     "vispera_de_festivo": "calendario — depende de t+1, pero el calendario se conoce de antemano",
     "dia_despues_de_festivo": "calendario",
     "puente": "calendario",
@@ -158,6 +159,10 @@ def construir(serie: pd.DataFrame, objetivo: str = "victimas") -> pd.DataFrame:
     # Días de pago: el 15 y el último día del mes concentran movimiento de efectivo.
     X["quincena"] = ((idx.day == 15) | idx.is_month_end).astype(int)
     X["festivo"] = es_festivo.astype(int)
+    # 2020 no es un año típico: el nivel está deprimido por las restricciones de movilidad
+    # (media diaria 227,1 frente a 434,9 en 2023). D-04 exige marcarlo en lugar de dejarlo
+    # entrar como un año más, y comprobar la sensibilidad entrenando también sin él.
+    X["anio_atipico_2020"] = (idx.year == 2020).astype(int)
     X["vispera_de_festivo"] = es_festivo.shift(-1, fill_value=False).astype(int)
     X["dia_despues_de_festivo"] = es_festivo.shift(1, fill_value=False).astype(int)
     # Puente: festivo que cae en lunes. La Ley Emiliani traslada al lunes la mayoría de los
