@@ -1,0 +1,29 @@
+{
+  "entrada": "data/raw/poblacion/202503_localidad_proyeccion_retroproyeccion_poblacion_2005_2035.ods",
+  "sha256_entrada": "f02e6d9b2d571a7bdc77fd3c2f5e3a0160b0c3a9a5c36925e14ad3579f851225",
+  "filas_archivo": 837,
+  "anios_archivo": [
+    2005,
+    2035
+  ],
+  "localidades": 20,
+  "periodo_salida": [
+    2020,
+    2025
+  ],
+  "filas_salida": 120,
+  "bogota_por_anio": {
+    "2020": 7732161,
+    "2021": 7823334,
+    "2022": 7873316,
+    "2023": 7907281,
+    "2024": 7929539,
+    "2025": 7937898
+  },
+  "comprobaciones": [
+    "Total = Total Hombres + Total Mujeres en cada fila",
+    "Total = suma de las 101 edades simples en cada fila",
+    "20 localidades y dos áreas: cabecera municipal y centro poblado y rural disperso"
+  ],
+  "salida": "outputs/poblacion/poblacion_localidad_2020_2025.csv"
+}

@@ -14,6 +14,7 @@ Fecha de consulta: **2026-11-11**. Cada referencia de `Informe/primera_entrega.t
 | `urcuqui2020` | Urcuqui, Moreno, Montenegro, Riascos y Dulce (2020), IEEE BESC 2020, pp. 1–6 | Crossref | Sí | Sí: GAN condicional, exactitud y equidad | ✅ Se añadió el DOI `10.1109/BESC51023.2020.9348315` (antes había una URL personal) |
 | `riascos2023` | Riascos Villegas, Ñungo, Gómez Tobón, Dulce Rubio y Gómez (2023), *PLOS ONE, 18*(7), e0287776 | Crossref (DOI `10.1371/journal.pone.0287776`) | Sí | Sí: modelado espacio-temporal con subregistro | ✅ |
 | `provost2013` | Provost y Fawcett (2013), *Data science for business*, O'Reilly Media | Open Library (ISBN 9781449361327) | Sí | Sí: referencia metodológica general | ✅ |
+| `sdp2025` | Secretaría Distrital de Planeación (2025), *Proyecciones y retroproyecciones de población (2005–2035)*, Datos Abiertos Bogotá | API CKAN del portal (`package_show`, 2026-11-16): organización «Secretaría Distrital de Planeación - SDP», licencia CC BY 4.0, recurso por localidad `202503_…_2005_2035.ods` creado el 2025-05-14 | Sí. El año de la referencia es el de la versión publicada (2025) | Sí: población por localidad y año, usada como denominador de las tasas de la Línea 123 | ✅ |
 
 ## Pendientes
 - [x] Confirmar el número de la nota de política de Riascos et al. (34 o 38) en el listado de notas de política de la Escuela de Gobierno Alberto Lleras Camargo.

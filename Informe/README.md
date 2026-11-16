@@ -44,6 +44,7 @@ Las filas de fuentes distintas no se suman.
 | `outputs/serie_objetivo/` y `figuras/serie_diaria_policia.pdf` | `scripts/serie_objetivo_policia.py` |
 | `outputs/informe/fiscalia_*.csv` | `scripts/fiscalia_modalidades.py` |
 | `outputs/informe/series_mensuales_fuentes.csv`, `linea123_localidad_2020_2025.csv` y sus figuras | `scripts/figuras_informe.py` |
+| `outputs/poblacion/` (población por localidad y año, denominador de las tasas) | `scripts/poblacion_localidad.py` |
 
 Las figuras de `figuras/` son copias de las de `outputs/`. Si se regeneran, hay que volver a copiarlas.
 
