@@ -30,8 +30,12 @@ cuyos vecinos ya ha visto. El error resultante sería optimista y no mediría na
 
 **Validación de origen rodante dentro del entrenamiento.** Seis pliegues de 90 días. Cada pliegue
 entrena con todo lo anterior a su origen y evalúa el tramo siguiente, así que el conjunto de
-entrenamiento crece y nunca contiene días posteriores a los que evalúa. Es el esquema estándar para
-series temporales y equivale a `TimeSeriesSplit` sin barajado.
+entrenamiento crece y nunca contiene días posteriores a los que evalúa. Equivale a
+`TimeSeriesSplit` sin barajado.
+
+Es el esquema que Hyndman y Athanasopoulos llaman **evaluación con origen de pronóstico rodante**:
+cada conjunto de prueba se pronostica solo con observaciones anteriores, de modo que no se usan
+observaciones futuras \[hyndman2021\].
 
 El conjunto de evaluación **no se toca** durante la selección de hiperparámetros. Se usa una sola
 vez, al final.
@@ -53,21 +57,30 @@ Con `y` el valor observado, `ŷ` la predicción y `n` los días evaluados:
 |---|---|---|
 | **MAE** | `(1/n) Σ |yᵢ − ŷᵢ|` | **Principal.** Se lee en víctimas al día |
 | **RMSE** | `√[(1/n) Σ (yᵢ − ŷᵢ)²]` | Secundaria. Penaliza más los errores grandes, que importan en los picos |
-| **MAPE** | `(100/n) Σ |yᵢ − ŷᵢ| / yᵢ` | Informativa. **Asimétrica**: castiga más la sobreestimación que la subestimación, así que no se usa para decidir |
+| **MAPE** | `(100/n) Σ |yᵢ − ŷᵢ| / yᵢ` | Informativa. **Asimétrica**: si `ŷ < y` el error porcentual no pasa del 100 %, y si `ŷ > y` no tiene cota, así que castiga más la sobreestimación. No se usa para decidir |
 | **MASE** | `MAE / MAE_ingenuo_estacional(entrenamiento)` | Adimensional. Menor que 1 mejora al ingenuo estacional; mayor que 1 lo empeora |
 
 **Por qué MASE y no solo MAE.** MAE depende de la escala y de la ventana: un MAE de 49 no dice si es
 bueno sin saber contra qué. MASE es un cociente, así que es comparable entre ventanas y entre
-series, y su umbral es interpretable: **1 es el ingenuo estacional**. Es la métrica que Hyndman y
-Koehler proponen precisamente para evitar los problemas de MAPE con valores pequeños y su asimetría.
+series, y su umbral es interpretable: **1 es el ingenuo estacional**.
+
+**Dos referencias, y no son intercambiables.** Hyndman y Koehler (2006) proponen el MASE y escalan
+el error por el MAE del **ingenuo de un paso** dentro de la muestra, `|Yᵢ − Yᵢ₋₁|`
+\[hyndman2006\]. Lo que este proyecto usa es la **versión estacional**, con denominador
+`(1/(T−m)) Σ |yₜ − yₜ₋ₘ|` y `m = 7`, que es la que da Hyndman y Athanasopoulos (2021)
+\[hyndman2021\]. Atribuir la variante estacional al artículo de 2006 sería inexacto.
+
+De `hyndman2006` se toma además el motivo para no decidir con MAPE: los errores porcentuales son
+infinitos o indefinidos si algún valor es cero, y su distribución se sesga mucho cuando los valores
+se acercan a cero.
 
 **El denominador del MASE se calcula sobre el entrenamiento**, no sobre la evaluación. Si se
 calculara sobre la evaluación, la métrica dependería del tramo que se quiere medir y dejaría de ser
 comparable entre modelos evaluados en ventanas distintas. En esta serie el denominador es **53,20**.
 
-> Pendiente: la referencia de Hyndman y Koehler (2006), *Another look at measures of forecast
-> accuracy*, hay que añadirla a la bibliografía con el mismo proceso de verificación que las otras
-> ocho (#24, #26). No se cita en el `.tex` hasta entonces.
+Las dos referencias están verificadas en `docs/verificacion_referencias.md` (#100) y entran en
+`Informe/referencias.tex` cuando la sección 7 se integre en LaTeX (#39), porque APA solo lista las
+obras citadas.
 
 ## 4. Modelos de referencia y la barra
 
