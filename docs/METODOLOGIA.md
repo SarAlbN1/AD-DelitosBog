@@ -129,16 +129,29 @@ Tres familias, de menos a más capacidad, para que la comparación muestre qué 
 los coeficientes y comprobar que las señales que el análisis exploratorio encontró —día de la
 semana, festivo— entran con el signo esperado.
 
-**b. Series de tiempo estacionales: SARIMA y ETS.** Modelan explícitamente la estacionalidad
-semanal, que es la señal dominante de la serie (viernes 403,1 frente a domingo 245,0). La
-literatura local sobre hurto en Bogotá usa modelos de esta familia en series mensuales
-\[garzon2025\], así que incluirlos permite situar el trabajo frente a ese antecedente, aunque aquí
-la resolución es diaria.
+**b. Series de tiempo estacionales: SARIMA y ETS.** Se justifican por **la propia serie**, no por
+la literatura local: la estacionalidad semanal es la señal dominante del análisis exploratorio
+(viernes 403,1 frente a domingo 245,0, un 64 % de diferencia) y esta familia la modela de forma
+explícita.
+
+Conviene precisar que **ninguno de los antecedentes verificados usa SARIMA ni ETS**. El antecedente
+local más cercano en series de tiempo, Garzón Acosta (2025), es de otra familia: usa un modelo de
+corrección de errores frente a un VECM, con pruebas ADF, de Granger y de cointegración, sobre
+series **mensuales** de ciudad \[garzon2025\]. Sirve para situar este trabajo frente a un
+antecedente econométrico mensual, no para respaldar la elección de SARIMA.
 
 **c. Conjuntos de árboles: Random Forest y potenciación del gradiente.** Capturan interacciones y no
-linealidades entre calendario y rezagos sin especificarlas. Es la familia que mejor resultado dio
-en el antecedente más cercano a este trabajo, un modelo espacio-temporal de hurto en Bogotá donde
-Random Forest superó a los métodos estadísticos \[martinez2025\].
+linealidades entre calendario y rezagos sin especificarlas.
+
+En el antecedente más cercano, un modelo espacio-temporal de hurto en Bogotá, **Random Forest
+superó a una regresión de Poisson**: MAE 7,13 frente a 9,94 y RMSE 16,62 frente a 21,10
+\[martinez2025\]. La comparación es contra ese modelo concreto, no contra «los métodos
+estadísticos» en general, que es más de lo que el estudio establece.
+
+Ese antecedente refuerza además una decisión de este trabajo por la vía contraria: **su partición
+fue 80/20 y no se describe como temporal**. Con rezagos y medias móviles, una partición no temporal
+deja futuro en el entrenamiento, así que sus métricas no son directamente comparables con las de
+aquí, donde la evaluación es posterior al entrenamiento por construcción.
 
 Esta progresión responde a la pregunta del proyecto, que no es «cuál es el mejor modelo posible»
 sino **cuánto mejora el pronóstico al añadir calendario y rezagos** sobre lo trivial
