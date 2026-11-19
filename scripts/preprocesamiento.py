@@ -45,6 +45,9 @@ from pathlib import Path
 
 import pandas as pd
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from rutas import ruta_fuente  # noqa: E402
+
 log = logging.getLogger("preprocesamiento")
 
 #: Valores de LOCALIDAD que no son una localidad.
@@ -136,10 +139,21 @@ def linea123(ruta: Path, anio_min: int, anio_max: int, c: Conteos) -> tuple[pd.D
 
     por_localidad = (con_loc.groupby(["anio", "mes", "localidad"], as_index=False)["incidentes"]
                      .sum().sort_values(["anio", "mes", "localidad"]))
+
+    # UPZ: el nivel más fino de la única fuente con resolución dentro de la ciudad. Se separan los
+    # valores sin ubicación, que incluyen «SIN LOCALIZACION», «SIN UPZ <localidad>» y «-».
+    upz = con_loc.assign(upz=con_loc["UPZ"].fillna("").str.strip().str.upper())
+    sin_upz = upz["upz"].isin(NO_LOCALIDAD) | upz["upz"].str.startswith("SIN UPZ")
+    por_upz = (upz[~sin_upz].groupby(["anio", "localidad", "upz"], as_index=False)["incidentes"]
+               .sum().sort_values("incidentes", ascending=False))
+    c.paso("linea123", "UPZ asignada", int(len(upz)), int((~sin_upz).sum()),
+           "se separan las filas sin UPZ: «SIN LOCALIZACION», «SIN UPZ <localidad>» y «-»")
     mensual = (hurto.groupby(["anio", "mes"], as_index=False)["incidentes"]
                .sum().sort_values(["anio", "mes"]))
 
     meta = {
+        "upz_distintas": int(por_upz["upz"].nunique()),
+        "incidentes_con_upz": int(por_upz["incidentes"].sum()),
         "archivo": ruta.as_posix(),
         "sha256": sha256(ruta),
         "filas_originales": n0,
@@ -151,14 +165,15 @@ def linea123(ruta: Path, anio_min: int, anio_max: int, c: Conteos) -> tuple[pd.D
         "nota_medida": ("el agregado suma CANT_INCIDENTES y no cuenta filas: las filas son grupos "
                         "agregados y contarlas cambia el ranking territorial"),
     }
-    return por_localidad, mensual, meta
+    return por_localidad, mensual, por_upz, meta
 
 
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--registro", type=Path, default=Path("data/raw/policia_registro/csv"))
     p.add_argument("--patron", default="delitos_registro_*.csv")
-    p.add_argument("--linea123", type=Path, default=Path("data/raw/linea123.csv"))
+    p.add_argument("--linea123", type=Path, default=None,
+                   help="Por defecto, la ruta que declara config/fuentes_auditoria.json.")
     p.add_argument("--procesados", type=Path, default=Path("data/processed"))
     p.add_argument("--salida", type=Path, default=Path("outputs/preprocesamiento"))
     p.add_argument("--inicio", default="2020-01-01")
@@ -167,6 +182,8 @@ def main(argv=None) -> int:
     p.add_argument("--anio-max", type=int, default=2025)
     p.add_argument("--chunksize", type=int, default=200_000)
     a = p.parse_args(argv)
+    if a.linea123 is None:
+        a.linea123 = ruta_fuente("linea123")
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 
     c = Conteos()
@@ -177,9 +194,10 @@ def main(argv=None) -> int:
 
     meta_123 = None
     if a.linea123.is_file():
-        por_loc, mensual, meta_123 = linea123(a.linea123, a.anio_min, a.anio_max, c)
+        por_loc, mensual, por_upz, meta_123 = linea123(a.linea123, a.anio_min, a.anio_max, c)
         por_loc.to_csv(a.procesados / "linea123_hurto_mensual_localidad.csv", index=False)
         mensual.to_csv(a.procesados / "linea123_hurto_mensual.csv", index=False)
+        por_upz.to_csv(a.procesados / "linea123_hurto_upz.csv", index=False)
     else:
         log.warning("no existe %s: se omite Línea 123", a.linea123)
 

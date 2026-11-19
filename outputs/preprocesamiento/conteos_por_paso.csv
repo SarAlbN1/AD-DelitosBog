@@ -7,3 +7,4 @@ linea123,original,1117394,1117394,0,archivo histórico 2015-2026
 linea123,periodo 2018-2025,1117394,763074,354320,el recurso cubre 2015-2026
 linea123,filtro hurto,763074,25144,737930,"TIPO_DETALLE contiene HURTO; es la tipificación de la llamada, no una calificación jurídica"
 linea123,localidad asignada,25144,24899,245,se separan 245 filas sin localidad: «SIN LOCALIZACION» no es una localidad
+linea123,UPZ asignada,24899,21521,3378,"se separan las filas sin UPZ: «SIN LOCALIZACION», «SIN UPZ <localidad>» y «-»"

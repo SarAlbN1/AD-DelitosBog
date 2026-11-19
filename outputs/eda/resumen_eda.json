@@ -120,42 +120,42 @@
         "pct": 6.12
       }
     ],
-    "nota_tasas": "tasa de llamadas tramitadas por 100.000 habitantes, 2020-2025, con la población de cada año; no es una tasa de hurtos; sin población y por tanto sin tasa: CANDELARIA",
+    "nota_tasas": "tasa de llamadas tramitadas por 100.000 habitantes, 2020-2025, con la población de cada año; no es una tasa de hurtos. Cruzan las 20 localidades",
     "top5_tasa": [
       {
         "clave": "LOS MARTIRES",
         "incidentes": 29033,
-        "personas_anio": 506159.0,
+        "personas_anio": 506159,
         "tasa_100k_periodo": 5735.9,
         "localidad": "LOS MÁRTIRES"
       },
       {
         "clave": "ANTONIO NARINO",
         "incidentes": 19521,
-        "personas_anio": 483662.0,
+        "personas_anio": 483662,
         "tasa_100k_periodo": 4036.1,
         "localidad": "ANTONIO NARIÑO"
       },
       {
         "clave": "SANTA FE",
         "incidentes": 25991,
-        "personas_anio": 667201.0,
+        "personas_anio": 667201,
         "tasa_100k_periodo": 3895.5,
         "localidad": "SANTA FE"
       },
       {
-        "clave": "BARRIOS UNIDOS",
-        "incidentes": 30974,
-        "personas_anio": 842802.0,
-        "tasa_100k_periodo": 3675.1,
-        "localidad": "BARRIOS UNIDOS"
+        "clave": "CANDELARIA",
+        "incidentes": 3834,
+        "personas_anio": 102815,
+        "tasa_100k_periodo": 3729.0,
+        "localidad": "CANDELARIA"
       },
       {
-        "clave": "TEUSAQUILLO",
-        "incidentes": 33702,
-        "personas_anio": 941870.0,
-        "tasa_100k_periodo": 3578.2,
-        "localidad": "TEUSAQUILLO"
+        "clave": "BARRIOS UNIDOS",
+        "incidentes": 30974,
+        "personas_anio": 842802,
+        "tasa_100k_periodo": 3675.1,
+        "localidad": "BARRIOS UNIDOS"
       }
     ],
     "advertencias": [
@@ -207,11 +207,56 @@
     },
     "nota": "resolución mes × Bogotá, la única común; las fuentes no se suman entre sí"
   },
+  "atipicos": {
+    "umbral_z": 3.0,
+    "criterio": "z respecto a la media y desviación del mismo día de la semana",
+    "n_altos": 1,
+    "n_bajos": 9,
+    "pct_atipicos": 0.47,
+    "festivos_entre_los_bajos": 2
+  },
+  "upz": {
+    "upz_distintas": 116,
+    "concentracion_top10_pct": 22.3,
+    "top5": [
+      {
+        "upz": "EL RINCON",
+        "localidad": "SUBA",
+        "incidentes": 20234,
+        "pct": 2.8
+      },
+      {
+        "upz": "LA SABANA",
+        "localidad": "LOS MÁRTIRES",
+        "incidentes": 19248,
+        "pct": 2.66
+      },
+      {
+        "upz": "LAS FERIAS",
+        "localidad": "ENGATIVÁ",
+        "incidentes": 17226,
+        "pct": 2.38
+      },
+      {
+        "upz": "TIBABUYES",
+        "localidad": "SUBA",
+        "incidentes": 16372,
+        "pct": 2.26
+      },
+      {
+        "upz": "BOSA CENTRAL",
+        "localidad": "BOSA",
+        "incidentes": 16174,
+        "pct": 2.24
+      }
+    ]
+  },
   "figuras": [
     "eda_dia_semana",
     "eda_estacionalidad_mensual",
     "eda_localidad",
     "eda_localidad_tasa",
-    "eda_fuentes_normalizadas"
+    "eda_fuentes_normalizadas",
+    "eda_mapa_tasa"
   ]
 }

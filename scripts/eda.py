@@ -141,7 +141,9 @@ def _tasas(por_loc: pd.DataFrame, ruta_poblacion: Path, anio_min: int, anio_max:
     atención (regla 5). «SIN LOCALIZACION» ya quedó fuera antes de llegar aquí (regla 3).
     """
     pob = pd.read_csv(ruta_poblacion)
-    pob["clave"] = _clave(pob["localidad"] if "localidad" in pob else pob["clave"])
+    # La columna `clave` viene preparada para este cruce. Normalizar `localidad` no sirve: la SDP
+    # dice «La Candelaria» y Línea 123 «CANDELARIA», así que esa localidad se quedaba sin tasa.
+    pob["clave"] = _clave(pob["clave"] if "clave" in pob else pob["localidad"])
     inc = por_loc.copy()
     inc["clave"] = _clave(inc["localidad"])
 
@@ -149,7 +151,12 @@ def _tasas(por_loc: pd.DataFrame, ruta_poblacion: Path, anio_min: int, anio_max:
     anual = inc.groupby(["clave", "anio"], as_index=False)["incidentes"].sum()
     cruce = anual.merge(pob[["clave", "anio", "habitantes"]], on=["clave", "anio"], how="left")
     sin_pob = sorted(cruce.loc[cruce["habitantes"].isna(), "clave"].unique().tolist())
-    cruce = cruce.dropna(subset=["habitantes"])
+    if sin_pob:
+        # Falla en lugar de anotarlo: una localidad sin tasa desaparece de la tabla sin que nadie
+        # lo note, y el orden por tasa queda mal sin aviso.
+        raise SystemExit(
+            f"sin población y por tanto sin tasa: {', '.join(sin_pob)}. "
+            f"Revise el cruce con {ruta_poblacion}: la columna 'clave' es la que debe usarse.")
     cruce["tasa_100k"] = 100_000 * cruce["incidentes"] / cruce["habitantes"]
 
     # Agregado del periodo: suma de incidentes sobre la suma de población-año (personas-año).
@@ -160,10 +167,53 @@ def _tasas(por_loc: pd.DataFrame, ruta_poblacion: Path, anio_min: int, anio_max:
     agg = agg.merge(nombres, on="clave", how="left").sort_values("tasa_100k_periodo", ascending=False)
 
     nota = (f"tasa de llamadas tramitadas por 100.000 habitantes, {anio_min}-{anio_max}, con la "
-            f"población de cada año; no es una tasa de hurtos")
-    if sin_pob:
-        nota += f"; sin población y por tanto sin tasa: {', '.join(sin_pob)}"
-    return {"por_anio": cruce, "periodo": agg, "sin_poblacion": sin_pob}, nota
+            f"población de cada año; no es una tasa de hurtos. Cruzan las "
+            f"{agg['clave'].nunique()} localidades")
+    return {"por_anio": cruce, "periodo": agg, "sin_poblacion": []}, nota
+
+
+def bloque_atipicos(s: pd.Series, festivos: set, z: float = 3.0) -> dict:
+    """Días atípicos de la serie objetivo.
+
+    No se usa un percentil sobre toda la serie: eso mira el futuro y además marca como atípicos los
+    días normales de los años altos. Se compara cada día contra la media y la desviación **de su
+    propio día de la semana**, porque el perfil semanal domina la serie: un domingo de 300 es alto y
+    un viernes de 300 es bajo.
+    """
+    por_dia = s.groupby(s.index.dayofweek)
+    mu = por_dia.transform("mean")
+    sd = por_dia.transform("std")
+    zs = (s - mu) / sd
+    es_festivo = pd.Series([d.date() in festivos for d in s.index], index=s.index)
+
+    atip = pd.DataFrame({"victimas": s, "media_su_dia": mu.round(1), "z": zs.round(2),
+                         "dia_semana": [DIAS[i] for i in s.index.dayofweek],
+                         "festivo": es_festivo.astype(int)})
+    altos = atip[zs > z].sort_values("z", ascending=False)
+    bajos = atip[zs < -z].sort_values("z")
+    return {
+        "umbral_z": z,
+        "criterio": "z respecto a la media y desviación del mismo día de la semana",
+        "n_altos": int(len(altos)), "n_bajos": int(len(bajos)),
+        "pct_atipicos": round(100 * (len(altos) + len(bajos)) / len(s), 2),
+        "altos": altos.head(10), "bajos": bajos.head(10),
+        "festivos_entre_los_bajos": int(bajos["festivo"].sum()),
+    }
+
+
+def bloque_upz(ruta: Path, anio_min: int, anio_max: int) -> dict | None:
+    """Las UPZ con más incidentes. Es el nivel más fino disponible en todo el proyecto."""
+    if not ruta.is_file():
+        log.warning("no existe %s: se omite el bloque de UPZ", ruta)
+        return None
+    df = pd.read_csv(ruta)
+    df = df[df["anio"].between(anio_min, anio_max)]
+    total = int(df["incidentes"].sum())
+    top = (df.groupby(["upz", "localidad"], as_index=False)["incidentes"].sum()
+           .sort_values("incidentes", ascending=False))
+    top["pct"] = (100 * top["incidentes"] / total).round(2)
+    return {"upz_distintas": int(top["upz"].nunique()), "total_incidentes": total,
+            "top": top, "concentracion_top10_pct": round(float(top.head(10)["pct"].sum()), 1)}
 
 
 def bloque_entre_fuentes(ruta: Path) -> dict | None:
@@ -185,6 +235,52 @@ def bloque_entre_fuentes(ruta: Path) -> dict | None:
         "correlacion_spearman": df.corr(method="spearman").round(3),
         "series": df,
     }
+
+
+def mapa_tasa(territorial: dict, geojson: Path, carpeta: Path) -> str | None:
+    """Mapa coroplético de la tasa por localidad. Se dibuja la tasa, no el conteo.
+
+    Un mapa de conteos colorea de rojo las localidades grandes y sugiere peligrosidad donde solo
+    hay población. La tasa es lo único defendible en un mapa, y aun así no es riesgo: mide
+    llamadas por habitante.
+    """
+    if not geojson.is_file():
+        log.warning("no existe %s: se omite el mapa", geojson)
+        return None
+    try:
+        import geopandas as gpd
+    except ImportError:
+        log.warning("geopandas no está instalado: se omite el mapa")
+        return None
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    gdf = gpd.read_file(geojson)
+    col = next((c for c in ("CMNOMLOCAL", "LocNombre", "nombre") if c in gdf.columns), None)
+    if col is None:
+        log.warning("el geojson no trae una columna de nombre de localidad: se omite el mapa")
+        return None
+    gdf["clave"] = _clave(gdf[col])
+    t = territorial["tasas"]["periodo"][["clave", "tasa_100k_periodo"]]
+    gdf = gdf.merge(t, on="clave", how="left")
+    sin = int(gdf["tasa_100k_periodo"].isna().sum())
+    if sin:
+        log.warning("%s polígonos sin tasa en el mapa", sin)
+
+    carpeta.mkdir(parents=True, exist_ok=True)
+    fig, ax = plt.subplots(figsize=(6.5, 7))
+    gdf.plot(column="tasa_100k_periodo", ax=ax, legend=True, cmap="YlOrRd",
+             edgecolor="white", linewidth=.4, missing_kwds={"color": "#dddddd",
+                                                            "label": "sin tasa"},
+             legend_kwds={"label": "llamadas por 100.000 habitantes", "shrink": .6})
+    ax.set_title("Línea 123 · tasa de llamadas de hurto por habitante\n2020-2025, por localidad",
+                 fontsize=10)
+    ax.set_axis_off()
+    for ext in ("png", "pdf"):
+        fig.savefig(carpeta / f"eda_mapa_tasa.{ext}", dpi=150, bbox_inches="tight")
+    plt.close(fig)
+    return "eda_mapa_tasa"
 
 
 def figuras(temporal: dict, territorial: dict | None, fuentes: dict | None, carpeta: Path) -> list[str]:
@@ -265,6 +361,8 @@ def main(argv=None) -> int:
     p.add_argument("--anio-min", type=int, default=2020,
                    help="Primer año del bloque territorial; 2020 para cuadrar con la serie.")
     p.add_argument("--anio-max", type=int, default=2025)
+    p.add_argument("--upz", type=Path, default=Path("data/processed/linea123_hurto_upz.csv"))
+    p.add_argument("--geojson", type=Path, default=Path("data/raw/localidades.geojson"))
     p.add_argument("--salida", type=Path, default=Path("outputs/eda"))
     a = p.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
@@ -282,6 +380,8 @@ def main(argv=None) -> int:
     temporal = bloque_temporal(s, fs)
     territorial = bloque_territorial(a.localidad, a.linea123_mensual, a.anio_min, a.anio_max,
                                      a.poblacion)
+    atipicos = bloque_atipicos(s, fs)
+    upz = bloque_upz(a.upz, a.anio_min, a.anio_max)
     fuentes = bloque_entre_fuentes(a.fuentes)
 
     a.salida.mkdir(parents=True, exist_ok=True)
@@ -299,7 +399,16 @@ def main(argv=None) -> int:
         t["periodo"].to_csv(a.salida / "territorial_tasas.csv", index=False)
         t["por_anio"].to_csv(a.salida / "territorial_tasas_por_anio.csv", index=False)
 
+    atipicos["altos"].to_csv(a.salida / "atipicos_altos.csv")
+    atipicos["bajos"].to_csv(a.salida / "atipicos_bajos.csv")
+    if upz:
+        upz["top"].to_csv(a.salida / "territorial_upz.csv", index=False)
+
     hechas = figuras(temporal, territorial, fuentes, a.salida / "figuras")
+    if territorial and territorial["tasas"]:
+        m = mapa_tasa(territorial, a.geojson, a.salida / "figuras")
+        if m:
+            hechas.append(m)
 
     doc = {
         "serie": {"periodo": [s.index.min().date().isoformat(), s.index.max().date().isoformat()],
@@ -335,6 +444,12 @@ def main(argv=None) -> int:
             "pearson": json.loads(fuentes["correlacion_pearson"].to_json()),
             "spearman": json.loads(fuentes["correlacion_spearman"].to_json()),
             "nota": "resolución mes × Bogotá, la única común; las fuentes no se suman entre sí",
+        },
+        "atipicos": {k: v for k, v in atipicos.items() if k not in ("altos", "bajos")},
+        "upz": None if not upz else {
+            "upz_distintas": upz["upz_distintas"],
+            "concentracion_top10_pct": upz["concentracion_top10_pct"],
+            "top5": upz["top"].head(5).to_dict("records"),
         },
         "figuras": hechas,
     }

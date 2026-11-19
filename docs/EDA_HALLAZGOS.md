@@ -37,8 +37,14 @@ medias diarias y no totales mientras el último año esté truncado.
 | **Domingo** | **245,0** |
 
 El viernes tiene un 64 % más de víctimas que el domingo. Es la señal más fuerte y limpia de la
-serie, y justifica que el día de la semana sea una predictora y que cualquier comparador ingenuo
-razonable use el rezago 7 en lugar del rezago 1.
+serie, y justifica que el día de la semana sea una predictora.
+
+Sobre los comparadores, el matiz importa: la fuerza del perfil semanal **no** implica que el rezago
+7 sea siempre el mejor comparador ingenuo. En la validación de origen rodante el rezago 1 gana 4 de
+los 6 pliegues, y el rezago 7 solo gana en la ventana de evaluación final
+([`METODOLOGIA.md`](METODOLOGIA.md), sección 4). La estacionalidad semanal es fuerte pero no
+constante a lo largo del año: se rompe en noviembre, diciembre y enero. Por eso la barra se calcula
+sobre el conjunto en que se evalúa el modelo y no se fija de antemano (D-04).
 
 ## 3. Efecto de los festivos
 
@@ -104,23 +110,28 @@ de la SDP, marzo de 2025).
 | Los Mártires | 29.033 | 14 | **5.736** | **1** | +13 |
 | Antonio Nariño | 19.521 | 17 | 4.036 | 2 | +15 |
 | Santa Fe | 25.991 | 15 | 3.896 | 3 | +12 |
-| Barrios Unidos | 30.974 | 13 | 3.675 | 4 | +9 |
-| Teusaquillo | 33.702 | 11 | 3.578 | 5 | +6 |
-| Chapinero | 33.584 | 12 | 3.379 | 6 | +6 |
+| **La Candelaria** | **3.834** | **19** | **3.729** | **4** | **+15** |
+| Barrios Unidos | 30.974 | 13 | 3.675 | 5 | +8 |
+| Teusaquillo | 33.702 | 11 | 3.578 | 6 | +5 |
+| Chapinero | 33.584 | 12 | 3.379 | 7 | +5 |
 
 Y las que caen al normalizar:
 
 | Localidad | Incidentes | Puesto por conteo | Tasa por 100.000 | Puesto por tasa |
 |---|---:|---:|---:|---:|
-| Kennedy | 99.525 | **1** | 1.552 | **12** |
-| Engativá | 93.654 | 2 | 1.891 | 8 |
-| Suba | 93.132 | 3 | 1.255 | 15 |
-| Bosa | 52.210 | 4 | 1.164 | 17 |
-| Ciudad Bolívar | 48.636 | 6 | 1.223 | 16 |
+| Kennedy | 99.525 | **1** | 1.552 | **13** |
+| Engativá | 93.654 | 2 | 1.891 | 9 |
+| Suba | 93.132 | 3 | 1.255 | 16 |
+| Bosa | 52.210 | 4 | 1.164 | 18 |
+| Ciudad Bolívar | 48.636 | 6 | 1.223 | 17 |
 
-**El orden se da la vuelta.** Kennedy pasa del puesto 1 por conteo al 12 por tasa. Los Mártires,
+**El orden se da la vuelta.** Kennedy pasa del puesto 1 por conteo al 13 por tasa. Los Mártires,
 que era el 14 por conteo, es el **primero** por tasa, con una tasa 3,7 veces la de Kennedy. Antonio
-Nariño sube 15 puestos.
+Nariño y La Candelaria suben 15 puestos cada una.
+
+La Candelaria es el caso extremo: con 3.834 incidentes es la penúltima por conteo y la **cuarta** por
+tasa, sobre 102.815 personas-año. Es la localidad más pequeña de la ciudad, así que el conteo la
+hacía invisible.
 
 Esto confirma lo que el conteo no podía decir: **el conteo mide tamaño de población, no intensidad
 del fenómeno.** Si el informe hubiera presentado el orden por conteo como un ranking, habría
@@ -133,8 +144,10 @@ por habitante.
    **demanda de atención** por habitante, no victimización.
 2. **No capta la población flotante.** Los Mártires, Santa Fe, La Candelaria, Chapinero y
    Teusaquillo reciben cada día a mucha gente que no vive allí: trabajo, comercio, transporte. Su
-   tasa por residente sale inflada, y es muy probable que eso explique buena parte de que encabecen
-   la tabla. **Sin una medida de población flotante esa parte no se puede separar.**
+   tasa por residente sale inflada, y es muy probable que eso explique buena parte de que ocupen
+   **los cuatro primeros puestos y el sexto y séptimo**. **Sin una medida de población flotante esa
+   parte no se puede separar**, así que el orden por tasa no se interpreta como intensidad del
+   fenómeno sobre quienes están allí.
 3. **Sumapaz es inestable.** Es rural, tiene la menor población de la ciudad y muy pocas llamadas en
    todo el periodo, así que su tasa de 213 por 100.000 se mueve mucho con pocos casos.
 4. **El orden cambia, pero no es un ranking de peligrosidad.** Ni por conteo ni por tasa. Las dos
@@ -142,6 +155,67 @@ por habitante.
 
 Se presentan **las dos cosas**, conteo y tasa, precisamente para que se vea cuánto cambia el orden
 al normalizar.
+
+### El mapa
+
+`outputs/eda/figuras/eda_mapa_tasa.pdf` dibuja **la tasa, no el conteo**. Un mapa de conteos
+colorea de rojo las localidades grandes y sugiere peligrosidad donde solo hay población, que es
+exactamente la lectura que este documento evita. Con la tasa, el centro de la ciudad —Los Mártires,
+Santa Fe, La Candelaria, Antonio Nariño— aparece como la zona con más llamadas por habitante, y las
+grandes del sur y el occidente quedan en tonos medios.
+
+## 5.bis UPZ: el fenómeno está disperso
+
+La UPZ es el nivel más fino disponible en todo el proyecto, y solo Línea 123 lo tiene. De los 24.899
+registros con localidad, **21.521 tienen UPZ asignada**; los 3.378 restantes son «SIN UPZ
+\<localidad\>» y se separan.
+
+| UPZ | Localidad | Incidentes | % |
+|---|---|---:|---:|
+| El Rincón | Suba | 20.234 | 2,80 % |
+| La Sabana | Los Mártires | 19.248 | 2,66 % |
+| Las Ferias | Engativá | 17.226 | 2,38 % |
+| Tibabuyes | Suba | 16.372 | 2,26 % |
+| Bosa Central | Bosa | 16.174 | 2,24 % |
+
+Son **116 UPZ distintas**, y las diez primeras concentran solo el **22,3 %** de los incidentes.
+
+**Eso es un resultado, no un vacío**: el hurto registrado por Línea 123 no se explica por un puñado
+de puntos calientes, está repartido por la ciudad. Tiene dos consecuencias. Para el modelado,
+refuerza que la serie de ciudad es la unidad razonable: no hay una UPZ que arrastre el total. Y para
+la interpretación, desaconseja presentar las UPZ como «las más peligrosas», porque la diferencia
+entre la primera y la décima es pequeña.
+
+La Sabana, segunda de la lista, pertenece a Los Mártires, que es la localidad con la tasa más alta.
+
+## 5.ter Valores atípicos
+
+No se usa un percentil sobre toda la serie: eso mira el futuro y además marca como atípicos los días
+normales de los años altos. Cada día se compara contra la media y la desviación **de su propio día de
+la semana**, porque el perfil semanal domina la serie: un domingo de 300 es alto y un viernes de 300
+es bajo.
+
+Con un umbral de |z| > 3 hay **10 días atípicos de 2.131, el 0,47 %**.
+
+**Los nueve días anormalmente bajos están todos en marzo y abril de 2020:**
+
+| Fecha | Víctimas | Media de su día | z | Día |
+|---|---:|---:|---:|---|
+| 2020-03-25 | 34 | 365,0 | −3,41 | miércoles |
+| 2020-04-09 | 36 | 364,8 | −3,34 | jueves |
+| 2020-03-31 | 52 | 351,1 | −3,24 | martes |
+| 2020-03-26 | 50 | 364,8 | −3,20 | jueves |
+| 2020-04-07 | 57 | 351,1 | −3,18 | martes |
+
+Son los días del confinamiento estricto: 34 víctimas frente a una media de 365 para un miércoles.
+**No se eliminan.** No son errores de medición ni ruido, son el efecto de una restricción real, y
+borrarlos escondería justo lo que el indicador de año atípico documenta.
+
+**El único día anormalmente alto es el 1 de diciembre de 2022**, con 678 víctimas frente a 364,8 de
+un jueves medio (z = 3,18). Coincide con el inicio de la temporada de compras de fin de año, que es
+una explicación plausible pero **no verificada**: con un solo día no se puede afirmar.
+
+Dos de los nueve días bajos son festivos, lo que encaja con el efecto de −37,8 % ya medido.
 
 ## 6. Relación entre las tres fuentes
 
@@ -180,5 +254,9 @@ Esto respalda dos decisiones ya tomadas:
 4. **2020 debe entrar marcado**, no como un año más.
 5. **Comparar medias diarias, no totales**, mientras 2025 esté truncado.
 6. **Las comparaciones entre localidades se hacen por tasa, no por conteo.** El orden cambia por
-   completo al normalizar: Kennedy pasa del puesto 1 al 12. Y ni siquiera la tasa es un ranking de
+   completo al normalizar: Kennedy pasa del puesto 1 al 13. Y ni siquiera la tasa es un ranking de
    peligrosidad, porque no capta la población flotante.
+7. **Los atípicos son el confinamiento, no ruido.** Los nueve días anormalmente bajos están todos en
+   marzo y abril de 2020, así que no se eliminan: se explican con el indicador de año atípico.
+8. **El fenómeno está disperso en el territorio.** Las diez UPZ con más incidentes concentran solo el
+   22,3 % de 116, así que no hay un puñado de puntos calientes que explique la serie de ciudad.
