@@ -1,0 +1,111 @@
+% Sección 5. Contenido: Sara Albarracín (#30, #33); integración en LaTeX: Juan Diego (#39).
+% Cifras: outputs/preprocesamiento/conteos_por_paso.csv y resumen.json, outputs/auditoria_policia/,
+% outputs/auditoria/duplicados.csv, outputs/features/diccionario_features.json y outputs/poblacion/.
+
+\section{Preprocesamiento de datos}\label{sec:preprocesamiento}
+
+El preprocesamiento lleva los archivos crudos a los conjuntos que usan el análisis exploratorio y el modelado. Lo ejecuta \texttt{scripts/preprocesamiento.py}, que reutiliza \texttt{scripts/serie\_objetivo\_policia.py} para construir la serie objetivo. Además de los conjuntos procesados, que no se versionan, el script deja dos archivos de evidencia en \texttt{outputs/preprocesamiento/}:
+\begin{itemize}
+  \item el número de filas antes y después de cada paso, con el motivo de cada exclusión;
+  \item la huella SHA-256 de cada archivo leído y las comprobaciones superadas.
+\end{itemize}
+
+\subsection{Pasos y filas excluidas}
+
+La tabla~\ref{tab:pasos} resume los pasos. Ninguna fila se pierde sin un motivo registrado.
+
+Las 11.116 filas de la Policía excluidas por periodo son las de noviembre y diciembre de 2025. El registro baja de 12.228 víctimas en octubre a 5.416 en noviembre y 5.700 en diciembre, menos de la mitad. Las llamadas a la Línea 123 se mantienen en esos meses: 12.750, 12.314 y 11.529 (\texttt{docs/verificacion\_\allowbreak{}caida\_\allowbreak{}2025.md}). El corte se explica en la sección~\ref{sec:objetivo}.
+
+La Línea 123 se conserva en 2018--2025 en el conjunto procesado. El análisis exploratorio la acota a 2020--2025 para que coincida con la serie objetivo.
+
+\begin{table}[H]
+\centering
+\caption{Filas antes y después de cada paso del preprocesamiento. Fuente: \texttt{outputs/\allowbreak{}preprocesamiento/\allowbreak{}conteos\_\allowbreak{}por\_\allowbreak{}paso.csv}.}\label{tab:pasos}
+\small
+\begin{tabular}{@{}p{2.1cm}p{6.6cm}rr@{}}
+\toprule
+\textbf{Fuente} & \textbf{Paso y motivo} & \textbf{Filas antes} & \textbf{Filas después} \\
+\midrule
+Policía & Bogotá (\texttt{CODIGO DANE} = 11001) & 4.829.870 & 1.406.157 \\
+ & Hurto a personas (\texttt{DELITOS} contiene «(05022)») & 1.406.157 & 741.986 \\
+ & Periodo del 2020-01-01 al 2025-10-31. Noviembre y diciembre de 2025 no son comparables con el resto de la serie & 741.986 & 730.870 \\
+\midrule
+Línea 123 & Años 2018--2025; el recurso cubre 2015--2026 & 1.117.394 & 763.074 \\
+ & Tipificación de la llamada que contiene «HURTO» & 763.074 & 25.144 \\
+ & Con localidad asignada; se separan las filas «SIN LOCALIZACION» & 25.144 & 24.899 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Reglas de tratamiento}
+
+Las reglas siguientes vienen de la auditoría de la sección~\ref{sec:datos}. El script las aplica y deja constancia de ellas en su resumen:
+\begin{enumerate}
+  \item \textbf{El registro de la Policía no se deduplica por fila exacta.} De sus 741.986 filas de hurto, 713.344 son duplicados exactos de otra fila (\texttt{outputs/\allowbreak{}auditoria\_\allowbreak{}policia/\allowbreak{}auditoria.json}). No son errores. El archivo no trae un identificador y dos víctimas con el mismo perfil, el mismo día, son indistinguibles. Deduplicar dejaría 28.642 filas y borraría el 96\,\% de las víctimas. El script se detiene si la suma de la serie no coincide con las filas filtradas.
+  \item \textbf{El campo \texttt{ID} de la Línea 123 no se usa como clave.} Se repite en 2.633 filas del archivo completo, que no tiene duplicados exactos (\texttt{outputs/auditoria/duplicados.csv}).
+  \item \textbf{La Línea 123 se mide sumando \texttt{CANT\_INCIDENTES}.} Sus filas son grupos agregados por mes, tipo y zona, así que contarlas pondera igual un grupo de un incidente que uno de quinientos.
+  \item \textbf{«SIN LOCALIZACION» no es una localidad.} Se separa del desglose territorial y su peso se reporta aparte.
+  \item \textbf{Las fuentes no se suman entre sí.} Cada una queda en su propio archivo y se comparan sus series, no sus totales.
+\end{enumerate}
+
+\subsection{Validación de la serie objetivo}
+
+La serie objetivo cuenta las víctimas registradas por día. La tabla~\ref{tab:validacion} reúne las comprobaciones de los criterios de calidad que la primera entrega dejó previstos.
+
+\begin{table}[H]
+\centering
+\caption{Comprobaciones sobre la serie objetivo. Fuente: \texttt{outputs/\allowbreak{}preprocesamiento/\allowbreak{}resumen.json}.}\label{tab:validacion}
+\small
+\begin{tabular}{@{}p{3.2cm}p{7.6cm}r@{}}
+\toprule
+\textbf{Criterio} & \textbf{Comprobación} & \textbf{Resultado} \\
+\midrule
+Completitud & Días del periodo sin ningún registro & 0 de 2.131 \\
+Validez & Fechas que no se pudieron interpretar & 0 \\
+Validez & Filas con \texttt{CANTIDAD} distinta de 1 & 0 \\
+Unicidad & Suma de la serie frente a filas filtradas & 730.870 = 730.870 \\
+Valores atípicos & Mínimo (2020-03-22) y máximo (2022-09-23) diarios & 25 y 718 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Los valores extremos se conservan. El mínimo cae en los primeros días de las restricciones de movilidad de 2020, y ninguno se elimina de forma automática, como se previó en la primera entrega.
+
+Los nulos de las variables de la víctima no afectan a la serie, porque esta solo cuenta filas por fecha. Se reportan igualmente: \texttt{GENERO} tiene 622 nulos (0,08\,\%) y la agrupación de edad, 392 (0,05\,\%).
+
+\subsection{Homologación territorial}
+
+Los nombres de localidad de la Línea 123 se normalizan a mayúsculas y sin espacios sobrantes, y quedan 20 localidades. Para cruzarlas con la población (sección~\ref{sec:poblacion}) se usa una clave sin tildes. La única diferencia de nombre entre las dos fuentes es «La Candelaria», que la Línea 123 registra como «CANDELARIA». El registro de la Policía no identifica la localidad, así que no entra en este cruce.
+
+\subsection{Variables derivadas}\label{sec:variables}
+
+\texttt{scripts/features.py} construye las predictoras sobre la serie diaria. Ninguna viene en las fuentes. Para predecir el día $t$, con horizonte $t+1$, solo se usa lo que se conoce al cerrar $t-1$. Cada variable declara su regla de disponibilidad, y el script falla si alguna no la declara:
+\begin{itemize}
+  \item \textbf{Calendario}, que se conoce con años de antelación: año, mes, día del mes, día de la semana, fin de semana, semana del año, quincena, festivo, víspera de festivo, día después de festivo y puente. Los festivos de Colombia se calculan con los días fijos, los que la Ley 51 de 1983 traslada al lunes y los que dependen de la Pascua.
+  \item \textbf{Pasado}, que solo usa valores hasta $t-1$: rezagos de 1, 7, 14 y 28 días, medias y desviaciones de los 7 y 28 días anteriores y el cociente entre ambas medias.
+\end{itemize}
+
+Son 20 predictoras. Su lista completa, con la regla de cada una, está en la tabla~\ref{tab:dic-features} del apéndice~\ref{ap:diccionario} y en \texttt{outputs/features/diccionario\_features.json}. Los primeros 28 días tienen valores vacíos porque los rezagos necesitan historia, así que la primera fila completa es la del 2020-01-29. Ninguna predictora proviene de la Línea 123 ni de la Fiscalía, que en esta entrega se usan solo como contraste mensual (sección~6).
+
+\textbf{Prueba contra la fuga de información.} La prueba de \texttt{tests/\allowbreak{}test\_\allowbreak{}features.py} no se limita a revisar nombres de columna:
+\begin{itemize}
+  \item cambia la serie desde un día $t$ en adelante, reconstruye las variables y exige que la fila de $t$ no cambie;
+  \item comprueba también que alterar el pasado sí la cambia.
+\end{itemize}
+
+Quedan excluidas de forma explícita:
+\begin{itemize}
+  \item el año y el mes de creación del proceso en la Fiscalía, porque el proceso puede abrirse meses después del hecho;
+  \item la etapa y el estado del proceso, que dependen del tiempo transcurrido y de la fecha de consulta;
+  \item un indicador de picos calculado con percentiles de toda la serie, porque incluye el futuro;
+  \item cualquier media móvil centrada en $t$.
+\end{itemize}
+
+% Pendiente del PR #98: añade anio_atipico_2020 (D-04). Al fusionarse, pasar a 21 predictoras y
+% describir aquí el indicador.
+
+\subsection{Población por localidad}\label{sec:poblacion}
+
+Para comparar localidades se usa la población residente que proyecta la Secretaría Distrital de Planeación para cada localidad y año \citep{sdp2025}. \texttt{scripts/poblacion\_localidad.py} suma la cabecera y la zona rural de cada localidad y produce una fila por localidad y año, 120 en total. En cada fila comprueba que el total sea la suma de hombres y mujeres y la de las 101 edades simples. Bogotá pasa de 7.732.161 habitantes en 2020 a 7.937.898 en 2025 (\texttt{outputs/poblacion/resumen\_poblacion.json}).
+
+Esta población no incluye a quienes trabajan en una localidad o la visitan sin vivir en ella. Sus consecuencias se discuten con las tasas en la sección~6.

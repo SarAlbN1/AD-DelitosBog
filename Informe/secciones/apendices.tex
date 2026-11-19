@@ -1,13 +1,13 @@
 % Apéndices, Juan Diego (#51) · Se incluye desde informe.tex después de \appendix.
 % Fuentes de cada tabla:
-%   ap:diccionario  docs/DICCIONARIO_DATOS.md (secciones 2 a 4)
+%   ap:diccionario  docs/DICCIONARIO_DATOS.md (secciones 2 a 5) y outputs/features/diccionario_features.json
 %   ap:archivos     outputs/auditoria/resumen_archivos.csv, outputs/auditoria_policia/resumen_archivos.csv
 %                   y las fechas de descarga de data/README.md
 %   ap:localidad    outputs/informe/linea123_localidad_2020_2025.csv
 
 \section{Diccionario de datos}\label{ap:diccionario}
 
-Este apéndice resume las variables de las fuentes complementarias y del agregado de control. Las del registro de la Policía están en la tabla~\ref{tab:variables-policia}. El diccionario completo, con el tipo, el número de valores distintos y el nombre original de cada columna, está en \texttt{docs/DICCIONARIO\_\allowbreak{}DATOS.md}. Las definiciones de Fiscalía siguen la ficha oficial del conjunto \citep{fiscalia}.
+Este apéndice resume las variables de las fuentes complementarias, del agregado de control y las derivadas de la serie objetivo. Las del registro de la Policía están en la tabla~\ref{tab:variables-policia}. El diccionario completo, con el tipo, el número de valores distintos y el nombre original de cada columna, está en \texttt{docs/DICCIONARIO\_\allowbreak{}DATOS.md}. Las definiciones de Fiscalía siguen la ficha oficial del conjunto \citep{fiscalia}.
 
 La columna \emph{Uso} indica el papel previsto en el proyecto: \emph{objetivo}, \emph{predictora}, \emph{filtro}, \emph{trazabilidad}, \emph{descriptiva} (se analiza pero no entra en el modelo) o \emph{no se usa}.
 
@@ -83,6 +83,29 @@ La columna \emph{Uso} indica el papel previsto en el proyecto: \emph{objetivo}, 
 \texttt{trimestre\_\allowbreak{}hecho}, \texttt{trimestre\_\allowbreak{}creacion} & Trimestre, redundante con el mes & no se usa \\
 \texttt{pais\_\allowbreak{}hecho}, \texttt{departamento\_\allowbreak{}hecho}, \texttt{municipio\_\allowbreak{}hecho} & Constantes tras el filtro de Bogotá & no se usa \\
 \texttt{fecha\_\allowbreak{}corte\_\allowbreak{}datos} & Fecha de corte de la extracción: 31/10/2026 & trazabilidad \\
+\bottomrule
+\end{longtable}
+
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{4.2cm}>{\raggedright\arraybackslash}p{8.0cm}>{\raggedright\arraybackslash}p{2.8cm}@{}}
+\caption{Variables derivadas de la serie objetivo (\texttt{scripts/features.py}). La columna \emph{Disponibilidad} indica qué se conoce al cerrar el día $t-1$.}\label{tab:dic-features}\\
+\toprule
+\textbf{Variable} & \textbf{Descripción} & \textbf{Disponibilidad} \\
+\midrule
+\endhead
+\texttt{victimas} & Víctimas registradas el día $t$. Nunca es predictora & objetivo \\
+\texttt{anio}, \texttt{mes}, \texttt{dia\_\allowbreak{}del\_\allowbreak{}mes} & Componentes de la fecha & calendario \\
+\texttt{dia\_\allowbreak{}semana} & 0 = lunes, \ldots, 6 = domingo & calendario \\
+\texttt{fin\_\allowbreak{}de\_\allowbreak{}semana} & 1 si es sábado o domingo & calendario \\
+\texttt{semana\_\allowbreak{}del\_\allowbreak{}anio} & Semana ISO & calendario \\
+\texttt{quincena} & 1 el día 15 y el último día del mes & calendario \\
+\texttt{festivo} & 1 si es festivo en Colombia & calendario \\
+\texttt{vispera\_\allowbreak{}de\_\allowbreak{}festivo} & 1 si el día siguiente es festivo; depende de $t+1$, pero el calendario se conoce de antemano & calendario \\
+\texttt{dia\_\allowbreak{}despues\_\allowbreak{}de\_\allowbreak{}festivo} & 1 si el día anterior fue festivo & calendario \\
+\texttt{puente} & 1 si es un festivo que cae en lunes & calendario \\
+\texttt{rezago\_\allowbreak{}1}, \texttt{rezago\_\allowbreak{}7}, \texttt{rezago\_\allowbreak{}14}, \texttt{rezago\_\allowbreak{}28} & Valor de la serie en $t-1$, $t-7$, $t-14$ y $t-28$ & pasado \\
+\texttt{media\_\allowbreak{}previa\_\allowbreak{}7}, \texttt{media\_\allowbreak{}previa\_\allowbreak{}28} & Media de $t-1$ a $t-7$ y de $t-1$ a $t-28$ & pasado \\
+\texttt{desv\_\allowbreak{}previa\_\allowbreak{}7}, \texttt{desv\_\allowbreak{}previa\_\allowbreak{}28} & Desviación estándar en las mismas ventanas & pasado \\
+\texttt{tendencia\_\allowbreak{}7\_\allowbreak{}28} & Cociente entre la media de 7 días y la de 28 & pasado \\
 \bottomrule
 \end{longtable}
 }
