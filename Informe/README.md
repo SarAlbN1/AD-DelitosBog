@@ -14,7 +14,7 @@ El informe se compila desde [informe.tex](informe.tex), que incluye un archivo p
 | `secciones/02_introduccion.tex` | Sección 2 | Juan Diego |
 | `secciones/03_trabajos_relacionados.tex` | Sección 3 | Juan Diego |
 | `secciones/04_datos.tex` | Sección 4 | Juan Diego |
-| `secciones/05_preprocesamiento.tex`, `06_analisis_exploratorio.tex`, `07_metodologia.tex` | Secciones 5–7. Se activan quitando el `%` de su `\input` en `informe.tex` | Sara |
+| `secciones/05_preprocesamiento.tex`, `06_analisis_exploratorio.tex`, `07_metodologia.tex` | Secciones 5–7. Parten de `scripts/preprocesamiento.py`, [`docs/EDA_HALLAZGOS.md`](../docs/EDA_HALLAZGOS.md) y [`docs/METODOLOGIA.md`](../docs/METODOLOGIA.md) | Sara (contenido) y Juan Diego (integración) |
 | `referencias.tex` | Referencias en APA 7 | Ambos |
 | `secciones/apendices.tex` | Apéndices A–D: diccionario de datos, archivos y SHA-256, reproducibilidad y tablas complementarias (#51) | Juan Diego |
 
@@ -36,7 +36,7 @@ Las decisiones están en [`docs/decisiones.md`](../docs/decisiones.md), D-01.
 
 Las filas de fuentes distintas no se suman.
 
-## De dónde sale cada cifra y figura de las secciones 4 y 5
+## De dónde sale cada cifra y figura de las secciones 4 a 7
 
 | Salida | Script |
 |---|---|
@@ -47,6 +47,8 @@ Las filas de fuentes distintas no se suman.
 | `outputs/poblacion/` (población por localidad y año, denominador de las tasas) | `scripts/poblacion_localidad.py` |
 | `outputs/preprocesamiento/` (tablas de pasos y de validación de la sección 5) | `scripts/preprocesamiento.py` |
 | `outputs/features/diccionario_features.json` (variables derivadas y apéndice A) | `scripts/features.py` |
+| `outputs/eda/` y las figuras `eda_*.pdf` (sección 6) | `scripts/eda.py` |
+| `outputs/baselines/` (comparadores y pliegues de la sección 7) | `scripts/baselines.py` |
 
 Las figuras de `figuras/` son copias de las de `outputs/`. Si se regeneran, hay que volver a copiarlas.
 
@@ -55,5 +57,10 @@ python scripts/policia_registro_a_csv.py --entrada data/raw/policia_registro --s
 python scripts/serie_objetivo_policia.py
 python scripts/fiscalia_modalidades.py
 python scripts/figuras_informe.py
+python scripts/preprocesamiento.py
+python scripts/features.py
+python scripts/eda.py
+python scripts/baselines.py
 cp outputs/serie_objetivo/figuras/serie_diaria_policia.pdf outputs/informe/figuras/series_mensuales_fuentes.pdf outputs/informe/figuras/linea123_localidad.pdf Informe/figuras/
+cp outputs/eda/figuras/eda_dia_semana.pdf outputs/eda/figuras/eda_estacionalidad_mensual.pdf outputs/eda/figuras/eda_localidad_tasa.pdf outputs/eda/figuras/eda_mapa_tasa.pdf outputs/eda/figuras/eda_fuentes_normalizadas.pdf Informe/figuras/
 ```
