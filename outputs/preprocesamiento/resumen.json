@@ -135,7 +135,9 @@
     }
   },
   "linea123": {
-    "archivo": "data/raw/linea123.csv",
+    "upz_distintas": 116,
+    "incidentes_con_upz": 988715,
+    "archivo": "/Users/sara/Proy/AD-DelitosBog/data/raw/linea123/datos-abiertllamadastramitadas-c4-bogota_numerounicodeseguridadyemergencias-nuse_linea-123os-nus.csv",
     "sha256": "ceeee37729c83adaae6907272457998cc5a60eaf57c14a5ead17c6db2d3a4d61",
     "filas_originales": 1117394,
     "filas_hurto_en_periodo": 25144,

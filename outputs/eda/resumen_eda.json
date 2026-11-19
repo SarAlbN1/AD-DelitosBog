@@ -1,0 +1,262 @@
+{
+  "serie": {
+    "periodo": [
+      "2020-01-01",
+      "2025-10-31"
+    ],
+    "dias": 2131,
+    "media": 343.0
+  },
+  "temporal": {
+    "anual": {
+      "2020": {
+        "victimas": 83136.0,
+        "media_diaria": 227.1475409836,
+        "dias": 366,
+        "anio_completo": true
+      },
+      "2021": {
+        "victimas": 109428.0,
+        "media_diaria": 299.802739726,
+        "dias": 365,
+        "anio_completo": true
+      },
+      "2022": {
+        "victimas": 137157.0,
+        "media_diaria": 375.7726027397,
+        "dias": 365,
+        "anio_completo": true
+      },
+      "2023": {
+        "victimas": 158745.0,
+        "media_diaria": 434.9178082192,
+        "dias": 365,
+        "anio_completo": true
+      },
+      "2024": {
+        "victimas": 130503.0,
+        "media_diaria": 356.5655737705,
+        "dias": 366,
+        "anio_completo": true
+      },
+      "2025": {
+        "victimas": 111901.0,
+        "media_diaria": 368.0953947368,
+        "dias": 304,
+        "anio_completo": false
+      }
+    },
+    "por_dia_semana": {
+      "lunes": 299.0,
+      "martes": 351.1,
+      "miércoles": 365.0,
+      "jueves": 364.8,
+      "viernes": 403.1,
+      "sábado": 372.5,
+      "domingo": 245.0
+    },
+    "por_mes": {
+      "ene": 325.9,
+      "feb": 355.0,
+      "mar": 336.8,
+      "abr": 312.7,
+      "may": 315.2,
+      "jun": 316.6,
+      "jul": 327.5,
+      "ago": 345.8,
+      "sep": 374.2,
+      "oct": 386.9,
+      "nov": 382.1,
+      "dic": 344.9
+    },
+    "festivos": {
+      "media_en_festivo": 203.6,
+      "media_en_no_festivo": 350.1,
+      "n_festivos": 103,
+      "media_lunes_festivo": 201.5,
+      "media_lunes_laborable": 323.9,
+      "n_lunes_festivo": 62,
+      "n_lunes_laborable": 242,
+      "n_lunes_total": 304,
+      "diferencia_lunes_pct": -37.8
+    },
+    "nota_2020": "2020 no es comparable: el nivel está deprimido por las restricciones de movilidad",
+    "nota_2025": "2025 está truncado el 2025-10-31 (#86): su total anual no es comparable"
+  },
+  "territorial": {
+    "periodo": [
+      2020,
+      2025
+    ],
+    "total_con_localidad": 815621,
+    "sin_localidad": {
+      "incidentes_sin_localidad": 5683,
+      "pct_sin_localidad": 0.69
+    },
+    "top5_conteo": [
+      {
+        "localidad": "KENNEDY",
+        "incidentes": 99525,
+        "pct": 12.12
+      },
+      {
+        "localidad": "ENGATIVÁ",
+        "incidentes": 93654,
+        "pct": 11.4
+      },
+      {
+        "localidad": "SUBA",
+        "incidentes": 93132,
+        "pct": 11.34
+      },
+      {
+        "localidad": "BOSA",
+        "incidentes": 52210,
+        "pct": 6.36
+      },
+      {
+        "localidad": "USAQUÉN",
+        "incidentes": 50245,
+        "pct": 6.12
+      }
+    ],
+    "nota_tasas": "tasa de llamadas tramitadas por 100.000 habitantes, 2020-2025, con la población de cada año; no es una tasa de hurtos. Cruzan las 20 localidades",
+    "top5_tasa": [
+      {
+        "clave": "LOS MARTIRES",
+        "incidentes": 29033,
+        "personas_anio": 506159,
+        "tasa_100k_periodo": 5735.9,
+        "localidad": "LOS MÁRTIRES"
+      },
+      {
+        "clave": "ANTONIO NARINO",
+        "incidentes": 19521,
+        "personas_anio": 483662,
+        "tasa_100k_periodo": 4036.1,
+        "localidad": "ANTONIO NARIÑO"
+      },
+      {
+        "clave": "SANTA FE",
+        "incidentes": 25991,
+        "personas_anio": 667201,
+        "tasa_100k_periodo": 3895.5,
+        "localidad": "SANTA FE"
+      },
+      {
+        "clave": "CANDELARIA",
+        "incidentes": 3834,
+        "personas_anio": 102815,
+        "tasa_100k_periodo": 3729.0,
+        "localidad": "CANDELARIA"
+      },
+      {
+        "clave": "BARRIOS UNIDOS",
+        "incidentes": 30974,
+        "personas_anio": 842802,
+        "tasa_100k_periodo": 3675.1,
+        "localidad": "BARRIOS UNIDOS"
+      }
+    ],
+    "advertencias": [
+      "la tasa es de llamadas tramitadas por 100.000 habitantes, no de hurtos: mide demanda de atención",
+      "Sumapaz es rural y con muy poca población, así que su tasa es inestable",
+      "la población de residencia no capta la población flotante: Chapinero, Santa Fe y La Candelaria reciben gente que no vive en ellas y su tasa por residente sale inflada",
+      "el orden cambia al normalizar, pero no se presenta como un ranking de peligrosidad"
+    ]
+  },
+  "entre_fuentes": {
+    "periodo": [
+      "2020-01",
+      "2025-10"
+    ],
+    "meses": 70,
+    "pearson": {
+      "Policía (víctimas)": {
+        "Policía (víctimas)": 1.0,
+        "Línea 123 (llamadas)": 0.601,
+        "Fiscalía (proceso–delito)": 0.962
+      },
+      "Línea 123 (llamadas)": {
+        "Policía (víctimas)": 0.601,
+        "Línea 123 (llamadas)": 1.0,
+        "Fiscalía (proceso–delito)": 0.633
+      },
+      "Fiscalía (proceso–delito)": {
+        "Policía (víctimas)": 0.962,
+        "Línea 123 (llamadas)": 0.633,
+        "Fiscalía (proceso–delito)": 1.0
+      }
+    },
+    "spearman": {
+      "Policía (víctimas)": {
+        "Policía (víctimas)": 1.0,
+        "Línea 123 (llamadas)": 0.47,
+        "Fiscalía (proceso–delito)": 0.947
+      },
+      "Línea 123 (llamadas)": {
+        "Policía (víctimas)": 0.47,
+        "Línea 123 (llamadas)": 1.0,
+        "Fiscalía (proceso–delito)": 0.537
+      },
+      "Fiscalía (proceso–delito)": {
+        "Policía (víctimas)": 0.947,
+        "Línea 123 (llamadas)": 0.537,
+        "Fiscalía (proceso–delito)": 1.0
+      }
+    },
+    "nota": "resolución mes × Bogotá, la única común; las fuentes no se suman entre sí"
+  },
+  "atipicos": {
+    "umbral_z": 3.0,
+    "criterio": "z respecto a la media y desviación del mismo día de la semana",
+    "n_altos": 1,
+    "n_bajos": 9,
+    "pct_atipicos": 0.47,
+    "festivos_entre_los_bajos": 2
+  },
+  "upz": {
+    "upz_distintas": 116,
+    "concentracion_top10_pct": 22.3,
+    "top5": [
+      {
+        "upz": "EL RINCON",
+        "localidad": "SUBA",
+        "incidentes": 20234,
+        "pct": 2.8
+      },
+      {
+        "upz": "LA SABANA",
+        "localidad": "LOS MÁRTIRES",
+        "incidentes": 19248,
+        "pct": 2.66
+      },
+      {
+        "upz": "LAS FERIAS",
+        "localidad": "ENGATIVÁ",
+        "incidentes": 17226,
+        "pct": 2.38
+      },
+      {
+        "upz": "TIBABUYES",
+        "localidad": "SUBA",
+        "incidentes": 16372,
+        "pct": 2.26
+      },
+      {
+        "upz": "BOSA CENTRAL",
+        "localidad": "BOSA",
+        "incidentes": 16174,
+        "pct": 2.24
+      }
+    ]
+  },
+  "figuras": [
+    "eda_dia_semana",
+    "eda_estacionalidad_mensual",
+    "eda_localidad",
+    "eda_localidad_tasa",
+    "eda_fuentes_normalizadas",
+    "eda_mapa_tasa"
+  ]
+}

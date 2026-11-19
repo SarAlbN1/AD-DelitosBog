@@ -28,6 +28,9 @@ import logging
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from rutas import ruta_fuente  # noqa: E402
+
 log = logging.getLogger("caida2025")
 
 HURTO_ICCS = "(05022)"
@@ -88,9 +91,12 @@ def main(argv=None) -> int:
     p.add_argument("--registro", type=Path,
                    default=Path("data/raw/policia_registro/csv/delitos_registro_2025.csv"))
     p.add_argument("--agregado", type=Path, default=Path("data/raw/hurto_bogota.csv"))
-    p.add_argument("--linea123", type=Path, default=Path("data/raw/linea123.csv"))
+    p.add_argument("--linea123", type=Path, default=None,
+                   help="Por defecto, la ruta que declara config/fuentes_auditoria.json.")
     p.add_argument("--salida", type=Path, default=Path("outputs/verificacion_caida_2025"))
     a = p.parse_args(argv)
+    if a.linea123 is None:
+        a.linea123 = ruta_fuente("linea123")
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 
     faltan = [x for x in (a.registro, a.agregado, a.linea123) if not x.is_file()]
