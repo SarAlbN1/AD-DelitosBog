@@ -303,27 +303,20 @@ La serie muestra cuatro rasgos que el modelamiento deberá tener en cuenta:
   \item un final en octubre de 2025: noviembre y diciembre quedan fuera porque no son comparables (tabla~\ref{tab:calidad}).
 \end{itemize}
 
-Las demás fuentes solo podrán entrar al modelo como variables explicativas si están disponibles antes del día que se pronostica y tienen una justificación metodológica. La Línea 123 y la Fiscalía publican por mes y con rezago, así que su uso en un pronóstico diario exigirá rezagos de al menos un mes. Se evaluará en la segunda entrega.
+Las demás fuentes solo podrán entrar al modelo como variables explicativas si están disponibles antes del día que se pronostica y tienen una justificación metodológica. La Línea 123 y la Fiscalía publican por mes y con rezago, así que su uso en un pronóstico diario exigiría rezagos de al menos un mes. En esta entrega no entran como predictoras: se usan como contraste mensual.
 
 El pronóstico es para el total de la ciudad. Un pronóstico por localidad no es viable con esta fuente, porque el registro no identifica la localidad.
 
-\subsection{Variables derivadas previstas}
+\subsection{Del entendimiento de los datos al preprocesamiento}
 
-En la segunda entrega se construirán, sobre la serie diaria, variables de calendario (año, mes, día de la semana y festivos), rezagos y estadísticas móviles calculadas solo con observaciones pasadas. Las series de la Línea 123 y de la Fiscalía solo se usarán con el rezago con que estarían disponibles al momento de pronosticar, para evitar filtrar información futura.
+La primera entrega dejó previstos tres trabajos, que esta entrega desarrolla:
+\begin{itemize}
+  \item \textbf{Criterios de calidad.} Completitud, unicidad, validez, consistencia territorial, valores atípicos y comparabilidad. Se comprueban en la sección~\ref{sec:preprocesamiento}. Los valores extremos no se eliminan de forma automática, porque pueden corresponder a hechos reales.
+  \item \textbf{Variables derivadas.} Calendario, rezagos y estadísticas móviles calculadas solo con observaciones pasadas (sección~\ref{sec:variables}).
+  \item \textbf{Análisis exploratorio y metodología.} El análisis de tendencia, estacionalidad y relación entre fuentes, y la comparación de modelos con comparadores triviales mediante una partición cronológica.
+\end{itemize}
 
-Estas variables son propuestas metodológicas, no campos existentes en la base original. Su utilidad real se comprobará mediante el análisis exploratorio y la evaluación de modelos.
-
-\subsection{Criterios previstos de calidad de datos}
-
-Durante el preprocesamiento se comprobarán: \textit{completitud} (nulos y continuidad de fechas), \textit{unicidad} (filas repetidas por fecha y municipio), \textit{validez} (conteos no negativos y formatos), \textit{consistencia territorial} (códigos y nombres), \textit{valores atípicos} (picos o caídas de la serie), y \textit{comparabilidad} (cambios de registro y revisiones de cifras). Los valores extremos no se eliminarán automáticamente, pues pueden corresponder a hechos o circunstancias reales.
-
-También se analizarán localidades ausentes o categorías sin ubicación en las fuentes que las incorporen. Los registros pueden estar afectados por subdenuncia y cambios administrativos \citep{riascos2023}; por ello, las predicciones se interpretarán como proyecciones de conteos registrados y no de la totalidad de eventos ocurridos.
-
-\subsection{Análisis y productos previstos para las siguientes entregas}
-
-La segunda entrega profundizará el análisis exploratorio de la serie objetivo (tendencia, estacionalidad y valores atípicos) y la comparación de tendencias entre fuentes. La tercera comparará modelos de pronóstico de la serie diaria con una línea base estacional ingenua, como repetir el valor del mismo día de la semana anterior, y alternativas como SARIMA, Random Forest y XGBoost.
-
-La evaluación empleará una separación cronológica de entrenamiento y prueba, evitando mezclar observaciones futuras en el entrenamiento. Se considerarán métricas como error absoluto medio (MAE) y raíz del error cuadrático medio (RMSE). Esta sección establece el plan de análisis; \textbf{no presenta preprocesamiento ejecutado, modelos entrenados ni resultados predictivos}, pues estos corresponden a las siguientes entregas.
+Los registros pueden estar afectados por subdenuncia y cambios administrativos \citep{riascos2023}. Por eso las predicciones se interpretan como proyecciones de conteos registrados, no de la totalidad de los hechos ocurridos. Esta entrega no presenta modelos entrenados ni resultados predictivos, que corresponden a la tercera.
 
 \subsection{Consideraciones éticas y limitaciones}
 

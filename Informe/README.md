@@ -36,7 +36,7 @@ Las decisiones están en [`docs/decisiones.md`](../docs/decisiones.md), D-01.
 
 Las filas de fuentes distintas no se suman.
 
-## De dónde sale cada cifra y figura de la sección 4
+## De dónde sale cada cifra y figura de las secciones 4 y 5
 
 | Salida | Script |
 |---|---|
@@ -45,6 +45,8 @@ Las filas de fuentes distintas no se suman.
 | `outputs/informe/fiscalia_*.csv` | `scripts/fiscalia_modalidades.py` |
 | `outputs/informe/series_mensuales_fuentes.csv`, `linea123_localidad_2020_2025.csv` y sus figuras | `scripts/figuras_informe.py` |
 | `outputs/poblacion/` (población por localidad y año, denominador de las tasas) | `scripts/poblacion_localidad.py` |
+| `outputs/preprocesamiento/` (tablas de pasos y de validación de la sección 5) | `scripts/preprocesamiento.py` |
+| `outputs/features/diccionario_features.json` (variables derivadas y apéndice A) | `scripts/features.py` |
 
 Las figuras de `figuras/` son copias de las de `outputs/`. Si se regeneran, hay que volver a copiarlas.
 
