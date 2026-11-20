@@ -23,7 +23,7 @@ Las tres tienen unidades de observación distintas y no se suman entre sí.
 
 2. Reutilice las descargas locales o siga [las instrucciones de descarga](data/README.md).
 3. Ejecute todas las celdas de [01 · Preprocesamiento](notebooks/01_preprocesamiento.ipynb) y después las de [02 · Análisis exploratorio](notebooks/02_analisis_exploratorio.ipynb). Las tablas y figuras se guardan en `data/processed/`.
-4. Consulte [la segunda entrega](docs/segunda_entrega.md) para ver la auditoría, los hallazgos y el protocolo de evaluación de la tercera entrega.
+4. Consulte la auditoría en [docs/AUDITORIA.md](docs/AUDITORIA.md), los hallazgos del análisis exploratorio en [docs/EDA_HALLAZGOS.md](docs/EDA_HALLAZGOS.md) y el protocolo de evaluación en [docs/METODOLOGIA.md](docs/METODOLOGIA.md).
 
 Python y pandas permiten reproducir la limpieza, construir atributos y calcular estadística descriptiva. Matplotlib genera las gráficas, GeoPandas maneja las geometrías distritales y scikit-learn se usará para la regresión lineal, el árbol y la evaluación cronológica.
 

@@ -143,6 +143,7 @@ variables y exige que la fila `t` no cambie.
 | `semana_del_anio` | calendario | Semana ISO |
 | `quincena` | calendario | 1 el día 15 y el último día del mes |
 | `festivo` | calendario | 1 si es festivo en Colombia. Los festivos se calculan con los días fijos, los que la Ley 51 de 1983 traslada al lunes y los que dependen de la Pascua |
+| `anio_atipico_2020` | calendario | 1 en 2020, año de las restricciones de movilidad (D-04). El año se conoce de antemano |
 | `vispera_de_festivo` | calendario | 1 si el día siguiente es festivo. Depende de `t+1`, pero el calendario se conoce de antemano |
 | `dia_despues_de_festivo` | calendario | 1 si el día anterior fue festivo |
 | `puente` | calendario | 1 si es un festivo que cae en lunes |
@@ -151,7 +152,7 @@ variables y exige que la fila `t` no cambie.
 | `desv_previa_7`, `desv_previa_28` | pasado | Desviación estándar en las mismas ventanas |
 | `tendencia_7_28` | pasado | Cociente entre `media_previa_7` y `media_previa_28` |
 
-Son 20 predictoras. Los primeros 28 días tienen nulos porque los rezagos y las ventanas necesitan
+Son 21 predictoras. Los primeros 28 días tienen nulos porque los rezagos y las ventanas necesitan
 historia; la primera fila completa es el 2020-01-29. Se conservan, y descartarlas es una decisión del
 modelado.
 
@@ -161,8 +162,6 @@ modelado.
 - `etapa` y `estado` de Fiscalía: dependen del tiempo transcurrido y de la fecha de consulta;
 - un indicador de pico calculado con percentiles de toda la serie: incluye el futuro;
 - una media móvil centrada en `t`: usa días posteriores.
-
-D-04 prevé además un indicador de 2020 como año atípico. Todavía no está en `scripts/features.py`.
 
 ## 6. Lo que este diccionario deja claro
 

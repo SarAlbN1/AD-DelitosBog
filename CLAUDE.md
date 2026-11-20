@@ -29,7 +29,7 @@ Antes de tocar una sección ajena, confírmalo con su responsable. Si encuentras
 | Alcance, responsable y dependencias | La issue vinculada y el [tablero](https://github.com/users/SarAlbN1/projects/11) |
 | Fuentes de datos, URL, filtros y unidad de observación | [data/README.md](data/README.md) |
 | Preparar y ejecutar el proyecto | [README.md](README.md) |
-| Preprocesamiento, EDA y metodología | [docs/segunda_entrega.md](docs/segunda_entrega.md) y los notebooks de `notebooks/` |
+| Preprocesamiento, EDA y metodología | `scripts/preprocesamiento.py`, [docs/EDA_HALLAZGOS.md](docs/EDA_HALLAZGOS.md), [docs/METODOLOGIA.md](docs/METODOLOGIA.md) y las secciones 5–7 de `Informe/secciones/` |
 | Auditoría de datasets y cifras de la sección 4 | `scripts/auditoria_datasets.py` y sus salidas en `outputs/auditoria/` |
 | Ramas, commits y pull requests | [CONTRIBUTING](CONTRIBUTING.md#ramas-y-commits) |
 

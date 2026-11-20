@@ -205,6 +205,25 @@
         "Fiscalía (proceso–delito)": 1.0
       }
     },
+    "meses_sin_atipico": 58,
+    "anio_excluido": 2020,
+    "pearson_sin_atipico": {
+      "Policía (víctimas)": {
+        "Policía (víctimas)": 1.0,
+        "Línea 123 (llamadas)": 0.284,
+        "Fiscalía (proceso–delito)": 0.925
+      },
+      "Línea 123 (llamadas)": {
+        "Policía (víctimas)": 0.284,
+        "Línea 123 (llamadas)": 1.0,
+        "Fiscalía (proceso–delito)": 0.355
+      },
+      "Fiscalía (proceso–delito)": {
+        "Policía (víctimas)": 0.925,
+        "Línea 123 (llamadas)": 0.355,
+        "Fiscalía (proceso–delito)": 1.0
+      }
+    },
     "nota": "resolución mes × Bogotá, la única común; las fuentes no se suman entre sí"
   },
   "atipicos": {

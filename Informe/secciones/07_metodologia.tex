@@ -1,0 +1,153 @@
+% Sección 7. Contenido: Sara Albarracín (#38, docs/METODOLOGIA.md y D-04 de docs/decisiones.md);
+% integración en LaTeX: Juan Diego (#39).
+% Cifras: outputs/baselines/ (comparadores.csv, validacion_rodante.csv, resumen_baselines.json),
+% generadas por scripts/baselines.py.
+
+\section{Metodología}\label{sec:metodologia}
+
+Esta sección fija el problema de predicción, el protocolo de validación, las métricas y la barra que cualquier modelo debe superar. Los modelos se entrenan y comparan en la tercera entrega. Los comparadores triviales ya están calculados con \texttt{scripts/baselines.py}, y sus resultados están en \texttt{outputs/baselines/}.
+
+\subsection{Planteamiento del problema}\label{sec:problema}
+
+\textbf{Tarea.} Pronóstico de un paso: predecir el número de víctimas de hurto a personas registradas en Bogotá el día $t$, usando solo la información disponible al cerrar el día $t-1$.
+
+\textbf{Variable objetivo.} Víctimas diarias registradas por la Policía Nacional (sección~\ref{sec:objetivo}): 2.131 días, del 2020-01-01 al 2025-10-31, con una media de 343,0.
+
+\textbf{Horizonte.} Un día ($t+1$), según la decisión D-04. Es el único horizonte en el que todas las predictoras de la sección~\ref{sec:variables} están disponibles sin suponer nada sobre los retrasos de publicación.
+
+\textbf{Qué se predice.} La serie cuenta hurtos \emph{registrados}, no hurtos ocurridos. El subregistro de la criminalidad en Bogotá está documentado \citep{riascos2023}. El modelo, por tanto, pronostica el conteo oficial y no la victimización real.
+
+\subsection{Validación}\label{sec:validacion}
+
+\textbf{Partición temporal, sin barajar.} El entrenamiento va del 2020-01-01 al 2025-04-30 (1.947 días). La evaluación, del 2025-05-01 al 2025-10-31: 184 días, con una media de 366,8 víctimas.
+
+Una validación cruzada aleatoria no es válida aquí. Barajar los días pondría información futura en el entrenamiento y, con rezagos y medias móviles, el modelo predeciría días cuyos vecinos ya ha visto. El error resultante sería optimista.
+
+\textbf{Validación de origen rodante dentro del entrenamiento.} Hay seis pliegues de 90 días (tabla~\ref{tab:pliegues}). Cada pliegue entrena con todo lo anterior a su origen y evalúa los 90 días siguientes. El entrenamiento crece de un pliegue al siguiente y nunca incluye días posteriores a los que evalúa. Es la evaluación con origen de pronóstico rodante de \citet{hyndman2021}, en la que cada conjunto de prueba se pronostica solo con observaciones anteriores.
+
+\begin{table}[H]
+\centering
+\caption{Pliegues de la validación de origen rodante. Cada pliegue evalúa los 90 días posteriores a su fin de entrenamiento. Fuente: \texttt{outputs/\allowbreak{}baselines/\allowbreak{}validacion\_\allowbreak{}rodante.csv}.}\label{tab:pliegues}
+\small
+\begin{tabular}{@{}crrr@{}}
+\toprule
+\textbf{Pliegue} & \textbf{Entrena hasta} & \textbf{Evalúa hasta} & \textbf{Días de entrenamiento} \\
+\midrule
+1 & 2023-11-07 & 2024-02-05 & 1.407 \\
+2 & 2024-02-05 & 2024-05-05 & 1.497 \\
+3 & 2024-05-05 & 2024-08-03 & 1.587 \\
+4 & 2024-08-03 & 2024-11-01 & 1.677 \\
+5 & 2024-11-01 & 2025-01-30 & 1.767 \\
+6 & 2025-01-30 & 2025-04-30 & 1.857 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Los hiperparámetros se eligen con los pliegues. El conjunto de evaluación se usa una sola vez, al final.
+
+\subsection{Métricas}\label{sec:metricas}
+
+Sean $y_i$ el valor observado, $\hat{y}_i$ la predicción y $n$ el número de días evaluados:
+\[
+\mathrm{MAE} = \frac{1}{n}\sum_{i=1}^{n} |y_i - \hat{y}_i|, \qquad
+\mathrm{RMSE} = \sqrt{\frac{1}{n}\sum_{i=1}^{n} (y_i - \hat{y}_i)^2},
+\]
+\[
+\mathrm{MAPE} = \frac{100}{n}\sum_{i=1}^{n} \frac{|y_i - \hat{y}_i|}{y_i}, \qquad
+\mathrm{MASE} = \frac{\mathrm{MAE}}{\frac{1}{T-m}\sum_{t=m+1}^{T} |y_t - y_{t-m}|},
+\]
+donde $T$ es el número de días de entrenamiento y $m = 7$.
+
+\begin{itemize}
+  \item \textbf{MAE} es la métrica principal, porque se lee en víctimas al día.
+  \item \textbf{RMSE} es secundaria: penaliza más los errores grandes, que importan en los picos.
+  \item \textbf{MAPE} es solo informativa. Es asimétrica: si $\hat{y} < y$, el error porcentual no pasa del 100\,\%, y si $\hat{y} > y$, no tiene cota, así que castiga más la sobreestimación \citep{hyndman2021}. Además, no está definida si algún valor observado es cero, y su distribución se sesga cuando los valores se acercan a cero \citep{hyndman2006}. No se usa para decidir.
+  \item \textbf{MASE} no tiene unidades, así que permite comparar entre ventanas. Un valor menor que 1 mejora al ingenuo estacional, y uno mayor que 1 lo empeora.
+\end{itemize}
+
+\citet{hyndman2006} proponen el MASE y escalan el error por el del ingenuo de un paso dentro de la muestra. Este trabajo usa la versión estacional, con el ingenuo de siete días en el denominador, que es la que presentan \citet{hyndman2021}. El denominador se calcula sobre el entrenamiento y no sobre la evaluación. Así no depende del tramo que se mide, y los modelos evaluados en ventanas distintas siguen siendo comparables. En esta serie vale 53,20 (\texttt{outputs/\allowbreak{}baselines/\allowbreak{}resumen\_\allowbreak{}baselines.json}).
+
+\subsection{Comparadores triviales y barra a superar}\label{sec:barra}
+
+Se calculan cuatro comparadores, y ninguno usa información del día $t$ ni posterior:
+\begin{itemize}
+  \item el \textbf{ingenuo}, $\hat{y}_t = y_{t-1}$;
+  \item el \textbf{ingenuo estacional}, $\hat{y}_t = y_{t-7}$, que repite el mismo día de la semana anterior;
+  \item la \textbf{media móvil de 7 días}, la media de $t-1$ a $t-7$;
+  \item la \textbf{media móvil de 28 días}, la media de $t-1$ a $t-28$.
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\caption{Comparadores triviales en el conjunto de evaluación (184 días, del 2025-05-01 al 2025-10-31). Fuente: \texttt{outputs/\allowbreak{}baselines/\allowbreak{}comparadores.csv}.}\label{tab:comparadores}
+\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\textbf{Comparador} & \textbf{MAE} & \textbf{RMSE} & \textbf{MAPE} & \textbf{MASE} \\
+\midrule
+Ingenuo & 52,92 & 68,41 & 15,62\,\% & 0,995 \\
+\textbf{Ingenuo estacional} & \textbf{49,04} & \textbf{61,44} & \textbf{14,39\,\%} & \textbf{0,922} \\
+Media móvil de 7 días & 49,42 & 61,86 & 14,59\,\% & 0,929 \\
+Media móvil de 28 días & 55,83 & 70,72 & 16,75\,\% & 1,050 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Según D-04, la barra es el mejor de los cuatro comparadores sobre el mismo conjunto de evaluación, y no un comparador elegido de antemano. En este conjunto, el mejor es el ingenuo estacional, con un MAE de 49,04, un RMSE de 61,44 y un MASE de 0,922 (tabla~\ref{tab:comparadores}). Un modelo que no baje de esos valores no mejora a repetir el dato del mismo día de la semana anterior.
+
+\textbf{El orden de los comparadores cambia según la ventana.} La tabla~\ref{tab:pliegues-mae} da el MAE de cada comparador en los seis pliegues. El ingenuo gana cuatro de los seis, pero en el conjunto de evaluación final gana el ingenuo estacional. El pliegue 5 cubre noviembre, diciembre y enero, cuando los festivos y la actividad de fin de año rompen la regularidad semanal. En él, el ingenuo estacional es el peor de los tres primeros comparadores.
+
+\begin{table}[H]
+\centering
+\caption{MAE de cada comparador en los pliegues de la validación de origen rodante. En negrita, el mejor de cada pliegue. Fuente: \texttt{outputs/\allowbreak{}baselines/\allowbreak{}validacion\_\allowbreak{}rodante.csv}.}\label{tab:pliegues-mae}
+\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+\begin{tabular}[b]{@{}l@{}}\textbf{Pliegue}\\\textbf{(periodo evaluado)}\end{tabular} & \textbf{Ingenuo} & \begin{tabular}[b]{@{}r@{}}\textbf{Ingenuo}\\\textbf{estacional}\end{tabular} & \begin{tabular}[b]{@{}r@{}}\textbf{Media}\\\textbf{móvil 7}\end{tabular} & \begin{tabular}[b]{@{}r@{}}\textbf{Media}\\\textbf{móvil 28}\end{tabular} \\
+\midrule
+1 (nov. 2023 -- feb. 2024) & \textbf{75,48} & 75,57 & 76,38 & 82,00 \\
+2 (feb. -- may. 2024) & \textbf{54,83} & 58,27 & 55,57 & 62,60 \\
+3 (may. -- ago. 2024) & 49,87 & \textbf{40,50} & 45,00 & 47,17 \\
+4 (ago. -- nov. 2024) & 54,93 & \textbf{43,09} & 50,59 & 51,30 \\
+5 (nov. 2024 -- ene. 2025) & \textbf{52,63} & 69,68 & 57,19 & 77,52 \\
+6 (ene. -- abr. 2025) & \textbf{62,43} & 62,71 & 67,97 & 70,15 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+De aquí salen dos consecuencias. La primera confirma la regla de D-04: fijar un comparador de antemano habría puesto la barra en el lugar equivocado en la mayoría de las ventanas. La segunda es que superar la barra en una sola ventana no basta como resultado. Si un modelo baja de 49,04 en la evaluación final, también hay que mostrar su comportamiento en los pliegues.
+
+La estacionalidad semanal es fuerte, pero no constante a lo largo del año. Un modelo con calendario debería captar ese cambio mejor que un comparador fijo.
+
+\subsection{Familias de modelos}\label{sec:familias}
+
+Se proponen tres familias de modelos, de menor a mayor capacidad, para que la comparación muestre qué aporta cada salto:
+\begin{enumerate}
+  \item \textbf{Regresión lineal con rezagos y calendario.} Es el modelo transparente de referencia. Sus coeficientes permiten comprobar que las señales del análisis exploratorio, como el día de la semana y los festivos, entran con el signo esperado.
+  \item \textbf{Modelos estacionales de series de tiempo: SARIMA y ETS.} Se justifican por la propia serie: la estacionalidad semanal es su señal dominante (sección~\ref{sec:eda-semana}), y estos modelos la representan de forma explícita. Ninguno de los antecedentes revisados usa SARIMA ni ETS. El más cercano en series de tiempo, \citet{garzon2025}, compara un modelo de corrección de errores con un VECM sobre series mensuales de la ciudad. Sirve para situar este trabajo frente a un antecedente econométrico, no para respaldar la elección de SARIMA.
+  \item \textbf{Conjuntos de árboles: Random Forest y potenciación del gradiente.} Captan interacciones y relaciones no lineales entre el calendario y los rezagos sin especificarlas. En \citet{martinez2025}, Random Forest superó a una regresión de Poisson, con un MAE de 7,13 frente a 9,94 y un RMSE de 16,62 frente a 21,10. Esa comparación es solo contra la regresión de Poisson. Además, el estudio usó una partición 80/20 que no describe como temporal, así que sus métricas no son comparables con las de este trabajo, donde la evaluación es siempre posterior al entrenamiento.
+\end{enumerate}
+
+Esta progresión responde a la pregunta del proyecto. No se busca el mejor modelo posible, sino medir cuánto mejora el pronóstico al añadir calendario y rezagos frente a los comparadores triviales \citep{provost2013}.
+
+\subsection{Prevención de la fuga de información}\label{sec:fuga}
+
+Todas las predictoras cumplen la regla de disponibilidad de la sección~\ref{sec:variables}. Las de calendario se conocen con años de antelación, y las demás solo usan valores anteriores a $t$. Una prueba automática cambia la serie desde un día en adelante y exige que la fila de ese día no cambie. Las variables excluidas por usar información futura se enumeran en esa misma sección.
+
+\subsection{Decisiones de datos que condicionan la evaluación}\label{sec:decisiones-eval}
+
+\begin{itemize}
+  \item \textbf{La serie termina el 2025-10-31.} Noviembre y diciembre de 2025 no son comparables con el resto de la serie, y habrían caído dentro del conjunto de evaluación. Con ellos, un modelo podría parecer que acierta un descenso que no corresponde al fenómeno: en esos meses la Línea 123 no baja. La causa de la caída no está establecida, y la exclusión no depende de ella (\texttt{docs/\allowbreak{}verificacion\_\allowbreak{}caida\_\allowbreak{}2025.md}).
+  \item \textbf{2020 entra marcado} con el indicador de año atípico, y se comprobará la sensibilidad entrenando también sin ese año.
+  \item \textbf{Las fuentes no se suman.} El modelo usa la serie de la Policía. La Línea 123 y la Fiscalía sirven de contraste en mes $\times$ Bogotá.
+\end{itemize}
+
+\subsection{Limitaciones}\label{sec:limitaciones-metodo}
+
+\begin{enumerate}
+  \item \textbf{Se pronostica el registro, no la victimización.} El subregistro no se puede observar con estas fuentes.
+  \item \textbf{Hay un solo horizonte.} No se evalúan horizontes más largos: hacerlo exigiría decidir qué predictoras siguen disponibles en $t+k$.
+  \item \textbf{La variable objetivo no tiene desglose territorial.} El registro de la Policía no baja del municipio, así que el modelo es de toda la ciudad. El análisis por localidad sale de la Línea 123 y no de la serie modelada.
+  \item \textbf{Hay una sola ventana de evaluación final.} Los pliegues dan una idea de la variabilidad, pero el resultado que se reporta corresponde a 184 días concretos.
+  \item \textbf{No se ha verificado con qué retraso se publican los datos.} El protocolo supone que el conteo de $t-1$ está disponible para predecir $t$, algo cierto en la evaluación retrospectiva. Para un uso operativo habría que comprobar ese retraso. La caída de noviembre y diciembre de 2025 muestra que los últimos meses publicados pueden no ser comparables con los anteriores, aunque su causa no está establecida: puede ser una consolidación incompleta o un cambio en el registro.
+\end{enumerate}

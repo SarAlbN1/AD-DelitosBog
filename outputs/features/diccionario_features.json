@@ -5,7 +5,7 @@
     "2025-10-31"
   ],
   "dias": 2131,
-  "n_predictoras": 20,
+  "n_predictoras": 21,
   "filas_con_algun_nulo": 28,
   "nota_nulos": "los nulos están solo al principio: los rezagos y las ventanas necesitan historia. Se conservan; descartarlos es decisión del modelado",
   "primera_fila_completa": "2020-01-29",
@@ -19,6 +19,7 @@
     "semana_del_anio": "calendario",
     "quincena": "calendario",
     "festivo": "calendario",
+    "anio_atipico_2020": "calendario — el año se conoce de antemano (D-04)",
     "vispera_de_festivo": "calendario — depende de t+1, pero el calendario se conoce de antemano",
     "dia_despues_de_festivo": "calendario",
     "puente": "calendario",

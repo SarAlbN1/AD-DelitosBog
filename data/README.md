@@ -57,7 +57,7 @@ curl -fLSsG 'https://oaiee.scj.gov.co/agc/rest/services/Tematicos_Pub/CifrasSCJ/
   --data-urlencode 'outSR=4326' --data-urlencode 'f=geojson' -o data/raw/localidades.geojson
 ```
 
-**Línea 123.** Descargue el [CSV oficial](https://datosabiertos.bogota.gov.co/dataset/incidentes/resource/30d65a8b-d0ed-4e95-977e-0d7cc2ea89ef) y guárdelo como `data/raw/linea123.csv`. El separador es `;`. El recurso se actualiza y puede cambiar su corte histórico. La columna `ID` **no es única**: 2.633 identificadores se repiten en el archivo completo y 166 dentro de las filas de hurto de 2018–2025, así que no sirve como clave primaria.
+**Línea 123.** Descargue el [CSV oficial](https://datosabiertos.bogota.gov.co/dataset/incidentes/resource/30d65a8b-d0ed-4e95-977e-0d7cc2ea89ef) y guárdelo con su nombre oficial en `data/raw/linea123/`, que es la ruta que declara `config/fuentes_auditoria.json` y que leen los scripts a través de `scripts/rutas.py`. El separador es `;`. El recurso se actualiza y puede cambiar su corte histórico. La columna `ID` **no es única**: 2.633 identificadores se repiten en el archivo completo y 166 dentro de las filas de hurto de 2018–2025, así que no sirve como clave primaria.
 
 **Fiscalía.** Se extrae por API con el filtro `cod_dane_hecho='11001' AND capitulo_delito='Del Hurto'`, paginando por `$order=:id`. La descarga se reproduce con [`scripts/descargar_fiscalia.py`](../scripts/descargar_fiscalia.py).
 
