@@ -1,0 +1,46 @@
+{
+  "_comentario": "Protocolo de modelado. Lo fija D-04 en docs/decisiones.md y este archivo es su única codificación: ningún script repite estos valores. Si cambian, se cambian aquí.",
+  "semilla": 42,
+  "horizonte_dias": 1,
+  "objetivo": "victimas",
+  "serie": "data/processed/serie_objetivo_diaria.csv",
+  "features": "data/processed/features_diarias.csv",
+  "particion": {
+    "fin_entrenamiento": "2025-04-30",
+    "_nota": "La evaluación es todo lo posterior: 2025-05-01 a 2025-10-31, 184 dias. La serie termina el 2025-10-31 porque noviembre y diciembre de 2025 no son comparables (issue 86)."
+  },
+  "validacion": {
+    "esquema": "origen_rodante",
+    "pliegues": 6,
+    "dias_pliegue": 90,
+    "minimo_entrenamiento": 365,
+    "_nota": "Sin barajar. Cada pliegue entrena con todo lo anterior a su origen. El conjunto de evaluación no se toca durante la seleccion de hiperparametros."
+  },
+  "metricas": {
+    "principal": "MAE",
+    "reportadas": ["MAE", "RMSE", "MAPE", "MASE"],
+    "periodo_estacional_mase": 7,
+    "_nota": "El denominador del MASE sale del entrenamiento, no de la evaluacion. MAPE es informativa y no decide."
+  },
+  "barra": {
+    "criterio": "mejor_comparador_en_evaluacion",
+    "_nota": "La barra es el mejor de los cuatro comparadores triviales sobre el mismo conjunto en que se evalua el modelo, no un comparador fijado de antemano. El orden entre ellos cambia con la ventana."
+  },
+  "anio_atipico": {
+    "anio": 2020,
+    "indicador": "anio_atipico_2020",
+    "prueba_sensibilidad": true,
+    "_nota": "2020 entra marcado y se comprueba la sensibilidad entrenando tambien sin el."
+  },
+  "excluidas_por_fuga": [
+    "fiscalia.a_o_creacion_proceso",
+    "fiscalia.mes_creacion_proceso",
+    "fiscalia.etapa",
+    "fiscalia.estado",
+    "pico_revision"
+  ],
+  "registro": {
+    "carpeta": "outputs/modelado",
+    "indice": "experimentos.csv"
+  }
+}

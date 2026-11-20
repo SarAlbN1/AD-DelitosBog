@@ -7,6 +7,9 @@ geopandas>=0.14   # mapas por localidad (#34, #35)
 odfpy>=1.4        # lectura del .ods de proyecciones de población de la SDP (#34)
 openpyxl>=3.1      # lectura de .xlsx (Policía Nacional)
 xlrd>=2.0          # lectura de .xls antiguos, si los hay
+# Modelado (Entrega 3, #41)
+scikit-learn>=1.4
+statsmodels>=0.14
+xgboost>=2.0       # en macOS necesita libomp: brew install libomp. Es opcional, ver docs/MODELADO.md
 # Pruebas
 pytest>=8.0
-# Las dependencias de modelado (scikit-learn, statsmodels, xgboost…) se añadirán en la Entrega 3 (issue E3-1).

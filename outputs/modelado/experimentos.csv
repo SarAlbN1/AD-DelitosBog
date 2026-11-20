@@ -1,0 +1,2 @@
+huella,momento,modelo,semilla,config_sha256,n,MAE,RMSE,MAPE,MASE
+c1abad1b42252f49,2026-11-19T21:13:42-05:00,RandomForestRegressor,42,5ab5464b4720a55643b80507113ce66bff6d7b1c1d9d7a6c8040413019974680,184,36.68,45.62,10.67,0.693
