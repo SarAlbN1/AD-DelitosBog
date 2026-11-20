@@ -154,7 +154,7 @@ La figura~\ref{fig:eda-mapa} representa la tasa en el mapa, y no el conteo. Un m
 
 \begin{enumerate}
   \item \textbf{No es una tasa de hurtos.} La Línea 123 cuenta llamadas tramitadas, así que la tasa mide la demanda de atención por habitante y no la victimización.
-  \item \textbf{No incluye la población flotante.} Los Mártires, Santa Fe, La Candelaria, Chapinero y Teusaquillo reciben cada día a muchas personas que no viven en ellas, por trabajo, comercio o transporte, y ocupan los puestos 1, 3, 4, 6 y 7 por tasa. Como el denominador es la población residente, su tasa se sobrestima. Sin una medida de población flotante no se puede separar ese efecto, así que el orden por tasa no se interpreta como el riesgo de quienes están en la localidad.
+  \item \textbf{No incluye la población flotante.} Los Mártires, Santa Fe, La Candelaria, Chapinero y Teusaquillo reciben cada día a muchas personas que no viven en ellas, por trabajo, comercio o transporte, y ocupan los puestos 1, 3, 4, 6 y 7 por tasa. A Antonio Nariño, en el 2.º, le aplica lo mismo, porque también concentra comercio y transporte. Como el denominador es la población residente, su tasa se sobrestima. Sin una medida de población flotante no se puede separar ese efecto, así que el orden por tasa no se interpreta como el riesgo de quienes están en la localidad.
   \item \textbf{La tasa de Sumapaz es inestable.} Es una localidad rural, con la menor población de la ciudad y 38 incidentes en todo el periodo. Con tan pocos casos, su tasa de 213,3 por 100.000 cambia mucho por un solo incidente.
   \item \textbf{Ninguno de los dos órdenes mide peligrosidad.} El conteo y la tasa describen dónde se pide atención, cada uno con su propio sesgo. Se presentan los dos para mostrar cuánto cambia el orden al normalizar.
 \end{enumerate}
@@ -177,26 +177,28 @@ Las tres fuentes se comparan en mes $\times$ Bogotá, la única resolución com�
 
 \begin{table}[H]
 \centering
-\caption{Correlación entre las series mensuales, 2020-01 a 2025-10 (70 meses). Fuente: \texttt{outputs/\allowbreak{}eda/\allowbreak{}fuentes\_\allowbreak{}correlacion\_\allowbreak{}pearson.csv} y \texttt{fuentes\_\allowbreak{}correlacion\_\allowbreak{}spearman.csv}.}\label{tab:eda-corr}
+\caption{Correlación entre las series mensuales: 2020-01 a 2025-10 (70 meses) y la misma ventana sin 2020 (58 meses). Fuente: \texttt{outputs/\allowbreak{}eda/\allowbreak{}fuentes\_\allowbreak{}correlacion\_\allowbreak{}pearson.csv}, \texttt{fuentes\_\allowbreak{}correlacion\_\allowbreak{}spearman.csv} y \texttt{fuentes\_\allowbreak{}correlacion\_\allowbreak{}pearson\_\allowbreak{}sin\_\allowbreak{}2020.csv}.}\label{tab:eda-corr}
 \small
-\begin{tabular}{@{}lrr@{}}
+\begin{tabular}{@{}lrrr@{}}
 \toprule
-\textbf{Par de fuentes} & \textbf{Pearson} & \textbf{Spearman} \\
+\textbf{Par de fuentes} & \textbf{Pearson} & \textbf{Spearman} & \textbf{Pearson sin 2020} \\
 \midrule
-Policía -- Fiscalía & 0,962 & 0,947 \\
-Fiscalía -- Línea 123 & 0,633 & 0,537 \\
-Policía -- Línea 123 & 0,601 & 0,470 \\
+Policía -- Fiscalía & 0,962 & 0,947 & 0,925 \\
+Fiscalía -- Línea 123 & 0,633 & 0,537 & 0,355 \\
+Policía -- Línea 123 & 0,601 & 0,470 & 0,284 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Las dos fuentes de registro, Policía y Fiscalía, se mueven casi igual (0,962), mientras que la Línea 123 solo correlaciona moderadamente con ellas (0,601 y 0,633). Esa diferencia es compatible con el origen de cada fuente. Policía y Fiscalía registran hechos denunciados dentro de sistemas institucionales. La Línea 123 recoge llamadas ciudadanas, que dependen de la decisión de llamar y no de que el caso entre en un sistema. La correlación no prueba ese mecanismo, pero sí respalda dos decisiones ya tomadas:
+Las dos fuentes de registro, Policía y Fiscalía, se mueven casi igual (0,962), mientras que la Línea 123 solo correlaciona moderadamente con ellas (0,601 y 0,633).
+
+Sin 2020, la correlación entre los dos registros apenas cambia (0,925), pero la de la Línea 123 cae a 0,284 con Policía y a 0,355 con Fiscalía. Eso es compatible con que buena parte de su correlación aparente venga de la caída simultánea de las tres fuentes durante el confinamiento: un choque común produce correlación aunque no haya una relación estable entre las series. Fuera de 2020, la Línea 123 es la fuente menos redundante de las tres.
+
+La diferencia entre fuentes es compatible con el origen de cada una. Policía y Fiscalía registran hechos denunciados dentro de sistemas institucionales. La Línea 123 recoge llamadas ciudadanas, que dependen de la decisión de llamar y no de que el caso entre en un sistema. La correlación no prueba ese mecanismo, pero sí respalda dos decisiones ya tomadas:
 \begin{itemize}
   \item usar la Línea 123 como contraste para la caída de noviembre y diciembre de 2025, porque es la única fuente que no comparte el mecanismo de registro (sección~\ref{sec:preprocesamiento});
   \item tratar las fuentes como complementarias y no como intercambiables.
 \end{itemize}
-% Pendiente (revisión del PR #98): la correlación con la Línea 123 depende mucho de la caída común de
-% 2020. Si eda.py llega a emitir la correlación sin 2020, añadirla aquí como segunda columna.
 
 \subsection{Implicaciones para el modelado}\label{sec:eda-implicaciones}
 
