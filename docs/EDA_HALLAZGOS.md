@@ -95,6 +95,7 @@ incidentes, incluidos los que no tienen localidad.
 | Engativá | 93.654 | 11,40 % |
 | Suba | 93.132 | 11,34 % |
 | Bosa | 52.210 | 6,36 % |
+| Usaquén | 50.245 | 6,12 % |
 | Ciudad Bolívar | 48.636 | 5,92 % |
 
 Los incidentes **sin localidad asignada** son 5.683, el **0,69 %**. Se separan porque «SIN
@@ -145,9 +146,10 @@ por habitante.
 2. **No capta la población flotante.** Los Mártires, Santa Fe, La Candelaria, Chapinero y
    Teusaquillo reciben cada día a mucha gente que no vive allí: trabajo, comercio, transporte. Su
    tasa por residente sale inflada, y es muy probable que eso explique buena parte de que ocupen
-   **los cuatro primeros puestos y el sexto y séptimo**. **Sin una medida de población flotante esa
-   parte no se puede separar**, así que el orden por tasa no se interpreta como intensidad del
-   fenómeno sobre quienes están allí.
+   los **puestos 1, 3, 4, 6 y 7**. Antonio Nariño, en el 2.º, también concentra comercio y
+   transporte, así que le aplica lo mismo. **Sin una medida de población flotante esa parte no se
+   puede separar**, así que el orden por tasa no se interpreta como intensidad del fenómeno sobre
+   quienes están allí.
 3. **Sumapaz es inestable.** Es rural, tiene la menor población de la ciudad y muy pocas llamadas en
    todo el periodo, así que su tasa de 213 por 100.000 se mueve mucho con pocos casos.
 4. **El orden cambia, pero no es un ranking de peligrosidad.** Ni por conteo ni por tasa. Las dos
@@ -166,9 +168,13 @@ grandes del sur y el occidente quedan en tonos medios.
 
 ## 5.bis UPZ: el fenómeno está disperso
 
-La UPZ es el nivel más fino disponible en todo el proyecto, y solo Línea 123 lo tiene. De los 24.899
-registros con localidad, **21.521 tienen UPZ asignada**; los 3.378 restantes son «SIN UPZ
-\<localidad\>» y se separan.
+La UPZ es el nivel más fino disponible en todo el proyecto, y solo Línea 123 lo tiene.
+
+Cuidado con las unidades, porque son dos distintas. En **filas** del archivo completo (2018–2025),
+de las 24.899 con localidad hay **21.521 con UPZ**; las 3.378 restantes son «SIN UPZ
+\<localidad\>» y se separan. Pero los porcentajes de la tabla están en **incidentes** y en el
+periodo del proyecto: **723.282 incidentes con UPZ en 2020–2025**, que es el denominador que usan
+los porcentajes de abajo.
 
 | UPZ | Localidad | Incidentes | % |
 |---|---|---:|---:|
@@ -178,7 +184,7 @@ registros con localidad, **21.521 tienen UPZ asignada**; los 3.378 restantes son
 | Tibabuyes | Suba | 16.372 | 2,26 % |
 | Bosa Central | Bosa | 16.174 | 2,24 % |
 
-Son **116 UPZ distintas**, y las diez primeras concentran solo el **22,3 %** de los incidentes.
+Son **116 UPZ distintas**, y las diez primeras concentran solo el **22,3 %** de esos 723.282 incidentes.
 
 **Eso es un resultado, no un vacío**: el hurto registrado por Línea 123 no se explica por un puñado
 de puntos calientes, está repartido por la ciudad. Tiene dos consecuencias. Para el modelado,
@@ -234,16 +240,39 @@ Correlación de Pearson:
 Fiscalía, se mueven casi idénticamente (0,962), mientras que **Línea 123 solo correlaciona
 moderadamente con ambas** (0,60 y 0,63).
 
-No es casualidad ni ruido. Policía y Fiscalía miden actividad administrativa sobre hechos
-denunciados y comparten dinámicas institucionales; Línea 123 mide llamadas ciudadanas, que
-dependen de la decisión de llamar y no de que el caso entre a un sistema. Dicho de otro modo:
-**las dos fuentes que más se parecen entre sí son las que comparten el mismo sesgo.**
+### Y sin 2020 el contraste es mucho más fuerte
+
+Excluyendo 2020, con 58 meses en lugar de 70:
+
+| | Policía | Línea 123 | Fiscalía |
+|---|---:|---:|---:|
+| **Policía** | 1,000 | **0,284** | 0,925 |
+| **Línea 123** | **0,284** | 1,000 | **0,355** |
+| **Fiscalía** | 0,925 | **0,355** | 1,000 |
+
+Policía y Fiscalía siguen altas (0,925), pero **Línea 123 se desploma: de 0,601 a 0,284 con Policía
+y de 0,633 a 0,355 con Fiscalía**.
+
+Eso dice que buena parte de la correlación aparente de Línea 123 con las fuentes de registro
+**venía del choque común de 2020**: durante el confinamiento las tres cayeron a la vez, y una caída
+simultánea produce correlación sin que haya una relación estable detrás. Quitado ese año, la línea
+de llamadas apenas sigue a los registros, mientras los dos registros siguen moviéndose juntos.
+
+Es compatible con la explicación estructural: Policía y Fiscalía miden actividad administrativa
+sobre hechos denunciados y comparten dinámicas institucionales; Línea 123 mide llamadas ciudadanas,
+que dependen de la decisión de llamar y no de que el caso entre a un sistema. **Las dos fuentes que
+más se parecen entre sí son las que comparten el mismo sesgo.** Los datos no demuestran el
+mecanismo, pero el patrón es el que ese mecanismo predice, y el desplome al quitar 2020 lo refuerza
+en lugar de debilitarlo.
+
+Las dos matrices salen de `outputs/eda/fuentes_correlacion_pearson.csv` y
+`fuentes_correlacion_pearson_sin_2020.csv`.
 
 Esto respalda dos decisiones ya tomadas:
 
 - Que Línea 123 sea la fuente de contraste en #86: es la única que no comparte el mecanismo de
   registro, y por eso su comportamiento en noviembre de 2025 dice algo que las otras dos no pueden
-  decir.
+  decir. Con 0,284 de correlación fuera de 2020, es además la menos redundante de las tres.
 - Que las fuentes se traten como complementarias y no intercambiables (D-01).
 
 ## 7. Qué se lleva el modelado

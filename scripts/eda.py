@@ -19,11 +19,16 @@ Reglas que vienen de la auditoría y que aquí se respetan:
 * La serie termina el 2025-10-31 (#86), así que 2025 está truncado y sus totales anuales no son
   comparables con los de los años completos.
 
-Las tasas por población **no se calculan** mientras no haya una fuente de población por localidad.
-Cuando exista, se pasa con ``--poblacion``, un CSV con columnas ``localidad`` y ``habitantes``, y el
-script añade la tasa por cada 100.000. Comparar conteos absolutos entre localidades de tamaño muy
-distinto induce una lectura estigmatizante, así que mientras tanto se dice explícitamente en la
-salida.
+Las tasas por población **se calculan** con las proyecciones de la Secretaría Distrital de
+Planeación (``--poblacion``, por defecto ``outputs/poblacion/poblacion_localidad_2020_2025.csv``).
+Ese CSV trae una fila por localidad y año, con las columnas ``clave``, ``anio`` y ``habitantes``, y
+el cruce usa **``clave``**: la SDP dice «La Candelaria» y Línea 123 «CANDELARIA». Cada año se
+divide por la población de su propio año.
+
+El script **falla** si alguna localidad se queda sin población, en lugar de dejarla fuera de la
+tabla sin avisar. Comparar conteos absolutos entre localidades de tamaño muy distinto induce una
+lectura estigmatizante, y la tasa corrige eso, pero tampoco mide riesgo: cuenta llamadas por
+habitante residente y no capta la población flotante.
 
 Uso::
 
@@ -216,7 +221,7 @@ def bloque_upz(ruta: Path, anio_min: int, anio_max: int) -> dict | None:
             "top": top, "concentracion_top10_pct": round(float(top.head(10)["pct"].sum()), 1)}
 
 
-def bloque_entre_fuentes(ruta: Path) -> dict | None:
+def bloque_entre_fuentes(ruta: Path, anio_atipico: int = 2020) -> dict | None:
     if not ruta.is_file():
         log.warning("no existe %s: se omite la comparación entre fuentes", ruta)
         return None
@@ -228,11 +233,18 @@ def bloque_entre_fuentes(ruta: Path) -> dict | None:
     df = df.set_index("fecha")[list(cols)].rename(columns=cols).dropna()
     # Los dos últimos meses de 2025 no son comparables (#86): se excluyen de la correlación.
     df = df[df.index < "2025-11-01"]
+    # Sin 2020. El confinamiento movió las tres fuentes a la vez, así que incluirlo infla la
+    # correlación entre fuentes que por lo demás se parecen poco. Se emiten las dos para que el
+    # informe pueda decir cuánta de la correlación la explica ese choque común.
+    sin_atipico = df[df.index >= f"{anio_atipico + 1}-01-01"]
     return {
         "periodo": [df.index.min().strftime("%Y-%m"), df.index.max().strftime("%Y-%m")],
         "meses": int(len(df)),
         "correlacion_pearson": df.corr().round(3),
         "correlacion_spearman": df.corr(method="spearman").round(3),
+        "meses_sin_atipico": int(len(sin_atipico)),
+        "anio_excluido": anio_atipico,
+        "correlacion_pearson_sin_atipico": sin_atipico.corr().round(3),
         "series": df,
     }
 
@@ -361,6 +373,8 @@ def main(argv=None) -> int:
     p.add_argument("--anio-min", type=int, default=2020,
                    help="Primer año del bloque territorial; 2020 para cuadrar con la serie.")
     p.add_argument("--anio-max", type=int, default=2025)
+    p.add_argument("--anio-atipico", type=int, default=2020,
+                   help="Año que se excluye en la correlación alternativa (D-04).")
     p.add_argument("--upz", type=Path, default=Path("data/processed/linea123_hurto_upz.csv"))
     p.add_argument("--geojson", type=Path, default=Path("data/raw/localidades.geojson"))
     p.add_argument("--salida", type=Path, default=Path("outputs/eda"))
@@ -382,7 +396,7 @@ def main(argv=None) -> int:
                                      a.poblacion)
     atipicos = bloque_atipicos(s, fs)
     upz = bloque_upz(a.upz, a.anio_min, a.anio_max)
-    fuentes = bloque_entre_fuentes(a.fuentes)
+    fuentes = bloque_entre_fuentes(a.fuentes, a.anio_atipico)
 
     a.salida.mkdir(parents=True, exist_ok=True)
     temporal["anual"].to_csv(a.salida / "temporal_anual.csv")
@@ -393,6 +407,8 @@ def main(argv=None) -> int:
     if fuentes:
         fuentes["correlacion_pearson"].to_csv(a.salida / "fuentes_correlacion_pearson.csv")
         fuentes["correlacion_spearman"].to_csv(a.salida / "fuentes_correlacion_spearman.csv")
+        fuentes["correlacion_pearson_sin_atipico"].to_csv(
+            a.salida / "fuentes_correlacion_pearson_sin_2020.csv")
 
     if territorial and territorial["tasas"]:
         t = territorial["tasas"]
@@ -443,6 +459,9 @@ def main(argv=None) -> int:
             "periodo": fuentes["periodo"], "meses": fuentes["meses"],
             "pearson": json.loads(fuentes["correlacion_pearson"].to_json()),
             "spearman": json.loads(fuentes["correlacion_spearman"].to_json()),
+            "meses_sin_atipico": fuentes["meses_sin_atipico"],
+            "anio_excluido": fuentes["anio_excluido"],
+            "pearson_sin_atipico": json.loads(fuentes["correlacion_pearson_sin_atipico"].to_json()),
             "nota": "resolución mes × Bogotá, la única común; las fuentes no se suman entre sí",
         },
         "atipicos": {k: v for k, v in atipicos.items() if k not in ("altos", "bajos")},
@@ -469,8 +488,9 @@ def main(argv=None) -> int:
                  t.iloc[0]["localidad"], t.iloc[0]["tasa_100k_periodo"],
                  t.iloc[-1]["localidad"], t.iloc[-1]["tasa_100k_periodo"])
     if fuentes:
-        log.info("correlación Policía–Línea 123 (mensual): %.3f",
-                 fuentes["correlacion_pearson"].iloc[0, 1])
+        log.info("correlación Policía–Línea 123 (mensual): %.3f con %s, %.3f sin %s",
+                 fuentes["correlacion_pearson"].iloc[0, 1], fuentes["anio_excluido"],
+                 fuentes["correlacion_pearson_sin_atipico"].iloc[0, 1], fuentes["anio_excluido"])
     log.info("figuras: %s · salidas en %s", ", ".join(hechas), a.salida)
     return 0
 
