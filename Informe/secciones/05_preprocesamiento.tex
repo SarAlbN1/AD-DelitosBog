@@ -81,11 +81,13 @@ Los nombres de localidad de la Línea 123 se normalizan a mayúsculas y sin espa
 
 \texttt{scripts/features.py} construye las predictoras sobre la serie diaria. Ninguna viene en las fuentes. Para predecir el día $t$, con horizonte $t+1$, solo se usa lo que se conoce al cerrar $t-1$. Cada variable declara su regla de disponibilidad, y el script falla si alguna no la declara:
 \begin{itemize}
-  \item \textbf{Calendario}, que se conoce con años de antelación: año, mes, día del mes, día de la semana, fin de semana, semana del año, quincena, festivo, víspera de festivo, día después de festivo y puente. Los festivos de Colombia se calculan con los días fijos, los que la Ley 51 de 1983 traslada al lunes y los que dependen de la Pascua.
+  \item \textbf{Calendario}, que se conoce con años de antelación: año, mes, día del mes, día de la semana, fin de semana, semana del año, quincena, festivo, víspera de festivo, día después de festivo, puente y un indicador de 2020 como año atípico. Los festivos de Colombia se calculan con los días fijos, los que la Ley 51 de 1983 traslada al lunes y los que dependen de la Pascua.
   \item \textbf{Pasado}, que solo usa valores hasta $t-1$: rezagos de 1, 7, 14 y 28 días, medias y desviaciones de los 7 y 28 días anteriores y el cociente entre ambas medias.
 \end{itemize}
 
-Son 20 predictoras. Su lista completa, con la regla de cada una, está en la tabla~\ref{tab:dic-features} del apéndice~\ref{ap:diccionario} y en \texttt{outputs/features/diccionario\_features.json}. Los primeros 28 días tienen valores vacíos porque los rezagos necesitan historia, así que la primera fila completa es la del 2020-01-29. Ninguna predictora proviene de la Línea 123 ni de la Fiscalía, que en esta entrega se usan solo como contraste mensual (sección~6).
+Son 21 predictoras. Su lista completa, con la regla de cada una, está en la tabla~\ref{tab:dic-features} del apéndice~\ref{ap:diccionario} y en \texttt{outputs/features/diccionario\_features.json}. Los primeros 28 días tienen valores vacíos porque los rezagos necesitan historia, así que la primera fila completa es la del 2020-01-29. Ninguna predictora proviene de la Línea 123 ni de la Fiscalía, que en esta entrega se usan solo como contraste mensual (sección~\ref{sec:fuentes-eda}).
+
+El indicador de año atípico vale 1 en 2020. Ese año tiene una media de 227,1 víctimas diarias, frente a 434,9 en 2023, y su nivel coincide con las restricciones de movilidad (sección~\ref{sec:eda}). La decisión D-04 lo marca en lugar de dejarlo entrar como un año más, y prevé comprobar la sensibilidad entrenando también sin ese año.
 
 \textbf{Prueba contra la fuga de información.} La prueba de \texttt{tests/\allowbreak{}test\_\allowbreak{}features.py} no se limita a revisar nombres de columna:
 \begin{itemize}
@@ -101,11 +103,8 @@ Quedan excluidas de forma explícita:
   \item cualquier media móvil centrada en $t$.
 \end{itemize}
 
-% Pendiente del PR #98: añade anio_atipico_2020 (D-04). Al fusionarse, pasar a 21 predictoras y
-% describir aquí el indicador.
-
 \subsection{Población por localidad}\label{sec:poblacion}
 
 Para comparar localidades se usa la población residente que proyecta la Secretaría Distrital de Planeación para cada localidad y año \citep{sdp2025}. \texttt{scripts/poblacion\_localidad.py} suma la cabecera y la zona rural de cada localidad y produce una fila por localidad y año, 120 en total. En cada fila comprueba que el total sea la suma de hombres y mujeres y la de las 101 edades simples. Bogotá pasa de 7.732.161 habitantes en 2020 a 7.937.898 en 2025 (\texttt{outputs/poblacion/resumen\_poblacion.json}).
 
-Esta población no incluye a quienes trabajan en una localidad o la visitan sin vivir en ella. Sus consecuencias se discuten con las tasas en la sección~6.
+Esta población no incluye a quienes trabajan en una localidad o la visitan sin vivir en ella. Sus consecuencias se discuten con las tasas en la sección~\ref{sec:territorial}.

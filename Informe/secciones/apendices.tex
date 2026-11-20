@@ -17,6 +17,11 @@ La columna \emph{Uso} indica el papel previsto en el proyecto: \emph{objetivo}, 
 \toprule
 \textbf{Variable} & \textbf{Descripción} & \textbf{Uso} \\
 \midrule
+\endfirsthead
+\caption[]{Variables del agregado diario de MinDefensa (continuación).}\\
+\toprule
+\textbf{Variable} & \textbf{Descripción} & \textbf{Uso} \\
+\midrule
 \endhead
 \texttt{fecha\_\allowbreak{}hecho} & Fecha del hecho; un valor por día del periodo & trazabilidad \\
 \texttt{cantidad} & Número de hurtos registrados ese día, no una fila por hecho. Suma 975.793 en 2018--2025 & trazabilidad \\
@@ -91,6 +96,11 @@ La columna \emph{Uso} indica el papel previsto en el proyecto: \emph{objetivo}, 
 \toprule
 \textbf{Variable} & \textbf{Descripción} & \textbf{Disponibilidad} \\
 \midrule
+\endfirsthead
+\caption[]{Variables derivadas de la serie objetivo (continuación).}\\
+\toprule
+\textbf{Variable} & \textbf{Descripción} & \textbf{Disponibilidad} \\
+\midrule
 \endhead
 \texttt{victimas} & Víctimas registradas el día $t$. Nunca es predictora & objetivo \\
 \texttt{anio}, \texttt{mes}, \texttt{dia\_\allowbreak{}del\_\allowbreak{}mes} & Componentes de la fecha & calendario \\
@@ -99,6 +109,7 @@ La columna \emph{Uso} indica el papel previsto en el proyecto: \emph{objetivo}, 
 \texttt{semana\_\allowbreak{}del\_\allowbreak{}anio} & Semana ISO & calendario \\
 \texttt{quincena} & 1 el día 15 y el último día del mes & calendario \\
 \texttt{festivo} & 1 si es festivo en Colombia & calendario \\
+\texttt{anio\_\allowbreak{}atipico\_\allowbreak{}2020} & 1 en 2020, año de las restricciones de movilidad (D-04); el año se conoce de antemano & calendario \\
 \texttt{vispera\_\allowbreak{}de\_\allowbreak{}festivo} & 1 si el día siguiente es festivo; depende de $t+1$, pero el calendario se conoce de antemano & calendario \\
 \texttt{dia\_\allowbreak{}despues\_\allowbreak{}de\_\allowbreak{}festivo} & 1 si el día anterior fue festivo & calendario \\
 \texttt{puente} & 1 si es un festivo que cae en lunes & calendario \\
@@ -119,6 +130,11 @@ Las huellas de la Policía corresponden a los CSV convertidos desde los \texttt{
 {\scriptsize
 \begin{longtable}{@{}>{\raggedright\arraybackslash}p{2.4cm}cr>{\ttfamily}l@{}}
 \caption{Archivos de origen: fecha de descarga, filas y SHA-256.}\label{tab:archivos}\\
+\toprule
+\textbf{Archivo} & \textbf{Descarga} & \textbf{Filas} & \normalfont\textbf{SHA-256} \\
+\midrule
+\endfirsthead
+\caption[]{Archivos de origen (continuación).}\\
 \toprule
 \textbf{Archivo} & \textbf{Descarga} & \textbf{Filas} & \normalfont\textbf{SHA-256} \\
 \midrule
@@ -163,6 +179,11 @@ La tabla~\ref{tab:localidad-ap} da los valores de la figura~\ref{fig:localidad}.
 {\small
 \begin{longtable}{@{}lrrr@{}}
 \caption{Llamadas de hurto a la Línea 123 por localidad, 2020--2025.}\label{tab:localidad-ap}\\
+\toprule
+\textbf{Localidad} & \textbf{Filas} & \textbf{Llamadas} & \textbf{\% de llamadas} \\
+\midrule
+\endfirsthead
+\caption[]{Llamadas de hurto a la Línea 123 por localidad, 2020--2025 (continuación).}\\
 \toprule
 \textbf{Localidad} & \textbf{Filas} & \textbf{Llamadas} & \textbf{\% de llamadas} \\
 \midrule
