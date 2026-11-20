@@ -1,6 +1,6 @@
 # Guía de reproducción
 
-Versión de la Entrega 1: obtención de las fuentes y auditoría. Se actualizará con el preprocesamiento (Entrega 2) y el modelado (Entrega 3). Issue: #6.
+Cubre la Entrega 1 (obtención de las fuentes y auditoría, #6) y la Entrega 2 (preprocesamiento, análisis exploratorio y comparadores, sección 5 de esta guía, #40). Se actualizará con el modelado (Entrega 3).
 
 > **Antes de empezar: dos tipos de reproducción.**
 >
@@ -30,7 +30,7 @@ pip install -r requirements.txt
 pytest -q tests
 ```
 
-`pytest` debe terminar en `15 passed`. Las pruebas usan datos sintéticos y solo validan el código.
+`pytest` debe terminar en `68 passed` (2026-11-19, tras #98 y #99). Las pruebas usan datos sintéticos y solo validan el código.
 
 Los datos van en `data/raw/<fuente>/`. Esa carpeta está en `.gitignore`: **nunca** se suben datos a GitHub.
 
@@ -144,7 +144,56 @@ diff outputs/auditoria/embudo_filtros.csv  /tmp/aud_repro/embudo_filtros.csv
 
 `diff` sin salida significa que las cifras coinciden. El autor de la guía hizo esta comprobación el 2026-11-11: las tres tablas fueron idénticas. Para cerrar #6 falta que la repita otra persona.
 
-## 5. Registro de la reproducción
+## 5. Segunda entrega: preprocesamiento, análisis exploratorio y comparadores
+
+Requiere las fuentes de la sección 2 y, además, la población por localidad y la capa de localidades. Las dos se descargan con los comandos de [`data/README.md`](../data/README.md). Desde la raíz del repositorio y en este orden:
+
+```bash
+python scripts/policia_registro_a_csv.py --entrada data/raw/policia_registro --salida data/raw/policia_registro/csv
+python scripts/serie_objetivo_policia.py
+python scripts/poblacion_localidad.py
+python scripts/preprocesamiento.py
+python scripts/features.py
+python scripts/fiscalia_modalidades.py
+python scripts/figuras_informe.py
+python scripts/eda.py
+python scripts/baselines.py
+```
+
+Las rutas de los archivos crudos salen de `config/fuentes_auditoria.json` a través de `scripts/rutas.py`. Si un archivo no está donde dice el manifiesto, `python scripts/rutas.py` muestra cuál falta.
+
+**Qué hace cada paso y qué debe dar (modo A):**
+
+| Script | Salidas | Cifras de control |
+|---|---|---|
+| `serie_objetivo_policia.py` | `outputs/serie_objetivo/` | 2.131 días, del 2020-01-01 al 2025-10-31, y 730.870 víctimas |
+| `poblacion_localidad.py` | `outputs/poblacion/` | 120 filas (20 localidades × 6 años) |
+| `preprocesamiento.py` | `data/processed/` (no se versiona) y `outputs/preprocesamiento/` | En Línea 123, 25.144 filas de hurto, 24.899 con localidad y 21.521 con UPZ |
+| `features.py` | `outputs/features/diccionario_features.json` | 21 predictoras; primera fila completa, el 2020-01-29 |
+| `eda.py` | `outputs/eda/` y sus figuras | Media de 343,0; 116 UPZ; 10 días atípicos; correlación Policía–Línea 123 de 0,601 |
+| `baselines.py` | `outputs/baselines/` | Barra: ingenuo estacional, MAE 49,04, RMSE 61,44, MASE 0,922 |
+
+**Avisos:**
+
+- **Población.** `eda.py` se detiene si alguna localidad de la Línea 123 se queda sin población. Antes ejecute `poblacion_localidad.py`.
+- **Mapa.** Si falta `data/raw/localidades.geojson`, `eda.py` omite el mapa con un aviso y termina con código 0. En ese caso `resumen_eda.json` no incluye `eda_mapa_tasa` en su lista de figuras.
+
+**Comprobación.** Después de ejecutar los pasos, `git status outputs/` muestra qué cambió. En el modo A, los CSV de `outputs/` deben coincidir con los versionados. En los JSON solo pueden cambiar dos cosas:
+
+- las rutas absolutas de los archivos leídos, que dependen de la máquina;
+- en `outputs/eda/territorial_upz.csv`, el orden de las UPZ empatadas en número de incidentes.
+
+Las figuras son binarias: se revisan a la vista.
+
+En una ejecución del 2026-11-19 (Windows 11, Python 3.14), sobre la copia congelada, se reprodujeron así:
+
+- `outputs/baselines/`: idéntico;
+- `outputs/eda/`: idéntico salvo el orden de dos UPZ empatadas;
+- `outputs/preprocesamiento/`: idéntico salvo la ruta absoluta.
+
+**Informe.** Las figuras de las secciones 4 a 6 se copian a `Informe/figuras/` con los comandos de [`Informe/README.md`](../Informe/README.md).
+
+## 6. Registro de la reproducción
 
 Para cerrar #6, quien reproduce (distinto del autor) comenta en el issue:
 - el modo (A o B) y la fecha;
