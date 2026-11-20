@@ -54,7 +54,12 @@ D-04 de calcular la barra sobre el conjunto en que se evalúa.
 **La oportunidad de publicación de los datos no está verificada.** El protocolo supone que el conteo
 del día `t−1` está disponible para predecir `t`, y eso es cierto en la evaluación retrospectiva
 porque se usan conteos ya publicados. Para un uso operativo habría que comprobar con qué retraso
-publica la Policía cada día, y #86 muestra que ese retraso existe y puede ser grande.
+publica la Policía cada día, y eso no está medido.
+
+El #86 no lo resuelve: concluye que noviembre y diciembre de 2025 **están incompletos o afectados
+por un cambio de registro, y que la causa no está establecida**. Un retraso de consolidación es una
+de las dos explicaciones compatibles, no un hecho demostrado. Así que el pendiente es medir el
+retraso, no darlo por existente.
 
 ## Piezas trasladadas
 
