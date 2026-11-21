@@ -183,7 +183,26 @@ Las rutas de los archivos crudos salen de `config/fuentes_auditoria.json` a trav
 - las rutas absolutas de los archivos leídos, que dependen de la máquina;
 - en `outputs/eda/territorial_upz.csv`, el orden de las UPZ empatadas en número de incidentes.
 
-Las figuras son binarias: se revisan a la vista.
+### Las figuras, y cuándo un cambio importa
+
+Las figuras son binarias, así que `git status` las marca por cualquier diferencia de bytes. Lo que
+significa ese cambio **depende de si se compara en la misma máquina o entre máquinas**:
+
+| Situación | PNG | PDF | Qué significa |
+|---|---|---|---|
+| **Misma máquina**, dos ejecuciones | no cambia | cambia | Solo metadatos: matplotlib incrusta la fecha de creación en el PDF. Si el PNG tampoco cambia, **el dibujo es idéntico** |
+| **Máquinas distintas** | **cambia** | cambia | No se puede concluir nada de los bytes: cada sistema dibuja las fuentes distinto y el recorte de `bbox_inches="tight"` se mueve con ellas |
+
+Entre máquinas, la comparación de bytes no sirve y hay que **revisar la figura a la vista**, o
+comparar las cifras del CSV del que sale: si `territorial_tasas.csv` es idéntico, el dibujo
+representa los mismos datos aunque los píxeles difieran.
+
+Verificado el 2026-11-20: entre macOS y Windows los seis PNG de `outputs/eda/figuras/` salen
+distintos con el mismo contenido. En la misma máquina, ninguno cambia.
+
+**Las figuras regeneradas en otra máquina no se suben**, justamente por esto: dejarían un cambio en
+`outputs/` que no corresponde a ningún cambio de datos.
+
 
 En una ejecución del 2026-11-19 (Windows 11, Python 3.14), sobre la copia congelada, se reprodujeron así:
 
