@@ -109,9 +109,70 @@ Si se decide usar xgboost, hay que instalar `libomp` **y dejarlo escrito en la g
 reproducción**, porque un entorno limpio sin esa biblioteca falla al importar y el mensaje no es
 evidente.
 
+
+## El arnés de evaluación compartido (#42)
+
+El criterio de aceptación de #42 era que **los comparadores usen exactamente los mismos pliegues que
+los modelos**. «Seguir el mismo protocolo» no es comprobable; producir los mismos límites de
+pliegue, sí.
+
+`scripts/modelado/evaluacion.py` es **la única** definición de los pliegues, la partición y las
+métricas. `baselines.py` importa de ahí en lugar de reimplementarlas, y `modelado/referencia.py`
+expresa los cuatro comparadores como predictores con la misma firma que tendrá cualquier modelo.
+Así pasan por `evaluar()` igual que un bosque aleatorio.
+
+`tests/test_evaluacion.py` lo comprueba comparando los límites de pliegue de un modelo lineal real
+contra los de los cuatro comparadores: si un día divergen, falla antes de que los números se
+publiquen.
+
+### Un predictor recibe la serie completa, y por qué
+
+El contrato es: `predictor(y, X, entrena, indice)`, con `y` la serie observada completa. Puede usar
+`y[s]` solo para `s` anterior al día que predice, y ajustar parámetros solo con `entrena`.
+
+Mi primera versión retenía el tramo de evaluación, pensando que así era imposible la fuga. **Estaba
+mal, y lo delató comparar contra las cifras conocidas**: el comparador ingenuo daba MAE 13,00 con
+n = 1 en lugar de 52,92 con n = 184, porque solo el primer día de la ventana recibía predicción.
+
+El fondo es que el horizonte es de un día: para predecir `t` se usa el conteo de `t-1`, que **ya es
+pasado** y está observado, también dentro de la ventana de evaluación. Es lo que fija el protocolo.
+Retener esos datos rompe el pronóstico en lugar de protegerlo.
+
+Lo que impide el uso indebido no es ocultar la serie, es la **prueba de perturbación**: alterar `y`
+desde un día hacia adelante no puede cambiar la métrica de ese pliegue. Con su comprobación
+inversa, para que no pase por vacuidad.
+
+### La versión del arnés
+
+`VERSION_ARNES` se sube **a mano** cuando cambia cómo se calcula un resultado.
+
+Existe por un hueco que apareció al corregir el error de arriba: el registro identifica una corrida
+por su huella, y la huella no puede mirar el código. Así que el arreglo produjo la misma huella con
+métricas distintas, y el registro **se negó a continuar** — correctamente, pero sin salida. Con la
+versión en la huella, un cambio de semántica es otra corrida y las dos quedan registradas.
+
+No se sube por cambios de comentarios ni de nombres: solo si el número resultante puede cambiar.
+
+### Resultado de los comparadores con el arnés
+
+| Comparador | Final MAE | MASE | Pliegues: MAE medio | Desv. | Peor |
+|---|---:|---:|---:|---:|---:|
+| Ingenuo | 52,92 | 0,995 | 58,36 | 9,37 | 75,48 |
+| **Ingenuo estacional** | **49,04** | **0,922** | 58,30 | 14,11 | 75,57 |
+| Media móvil 7 | 49,42 | 0,929 | 58,78 | 11,52 | 76,38 |
+| Media móvil 28 | 55,83 | 1,050 | 65,12 | 14,03 | 82,00 |
+
+Idénticas a las de `baselines.py`, que es lo que confirma que el refactor no cambió el cálculo.
+
+El resumen por pliegue añade algo que la cifra final esconde: **el ingenuo estacional es el que más
+varía entre pliegues** (desviación 14,11 frente a 9,37 del ingenuo) y gana solo 2 de los 6, aunque
+sea el mejor en la evaluación final. Un modelo que lo bata en la ventana final debería además ser
+más estable, y el informe tiene que reportar las dos cosas.
+
 ## Lo que este entorno no hace
 
-- **No ajusta ningún modelo del informe.** Eso es #42, #43 y #44.
+- **No ajusta ningún modelo del informe.** Eso es #43 y #44. #42 dejó el arnés y los
+  comparadores.
 - **No selecciona hiperparámetros.** Es #45, y debe recorrer la rejilla dentro de los pliegues
   rodantes, nunca tocando los 184 días de evaluación.
 - **No registra el entrenamiento sin 2020.** La prueba de sensibilidad que pide D-04 se ejecuta en
