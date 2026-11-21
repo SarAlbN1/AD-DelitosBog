@@ -1,0 +1,11 @@
+fecha,victimas,media_su_dia,z,dia_semana,festivo,tipo
+2022-12-01,678.0,364.8,3.18,jueves,0,alto
+2020-03-25,34.0,365.0,-3.41,miércoles,0,bajo
+2020-04-09,36.0,364.8,-3.34,jueves,1,bajo
+2020-03-31,52.0,351.1,-3.24,martes,0,bajo
+2020-03-26,50.0,364.8,-3.2,jueves,0,bajo
+2020-04-07,57.0,351.1,-3.18,martes,0,bajo
+2020-04-14,59.0,351.1,-3.16,martes,0,bajo
+2020-04-01,70.0,365.0,-3.04,miércoles,0,bajo
+2024-12-25,70.0,365.0,-3.04,miércoles,1,bajo
+2020-04-16,67.0,364.8,-3.03,jueves,0,bajo

@@ -1,0 +1,9 @@
+regla,por_que
+"El mapa y las comparaciones entre localidades usan la tasa, no el conteo",Por conteo Kennedy es 1.ª y por tasa 13.ª. Un mapa de conteos colorea de rojo lo que solo es población
+"Línea 123 se agrega sumando incidentes, nunca contando filas",Sus filas son grupos agregados: contarlas pondera igual un grupo de 1 y uno de 500
+Las fuentes no se suman entre sí,Miden cosas distintas. Por eso fact_fuentes_mensual va en formato largo
+«SIN LOCALIZACION» no es una localidad,"Queda fuera del mapa y se reporta aparte: 5.683 incidentes, 0,69 %"
+2020 va marcado como año atípico,"Media diaria 227,1 frente a 434,9 en 2023, por las restricciones de movilidad"
+El total de 2025 no se compara con años completos,"La serie termina el 2025-10-31. Se comparan medias diarias: 368,1 frente a 356,6 de 2024"
+Noviembre y diciembre de 2025 están fuera de la serie,No son comparables: el registro cae a la mitad y Línea 123 no (issue 86)
+Ninguna página presenta un ranking de peligrosidad,Ni por conteo ni por tasa. La tasa no capta la población flotante
