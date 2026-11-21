@@ -1,0 +1,350 @@
+{
+  "huella_pliegues": "35c29ec29e6d6b5a",
+  "barra": {
+    "criterio": "mejor_comparador_en_evaluacion",
+    "mejor_por_MAE": "ingenuo_estacional",
+    "MAE": 49.04,
+    "mejor_por_RMSE": "ingenuo_estacional",
+    "RMSE": 61.44,
+    "MASE_a_superar": 0.922
+  },
+  "ganadores_por_pliegue": {
+    "ingenuo": 4,
+    "ingenuo_estacional": 2
+  },
+  "nota_estabilidad": "el orden entre comparadores cambia con la ventana: el que gana en la evaluación final no gana en todos los pliegues",
+  "comparadores": {
+    "ingenuo": {
+      "final": {
+        "n": 184,
+        "MAE": 52.92,
+        "RMSE": 68.41,
+        "MAPE": 15.62,
+        "MASE": 0.995
+      },
+      "resumen_pliegues": {
+        "MAE_medio": 58.36,
+        "MAE_desv": 9.37,
+        "MAE_peor": 75.48,
+        "pliegues": 6
+      },
+      "por_pliegue": [
+        {
+          "pliegue": 1,
+          "fin_entrenamiento": "2023-11-07",
+          "fin_evaluacion": "2024-02-05",
+          "dias_entrenamiento": 1407,
+          "n": 90,
+          "MAE": 75.48,
+          "RMSE": 96.52,
+          "MAPE": 23.4,
+          "MASE": 1.473
+        },
+        {
+          "pliegue": 2,
+          "fin_entrenamiento": "2024-02-05",
+          "fin_evaluacion": "2024-05-05",
+          "dias_entrenamiento": 1497,
+          "n": 90,
+          "MAE": 54.83,
+          "RMSE": 68.44,
+          "MAPE": 16.63,
+          "MASE": 1.04
+        },
+        {
+          "pliegue": 3,
+          "fin_entrenamiento": "2024-05-05",
+          "fin_evaluacion": "2024-08-03",
+          "dias_entrenamiento": 1587,
+          "n": 90,
+          "MAE": 49.87,
+          "RMSE": 63.0,
+          "MAPE": 16.27,
+          "MASE": 0.941
+        },
+        {
+          "pliegue": 4,
+          "fin_entrenamiento": "2024-08-03",
+          "fin_evaluacion": "2024-11-01",
+          "dias_entrenamiento": 1677,
+          "n": 90,
+          "MAE": 54.93,
+          "RMSE": 71.8,
+          "MAPE": 16.49,
+          "MASE": 1.05
+        },
+        {
+          "pliegue": 5,
+          "fin_entrenamiento": "2024-11-01",
+          "fin_evaluacion": "2025-01-30",
+          "dias_entrenamiento": 1767,
+          "n": 90,
+          "MAE": 52.63,
+          "RMSE": 70.06,
+          "MAPE": 18.54,
+          "MASE": 1.015
+        },
+        {
+          "pliegue": 6,
+          "fin_entrenamiento": "2025-01-30",
+          "fin_evaluacion": "2025-04-30",
+          "dias_entrenamiento": 1857,
+          "n": 90,
+          "MAE": 62.43,
+          "RMSE": 81.87,
+          "MAPE": 18.09,
+          "MASE": 1.184
+        }
+      ]
+    },
+    "ingenuo_estacional": {
+      "final": {
+        "n": 184,
+        "MAE": 49.04,
+        "RMSE": 61.44,
+        "MAPE": 14.39,
+        "MASE": 0.922
+      },
+      "resumen_pliegues": {
+        "MAE_medio": 58.3,
+        "MAE_desv": 14.11,
+        "MAE_peor": 75.57,
+        "pliegues": 6
+      },
+      "por_pliegue": [
+        {
+          "pliegue": 1,
+          "fin_entrenamiento": "2023-11-07",
+          "fin_evaluacion": "2024-02-05",
+          "dias_entrenamiento": 1407,
+          "n": 90,
+          "MAE": 75.57,
+          "RMSE": 105.77,
+          "MAPE": 22.78,
+          "MASE": 1.475
+        },
+        {
+          "pliegue": 2,
+          "fin_entrenamiento": "2024-02-05",
+          "fin_evaluacion": "2024-05-05",
+          "dias_entrenamiento": 1497,
+          "n": 90,
+          "MAE": 58.27,
+          "RMSE": 82.67,
+          "MAPE": 18.11,
+          "MASE": 1.106
+        },
+        {
+          "pliegue": 3,
+          "fin_entrenamiento": "2024-05-05",
+          "fin_evaluacion": "2024-08-03",
+          "dias_entrenamiento": 1587,
+          "n": 90,
+          "MAE": 40.5,
+          "RMSE": 52.76,
+          "MAPE": 12.81,
+          "MASE": 0.764
+        },
+        {
+          "pliegue": 4,
+          "fin_entrenamiento": "2024-08-03",
+          "fin_evaluacion": "2024-11-01",
+          "dias_entrenamiento": 1677,
+          "n": 90,
+          "MAE": 43.09,
+          "RMSE": 54.21,
+          "MAPE": 12.61,
+          "MASE": 0.823
+        },
+        {
+          "pliegue": 5,
+          "fin_entrenamiento": "2024-11-01",
+          "fin_evaluacion": "2025-01-30",
+          "dias_entrenamiento": 1767,
+          "n": 90,
+          "MAE": 69.68,
+          "RMSE": 92.95,
+          "MAPE": 31.87,
+          "MASE": 1.343
+        },
+        {
+          "pliegue": 6,
+          "fin_entrenamiento": "2025-01-30",
+          "fin_evaluacion": "2025-04-30",
+          "dias_entrenamiento": 1857,
+          "n": 90,
+          "MAE": 62.71,
+          "RMSE": 87.75,
+          "MAPE": 18.52,
+          "MASE": 1.189
+        }
+      ]
+    },
+    "media_movil_7": {
+      "final": {
+        "n": 184,
+        "MAE": 49.42,
+        "RMSE": 61.86,
+        "MAPE": 14.59,
+        "MASE": 0.929
+      },
+      "resumen_pliegues": {
+        "MAE_medio": 58.78,
+        "MAE_desv": 11.52,
+        "MAE_peor": 76.38,
+        "pliegues": 6
+      },
+      "por_pliegue": [
+        {
+          "pliegue": 1,
+          "fin_entrenamiento": "2023-11-07",
+          "fin_evaluacion": "2024-02-05",
+          "dias_entrenamiento": 1407,
+          "n": 90,
+          "MAE": 76.38,
+          "RMSE": 95.45,
+          "MAPE": 23.6,
+          "MASE": 1.491
+        },
+        {
+          "pliegue": 2,
+          "fin_entrenamiento": "2024-02-05",
+          "fin_evaluacion": "2024-05-05",
+          "dias_entrenamiento": 1497,
+          "n": 90,
+          "MAE": 55.57,
+          "RMSE": 68.98,
+          "MAPE": 16.92,
+          "MASE": 1.054
+        },
+        {
+          "pliegue": 3,
+          "fin_entrenamiento": "2024-05-05",
+          "fin_evaluacion": "2024-08-03",
+          "dias_entrenamiento": 1587,
+          "n": 90,
+          "MAE": 45.0,
+          "RMSE": 58.46,
+          "MAPE": 14.61,
+          "MASE": 0.849
+        },
+        {
+          "pliegue": 4,
+          "fin_entrenamiento": "2024-08-03",
+          "fin_evaluacion": "2024-11-01",
+          "dias_entrenamiento": 1677,
+          "n": 90,
+          "MAE": 50.59,
+          "RMSE": 62.47,
+          "MAPE": 15.16,
+          "MASE": 0.967
+        },
+        {
+          "pliegue": 5,
+          "fin_entrenamiento": "2024-11-01",
+          "fin_evaluacion": "2025-01-30",
+          "dias_entrenamiento": 1767,
+          "n": 90,
+          "MAE": 57.19,
+          "RMSE": 74.9,
+          "MAPE": 23.54,
+          "MASE": 1.103
+        },
+        {
+          "pliegue": 6,
+          "fin_entrenamiento": "2025-01-30",
+          "fin_evaluacion": "2025-04-30",
+          "dias_entrenamiento": 1857,
+          "n": 90,
+          "MAE": 67.97,
+          "RMSE": 81.5,
+          "MAPE": 19.67,
+          "MASE": 1.289
+        }
+      ]
+    },
+    "media_movil_28": {
+      "final": {
+        "n": 184,
+        "MAE": 55.83,
+        "RMSE": 70.72,
+        "MAPE": 16.75,
+        "MASE": 1.05
+      },
+      "resumen_pliegues": {
+        "MAE_medio": 65.12,
+        "MAE_desv": 14.03,
+        "MAE_peor": 82.0,
+        "pliegues": 6
+      },
+      "por_pliegue": [
+        {
+          "pliegue": 1,
+          "fin_entrenamiento": "2023-11-07",
+          "fin_evaluacion": "2024-02-05",
+          "dias_entrenamiento": 1407,
+          "n": 90,
+          "MAE": 82.0,
+          "RMSE": 100.51,
+          "MAPE": 26.06,
+          "MASE": 1.601
+        },
+        {
+          "pliegue": 2,
+          "fin_entrenamiento": "2024-02-05",
+          "fin_evaluacion": "2024-05-05",
+          "dias_entrenamiento": 1497,
+          "n": 90,
+          "MAE": 62.6,
+          "RMSE": 76.54,
+          "MAPE": 19.62,
+          "MASE": 1.188
+        },
+        {
+          "pliegue": 3,
+          "fin_entrenamiento": "2024-05-05",
+          "fin_evaluacion": "2024-08-03",
+          "dias_entrenamiento": 1587,
+          "n": 90,
+          "MAE": 47.17,
+          "RMSE": 63.3,
+          "MAPE": 16.1,
+          "MASE": 0.89
+        },
+        {
+          "pliegue": 4,
+          "fin_entrenamiento": "2024-08-03",
+          "fin_evaluacion": "2024-11-01",
+          "dias_entrenamiento": 1677,
+          "n": 90,
+          "MAE": 51.3,
+          "RMSE": 62.6,
+          "MAPE": 15.1,
+          "MASE": 0.98
+        },
+        {
+          "pliegue": 5,
+          "fin_entrenamiento": "2024-11-01",
+          "fin_evaluacion": "2025-01-30",
+          "dias_entrenamiento": 1767,
+          "n": 90,
+          "MAE": 77.52,
+          "RMSE": 102.59,
+          "MAPE": 36.59,
+          "MASE": 1.495
+        },
+        {
+          "pliegue": 6,
+          "fin_entrenamiento": "2025-01-30",
+          "fin_evaluacion": "2025-04-30",
+          "dias_entrenamiento": 1857,
+          "n": 90,
+          "MAE": 70.15,
+          "RMSE": 83.56,
+          "MAPE": 20.32,
+          "MASE": 1.33
+        }
+      ]
+    }
+  }
+}

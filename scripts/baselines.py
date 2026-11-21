@@ -49,6 +49,7 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -67,35 +68,17 @@ COMPARADORES: dict[str, tuple[int, int | None]] = {
 #: Periodo estacional de la serie: la semana.
 PERIODO_ESTACIONAL = 7
 
+# Las tres funciones del cálculo viven en scripts/modelado/evaluacion.py y se importan, no se
+# reimplementan. El criterio de #42 es que los comparadores y los modelos usen exactamente el
+# mismo protocolo, y eso solo está garantizado si hay una única definición. Antes había dos.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from modelado.evaluacion import mae_ingenuo_estacional, metricas  # noqa: E402
+
 
 def predecir(y: pd.Series, desplazamiento: int, ventana: int | None) -> pd.Series:
     """Predicción de un comparador. Nunca usa el valor de t ni posteriores."""
     base = y.shift(desplazamiento)
     return base if ventana is None else base.rolling(ventana).mean()
-
-
-def mae_ingenuo_estacional(y: pd.Series, periodo: int = PERIODO_ESTACIONAL) -> float:
-    """Denominador del MASE: el MAE del ingenuo estacional sobre el tramo que se le pase."""
-    e = (y - y.shift(periodo)).abs().dropna()
-    if e.empty:
-        raise ValueError("no hay suficientes observaciones para el denominador del MASE")
-    return float(e.mean())
-
-
-def metricas(y: pd.Series, pred: pd.Series, denominador_mase: float) -> dict:
-    """Las cuatro métricas sobre los días en que la predicción existe."""
-    m = y.notna() & pred.notna()
-    if not m.any():
-        raise ValueError("no hay días con predicción para evaluar")
-    e = (y[m] - pred[m]).to_numpy(dtype=float)
-    obs = y[m].to_numpy(dtype=float)
-    return {
-        "n": int(m.sum()),
-        "MAE": round(float(np.mean(np.abs(e))), 2),
-        "RMSE": round(float(np.sqrt(np.mean(e ** 2))), 2),
-        "MAPE": round(float(np.mean(np.abs(e) / obs) * 100), 2),
-        "MASE": round(float(np.mean(np.abs(e)) / denominador_mase), 3),
-    }
 
 
 def pliegues_origen_rodante(idx: pd.DatetimeIndex, n: int, dias: int,
@@ -125,7 +108,7 @@ def evaluar(y: pd.Series, fin_entrenamiento: str, pliegues: int, dias_pliegue: i
         raise SystemExit(f"la partición en {fin_entrenamiento} deja un lado vacío")
 
     # El denominador del MASE sale del entrenamiento, nunca de la evaluación.
-    den = mae_ingenuo_estacional(entrena)
+    den = mae_ingenuo_estacional(entrena, PERIODO_ESTACIONAL)
 
     resultados = {}
     for nombre, (desp, vent) in COMPARADORES.items():
@@ -143,7 +126,7 @@ def evaluar(y: pd.Series, fin_entrenamiento: str, pliegues: int, dias_pliegue: i
                                                   minimo_entrenamiento):
         tr = entrena[entrena.index <= fin_tr]
         ev = entrena[(entrena.index > fin_tr) & (entrena.index <= fin_ev)]
-        den_pliegue = mae_ingenuo_estacional(tr)
+        den_pliegue = mae_ingenuo_estacional(tr, PERIODO_ESTACIONAL)
         fila = {"fin_entrenamiento": fin_tr.date().isoformat(),
                 "fin_evaluacion": fin_ev.date().isoformat(),
                 "dias_entrenamiento": int(len(tr)), "dias_evaluacion": int(len(ev))}
