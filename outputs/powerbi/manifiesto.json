@@ -1,0 +1,190 @@
+{
+  "generado_por": "scripts/exportar_powerbi.py",
+  "nota_pbix": "el .pbix no se genera aquí: requiere Power BI Desktop. El guion de montaje está en docs/POWERBI.md",
+  "tablas": {
+    "fact_serie_diaria": {
+      "filas": 2131,
+      "columnas": [
+        "fecha",
+        "victimas",
+        "anio",
+        "mes",
+        "dia_del_mes",
+        "dia_semana",
+        "fin_de_semana",
+        "semana_del_anio",
+        "quincena",
+        "festivo",
+        "anio_atipico_2020",
+        "vispera_de_festivo",
+        "dia_despues_de_festivo",
+        "puente",
+        "rezago_1",
+        "rezago_7",
+        "rezago_14",
+        "rezago_28",
+        "media_previa_7",
+        "desv_previa_7",
+        "media_previa_28",
+        "desv_previa_28",
+        "tendencia_7_28"
+      ]
+    },
+    "fact_linea123_localidad": {
+      "filas": 1846,
+      "columnas": [
+        "anio",
+        "mes",
+        "localidad",
+        "incidentes"
+      ]
+    },
+    "fact_linea123_upz": {
+      "filas": 940,
+      "columnas": [
+        "anio",
+        "localidad",
+        "upz",
+        "incidentes"
+      ]
+    },
+    "fact_fuentes_mensual": {
+      "filas": 360,
+      "columnas": [
+        "fecha",
+        "anio",
+        "fuente",
+        "valor",
+        "comparable"
+      ]
+    },
+    "fact_comparadores": {
+      "filas": 4,
+      "columnas": [
+        "comparador",
+        "n",
+        "MAE",
+        "RMSE",
+        "MAPE",
+        "MASE"
+      ]
+    },
+    "fact_validacion_rodante": {
+      "filas": 6,
+      "columnas": [
+        "fin_entrenamiento",
+        "fin_evaluacion",
+        "dias_entrenamiento",
+        "dias_evaluacion",
+        "ingenuo",
+        "ingenuo_estacional",
+        "media_movil_7",
+        "media_movil_28"
+      ]
+    },
+    "dim_calendario": {
+      "filas": 2131,
+      "columnas": [
+        "fecha",
+        "anio",
+        "mes",
+        "nombre_mes",
+        "anio_mes",
+        "trimestre",
+        "dia_del_mes",
+        "dia_semana_numero",
+        "dia_semana",
+        "fin_de_semana",
+        "festivo",
+        "vispera_de_festivo",
+        "quincena",
+        "anio_atipico"
+      ]
+    },
+    "dim_localidad": {
+      "filas": 120,
+      "columnas": [
+        "codigo_localidad",
+        "localidad",
+        "clave",
+        "anio",
+        "habitantes",
+        "habitantes_cabecera",
+        "habitantes_rural",
+        "localidad_tabla",
+        "incidentes_periodo",
+        "pct_incidentes_periodo",
+        "tasa_100k_periodo",
+        "puesto_conteo",
+        "puesto_tasa",
+        "es_rural_sumapaz",
+        "poblacion_flotante_alta"
+      ]
+    },
+    "dim_fuente": {
+      "filas": 4,
+      "columnas": [
+        "fuente",
+        "clave",
+        "unidad_observacion",
+        "resolucion_temporal",
+        "resolucion_territorial",
+        "periodo",
+        "filas_hurto_bogota",
+        "sostiene_el_minimo",
+        "es_la_serie_objetivo"
+      ]
+    },
+    "qa_embudo": {
+      "filas": 9,
+      "columnas": [
+        "fuente",
+        "paso",
+        "filas_antes",
+        "filas_despues",
+        "excluidas",
+        "motivo"
+      ]
+    },
+    "qa_nulos": {
+      "filas": 39,
+      "columnas": [
+        "fuente",
+        "columna",
+        "filas_evaluadas",
+        "nulos",
+        "pct_nulos",
+        "nota"
+      ]
+    },
+    "qa_atipicos": {
+      "filas": 10,
+      "columnas": [
+        "fecha",
+        "victimas",
+        "media_su_dia",
+        "z",
+        "dia_semana",
+        "festivo",
+        "tipo"
+      ]
+    },
+    "qa_reglas": {
+      "filas": 8,
+      "columnas": [
+        "regla",
+        "por_que"
+      ]
+    }
+  },
+  "reglas": [
+    "El mapa y las comparaciones entre localidades usan la tasa, no el conteo",
+    "Línea 123 se agrega sumando incidentes, nunca contando filas",
+    "Las fuentes no se suman entre sí",
+    "«SIN LOCALIZACION» no es una localidad",
+    "2020 va marcado como año atípico",
+    "El total de 2025 no se compara con años completos",
+    "Noviembre y diciembre de 2025 están fuera de la serie",
+    "Ninguna página presenta un ranking de peligrosidad"
+  ]
+}

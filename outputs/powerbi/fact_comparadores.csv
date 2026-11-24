@@ -1,0 +1,5 @@
+comparador,n,MAE,RMSE,MAPE,MASE
+ingenuo,184.0,52.92,68.41,15.62,0.995
+ingenuo_estacional,184.0,49.04,61.44,14.39,0.922
+media_movil_7,184.0,49.42,61.86,14.59,0.929
+media_movil_28,184.0,55.83,70.72,16.75,1.05

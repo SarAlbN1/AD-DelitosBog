@@ -1,0 +1,361 @@
+fecha,anio,fuente,valor,comparable
+2018-01,2018,Fiscalía (Procesos V3),10250.0,sí
+2018-01,2018,Línea 123,11312.0,sí
+2018-01,2018,MinDefensa (agregado),7150.0,sí
+2018-02,2018,Fiscalía (Procesos V3),10645.0,sí
+2018-02,2018,Línea 123,10842.0,sí
+2018-02,2018,MinDefensa (agregado),7657.0,sí
+2018-03,2018,Fiscalía (Procesos V3),11308.0,sí
+2018-03,2018,Línea 123,12223.0,sí
+2018-03,2018,MinDefensa (agregado),8226.0,sí
+2018-04,2018,Fiscalía (Procesos V3),12318.0,sí
+2018-04,2018,Línea 123,11855.0,sí
+2018-04,2018,MinDefensa (agregado),9208.0,sí
+2018-05,2018,Fiscalía (Procesos V3),12244.0,sí
+2018-05,2018,Línea 123,11048.0,sí
+2018-05,2018,MinDefensa (agregado),9090.0,sí
+2018-06,2018,Fiscalía (Procesos V3),11288.0,sí
+2018-06,2018,Línea 123,10359.0,sí
+2018-06,2018,MinDefensa (agregado),8123.0,sí
+2018-07,2018,Fiscalía (Procesos V3),11835.0,sí
+2018-07,2018,Línea 123,11297.0,sí
+2018-07,2018,MinDefensa (agregado),8567.0,sí
+2018-08,2018,Fiscalía (Procesos V3),13219.0,sí
+2018-08,2018,Línea 123,12143.0,sí
+2018-08,2018,MinDefensa (agregado),9612.0,sí
+2018-09,2018,Fiscalía (Procesos V3),12336.0,sí
+2018-09,2018,Línea 123,11586.0,sí
+2018-09,2018,MinDefensa (agregado),9294.0,sí
+2018-10,2018,Fiscalía (Procesos V3),13370.0,sí
+2018-10,2018,Línea 123,11380.0,sí
+2018-10,2018,MinDefensa (agregado),10101.0,sí
+2018-11,2018,Fiscalía (Procesos V3),12843.0,sí
+2018-11,2018,Línea 123,11066.0,sí
+2018-11,2018,MinDefensa (agregado),9636.0,sí
+2018-12,2018,Fiscalía (Procesos V3),12455.0,sí
+2018-12,2018,Línea 123,12382.0,sí
+2018-12,2018,MinDefensa (agregado),9300.0,sí
+2019-01,2019,Fiscalía (Procesos V3),11467.0,sí
+2019-01,2019,Línea 123,11278.0,sí
+2019-01,2019,MinDefensa (agregado),8584.0,sí
+2019-02,2019,Fiscalía (Procesos V3),12761.0,sí
+2019-02,2019,Línea 123,10838.0,sí
+2019-02,2019,MinDefensa (agregado),9806.0,sí
+2019-03,2019,Fiscalía (Procesos V3),14728.0,sí
+2019-03,2019,Línea 123,11398.0,sí
+2019-03,2019,MinDefensa (agregado),11377.0,sí
+2019-04,2019,Fiscalía (Procesos V3),13019.0,sí
+2019-04,2019,Línea 123,11040.0,sí
+2019-04,2019,MinDefensa (agregado),10035.0,sí
+2019-05,2019,Fiscalía (Procesos V3),14461.0,sí
+2019-05,2019,Línea 123,11603.0,sí
+2019-05,2019,MinDefensa (agregado),11109.0,sí
+2019-06,2019,Fiscalía (Procesos V3),12801.0,sí
+2019-06,2019,Línea 123,10490.0,sí
+2019-06,2019,MinDefensa (agregado),9840.0,sí
+2019-07,2019,Fiscalía (Procesos V3),13842.0,sí
+2019-07,2019,Línea 123,11057.0,sí
+2019-07,2019,MinDefensa (agregado),10693.0,sí
+2019-08,2019,Fiscalía (Procesos V3),14062.0,sí
+2019-08,2019,Línea 123,12215.0,sí
+2019-08,2019,MinDefensa (agregado),10946.0,sí
+2019-09,2019,Fiscalía (Procesos V3),13712.0,sí
+2019-09,2019,Línea 123,11092.0,sí
+2019-09,2019,MinDefensa (agregado),10677.0,sí
+2019-10,2019,Fiscalía (Procesos V3),14571.0,sí
+2019-10,2019,Línea 123,11252.0,sí
+2019-10,2019,MinDefensa (agregado),11335.0,sí
+2019-11,2019,Fiscalía (Procesos V3),14036.0,sí
+2019-11,2019,Línea 123,12965.0,sí
+2019-11,2019,MinDefensa (agregado),11010.0,sí
+2019-12,2019,Fiscalía (Procesos V3),15661.0,sí
+2019-12,2019,Línea 123,10288.0,sí
+2019-12,2019,MinDefensa (agregado),12430.0,sí
+2020-01,2020,Fiscalía (Procesos V3),14590.0,sí
+2020-01,2020,Línea 123,10319.0,sí
+2020-01,2020,MinDefensa (agregado),11499.0,sí
+2020-01,2020,Policía (registro),11499.0,sí
+2020-02,2020,Fiscalía (Procesos V3),11907.0,sí
+2020-02,2020,Línea 123,9977.0,sí
+2020-02,2020,MinDefensa (agregado),8739.0,sí
+2020-02,2020,Policía (registro),8739.0,sí
+2020-03,2020,Fiscalía (Procesos V3),8207.0,sí
+2020-03,2020,Línea 123,6473.0,sí
+2020-03,2020,MinDefensa (agregado),6085.0,sí
+2020-03,2020,Policía (registro),6085.0,sí
+2020-04,2020,Fiscalía (Procesos V3),3546.0,sí
+2020-04,2020,Línea 123,5293.0,sí
+2020-04,2020,MinDefensa (agregado),2574.0,sí
+2020-04,2020,Policía (registro),2574.0,sí
+2020-05,2020,Fiscalía (Procesos V3),7134.0,sí
+2020-05,2020,Línea 123,7828.0,sí
+2020-05,2020,MinDefensa (agregado),5095.0,sí
+2020-05,2020,Policía (registro),5095.0,sí
+2020-06,2020,Fiscalía (Procesos V3),8252.0,sí
+2020-06,2020,Línea 123,9095.0,sí
+2020-06,2020,MinDefensa (agregado),5952.0,sí
+2020-06,2020,Policía (registro),5952.0,sí
+2020-07,2020,Fiscalía (Procesos V3),9142.0,sí
+2020-07,2020,Línea 123,8293.0,sí
+2020-07,2020,MinDefensa (agregado),6690.0,sí
+2020-07,2020,Policía (registro),6690.0,sí
+2020-08,2020,Fiscalía (Procesos V3),8986.0,sí
+2020-08,2020,Línea 123,8198.0,sí
+2020-08,2020,MinDefensa (agregado),6501.0,sí
+2020-08,2020,Policía (registro),6501.0,sí
+2020-09,2020,Fiscalía (Procesos V3),9346.0,sí
+2020-09,2020,Línea 123,9800.0,sí
+2020-09,2020,MinDefensa (agregado),6742.0,sí
+2020-09,2020,Policía (registro),6742.0,sí
+2020-10,2020,Fiscalía (Procesos V3),10489.0,sí
+2020-10,2020,Línea 123,12451.0,sí
+2020-10,2020,MinDefensa (agregado),7632.0,sí
+2020-10,2020,Policía (registro),7632.0,sí
+2020-11,2020,Fiscalía (Procesos V3),10152.0,sí
+2020-11,2020,Línea 123,11550.0,sí
+2020-11,2020,MinDefensa (agregado),7470.0,sí
+2020-11,2020,Policía (registro),7470.0,sí
+2020-12,2020,Fiscalía (Procesos V3),11020.0,sí
+2020-12,2020,Línea 123,12358.0,sí
+2020-12,2020,MinDefensa (agregado),8157.0,sí
+2020-12,2020,Policía (registro),8157.0,sí
+2021-01,2021,Fiscalía (Procesos V3),8899.0,sí
+2021-01,2021,Línea 123,9564.0,sí
+2021-01,2021,MinDefensa (agregado),6719.0,sí
+2021-01,2021,Policía (registro),6719.0,sí
+2021-02,2021,Fiscalía (Procesos V3),10158.0,sí
+2021-02,2021,Línea 123,10385.0,sí
+2021-02,2021,MinDefensa (agregado),7665.0,sí
+2021-02,2021,Policía (registro),7665.0,sí
+2021-03,2021,Fiscalía (Procesos V3),11271.0,sí
+2021-03,2021,Línea 123,11539.0,sí
+2021-03,2021,MinDefensa (agregado),8927.0,sí
+2021-03,2021,Policía (registro),8927.0,sí
+2021-04,2021,Fiscalía (Procesos V3),9116.0,sí
+2021-04,2021,Línea 123,10434.0,sí
+2021-04,2021,MinDefensa (agregado),7176.0,sí
+2021-04,2021,Policía (registro),7176.0,sí
+2021-05,2021,Fiscalía (Procesos V3),11459.0,sí
+2021-05,2021,Línea 123,12914.0,sí
+2021-05,2021,MinDefensa (agregado),8839.0,sí
+2021-05,2021,Policía (registro),8839.0,sí
+2021-06,2021,Fiscalía (Procesos V3),11915.0,sí
+2021-06,2021,Línea 123,12167.0,sí
+2021-06,2021,MinDefensa (agregado),9017.0,sí
+2021-06,2021,Policía (registro),9017.0,sí
+2021-07,2021,Fiscalía (Procesos V3),13136.0,sí
+2021-07,2021,Línea 123,13754.0,sí
+2021-07,2021,MinDefensa (agregado),9994.0,sí
+2021-07,2021,Policía (registro),9994.0,sí
+2021-08,2021,Fiscalía (Procesos V3),12775.0,sí
+2021-08,2021,Línea 123,11511.0,sí
+2021-08,2021,MinDefensa (agregado),9740.0,sí
+2021-08,2021,Policía (registro),9740.0,sí
+2021-09,2021,Fiscalía (Procesos V3),12276.0,sí
+2021-09,2021,Línea 123,13059.0,sí
+2021-09,2021,MinDefensa (agregado),9463.0,sí
+2021-09,2021,Policía (registro),9463.0,sí
+2021-10,2021,Fiscalía (Procesos V3),13627.0,sí
+2021-10,2021,Línea 123,12948.0,sí
+2021-10,2021,MinDefensa (agregado),10679.0,sí
+2021-10,2021,Policía (registro),10679.0,sí
+2021-11,2021,Fiscalía (Procesos V3),14001.0,sí
+2021-11,2021,Línea 123,12012.0,sí
+2021-11,2021,MinDefensa (agregado),11013.0,sí
+2021-11,2021,Policía (registro),11013.0,sí
+2021-12,2021,Fiscalía (Procesos V3),13195.0,sí
+2021-12,2021,Línea 123,13015.0,sí
+2021-12,2021,MinDefensa (agregado),10196.0,sí
+2021-12,2021,Policía (registro),10196.0,sí
+2022-01,2022,Fiscalía (Procesos V3),11374.0,sí
+2022-01,2022,Línea 123,10492.0,sí
+2022-01,2022,MinDefensa (agregado),8812.0,sí
+2022-01,2022,Policía (registro),8812.0,sí
+2022-02,2022,Fiscalía (Procesos V3),11600.0,sí
+2022-02,2022,Línea 123,10634.0,sí
+2022-02,2022,MinDefensa (agregado),9081.0,sí
+2022-02,2022,Policía (registro),9081.0,sí
+2022-03,2022,Fiscalía (Procesos V3),14009.0,sí
+2022-03,2022,Línea 123,11813.0,sí
+2022-03,2022,MinDefensa (agregado),11359.0,sí
+2022-03,2022,Policía (registro),11359.0,sí
+2022-04,2022,Fiscalía (Procesos V3),12045.0,sí
+2022-04,2022,Línea 123,11201.0,sí
+2022-04,2022,MinDefensa (agregado),9835.0,sí
+2022-04,2022,Policía (registro),9835.0,sí
+2022-05,2022,Fiscalía (Procesos V3),12009.0,sí
+2022-05,2022,Línea 123,12431.0,sí
+2022-05,2022,MinDefensa (agregado),9271.0,sí
+2022-05,2022,Policía (registro),9271.0,sí
+2022-06,2022,Fiscalía (Procesos V3),11470.0,sí
+2022-06,2022,Línea 123,10957.0,sí
+2022-06,2022,MinDefensa (agregado),8862.0,sí
+2022-06,2022,Policía (registro),8862.0,sí
+2022-07,2022,Fiscalía (Procesos V3),11871.0,sí
+2022-07,2022,Línea 123,11260.0,sí
+2022-07,2022,MinDefensa (agregado),9276.0,sí
+2022-07,2022,Policía (registro),9276.0,sí
+2022-08,2022,Fiscalía (Procesos V3),14898.0,sí
+2022-08,2022,Línea 123,11028.0,sí
+2022-08,2022,MinDefensa (agregado),11923.0,sí
+2022-08,2022,Policía (registro),11923.0,sí
+2022-09,2022,Fiscalía (Procesos V3),17930.0,sí
+2022-09,2022,Línea 123,11586.0,sí
+2022-09,2022,MinDefensa (agregado),15039.0,sí
+2022-09,2022,Policía (registro),15039.0,sí
+2022-10,2022,Fiscalía (Procesos V3),19710.0,sí
+2022-10,2022,Línea 123,12598.0,sí
+2022-10,2022,MinDefensa (agregado),16098.0,sí
+2022-10,2022,Policía (registro),16098.0,sí
+2022-11,2022,Fiscalía (Procesos V3),18086.0,sí
+2022-11,2022,Línea 123,12913.0,sí
+2022-11,2022,MinDefensa (agregado),14025.0,sí
+2022-11,2022,Policía (registro),14025.0,sí
+2022-12,2022,Fiscalía (Procesos V3),18854.0,sí
+2022-12,2022,Línea 123,12902.0,sí
+2022-12,2022,MinDefensa (agregado),13576.0,sí
+2022-12,2022,Policía (registro),13576.0,sí
+2023-01,2023,Fiscalía (Procesos V3),16274.0,sí
+2023-01,2023,Línea 123,11350.0,sí
+2023-01,2023,MinDefensa (agregado),12367.0,sí
+2023-01,2023,Policía (registro),12367.0,sí
+2023-02,2023,Fiscalía (Procesos V3),16088.0,sí
+2023-02,2023,Línea 123,11179.0,sí
+2023-02,2023,MinDefensa (agregado),12231.0,sí
+2023-02,2023,Policía (registro),12231.0,sí
+2023-03,2023,Fiscalía (Procesos V3),18992.0,sí
+2023-03,2023,Línea 123,12115.0,sí
+2023-03,2023,MinDefensa (agregado),14729.0,sí
+2023-03,2023,Policía (registro),14729.0,sí
+2023-04,2023,Fiscalía (Procesos V3),16786.0,sí
+2023-04,2023,Línea 123,12982.0,sí
+2023-04,2023,MinDefensa (agregado),13061.0,sí
+2023-04,2023,Policía (registro),13061.0,sí
+2023-05,2023,Fiscalía (Procesos V3),18146.0,sí
+2023-05,2023,Línea 123,13493.0,sí
+2023-05,2023,MinDefensa (agregado),14018.0,sí
+2023-05,2023,Policía (registro),14018.0,sí
+2023-06,2023,Fiscalía (Procesos V3),17246.0,sí
+2023-06,2023,Línea 123,12209.0,sí
+2023-06,2023,MinDefensa (agregado),13239.0,sí
+2023-06,2023,Policía (registro),13239.0,sí
+2023-07,2023,Fiscalía (Procesos V3),16928.0,sí
+2023-07,2023,Línea 123,13032.0,sí
+2023-07,2023,MinDefensa (agregado),13031.0,sí
+2023-07,2023,Policía (registro),13031.0,sí
+2023-08,2023,Fiscalía (Procesos V3),18452.0,sí
+2023-08,2023,Línea 123,10591.0,sí
+2023-08,2023,MinDefensa (agregado),14147.0,sí
+2023-08,2023,Policía (registro),14147.0,sí
+2023-09,2023,Fiscalía (Procesos V3),17590.0,sí
+2023-09,2023,Línea 123,11648.0,sí
+2023-09,2023,MinDefensa (agregado),13664.0,sí
+2023-09,2023,Policía (registro),13664.0,sí
+2023-10,2023,Fiscalía (Procesos V3),17092.0,sí
+2023-10,2023,Línea 123,12428.0,sí
+2023-10,2023,MinDefensa (agregado),13477.0,sí
+2023-10,2023,Policía (registro),13477.0,sí
+2023-11,2023,Fiscalía (Procesos V3),15826.0,sí
+2023-11,2023,Línea 123,12561.0,sí
+2023-11,2023,MinDefensa (agregado),12684.0,sí
+2023-11,2023,Policía (registro),12684.0,sí
+2023-12,2023,Fiscalía (Procesos V3),15510.0,sí
+2023-12,2023,Línea 123,12284.0,sí
+2023-12,2023,MinDefensa (agregado),12097.0,sí
+2023-12,2023,Policía (registro),12097.0,sí
+2024-01,2024,Fiscalía (Procesos V3),14596.0,sí
+2024-01,2024,Línea 123,7984.0,sí
+2024-01,2024,MinDefensa (agregado),11424.0,sí
+2024-01,2024,Policía (registro),11424.0,sí
+2024-02,2024,Fiscalía (Procesos V3),14631.0,sí
+2024-02,2024,Línea 123,11736.0,sí
+2024-02,2024,MinDefensa (agregado),11350.0,sí
+2024-02,2024,Policía (registro),11350.0,sí
+2024-03,2024,Fiscalía (Procesos V3),13238.0,sí
+2024-03,2024,Línea 123,10092.0,sí
+2024-03,2024,MinDefensa (agregado),9901.0,sí
+2024-03,2024,Policía (registro),9900.0,sí
+2024-04,2024,Fiscalía (Procesos V3),15553.0,sí
+2024-04,2024,Línea 123,7630.0,sí
+2024-04,2024,MinDefensa (agregado),11970.0,sí
+2024-04,2024,Policía (registro),11970.0,sí
+2024-05,2024,Fiscalía (Procesos V3),15123.0,sí
+2024-05,2024,Línea 123,12053.0,sí
+2024-05,2024,MinDefensa (agregado),11607.0,sí
+2024-05,2024,Policía (registro),11607.0,sí
+2024-06,2024,Fiscalía (Procesos V3),12511.0,sí
+2024-06,2024,Línea 123,11987.0,sí
+2024-06,2024,MinDefensa (agregado),9147.0,sí
+2024-06,2024,Policía (registro),9147.0,sí
+2024-07,2024,Fiscalía (Procesos V3),13513.0,sí
+2024-07,2024,Línea 123,12091.0,sí
+2024-07,2024,MinDefensa (agregado),10055.0,sí
+2024-07,2024,Policía (registro),10055.0,sí
+2024-08,2024,Fiscalía (Procesos V3),14005.0,sí
+2024-08,2024,Línea 123,11670.0,sí
+2024-08,2024,MinDefensa (agregado),10742.0,sí
+2024-08,2024,Policía (registro),10742.0,sí
+2024-09,2024,Fiscalía (Procesos V3),13705.0,sí
+2024-09,2024,Línea 123,12009.0,sí
+2024-09,2024,MinDefensa (agregado),10899.0,sí
+2024-09,2024,Policía (registro),10899.0,sí
+2024-10,2024,Fiscalía (Procesos V3),14878.0,sí
+2024-10,2024,Línea 123,13455.0,sí
+2024-10,2024,MinDefensa (agregado),11851.0,sí
+2024-10,2024,Policía (registro),11851.0,sí
+2024-11,2024,Fiscalía (Procesos V3),15262.0,sí
+2024-11,2024,Línea 123,12014.0,sí
+2024-11,2024,MinDefensa (agregado),12127.0,sí
+2024-11,2024,Policía (registro),12127.0,sí
+2024-12,2024,Fiscalía (Procesos V3),15099.0,sí
+2024-12,2024,Línea 123,12247.0,sí
+2024-12,2024,MinDefensa (agregado),9431.0,sí
+2024-12,2024,Policía (registro),9431.0,sí
+2025-01,2025,Fiscalía (Procesos V3),13456.0,sí
+2025-01,2025,Línea 123,10494.0,sí
+2025-01,2025,MinDefensa (agregado),9790.0,sí
+2025-01,2025,Policía (registro),9790.0,sí
+2025-02,2025,Fiscalía (Procesos V3),14676.0,sí
+2025-02,2025,Línea 123,11313.0,sí
+2025-02,2025,MinDefensa (agregado),11287.0,sí
+2025-02,2025,Policía (registro),11287.0,sí
+2025-03,2025,Fiscalía (Procesos V3),16243.0,sí
+2025-03,2025,Línea 123,12142.0,sí
+2025-03,2025,MinDefensa (agregado),11653.0,sí
+2025-03,2025,Policía (registro),11653.0,sí
+2025-04,2025,Fiscalía (Procesos V3),14997.0,sí
+2025-04,2025,Línea 123,11837.0,sí
+2025-04,2025,MinDefensa (agregado),11677.0,sí
+2025-04,2025,Policía (registro),11677.0,sí
+2025-05,2025,Fiscalía (Procesos V3),16525.0,sí
+2025-05,2025,Línea 123,12194.0,sí
+2025-05,2025,MinDefensa (agregado),9789.0,sí
+2025-05,2025,Policía (registro),9789.0,sí
+2025-06,2025,Fiscalía (Procesos V3),15778.0,sí
+2025-06,2025,Línea 123,12112.0,sí
+2025-06,2025,MinDefensa (agregado),10777.0,sí
+2025-06,2025,Policía (registro),10777.0,sí
+2025-07,2025,Fiscalía (Procesos V3),16965.0,sí
+2025-07,2025,Línea 123,12702.0,sí
+2025-07,2025,MinDefensa (agregado),11869.0,sí
+2025-07,2025,Policía (registro),11869.0,sí
+2025-08,2025,Fiscalía (Procesos V3),17057.0,sí
+2025-08,2025,Línea 123,13219.0,sí
+2025-08,2025,MinDefensa (agregado),11274.0,sí
+2025-08,2025,Policía (registro),11274.0,sí
+2025-09,2025,Fiscalía (Procesos V3),17633.0,sí
+2025-09,2025,Línea 123,13106.0,sí
+2025-09,2025,MinDefensa (agregado),11557.0,sí
+2025-09,2025,Policía (registro),11557.0,sí
+2025-10,2025,Fiscalía (Procesos V3),18687.0,sí
+2025-10,2025,Línea 123,12750.0,sí
+2025-10,2025,MinDefensa (agregado),12228.0,sí
+2025-10,2025,Policía (registro),12228.0,sí
+2025-11,2025,Fiscalía (Procesos V3),10505.0,no (issue 86)
+2025-11,2025,Línea 123,12314.0,no (issue 86)
+2025-11,2025,MinDefensa (agregado),5416.0,no (issue 86)
+2025-11,2025,Policía (registro),5416.0,no (issue 86)
+2025-12,2025,Fiscalía (Procesos V3),13450.0,no (issue 86)
+2025-12,2025,Línea 123,11529.0,no (issue 86)
+2025-12,2025,MinDefensa (agregado),5700.0,no (issue 86)
+2025-12,2025,Policía (registro),5700.0,no (issue 86)
