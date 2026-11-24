@@ -120,13 +120,13 @@ def test_el_denominador_sale_del_entrenamiento():
     y = serie()
     entrena = y[y.index <= FIN_ENTRENAMIENTO]
     r = bl.evaluar(y, FIN_ENTRENAMIENTO, pliegues=3, dias_pliegue=90, minimo_entrenamiento=200)
-    assert r["denominador_mase"] == round(bl.mae_ingenuo_estacional(entrena), 2)
+    assert r["denominador_mase"] == round(bl.mae_ingenuo_estacional(entrena, bl.PERIODO_ESTACIONAL), 2)
 
 
 def test_mase_de_uno_para_el_ingenuo_estacional_sobre_su_propio_tramo():
     """Si se evalúa el ingenuo estacional en el mismo tramo del denominador, su MASE es 1."""
     y = serie()
-    den = bl.mae_ingenuo_estacional(y)
+    den = bl.mae_ingenuo_estacional(y, bl.PERIODO_ESTACIONAL)
     pred = bl.predecir(y, *bl.COMPARADORES["ingenuo_estacional"])
     m = bl.metricas(y, pred, den)
     assert m["MASE"] == pytest.approx(1.0, abs=1e-3)

@@ -1,11 +1,10 @@
 {
-  "huella": "c1abad1b42252f49",
-  "momento": "2026-11-19T21:13:42-05:00",
-  "modelo": "RandomForestRegressor",
+  "huella": "90c4e2f340f4cb2e",
+  "momento": "2026-11-20T17:47:33-05:00",
+  "modelo": "referencia.media_movil_28",
   "hiperparametros": {
-    "n_estimators": 60,
-    "max_depth": 6,
-    "min_samples_leaf": 7
+    "desplazamiento": 1,
+    "ventana": 28
   },
   "semilla": 42,
   "config": {
@@ -26,15 +25,17 @@
     ]
   },
   "datos": {
-    "features": "features_diarias.csv",
-    "features_sha256": "7734dcdcb9b22aa20cbe4d2deca443151f44f4612fd56dbc4728e773f4ed1f83"
+    "serie": "serie_objetivo_diaria.csv",
+    "serie_sha256": "582a36c72b734903c34925c1f129ccba4d6d0a5f1ad8e22ea28241f87d019ab7",
+    "huella_pliegues": "35c29ec29e6d6b5a",
+    "version_arnes": 2
   },
   "metricas": {
     "n": 184,
-    "MAE": 36.68,
-    "RMSE": 45.62,
-    "MAPE": 10.67,
-    "MASE": 0.693
+    "MAE": 55.83,
+    "RMSE": 70.72,
+    "MAPE": 16.75,
+    "MASE": 1.05
   },
   "versiones": {
     "python": "3.9.6",
@@ -46,6 +47,11 @@
     "xgboost": "no disponible"
   },
   "extra": {
-    "proposito": "comprobación de reproducibilidad del entorno (#41)"
+    "resumen_pliegues": {
+      "MAE_medio": 65.12,
+      "MAE_desv": 14.03,
+      "MAE_peor": 82.0,
+      "pliegues": 6
+    }
   }
 }
