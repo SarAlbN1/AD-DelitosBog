@@ -5,13 +5,14 @@ que tendrá cualquier modelo. Así pasan por `evaluacion.evaluar` igual que un b
 usan, por construcción, los mismos pliegues: no hay dos implementaciones del protocolo que puedan
 divergir.
 
-Ninguno usa información de `t` ni posterior. El arnés además no se lo permite: solo recibe el tramo
-de entrenamiento del pliegue y el índice que debe predecir.
+Ninguno usa información de `t` ni posterior. El arnés no se lo impide: el predictor recibe la serie
+observada completa (contrato v2), así que lo que lo garantiza es `evaluacion.sin_fuga`, que las
+pruebas aplican a cada comparador.
 
 Un detalle que importa para que la comparación sea justa: un comparador necesita la historia
 inmediatamente anterior al día que predice, y esa historia **es pasado**, no fuga. El desplazamiento
 mínimo es de un día, así que el valor del día evaluado nunca entra en su propia predicción. La
-prueba de perturbación lo comprueba en lugar de confiarlo.
+prueba `sin_fuga` lo comprueba en lugar de confiarlo.
 
 Uso::
 
@@ -20,6 +21,7 @@ Uso::
 
 from __future__ import annotations
 
+import dataclasses
 import json
 import logging
 import sys
@@ -95,7 +97,9 @@ def main(argv=None) -> int:
     import argparse
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--salida", type=Path, default=None,
-                   help="Por defecto, la carpeta de registro de config/modelado.json.")
+                   help="Carpeta de las tablas. Con ella, el registro de corridas también va a "
+                        "<salida>/registro, y no toca outputs/modelado/. Por defecto, la carpeta "
+                        "de registro de config/modelado.json.")
     a = p.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 
@@ -111,6 +115,9 @@ def main(argv=None) -> int:
 
     r = evaluar_todos(cfg, y)
     salida = a.salida or (cfg.carpeta_registro / "referencia")
+    if a.salida is not None:
+        # Una corrida de comprobación no debe añadir entradas al registro versionado.
+        cfg = dataclasses.replace(cfg, carpeta_registro=a.salida / "registro")
     salida.mkdir(parents=True, exist_ok=True)
 
     filas = []
