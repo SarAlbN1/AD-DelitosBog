@@ -203,10 +203,40 @@ que sigue es el punto de partida que el ajuste tiene que superar, no el resultad
 | Gradiente por histogramas | 32,89 | 0,618 | 31,51 | 36,19 |
 | Gradiente por histogramas, sin 2020 | 32,94 | 0,619 | 32,56 | 38,41 |
 
-Los cuatro quedan por debajo de la barra en la evaluación final. Entrenar sin 2020 mueve el MAE final
-menos de 0,5 en los dos modelos: con 2020 marcado como atípico, no se ve una dependencia de ese año.
-Es una sola partición de 184 días y una sola semilla, así que **no es una conclusión de
-estabilidad**; la comparación con el resto de modelos y la lectura de los pliegues van en el #46.
+Los cuatro quedan por debajo de la barra en la evaluación final. Es una sola partición de 184 días y
+una sola semilla, así que **no es una conclusión de estabilidad**; la comparación con el resto de
+modelos y la lectura de los pliegues van en el #46.
+
+### El gradiente por histogramas no se reproduce entre plataformas
+
+La revisión del #117 repitió la corrida con la misma semilla (42) en otros entornos. MAE de la
+evaluación final:
+
+| Entorno | Gradiente, con 2020 | Gradiente, sin 2020 | Bosque, con 2020 | Bosque, sin 2020 |
+|---|---|---|---|---|
+| macOS arm64, Python 3.9.6, scikit-learn 1.6.1 (este registro) | 32,89 | 32,94 | 34,22 | 33,82 |
+| Linux x86 (Docker), **las mismas versiones** | 32,89 | 33,17 | | |
+| Windows, Python 3.14, scikit-learn 1.9.1 | 32,77 | 33,68 | 34,22 | 33,82 |
+
+(Las cifras de Linux y Windows son las que reportó la revisión de Juan Diego; la corrida de
+este registro es la de macOS.)
+
+* **El bosque aleatorio se reproduce exacto** en los entornos probados.
+* **El gradiente no.** En cada entorno el resultado es determinista (en Windows da lo mismo con 1 y
+  con 8 hilos), así que la diferencia viene de la plataforma y de la versión, no del azar. Se mueve
+  hasta 0,7 de MAE, mucho más que la cuarta cifra decimal que la sección de la semilla da por
+  esperable, y la versión sin 2020 cambia incluso con las mismas versiones.
+* **Consecuencia 1:** el criterio «las predicciones se reproducen con la semilla» se cumple en la
+  misma máquina, no entre máquinas. Las cifras del registro valen para el entorno que guarda cada
+  corrida (`versiones` en `outputs/modelado/corridas/`).
+* **Consecuencia 2:** la sensibilidad a 2020 del gradiente depende del entorno. Quitar 2020 empeora
+  el MAE final 0,05 en macOS, 0,28 en Linux y 0,91 en Windows. **Se presenta como no concluyente**
+  hasta fijar un entorno de referencia; es la comparación que interpreta el #46. El bosque no
+  tiene ese problema: entrenar sin 2020 mueve su MAE menos de 0,5 en todos los entornos.
+* **Pendiente de equipo, antes del #46:** fijar un entorno de referencia para las cifras del informe
+  (por ejemplo, una imagen con versiones fijas). Con Python 3.9 no se puede instalar scikit-learn
+  1.9, ni con 3.14 la 1.6.1, así que fijar versiones en `requirements.txt` no basta para los dos
+  equipos.
 
 ### Los dos criterios de aceptación
 
