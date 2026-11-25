@@ -240,6 +240,30 @@ entrenamiento no predice ganar en el pliegue siguiente en esta serie**. No se co
 cambiar el criterio de selección es una decisión de #45, y porque ocultarlo mejoraría la tabla y
 empeoraría la lectura. Es un dato para #45 y #46.
 
+### La selección por pliegue puede cambiar entre plataformas
+
+La revisión del #118 repitió el script en Windows (Python 3.14, statsmodels 0.15.0). **La evaluación
+final se reproduce** con una diferencia de hasta 0,01 de MAE (SARIMA 33,53 frente a 33,54; las demás
+cifras iguales), y `estacionariedad.csv` sale idéntico. Lo que cambia es la **elección por pliegue**
+cuando dos candidatas están casi empatadas por AICc:
+
+| Modelo, pliegue | Esta corrida | Windows | MAE del pliegue (esta → Windows) |
+|---|---|---|---|
+| SARIMA desde 2021, 1 | (2,1,2) | (1,1,2) | 43,55 → 42,30 |
+| ETS desde 2021, 1 | aditivo con tendencia amortiguada | aditivo sin tendencia | 44,61 → 44,66 |
+| ETS desde 2021, 4 | estacionalidad aditiva | multiplicativa | 29,82 → 29,85 |
+| ETS desde 2021, 6 | multiplicativa | aditiva | 39,42 → **43,22** |
+
+(Cifras de la revisión de Juan Diego en Windows.) En esos casos el AICc de la ganadora difiere en
+menos de 4 puntos entre las dos corridas, así que una diferencia numérica mínima del optimizador
+basta para cambiar la ganadora. Las cifras finales no se mueven, pero **las métricas por pliegue sí**,
+y el #45 va a ajustar sobre ellas. Se recomienda una regla de desempate para el #45 (por ejemplo,
+preferir la configuración más simple si ΔAICc < 2), de modo que la selección no dependa del entorno.
+
+Dos precisiones a lo escrito arriba: «la multiplicativa falla fuera de muestra» vale para los
+pliegues 2 y 3 de `ETS, desde 2021`, no en general (en el pliegue 6 la aditiva sale peor); y «salidas
+idénticas byte a byte» se cumple en la misma máquina.
+
 ### Diagnóstico de residuos (Ljung-Box, ajuste final con el entrenamiento)
 
 | Modelo | Especificación elegida | p (rezago 7) | p (14) | p (28) |
