@@ -177,3 +177,46 @@ más estable, y el informe tiene que reportar las dos cosas.
   rodantes, nunca tocando los 184 días de evaluación.
 - **No registra el entrenamiento sin 2020.** La prueba de sensibilidad que pide D-04 se ejecuta en
   #46, y el registro ya la admite: es otra corrida con otra huella.
+
+## Modelos de árboles con rezagos (#44)
+
+`scripts/modelado/arboles.py` entrena un `RandomForestRegressor` y un `HistGradientBoostingRegressor`
+con las 21 variables derivadas de `features.py`, y los evalúa con **el mismo arnés** que los
+comparadores: mismos pliegues, misma evaluación final.
+
+```sh
+python scripts/modelado/arboles.py
+```
+
+Salidas en `outputs/modelado/arboles/`: `metricas_finales.csv`, `metricas_por_pliegue.csv`,
+`predicciones_por_pliegue.csv` (real y predicción de cada día de cada pliegue y de la evaluación
+final) y `resumen_arboles.json`.
+
+**Los hiperparámetros son fijos, no ajustados.** La selección con validación temporal es el #45. Lo
+que sigue es el punto de partida que el ajuste tiene que superar, no el resultado final.
+
+| Modelo | MAE final | MASE final | MAE medio por pliegue | Peor pliegue |
+|---|---|---|---|---|
+| Barra (ingenuo estacional) | 49,04 | 0,922 | | |
+| Bosque aleatorio | 34,22 | 0,643 | 34,89 | 43,12 |
+| Bosque aleatorio, sin 2020 | 33,82 | 0,636 | 34,87 | 43,51 |
+| Gradiente por histogramas | 32,89 | 0,618 | 31,51 | 36,19 |
+| Gradiente por histogramas, sin 2020 | 32,94 | 0,619 | 32,56 | 38,41 |
+
+Los cuatro quedan por debajo de la barra en la evaluación final. Entrenar sin 2020 mueve el MAE final
+menos de 0,5 en los dos modelos: con 2020 marcado como atípico, no se ve una dependencia de ese año.
+Es una sola partición de 184 días y una sola semilla, así que **no es una conclusión de
+estabilidad**; la comparación con el resto de modelos y la lectura de los pliegues van en el #46.
+
+### Los dos criterios de aceptación
+
+* **La prueba anti-fuga pasa.** `evaluacion.sin_fuga` altera `y[t:]`, reconstruye las 21 variables
+  desde la serie alterada (`construir_X`) y exige que la predicción de `t` no cambie.
+  `tests/test_arboles.py` la aplica a los dos modelos sobre días de un pliegue y de la evaluación
+  final, y comprueba con un modelo que sí usa `y[t]` que la prueba **falla** cuando debe.
+* **Las predicciones se reproducen con la semilla.** Dos corridas dan las mismas predicciones y
+  `outputs/modelado/arboles/` sale idéntico byte a byte al repetir el script en el mismo equipo. El
+  registro de experimentos se niega a guardar dos resultados distintos para la misma huella.
+
+El ajuste descarta las filas sin historia para los rezagos (los primeros 28 días; la primera fila
+completa es el 2020-01-29). Con `sin_2020` se descartan además las filas del año atípico.

@@ -1,0 +1,5 @@
+modelo,n,MAE,RMSE,MAPE,MASE,MAE_vs_barra
+bosque_aleatorio,184.0,34.22,42.69,9.86,0.643,-14.82
+bosque_aleatorio_sin_2020,184.0,33.82,42.5,9.77,0.636,-15.22
+gradiente_histogramas,184.0,32.89,42.5,9.75,0.618,-16.15
+gradiente_histogramas_sin_2020,184.0,32.94,43.07,9.78,0.619,-16.1
