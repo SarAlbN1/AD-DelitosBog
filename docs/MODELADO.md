@@ -221,7 +221,7 @@ evaluación final:
 (Las cifras de Linux y Windows son las que reportó la revisión de Juan Diego; la corrida de
 este registro es la de macOS.)
 
-* **El bosque aleatorio se reproduce exacto** en los entornos probados.
+* **El bosque aleatorio se reproduce exacto** en Windows, el único entorno distinto donde se probó.
 * **El gradiente no.** En cada entorno el resultado es determinista (en Windows da lo mismo con 1 y
   con 8 hilos), así que la diferencia viene de la plataforma y de la versión, no del azar. Se mueve
   hasta 0,7 de MAE, mucho más que la cuarta cifra decimal que la sección de la semilla da por
@@ -231,8 +231,8 @@ este registro es la de macOS.)
   corrida (`versiones` en `outputs/modelado/corridas/`).
 * **Consecuencia 2:** la sensibilidad a 2020 del gradiente depende del entorno. Quitar 2020 empeora
   el MAE final 0,05 en macOS, 0,28 en Linux y 0,91 en Windows. **Se presenta como no concluyente**
-  hasta fijar un entorno de referencia; es la comparación que interpreta el #46. El bosque no
-  tiene ese problema: entrenar sin 2020 mueve su MAE menos de 0,5 en todos los entornos.
+  hasta fijar un entorno de referencia; es la comparación que interpreta el #46. El bosque, en
+  los dos entornos donde se corrió, mueve su MAE menos de 0,5 al quitar 2020; no se probó en Linux.
 * **Pendiente de equipo, antes del #46:** fijar un entorno de referencia para las cifras del informe
   (por ejemplo, una imagen con versiones fijas). Con Python 3.9 no se puede instalar scikit-learn
   1.9, ni con 3.14 la 1.6.1, así que fijar versiones en `requirements.txt` no basta para los dos
