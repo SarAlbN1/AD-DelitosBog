@@ -1,0 +1,29 @@
+modelo,pliegue,especificacion,criterio
+sarima,1,"{""orden"": [2, 1, 2], ""estacional"": [1, 0, 1, 7]}",14998.77
+sarima,2,"{""orden"": [1, 1, 1], ""estacional"": [1, 0, 1, 7]}",16003.03
+sarima,3,"{""orden"": [1, 1, 2], ""estacional"": [1, 0, 1, 7]}",16948.61
+sarima,4,"{""orden"": [1, 1, 2], ""estacional"": [1, 0, 1, 7]}",17880.7
+sarima,5,"{""orden"": [1, 1, 2], ""estacional"": [1, 0, 1, 7]}",18803.18
+sarima,6,"{""orden"": [2, 1, 1], ""estacional"": [1, 0, 1, 7]}",19788.78
+sarima,final,"{""orden"": [1, 1, 2], ""estacional"": [1, 0, 1, 7]}",20747.9
+sarima_desde_2021,1,"{""orden"": [2, 1, 2], ""estacional"": [1, 0, 1, 7]}",11172.66
+sarima_desde_2021,2,"{""orden"": [1, 1, 1], ""estacional"": [1, 0, 1, 7]}",12172.4
+sarima_desde_2021,3,"{""orden"": [1, 1, 2], ""estacional"": [1, 0, 1, 7]}",13118.37
+sarima_desde_2021,4,"{""orden"": [1, 1, 2], ""estacional"": [1, 0, 1, 7]}",14052.4
+sarima_desde_2021,5,"{""orden"": [1, 1, 2], ""estacional"": [1, 0, 1, 7]}",14977.47
+sarima_desde_2021,6,"{""orden"": [1, 1, 2], ""estacional"": [1, 0, 1, 7]}",15949.75
+sarima_desde_2021,final,"{""orden"": [1, 1, 2], ""estacional"": [1, 0, 1, 7]}",16922.7
+ets,1,"{""config"": [""add"", null, false, ""add""]}",15216.09
+ets,2,"{""config"": [""add"", null, false, ""add""]}",16216.98
+ets,3,"{""config"": [""add"", null, false, ""mul""]}",17184.95
+ets,4,"{""config"": [""add"", null, false, ""mul""]}",18119.46
+ets,5,"{""config"": [""add"", null, false, ""mul""]}",19048.25
+ets,6,"{""config"": [""add"", null, false, ""mul""]}",20011.47
+ets,final,"{""config"": [""add"", null, false, ""mul""]}",20992.31
+ets_desde_2021,1,"{""config"": [""add"", ""add"", true, ""add""]}",11368.33
+ets_desde_2021,2,"{""config"": [""add"", null, false, ""mul""]}",12352.27
+ets_desde_2021,3,"{""config"": [""add"", null, false, ""mul""]}",13304.56
+ets_desde_2021,4,"{""config"": [""add"", null, false, ""add""]}",14277.29
+ets_desde_2021,5,"{""config"": [""add"", null, false, ""add""]}",15208.62
+ets_desde_2021,6,"{""config"": [""add"", null, false, ""mul""]}",16175.36
+ets_desde_2021,final,"{""config"": [""add"", null, false, ""mul""]}",17153.92

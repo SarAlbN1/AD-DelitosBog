@@ -1,0 +1,59 @@
+{
+  "huella": "9a40cb498affcf09",
+  "momento": "2026-11-24T23:20:49-05:00",
+  "modelo": "estadisticos.sarima_desde_2021",
+  "hiperparametros": {
+    "familia": "sarima",
+    "desde_2021": true,
+    "periodo": 7,
+    "seleccion": "por tramo, solo con su entrenamiento"
+  },
+  "semilla": 42,
+  "config": {
+    "config": "/Users/sara/Proy/AD-DelitosBog/config/modelado.json",
+    "config_sha256": "5ab5464b4720a55643b80507113ce66bff6d7b1c1d9d7a6c8040413019974680",
+    "semilla": 42,
+    "horizonte_dias": 1,
+    "fin_entrenamiento": "2025-04-30",
+    "esquema_validacion": "origen_rodante",
+    "pliegues": 6,
+    "dias_pliegue": 90,
+    "metrica_principal": "MAE",
+    "metricas": [
+      "MAE",
+      "RMSE",
+      "MAPE",
+      "MASE"
+    ]
+  },
+  "datos": {
+    "serie": "serie_objetivo_diaria.csv",
+    "serie_sha256": "582a36c72b734903c34925c1f129ccba4d6d0a5f1ad8e22ea28241f87d019ab7",
+    "huella_pliegues": "35c29ec29e6d6b5a",
+    "version_arnes": 2
+  },
+  "metricas": {
+    "n": 184,
+    "MAE": 33.78,
+    "RMSE": 43.1,
+    "MAPE": 9.87,
+    "MASE": 0.635
+  },
+  "versiones": {
+    "python": "3.9.6",
+    "plataforma": "macOS-26.7.3-arm64-arm-64bit",
+    "pandas": "2.3.3",
+    "numpy": "2.0.2",
+    "sklearn": "1.6.1",
+    "statsmodels": "0.14.6",
+    "xgboost": "no disponible"
+  },
+  "extra": {
+    "resumen_pliegues": {
+      "MAE_medio": 36.27,
+      "MAE_desv": 5.92,
+      "MAE_peor": 43.55,
+      "pliegues": 6
+    }
+  }
+}
