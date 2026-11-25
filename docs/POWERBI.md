@@ -130,8 +130,9 @@ marcar visualmente los casos que no se deben leer como el resto.
 
 **1. Resumen.** Serie diaria (línea, eje de `dim_calendario`). Tarjetas con víctimas totales, media
 diaria y días. Tabla por año con **media diaria y total lado a lado**, más la columna «Año
-completo», para que el 2025 truncado se vea como tal. Tabla de `dim_fuente` con las filas de hurto
-y si sostiene el mínimo.
+completo», para que el 2025 truncado se vea como tal. Tabla de `dim_fuente` con `filas_auditadas` (Policía: 2020–2025, 741.986), `victimas_en_la_serie`
+(730.870, hasta 2025-10-31) y si sostiene el mínimo. Son dos cifras distintas: no se muestran bajo el
+mismo rótulo.
 
 **2. Patrones temporales.** Barras por `dia_semana` (viernes 403,1 · domingo 245,0). Línea por
 `nombre_mes`. Tarjeta con `Efecto festivo %` (−37,8 %) y el aviso de que compara lunes con lunes.
