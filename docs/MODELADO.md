@@ -142,6 +142,15 @@ Lo que impide el uso indebido no es ocultar la serie, es la **prueba de perturba
 desde un día hacia adelante no puede cambiar la métrica de ese pliegue. Con su comprobación
 inversa, para que no pase por vacuidad.
 
+Esa prueba **no detecta la fuga del mismo día**: altera solo los días posteriores al pliegue, y un
+predictor que use `y[t]` para predecir `t` la pasa igual que el ingenuo correcto (lo detectó la
+revisión del #110). Para eso está `evaluacion.sin_fuga`: para cada día `t`, altera `y[t:]` y exige
+que la predicción de `t` no cambie. **Cada modelo del #43 y del #44 la llama en sus pruebas.** Si el
+modelo usa `X` con columnas derivadas de `y` (rezagos, medias móviles), hay que pasar
+`construir_X`, que reconstruye `X` desde la serie alterada; sin ella, esas columnas no se alteran y
+la prueba no las cubre. Al probar, cada día se prueba con la máscara de entrenamiento de su propio
+tramo: con la del tramo final, un día de un pliegue ya estaría dentro del ajuste.
+
 ### La versión del arnés
 
 `VERSION_ARNES` se sube **a mano** cuando cambia cómo se calcula un resultado.
