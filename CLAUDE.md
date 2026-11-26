@@ -16,8 +16,8 @@ Los scripts, los notebooks ejecutados, los commits y los archivos de `outputs/` 
 
 | Responsable | Secciones y temas |
 |---|---|
-| Sara (`SarAlbN1`) | Preprocesamiento, análisis exploratorio, metodología, fuente Policía y modelado |
-| Juan Diego (`Juandi48`) | Introducción, trabajos relacionados, descripción de fuentes y sección 4 |
+| Sara (`SarAlbN1`) | Preprocesamiento, análisis exploratorio, metodología, fuente Policía, modelos base de la tercera entrega (#43, #44) y tablero de Power BI (#106) |
+| Juan Diego (`Juandi48`) | Introducción, trabajos relacionados, descripción de fuentes y sección 4. En la tercera entrega: ajuste de hiperparámetros, evaluación e interpretación (#45, #46, #47), reproducibilidad (#54) y secciones 9 a 11 |
 | Ambos | Requisito de 500.000 registros, diccionario de datos, unidades de observación e integración, revisión cruzada y compilación final |
 
 Antes de tocar una sección ajena, confírmalo con su responsable. Si encuentras un defecto fuera de tu alcance, repórtalo en la issue en vez de corregirlo por tu cuenta.

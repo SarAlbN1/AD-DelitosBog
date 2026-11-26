@@ -144,7 +144,7 @@ semana, festivo— entran con el signo esperado.
 
 **b. Series de tiempo estacionales: SARIMA y ETS.** Se justifican por **la propia serie**, no por
 la literatura local: la estacionalidad semanal es la señal dominante del análisis exploratorio
-(viernes 403,1 frente a domingo 245,0, un 64 % de diferencia) y esta familia la modela de forma
+(viernes 403,1 frente a domingo 245,0, un 65 % de diferencia) y esta familia la modela de forma
 explícita.
 
 Conviene precisar que **ninguno de los antecedentes verificados usa SARIMA ni ETS**. El antecedente

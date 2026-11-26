@@ -36,7 +36,7 @@ medias diarias y no totales mientras el último año esté truncado.
 | Sábado | 372,5 |
 | **Domingo** | **245,0** |
 
-El viernes tiene un 64 % más de víctimas que el domingo. Es la señal más fuerte y limpia de la
+El viernes tiene un 65 % más de víctimas que el domingo. Es la señal más fuerte y limpia de la
 serie, y justifica que el día de la semana sea una predictora.
 
 Sobre los comparadores, el matiz importa: la fuerza del perfil semanal **no** implica que el rezago
@@ -73,7 +73,7 @@ Hay 103 festivos en el periodo, y 304 lunes: 62 festivos y 242 laborables. El sc
 | Media diaria | 325,9 | 355,0 | 336,8 | **312,7** | 315,2 | 316,6 | 327,5 | 345,8 | 374,2 | **386,9** | 382,1 | 344,9 |
 
 El rango es estrecho: de 312,7 en abril a 386,9 en octubre, un 24 % entre el mínimo y el máximo,
-frente al 64 % del perfil semanal. **La estacionalidad mensual existe pero es mucho más débil que
+frente al 65 % del perfil semanal. **La estacionalidad mensual existe pero es mucho más débil que
 la semanal**, lo que sugiere que un modelo con rezagos semanales y calendario captará la mayor
 parte de la estructura.
 
@@ -203,7 +203,7 @@ es bajo.
 
 Con un umbral de |z| > 3 hay **10 días atípicos de 2.131, el 0,47 %**.
 
-**Los nueve días anormalmente bajos están todos en marzo y abril de 2020:**
+**Ocho de los nueve días anormalmente bajos están en marzo y abril de 2020** (la tabla muestra cinco):
 
 | Fecha | Víctimas | Media de su día | z | Día |
 |---|---:|---:|---:|---|
@@ -214,6 +214,11 @@ Con un umbral de |z| > 3 hay **10 días atípicos de 2.131, el 0,47 %**.
 | 2020-04-07 | 57 | 351,1 | −3,18 | martes |
 
 Son los días del confinamiento estricto: 34 víctimas frente a una media de 365 para un miércoles.
+
+**El noveno es el 25 de diciembre de 2024**: Navidad, 70 víctimas frente a 365,0 de un miércoles medio
+(z = −3,04). No tiene que ver con el confinamiento: es un festivo, y encaja con el efecto de festivo
+ya medido.
+
 **No se eliminan.** No son errores de medición ni ruido, son el efecto de una restricción real, y
 borrarlos escondería justo lo que el indicador de año atípico documenta.
 
@@ -277,7 +282,7 @@ Esto respalda dos decisiones ya tomadas:
 
 ## 7. Qué se lleva el modelado
 
-1. **El día de la semana es la señal dominante**: 64 % entre viernes y domingo.
+1. **El día de la semana es la señal dominante**: 65 % entre viernes y domingo.
 2. **El festivo pesa −38 %** incluso controlando el día de la semana, y se conoce de antemano.
 3. **La estacionalidad mensual es débil** frente a la semanal.
 4. **2020 debe entrar marcado**, no como un año más.
@@ -285,7 +290,8 @@ Esto respalda dos decisiones ya tomadas:
 6. **Las comparaciones entre localidades se hacen por tasa, no por conteo.** El orden cambia por
    completo al normalizar: Kennedy pasa del puesto 1 al 13. Y ni siquiera la tasa es un ranking de
    peligrosidad, porque no capta la población flotante.
-7. **Los atípicos son el confinamiento, no ruido.** Los nueve días anormalmente bajos están todos en
-   marzo y abril de 2020, así que no se eliminan: se explican con el indicador de año atípico.
+7. **Los atípicos no son ruido.** Ocho de los nueve días anormalmente bajos están en marzo y abril de
+   2020 (el confinamiento) y el noveno es la Navidad de 2024. No se eliminan: el primer grupo se
+   explica con el indicador de año atípico y el segundo con el calendario.
 8. **El fenómeno está disperso en el territorio.** Las diez UPZ con más incidentes concentran solo el
    22,3 % de 116, así que no hay un puñado de puntos calientes que explique la serie de ciudad.

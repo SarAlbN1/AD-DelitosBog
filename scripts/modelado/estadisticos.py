@@ -177,8 +177,10 @@ def predictor_sarima(orden=None, estacional=None, desde: pd.Timestamp | None = N
                else seleccionar_sarima(tr))
         modelo = _ajustar_sarima(tr, sel["orden"], sel["estacional"])
         # Parámetros fijos sobre la serie observada hasta el último día a predecir: el valor
-        # ajustado de `t` es la predicción un paso adelante y no usa y[t].
-        hasta = _con_frecuencia(y[:indice.max()])
+        # ajustado de `t` es la predicción un paso adelante y no usa y[t]. El filtrado arranca en
+        # el primer día de `tr`, no en el de `y`: con `desde` ambos difieren, y los parámetros
+        # (en ETS, los estados iniciales) corresponden al inicio de `tr`.
+        hasta = _con_frecuencia(y[tr.index.min():indice.max()])
         pred = modelo.apply(hasta).fittedvalues.reindex(indice)
         if registro is not None:
             registro.append({"espec": {"orden": list(sel["orden"]),
@@ -221,7 +223,7 @@ def predictor_ets(config=None, desde: pd.Timestamp | None = None,
             tr = tr[tr.index >= desde]
         sel = {"config": config} if config is not None else seleccionar_ets(tr)
         ajustado = _modelo_ets(tr, sel["config"]).fit(disp=False)
-        hasta = y[:indice.max()]
+        hasta = y[tr.index.min():indice.max()]   # arranca donde `tr`: ver predictor_sarima
         pred = _modelo_ets(hasta, sel["config"]).smooth(ajustado.params).fittedvalues.reindex(indice)
         if registro is not None:
             registro.append({"espec": {"config": list(sel["config"])},
