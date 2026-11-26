@@ -129,10 +129,12 @@
         "unidad_observacion",
         "resolucion_temporal",
         "resolucion_territorial",
-        "periodo",
-        "filas_hurto_bogota",
+        "periodo_auditado",
+        "periodo_serie",
+        "filas_auditadas",
         "sostiene_el_minimo",
-        "es_la_serie_objetivo"
+        "es_la_serie_objetivo",
+        "victimas_en_la_serie"
       ]
     },
     "qa_embudo": {

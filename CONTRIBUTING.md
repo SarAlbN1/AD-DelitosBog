@@ -40,9 +40,9 @@ Esta página es la fuente de las reglas de revisión, aprobación y fusión de A
 
 ### Abrir y revisar un PR
 
-1. Integra los cambios a `main` mediante PR desde una rama propia. Usa el flujo de [ramas y commits](#ramas-y-commits).
+1. Integra los cambios a `main` mediante PR desde una rama propia. Usa el flujo de [ramas y commits](#ramas-y-commits). **Un PR por issue, siempre con base `main` y nunca apilado sobre otra rama.** Los PR apilados #70 a #72 cerraron sus issues sin que el contenido llegara a `main`, y hubo que recuperarlo en el #80. Si un PR necesita código de otro que aún no está fusionado, sigue teniendo base `main`: dilo en su descripción, enlaza el PR del que depende y no lo fusiones hasta que ese esté en `main`.
 2. Describe el cambio, sus criterios y las comprobaciones ejecutadas. Indica los resultados y pendientes. Enlaza la issue cuando exista y usa `Closes #<número>` solo para la issue real que cierre el PR.
-3. Solicita revisión a la otra persona del equipo. Somos dos, así que el revisor es siempre quien no escribió el cambio: el autor no aprueba ni fusiona su propio PR, ni siquiera cuando el cambio es pequeño o urgente.
+3. Solicita revisión a la otra persona del equipo. Somos dos, así que el revisor es siempre quien no escribió el cambio: el autor no aprueba ni fusiona su propio PR, ni siquiera cuando el cambio es pequeño o urgente. **Quien recibe la solicitud revisa en 24 horas o avisa en el PR «hoy no puedo»**, para que el autor sepa a qué atenerse y no se bloqueen las tareas que dependen del cambio.
 4. La revisión comprueba el último commit del PR, los criterios aplicables y la evidencia. Los hallazgos que impidan la integración se resuelven antes de fusionar. Una revisión que solicita cambios debe quedar resuelta por quien la emitió.
 5. Un commit nuevo exige volver a verificar el PR y obtener una aprobación vigente para ese commit. El estado fusionable de GitHub por sí solo no satisface la revisión.
 6. Si el PR cambia una cifra del informe, incluye el archivo de `outputs/` o el comando que la produce. Una cifra sin evidencia reproducible bloquea la revisión.

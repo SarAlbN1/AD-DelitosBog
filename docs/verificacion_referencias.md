@@ -39,6 +39,17 @@ Consulta del **2026-11-16**. Respaldan las métricas y la validación de `docs/M
 
 Por tanto, el MAPE castiga más la sobreestimación. Es una propiedad de la fórmula y puede citarse a `hyndman2021`.
 
+## Referencias de las limitaciones (#48)
+
+Consulta del **2026-11-24**. Cada una respalda lo siguiente, y nada más.
+
+| Clave | Referencia | Cómo se verificó | Qué respalda en la sección 11 | Estado |
+|---|---|---|---|---|
+| `ensign2018` | Ensign, Friedler, Neville, Scheidegger y Venkatasubramanian (2018), *Runaway feedback loops in predictive policing*, *Proceedings of the 1st Conference on Fairness, Accountability and Transparency*, PMLR 81, 160–171 | Página de PMLR (`proceedings.mlr.press/v81/ensign18a.html`: autores, conferencia, páginas 160–171, 2018) y resumen en arXiv (`1706.09847`) | Según el resumen: un sistema que asigna la policía por zonas y se actualiza con los incidentes que esa policía **descubre** puede enviarla repetidamente a los mismos barrios con independencia de la tasa real; los incidentes **reportados** por residentes atenúan el efecto pero no lo eliminan | ✅ |
+| `riascos2023` | Ya verificada arriba (Crossref) | Resumen en Crossref | Modelo de eventos espacio-temporales con subregistro; estima con datos de Bogotá las tasas «verdaderas» de delito y de subregistro. **No** se citan cifras del artículo | ✅ |
+
+**Descartada: Lum e Isaac (2016)**, *To predict and serve?*, *Significance, 13*(5), 14–19 (DOI `10.1111/j.1740-9713.2016.00960.x`, verificado en Crossref). El texto completo es de pago y solo se pudo leer el resumen, que no menciona los bucles de retroalimentación. No se cita para no atribuirle lo que no se comprobó.
+
 ## Pendientes
 - [x] Confirmar el número de la nota de política de Riascos et al. (34 o 38) en el listado de notas de política de la Escuela de Gobierno Alberto Lleras Camargo.
 - [ ] Martínez Chitiva (2025): leer el PDF para extraer las fuentes de datos y los modelos comparados, que la matriz del #25 necesita.

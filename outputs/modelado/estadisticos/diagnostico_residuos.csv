@@ -1,0 +1,3 @@
+modelo,n_residuos,media,desv,grados_de_libertad,ljung_box_p_7,ljung_box_p_14,ljung_box_p_28,autocorrelacion_residual,criterio,especificacion
+sarima,1939,1.399,51.548,5,0.0,0.0,0.0001,True,"p < 0,05 en algún rezago: queda autocorrelación sin modelar","{""orden"": [1, 1, 2], ""estacional"": [1, 0, 1, 7]}"
+ets,1940,-0.699,52.586,2,0.0,0.0,0.0,True,"p < 0,05 en algún rezago: queda autocorrelación sin modelar","{""config"": [""add"", null, false, ""mul""]}"

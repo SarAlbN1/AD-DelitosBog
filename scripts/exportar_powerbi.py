@@ -60,27 +60,28 @@ sys.path.insert(0, str(RAIZ / "scripts"))
 
 log = logging.getLogger("powerbi")
 
-#: Metadatos de cada fuente. Lo que un tablero necesita saber para no mezclarlas.
+#: Metadatos descriptivos de cada fuente. Aquí no va ninguna cifra: las filas y las víctimas se leen
+#: de `outputs/` en `dim_fuente()`, para que el tablero no pueda separarse de la auditoría.
 FUENTES = [
     {"fuente": "Policía (registro)", "clave": "policia_registro",
      "unidad_observacion": "una víctima de hurto a personas",
      "resolucion_temporal": "día", "resolucion_territorial": "municipio",
-     "periodo": "2020-01-01 a 2025-10-31", "filas_hurto_bogota": 741986,
+     "periodo_auditado": "2020-2025", "periodo_serie": "2020-01-01 a 2025-10-31",
      "sostiene_el_minimo": "sí", "es_la_serie_objetivo": "sí"},
     {"fuente": "Fiscalía (Procesos V3)", "clave": "fiscalia",
      "unidad_observacion": "un par proceso–delito",
      "resolucion_temporal": "mes", "resolucion_territorial": "municipio",
-     "periodo": "2018-2025", "filas_hurto_bogota": 1300703,
+     "periodo_auditado": "2018-2025", "periodo_serie": "",
      "sostiene_el_minimo": "sí", "es_la_serie_objetivo": "no"},
     {"fuente": "Línea 123", "clave": "linea123",
      "unidad_observacion": "un agregado de llamadas tramitadas",
      "resolucion_temporal": "mes", "resolucion_territorial": "UPZ",
-     "periodo": "2018-2025", "filas_hurto_bogota": 25144,
+     "periodo_auditado": "2018-2025", "periodo_serie": "",
      "sostiene_el_minimo": "no", "es_la_serie_objetivo": "no"},
     {"fuente": "MinDefensa (agregado)", "clave": "policia_agregado",
      "unidad_observacion": "un conteo por día y municipio",
      "resolucion_temporal": "día", "resolucion_territorial": "municipio",
-     "periodo": "2018-2025", "filas_hurto_bogota": 2922,
+     "periodo_auditado": "2018-2025", "periodo_serie": "",
      "sostiene_el_minimo": "no", "es_la_serie_objetivo": "no (control de consistencia)"},
 ]
 
@@ -114,7 +115,11 @@ def _leer(ruta: Path, **kw) -> pd.DataFrame:
 
 def hechos_serie(features: Path) -> pd.DataFrame:
     df = _leer(features, parse_dates=["fecha"])
-    return df.rename(columns={"victimas": "victimas"})
+    # Las medias móviles difieren en el último decimal según la versión de pandas. Con 4 decimales
+    # la hoja sale igual byte a byte en cualquier máquina.
+    flotantes = df.select_dtypes("float").columns
+    df[flotantes] = df[flotantes].round(4)
+    return df
 
 
 def dim_calendario(serie: pd.DataFrame) -> pd.DataFrame:
@@ -165,6 +170,28 @@ def dim_localidad(tasas: Path, poblacion: Path, conteo: Path) -> pd.DataFrame:
     return salida
 
 
+def dim_fuente(auditoria: Path, auditoria_policia: Path, resumen_serie: Path) -> pd.DataFrame:
+    """Una fila por fuente. Las cifras salen de la auditoría, no se escriben aquí.
+
+    Dos columnas distintas, porque no son lo mismo:
+
+    * `filas_auditadas`: filas de hurto en Bogotá del periodo auditado (Policía: 2020-2025 completo).
+    * `victimas_en_la_serie`: solo Policía; lo que queda en la serie objetivo, hasta 2025-10-31.
+    """
+    res = pd.concat([_leer(auditoria / "resumen_fuentes.csv"),
+                     _leer(auditoria_policia / "resumen_fuentes.csv")])
+    filas = res.drop_duplicates("fuente").set_index("fuente")["filas_hurto"]
+    serie = json.loads(resumen_serie.read_text(encoding="utf-8"))["filas_en_la_serie"]
+    t = pd.DataFrame(FUENTES)
+    faltan = sorted(set(t["clave"]) - set(filas.index))
+    if faltan:
+        raise SystemExit(f"las auditorías no traen las fuentes {faltan}")
+    t.insert(t.columns.get_loc("periodo_serie") + 1, "filas_auditadas",
+             t["clave"].map(filas).astype(int))
+    t["victimas_en_la_serie"] = t["clave"].map({"policia_registro": serie}).astype("Int64")
+    return t
+
+
 def fuentes_largo(series: Path) -> pd.DataFrame:
     """Formato largo a propósito: en ancho es trivial sumar las tres fuentes, y está prohibido."""
     df = _leer(series)
@@ -195,7 +222,10 @@ def main(argv=None) -> int:
     tablas: dict[str, pd.DataFrame] = {
         "fact_serie_diaria": serie,
         "fact_linea123_localidad": _leer(d / "linea123_hurto_mensual_localidad.csv"),
-        "fact_linea123_upz": _leer(d / "linea123_hurto_upz.csv"),
+        # Desempate estable: con UPZ empatadas el orden de entrada depende de la máquina.
+        "fact_linea123_upz": _leer(d / "linea123_hurto_upz.csv").sort_values(
+            ["anio", "incidentes", "localidad", "upz"],
+            ascending=[True, False, True, True], kind="stable").reset_index(drop=True),
         "fact_fuentes_mensual": fuentes_largo(o / "informe" / "series_mensuales_fuentes.csv"),
         "fact_comparadores": _leer(o / "baselines" / "comparadores.csv").rename(
             columns={"Unnamed: 0": "comparador"}),
@@ -204,7 +234,8 @@ def main(argv=None) -> int:
         "dim_localidad": dim_localidad(o / "eda" / "territorial_tasas.csv",
                                       o / "poblacion" / "poblacion_localidad_2020_2025.csv",
                                       o / "eda" / "territorial_localidad.csv"),
-        "dim_fuente": pd.DataFrame(FUENTES),
+        "dim_fuente": dim_fuente(o / "auditoria", o / "auditoria_policia",
+                                 o / "serie_objetivo" / "resumen_serie.json"),
         "qa_embudo": _leer(o / "preprocesamiento" / "conteos_por_paso.csv"),
         "qa_nulos": _leer(o / "auditoria" / "valores_nulos.csv"),
         "qa_atipicos": pd.concat([

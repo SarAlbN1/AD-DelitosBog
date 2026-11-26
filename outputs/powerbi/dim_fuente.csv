@@ -1,5 +1,5 @@
-fuente,clave,unidad_observacion,resolucion_temporal,resolucion_territorial,periodo,filas_hurto_bogota,sostiene_el_minimo,es_la_serie_objetivo
-Policía (registro),policia_registro,una víctima de hurto a personas,día,municipio,2020-01-01 a 2025-10-31,741986,sí,sí
-Fiscalía (Procesos V3),fiscalia,un par proceso–delito,mes,municipio,2018-2025,1300703,sí,no
-Línea 123,linea123,un agregado de llamadas tramitadas,mes,UPZ,2018-2025,25144,no,no
-MinDefensa (agregado),policia_agregado,un conteo por día y municipio,día,municipio,2018-2025,2922,no,no (control de consistencia)
+fuente,clave,unidad_observacion,resolucion_temporal,resolucion_territorial,periodo_auditado,periodo_serie,filas_auditadas,sostiene_el_minimo,es_la_serie_objetivo,victimas_en_la_serie
+Policía (registro),policia_registro,una víctima de hurto a personas,día,municipio,2020-2025,2020-01-01 a 2025-10-31,741986,sí,sí,730870
+Fiscalía (Procesos V3),fiscalia,un par proceso–delito,mes,municipio,2018-2025,,1300703,sí,no,
+Línea 123,linea123,un agregado de llamadas tramitadas,mes,UPZ,2018-2025,,25144,no,no,
+MinDefensa (agregado),policia_agregado,un conteo por día y municipio,día,municipio,2018-2025,,2922,no,no (control de consistencia),

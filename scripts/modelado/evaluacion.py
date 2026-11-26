@@ -132,6 +132,34 @@ def particion(cfg: ConfigLike, indice: pd.DatetimeIndex) -> tuple[np.ndarray, np
     return indice <= limite, indice > limite
 
 
+def sin_fuga(predictor: Predictor, y: pd.Series, entrena: np.ndarray, dias,
+             construir_X: Callable[[pd.Series], pd.DataFrame] | None = None) -> bool:
+    """Comprueba, día a día, que la predicción de `t` no usa `y[t]` ni nada posterior.
+
+    Para cada día `t` de `dias` altera `y[t:]` y vuelve a predecir `t`: si la predicción cambia, el
+    predictor miró el valor del día que predice (o uno posterior) y hay fuga. La prueba de
+    perturbación por pliegues no lo detecta: altera solo los días posteriores al pliegue y un
+    predictor que use `y[t]` la pasa igual que el ingenuo correcto.
+
+    Si el modelo usa `X` con columnas derivadas de `y` (rezagos, medias móviles), pasa
+    `construir_X`: una función que reconstruye `X` desde la serie alterada. Sin ella, `X` se
+    entrega tal cual y las columnas derivadas no se alteran, así que la prueba no las cubre.
+
+    Devuelve `True` si no hay fuga. Úsala en las pruebas de cada modelo.
+    """
+    for t in pd.DatetimeIndex(dias):
+        alterada = y.copy()
+        desde = alterada.index >= t
+        alterada[desde] = alterada[desde] * 9 + 777
+        X0 = construir_X(y) if construir_X else None
+        X1 = construir_X(alterada) if construir_X else None
+        base = predictor(y, X0, entrena, pd.DatetimeIndex([t]))
+        otra = predictor(alterada, X1, entrena, pd.DatetimeIndex([t]))
+        if not base.equals(otra):
+            return False
+    return True
+
+
 def evaluar(cfg: ConfigLike, y: pd.Series, predictor: Predictor, X: pd.DataFrame | None = None,
             nombre: str = "modelo") -> dict:
     """Evalúa un predictor con el protocolo completo: pliegues rodantes y evaluación final.
