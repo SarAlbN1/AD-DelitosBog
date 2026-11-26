@@ -18,7 +18,7 @@ texto y se revisa en Git:
 `main`) → Power Query lee esos CSV de la **copia local del repositorio** con la función `LeerHoja` →
 modelo → páginas. No hay orígenes web, así que Power BI no pide niveles de privacidad.
 
-**Para abrirlo en otra máquina:**
+**Para abrirlo en otra máquina** (un `.pbip` abre el modelo sin datos: pulse **Actualizar**):
 
 1. Clonar el repositorio y quedarse en `main` (o hacer `git pull`).
 2. Abrir `powerbi/Tablero-DelitosBOG.pbip` con Power BI Desktop.
