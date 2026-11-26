@@ -3,10 +3,10 @@
   "name": "4c528946601fa348d839",
   "position": {
     "x": 20,
-    "y": 184,
+    "y": 260,
     "z": 8000,
     "width": 820,
-    "height": 262,
+    "height": 260,
     "tabOrder": 8000
   },
   "visual": {
@@ -63,7 +63,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#94A3B8'"
+                      "Value": "'#E2E8F0'"
                     }
                   }
                 }
@@ -73,6 +73,13 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12.0D"
                 }
               }
             }
@@ -87,7 +94,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#94A3B8'"
+                      "Value": "'#E2E8F0'"
                     }
                   }
                 }
@@ -110,6 +117,13 @@
                   "Value": "false"
                 }
               }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12.0D"
+                }
+              }
             }
           }
         }
@@ -122,7 +136,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#94A3B8'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
@@ -132,6 +146,13 @@
               "expr": {
                 "Literal": {
                   "Value": "'Top'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12.0D"
                 }
               }
             }
@@ -183,7 +204,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Víctimas por día, mes a mes'"
+                  "Value": "'Víctimas por día, mes a mes: la caída de 2020 y el pico de 2023'"
                 }
               }
             },
@@ -192,7 +213,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F1F5F9'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
@@ -201,7 +222,14 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "11.0D"
+                  "Value": "14.0D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }

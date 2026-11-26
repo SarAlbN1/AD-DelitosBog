@@ -3,10 +3,10 @@
   "name": "6badefd8c5d6fbb25c33",
   "position": {
     "x": 24,
-    "y": 676,
+    "y": 684,
     "z": 10000,
     "width": 612,
-    "height": 24,
+    "height": 22,
     "tabOrder": 10000
   },
   "visual": {
@@ -20,10 +20,10 @@
               {
                 "textRuns": [
                   {
-                    "value": "Sumapaz (rural) y «SIN LOCALIZACION» quedan fuera del mapa. Kennedy es 1.ª por conteo y 13.ª por tasa.",
+                    "value": "Sumapaz (rural) y «SIN LOCALIZACION» quedan fuera del mapa.",
                     "textStyle": {
-                      "fontSize": "8pt",
-                      "color": "#94A3B8"
+                      "fontSize": "9pt",
+                      "color": "#E2E8F0"
                     }
                   }
                 ]

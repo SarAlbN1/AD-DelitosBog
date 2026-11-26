@@ -1,0 +1,39 @@
+/// Predicción diaria frente a lo observado, por modelo y pliegue de validación (#43).
+table fact_predicciones
+	lineageTag: f5f1cff3-5b19-4c03-b194-89185611fa73
+
+	column modelo
+		dataType: string
+		lineageTag: c1a9f280-8673-482a-8a86-f674af70cbfd
+		sourceColumn: modelo
+
+	column pliegue
+		dataType: string
+		lineageTag: 461f2350-b5e5-4574-bd20-e8dc39695cc6
+		summarizeBy: none
+		sourceColumn: pliegue
+
+	column fecha
+		dataType: dateTime
+		lineageTag: bde1b770-7b66-4633-9134-8aeb5275b47d
+		sourceColumn: fecha
+
+	column real
+		dataType: double
+		lineageTag: d0d35cab-a0c9-4cb4-8595-b351ccc4169f
+		sourceColumn: real
+
+	column prediccion
+		dataType: double
+		lineageTag: 676bdd95-8d6f-4dbc-898f-8c7257fd05f2
+		sourceColumn: prediccion
+
+	partition fact_predicciones = m
+		mode: import
+		source =
+				let
+				    T = LeerSalida("modelado/estadisticos/predicciones_por_pliegue.csv"),
+				    Tipos = Table.TransformColumnTypes(T, {{"modelo", type text}, {"pliegue", type text}, {"fecha", type date}, {"real", type number}, {"prediccion", type number}}, "en-US")
+				in
+				    Tipos
+

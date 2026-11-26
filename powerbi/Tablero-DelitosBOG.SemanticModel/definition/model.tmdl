@@ -29,6 +29,8 @@ ref table qa_reglas
 ref table geo_localidades
 ref table dim_localidad
 ref table Medidas
+ref table fact_modelos
+ref table fact_predicciones
 
 ref cultureInfo en-US
 

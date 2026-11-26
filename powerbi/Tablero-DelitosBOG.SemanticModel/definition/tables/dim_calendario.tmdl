@@ -1,25 +1,25 @@
 /// Una fila por día de la serie, con festivo, día de la semana y año atípico.
 table dim_calendario
-	dataCategory: Time
 	lineageTag: 66b085c9-2f24-479e-bf2b-96fab212824f
+	dataCategory: Time
 
 	column fecha
 		dataType: dateTime
+		isKey
 		lineageTag: 737f1e95-2a28-49bb-a731-d613eac986bd
 		sourceColumn: fecha
-		isKey
 
 	column anio
 		dataType: int64
 		lineageTag: dbf72fbf-6c7c-46ed-8e9a-3a711b7bf644
-		sourceColumn: anio
 		summarizeBy: none
+		sourceColumn: anio
 
 	column mes
 		dataType: int64
 		lineageTag: 977a225c-d1e9-4e80-9ddc-dd08117bb0bc
-		sourceColumn: mes
 		summarizeBy: none
+		sourceColumn: mes
 
 	column nombre_mes
 		dataType: string
@@ -45,8 +45,8 @@ table dim_calendario
 	column dia_semana_numero
 		dataType: int64
 		lineageTag: 09a18c2d-9b57-4680-92f3-4ffa60dd061e
-		sourceColumn: dia_semana_numero
 		summarizeBy: none
+		sourceColumn: dia_semana_numero
 
 	column dia_semana
 		dataType: string

@@ -4,16 +4,16 @@ table fact_poblacion
 
 	column clave
 		dataType: string
+		isHidden
 		lineageTag: aa5d7d57-d47b-4cdc-8afe-564c07edbb95
 		sourceColumn: clave
-		isHidden
 
 	column anio
 		dataType: int64
-		lineageTag: 3e17dcba-0100-49f6-a550-ca7c08bd4c56
-		sourceColumn: anio
 		isHidden
+		lineageTag: 3e17dcba-0100-49f6-a550-ca7c08bd4c56
 		summarizeBy: none
+		sourceColumn: anio
 
 	column habitantes
 		dataType: int64

@@ -180,6 +180,127 @@ table Medidas
 		displayFolder: 0 Textos
 		lineageTag: 9738dfda-1fec-4421-a1cd-27bd1695f405
 
+	measure 'Día pico' =
+			VAR t = ADDCOLUMNS ( VALUES ( dim_calendario[dia_semana] ), "@m", [Media diaria] )
+			RETURN MAXX ( TOPN ( 1, t, [@m], DESC ), dim_calendario[dia_semana] )
+		displayFolder: 5 Hallazgos
+		lineageTag: b8d949be-afa0-405e-aaed-c712b5e714f9
+
+	measure 'Día valle' =
+			VAR t = FILTER ( ADDCOLUMNS ( VALUES ( dim_calendario[dia_semana] ), "@m", [Media diaria] ), NOT ISBLANK ( [@m] ) )
+			RETURN MAXX ( TOPN ( 1, t, [@m], ASC ), dim_calendario[dia_semana] )
+		displayFolder: 5 Hallazgos
+		lineageTag: faf40dc5-9caa-477a-9d15-349d1ede89cb
+
+	measure 'Brecha pico-valle %' =
+			VAR t = FILTER ( ADDCOLUMNS ( VALUES ( dim_calendario[dia_semana] ), "@m", [Media diaria] ), NOT ISBLANK ( [@m] ) )
+			VAR mx = MAXX ( t, [@m] ) VAR mn = MINX ( t, [@m] )
+			RETURN DIVIDE ( mx - mn, mn )
+		formatString: 0%
+		displayFolder: 5 Hallazgos
+		lineageTag: 697f4630-d4ce-42b6-9924-036559e91edd
+
+	measure 'Mes pico' =
+			VAR t = ADDCOLUMNS ( VALUES ( dim_calendario[nombre_mes] ), "@m", [Media diaria] )
+			RETURN MAXX ( TOPN ( 1, t, [@m], DESC ), dim_calendario[nombre_mes] )
+		displayFolder: 5 Hallazgos
+		lineageTag: 87ac2b7a-6c47-4a53-9291-b1bf24f55d80
+
+	measure 'Media fin de semana vs laborable %' =
+			VAR fs = CALCULATE ( [Media diaria], dim_calendario[fin_de_semana] = 1, dim_calendario[festivo] = 0 )
+			VAR lab = CALCULATE ( [Media diaria], dim_calendario[tipo_dia] = "Laborable" )
+			RETURN DIVIDE ( fs - lab, lab )
+		formatString: +0%;-0%;0%
+		displayFolder: 1 Serie Policía
+		lineageTag: 168e7407-dfd0-45cc-b34b-d6b0276fb7ae
+
+	measure 'Hallazgo tendencia' =
+			VAR a = MAX ( fact_serie_diaria[fecha] )
+			VAR anio = YEAR ( a )
+			VAR m = CALCULATE ( [Media diaria], dim_anio[anio] = anio )
+			VAR v = CALCULATE ( [Var. media diaria vs año anterior], dim_anio[anio] = anio )
+			VAR t = FILTER ( ADDCOLUMNS ( VALUES ( dim_anio[anio] ), "@m", [Media diaria] ), NOT ISBLANK ( [@m] ) )
+			VAR apico = MAXX ( TOPN ( 1, t, [@m], DESC ), dim_anio[anio] )
+			VAR mpico = MAXX ( t, [@m] )
+			RETURN
+			"En " & anio & " se registran " & FORMAT ( m, "#,0", "es-CO" ) & " víctimas de hurto por día (" & FORMAT ( v, "+0%;-0%", "es-CO" ) & " frente a " & ( anio - 1 ) & "). El año más alto del periodo fue " & apico & ", con " & FORMAT ( mpico, "#,0", "es-CO" ) & " por día."
+		displayFolder: 5 Hallazgos
+		lineageTag: 05153032-2033-400e-8fb4-3fd8b43f9c2c
+
+	measure 'Hallazgo semana' =
+			VAR pico = [Día pico] VAR valle = [Día valle]
+			VAR mp = CALCULATE ( [Media diaria], dim_calendario[dia_semana] = pico )
+			VAR mv = CALCULATE ( [Media diaria], dim_calendario[dia_semana] = valle )
+			RETURN "El " & pico & " es el día con más hurtos (" & FORMAT ( mp, "#,0", "es-CO" ) & " víctimas por día): " & FORMAT ( DIVIDE ( mp - mv, mv ), "0%", "es-CO" ) & " más que el " & valle & " (" & FORMAT ( mv, "#,0", "es-CO" ) & ")."
+		displayFolder: 5 Hallazgos
+		lineageTag: a74901f0-583f-4973-a09d-161a31bd1fee
+
+	measure 'Hallazgo festivo' = "Un lunes festivo registra " & FORMAT ( - [Efecto festivo %], "0%", "es-CO" ) & " menos víctimas que un lunes laborable (" & FORMAT ( [Media lunes festivo], "#,0", "es-CO" ) & " frente a " & FORMAT ( [Media lunes laborable], "#,0", "es-CO" ) & "): un indicio de que el hurto acompaña la actividad laboral."
+		displayFolder: 5 Hallazgos
+		lineageTag: fce85186-d004-4cb8-badb-17e0c66304a8
+
+	measure 'Localidad tasa máxima' =
+			VAR t = ADDCOLUMNS ( VALUES ( dim_localidad[localidad] ), "@t", [Tasa 123 por 100k] )
+			RETURN MAXX ( TOPN ( 1, t, [@t], DESC ), dim_localidad[localidad] )
+		displayFolder: 5 Hallazgos
+		lineageTag: 5a0b4b8f-e239-4f7b-a726-d7861b037ab4
+
+	measure 'Hallazgo territorio' =
+			VAR loc = [Localidad tasa máxima]
+			VAR t = CALCULATE ( [Tasa 123 por 100k], dim_localidad[localidad] = loc )
+			VAR lect = CALCULATE ( SELECTEDVALUE ( dim_localidad[lectura] ), dim_localidad[localidad] = loc )
+			VAR tc = [Tasa ciudad por 100k]
+			VAR tc2 = ADDCOLUMNS ( VALUES ( dim_localidad[localidad] ), "@c", [Llamadas 123] )
+			VAR locc = MAXX ( TOPN ( 1, tc2, [@c], DESC ), dim_localidad[localidad] )
+			VAR pc = DIVIDE ( CALCULATE ( [Llamadas 123], dim_localidad[localidad] = locc ), CALCULATE ( [Llamadas 123], REMOVEFILTERS ( dim_localidad ) ) )
+			VAR rt = CALCULATE ( [Puesto por tasa], dim_localidad[localidad] = locc )
+			RETURN
+			loc & " tiene la tasa más alta: " & FORMAT ( t, "#,0", "es-CO" ) & " llamadas por hurto por cada 100.000 habitantes, " & FORMAT ( DIVIDE ( t, tc ), "0.0", "es-CO" ) & " veces la de la ciudad (" & LOWER ( lect ) & "). " & locc & " concentra el " & FORMAT ( pc, "0%", "es-CO" ) & " de las llamadas, pero por tasa es la n.º " & rt & ": su volumen refleja su población, no un mayor riesgo."
+		displayFolder: 5 Hallazgos
+		lineageTag: 573aa06a-d1fb-4863-8f35-f8a36a04f15e
+
+	measure 'MAE mejor modelo' = MINX ( FILTER ( ALL ( fact_modelos ), fact_modelos[familia] = "Estadístico" ), fact_modelos[MAE] )
+		formatString: 0.0
+		displayFolder: 4 Modelado
+		lineageTag: ec5c2557-0199-4616-8f40-88447ddf99f6
+
+	measure 'Mejor modelo' =
+			VAR m = [MAE mejor modelo]
+			RETURN CALCULATE ( MIN ( fact_modelos[nombre] ), FILTER ( ALL ( fact_modelos ), fact_modelos[MAE] = m ) )
+		displayFolder: 4 Modelado
+		lineageTag: 243ebc99-6bc3-4c21-b5ab-1ccb08f9b454
+
+	measure 'MAPE mejor modelo' =
+			VAR m = [MAE mejor modelo]
+			RETURN CALCULATE ( MIN ( fact_modelos[MAPE] ), FILTER ( ALL ( fact_modelos ), fact_modelos[MAE] = m ) )
+		formatString: 0.0
+		displayFolder: 4 Modelado
+		lineageTag: db3776d7-179d-47db-8747-01d7fda36bba
+
+	measure 'Mejora sobre la barra %' = DIVIDE ( [Barra MAE] - [MAE mejor modelo], [Barra MAE] )
+		formatString: 0%
+		displayFolder: 4 Modelado
+		lineageTag: 24b1800d-8e1a-41dd-a063-a8fc743c16dd
+
+	measure 'MAE modelo' = MIN ( fact_modelos[MAE] )
+		formatString: 0.0
+		displayFolder: 4 Modelado
+		lineageTag: c93026cd-093c-4ec6-9b26-0e0f0f90bc27
+
+	measure Observado = AVERAGE ( fact_predicciones[real] )
+		formatString: #,0
+		displayFolder: 4 Modelado
+		lineageTag: 3e4129d2-55c2-46a7-bcba-66600ef036f8
+
+	measure Pronóstico = AVERAGE ( fact_predicciones[prediccion] )
+		formatString: #,0
+		displayFolder: 4 Modelado
+		lineageTag: 4fe36d5c-f704-4d6e-89f8-fdb8592d5c91
+
+	measure 'Hallazgo modelo' = "El mejor modelo, " & [Mejor modelo] & ", pronostica las víctimas diarias con un error medio de " & FORMAT ( [MAE mejor modelo], "0", "es-CO" ) & " víctimas por día (" & FORMAT ( [MAPE mejor modelo] / 100, "0%", "es-CO" ) & "): " & FORMAT ( [Mejora sobre la barra %], "0%", "es-CO" ) & " menos error que el mejor comparador ingenuo (" & FORMAT ( [Barra MAE], "0", "es-CO" ) & ")."
+		displayFolder: 5 Hallazgos
+		lineageTag: 9f219372-1061-4841-a67b-3db56ad634fa
+
 	column ancla
 		dataType: int64
 		isHidden

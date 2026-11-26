@@ -5,8 +5,8 @@ table dim_localidad
 	column codigo_localidad
 		dataType: int64
 		lineageTag: 5141155b-7ac3-412e-9e0c-a0e624413953
-		sourceColumn: codigo_localidad
 		summarizeBy: none
+		sourceColumn: codigo_localidad
 
 	column localidad
 		dataType: string
@@ -26,14 +26,14 @@ table dim_localidad
 	column puesto_conteo
 		dataType: int64
 		lineageTag: 1f08b084-a9f0-4194-968c-6028ade364e2
-		sourceColumn: puesto_conteo
 		summarizeBy: none
+		sourceColumn: puesto_conteo
 
 	column puesto_tasa
 		dataType: int64
 		lineageTag: 5e233dc6-b3a0-4c60-abf1-1702a0e6896d
-		sourceColumn: puesto_tasa
 		summarizeBy: none
+		sourceColumn: puesto_tasa
 
 	column es_rural_sumapaz
 		dataType: int64

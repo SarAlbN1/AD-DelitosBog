@@ -13,3 +13,14 @@ expression LeerHoja =
 expression RutaRepo = "C:\Users\saraa\Proy\AD-DelitosBog" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
 	lineageTag: 516f6b3e-f285-4c0e-8a84-4cb285fd7786
 
+/// Lee un CSV de outputs/ en la copia local del repositorio (ruta relativa a outputs).
+expression LeerSalida =
+		(ruta as text) as table =>
+		let
+		    Origen = File.Contents(RutaRepo & "\outputs\" & ruta),
+		    Csv = Csv.Document(Origen, [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+		    Tabla = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])
+		in
+		    Tabla
+	lineageTag: da20bb17-2376-4679-b159-b163fcd69d09
+

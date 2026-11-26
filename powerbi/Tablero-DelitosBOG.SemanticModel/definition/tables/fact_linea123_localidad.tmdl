@@ -4,17 +4,17 @@ table fact_linea123_localidad
 
 	column anio
 		dataType: int64
-		lineageTag: 662ee539-84d2-46c5-8b74-6c51d0458d39
-		sourceColumn: anio
 		isHidden
+		lineageTag: 662ee539-84d2-46c5-8b74-6c51d0458d39
 		summarizeBy: none
+		sourceColumn: anio
 
 	column mes
 		dataType: int64
-		lineageTag: ab13d545-7a5a-4e61-b1c3-11a6c99ff01e
-		sourceColumn: mes
 		isHidden
+		lineageTag: ab13d545-7a5a-4e61-b1c3-11a6c99ff01e
 		summarizeBy: none
+		sourceColumn: mes
 
 	column localidad
 		dataType: string
@@ -28,9 +28,9 @@ table fact_linea123_localidad
 
 	column anio_mes
 		dataType: string
+		isHidden
 		lineageTag: 38743df5-f044-43b2-b0de-b1e34074bed1
 		sourceColumn: anio_mes
-		isHidden
 
 	partition fact_linea123_localidad = m
 		mode: import

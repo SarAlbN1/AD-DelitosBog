@@ -5,8 +5,8 @@ table fact_linea123_upz
 	column anio
 		dataType: int64
 		lineageTag: 929426b0-09f5-463f-8b7e-d652fe020f53
-		sourceColumn: anio
 		summarizeBy: none
+		sourceColumn: anio
 
 	column localidad
 		dataType: string

@@ -5,7 +5,7 @@ El tablero vive en `powerbi/` como proyecto de Power BI (`.pbip`):
 
 * `Tablero-DelitosBOG.SemanticModel/` — el modelo en TMDL: tablas, relaciones y medidas. Lee las
   hojas de `outputs/powerbi/` en la copia local del repositorio (parámetro `RutaRepo`).
-* `Tablero-DelitosBOG.Report/` — las páginas. Las escribe **este script**, de modo que el diseño
+* `Tablero-DelitosBOG.Report/` — las cuatro páginas (Panorama, ¿Cuándo?, ¿Dónde?, Pronóstico). Las escribe **este script**, de modo que el diseño
   también es código: cambiar un visual es cambiar una línea aquí y volver a ejecutar.
 
 Nada de lo que se dibuja trae cifras escritas a mano: todos los visuales usan las medidas del modelo.
@@ -33,7 +33,7 @@ W, H = 1280, 720
 
 # Paleta: fondo azul noche y una escala de calor (amarillo → rojo) para lo que mide hurto.
 FONDO, PANEL, BORDE = "#0F172A", "#1E293B", "#334155"
-TEXTO, TEXTO_2 = "#F1F5F9", "#94A3B8"
+TEXTO, TEXTO_2 = "#FFFFFF", "#E2E8F0"
 CALOR = ("#FDE68A", "#F97316", "#B91C1C")
 ACENTO = "#F97316"
 
@@ -121,7 +121,7 @@ class Pagina:
         vc = contenedor or {}
         if titulo is not None:
             vc["title"] = [{"properties": {"show": lit(True), "text": lit(titulo),
-                                           "fontColor": color(TEXTO), "fontSize": lit(11.0)}}]
+                                           "fontColor": color(TEXTO), "fontSize": lit(14.0), "bold": lit(True)}}]
         if panel:
             vc.setdefault("background", [{"properties": {"show": lit(True), "color": color(PANEL),
                                                          "transparency": lit(0.0)}}])
@@ -174,11 +174,27 @@ class Pagina:
     def tarjeta(self, etiqueta, x, y, w, h, medida, rotulo, color_valor=TEXTO):
         self.agregar(etiqueta, "card", x, y, w, h,
                      roles={"Values": [(med(medida), rotulo)]},
-                     objetos={"labels": [{"properties": {"color": color(color_valor), "fontSize": lit(24.0)}}],
+                     objetos={"labels": [{"properties": {"color": color(color_valor), "fontSize": lit(30.0)}}],
                               "categoryLabels": [{"properties": {"show": lit(True), "color": color(TEXTO_2),
-                                                                 "fontSize": lit(10.0)}}]},
+                                                                 "fontSize": lit(13.0)}}],
+                              "wordWrap": [{"properties": {"show": lit(True)}}]},
                      contenedor={"border": [{"properties": {"show": lit(True), "color": color(ACENTO),
                                                             "radius": lit(10.0)}}]})
+
+    def hallazgo(self, etiqueta, x, y, w, h, medida):
+        """Una frase calculada por una medida: el dato convertido en información."""
+        self.agregar(etiqueta, "card", x, y, w, h,
+                     roles={"Values": [(med(medida), "Hallazgo")]},
+                     objetos={"labels": [{"properties": {"color": color(TEXTO), "fontSize": lit(14.0)}}],
+                              "categoryLabels": [{"properties": {"show": lit(False)}}],
+                              "wordWrap": [{"properties": {"show": lit(True)}}]},
+                     contenedor={"background": [{"properties": {"show": lit(True), "color": color("#3B1D0E"),
+                                                                "transparency": lit(0.0)}}],
+                                 "border": [{"properties": {"show": lit(True), "color": color(ACENTO),
+                                                            "radius": lit(10.0)}}],
+                                 "title": [{"properties": {"show": lit(True), "text": lit("▶ Hallazgo"),
+                                                           "fontColor": color(ACENTO), "fontSize": lit(12.0),
+                                                           "bold": lit(True)}}]})
 
     def fila_tarjetas(self, y, tarjetas, h=92):
         n = len(tarjetas)
@@ -189,204 +205,195 @@ class Pagina:
 
 
 def ejes():
-    return {"categoryAxis": [{"properties": {"labelColor": color(TEXTO_2), "showAxisTitle": lit(False)}}],
+    return {"categoryAxis": [{"properties": {"labelColor": color(TEXTO_2), "showAxisTitle": lit(False),
+                                             "fontSize": lit(12.0)}}],
             "valueAxis": [{"properties": {"labelColor": color(TEXTO_2), "gridlineColor": color(BORDE),
-                                          "showAxisTitle": lit(False)}}],
-            "legend": [{"properties": {"labelColor": color(TEXTO_2), "position": lit("Top")}}]}
+                                          "showAxisTitle": lit(False), "fontSize": lit(12.0)}}],
+            "legend": [{"properties": {"labelColor": color(TEXTO), "position": lit("Top"), "fontSize": lit(12.0)}}]}
 
 
 def con_etiquetas(obj, formato=None):
     obj = dict(obj)
-    obj["labels"] = [{"properties": {"show": lit(True), "color": color(TEXTO), "fontSize": lit(9.0)}}]
+    obj["labels"] = [{"properties": {"show": lit(True), "color": color(TEXTO), "fontSize": lit(12.0)}}]
     return obj
 
 
 # ---------------------------------------------------------------- páginas
+ANIOS_SERIE = [2020, 2021, 2022, 2023, 2024, 2025]
+TABLA = {"columnHeaders": [{"properties": {"fontColor": color(TEXTO), "backColor": color(BORDE),
+                                           "fontSize": lit(12.0)}}],
+         "values": [{"properties": {"fontColorPrimary": color(TEXTO), "backColorPrimary": color(PANEL),
+                                    "fontColorSecondary": color(TEXTO), "backColorSecondary": color(FONDO),
+                                    "fontSize": lit(12.0), "wordWrap": lit(True)}}],
+         "total": [{"properties": {"fontColor": color(TEXTO), "backColor": color(BORDE), "fontSize": lit(12.0)}}]}
+
+
+def barras_calor(medida):
+    return {"dataPoint": [{"properties": {"fill": gradiente(med(medida))}, "selector": selector_todos(med(medida))}]}
+
+
 def pagina_panorama():
     p = Pagina("panorama", "Hurto a personas en Bogotá",
-               "Panorama 2020–2025 · Policía Nacional (registro de víctimas). Serie hasta el 31-oct-2025")
+               "¿Cuánto hurto hay y hacia dónde va? · Policía Nacional, víctimas registradas 2020 – oct. 2025")
     p.encabezado()
     p.fila_tarjetas(80, [("Víctimas", "Víctimas registradas"), ("Media diaria", "Víctimas por día"),
-                         ("Var. media diaria vs año anterior", "Variación vs año anterior"),
+                         ("Var. media diaria vs año anterior", "Variación frente al año anterior"),
                          ("Máximo diario", "Día con más víctimas"),
-                         ("Efecto festivo %", "Lunes festivo vs laborable"),
                          ("Registros Policía auditados", "Registros auditados (mín. 500.000)")])
-    p.agregar("serie_mensual", "lineChart", 20, 184, 820, 262,
-              titulo="Víctimas por día, mes a mes",
+    p.hallazgo("hallazgo", 20, 184, 1240, 64, "Hallazgo tendencia")
+    p.agregar("serie_mensual", "lineChart", 20, 260, 820, 260,
+              titulo="Víctimas por día, mes a mes: la caída de 2020 y el pico de 2023",
               roles={"Category": [(col("dim_periodo", "fecha_mes"), "Mes")],
                      "Y": [(med("Media diaria"), "Víctimas por día")]},
               objetos={**ejes(), "dataPoint": [{"properties": {"fill": color(ACENTO)}}],
                        "lineStyles": [{"properties": {"strokeWidth": lit(3)}}]})
-    p.agregar("tipo_dia", "donutChart", 852, 184, 408, 262,
-              titulo="¿Qué tipo de día? Reparto de las víctimas",
-              roles={"Category": [(col("dim_calendario", "tipo_dia"), "Tipo de día")],
-                     "Y": [(med("Víctimas"), "Víctimas")]},
-              objetos={"legend": [{"properties": {"show": lit(True), "labelColor": color(TEXTO_2),
-                                                  "position": lit("Bottom")}}],
-                       "labels": [{"properties": {"color": color(TEXTO), "labelStyle": lit("Category, percent of total")}}]})
-    p.agregar("dia_semana", "clusteredColumnChart", 20, 458, 410, 246,
-              titulo="Perfil semanal: víctimas por día",
-              roles={"Category": [(col("dim_calendario", "dia_semana"), "Día")],
-                     "Y": [(med("Media diaria"), "Víctimas por día")]},
-              orden=(col("dim_calendario", "dia_semana"), "Ascending"),
-              objetos=con_etiquetas({**ejes(), "dataPoint": [
-                  {"properties": {"fill": gradiente(med("Media diaria"))},
-                   "selector": selector_todos(med("Media diaria"))}]}))
-    p.agregar("por_anio", "clusteredBarChart", 442, 458, 410, 246,
-              titulo="Media diaria por año (se compara la media, no el total)",
+    p.agregar("por_anio", "clusteredColumnChart", 852, 260, 408, 260,
+              titulo="Media diaria por año",
               roles={"Category": [(col("dim_anio", "anio_texto"), "Año")],
                      "Y": [(med("Media diaria"), "Víctimas por día")]},
               orden=(col("dim_anio", "anio_texto"), "Ascending"),
-              objetos=con_etiquetas({**ejes(), "dataPoint": [
-                  {"properties": {"fill": gradiente(med("Media diaria"))},
-                   "selector": selector_todos(med("Media diaria"))}]}),
-              filtros=[filtro_en("dim_anio", "anio", [2020, 2021, 2022, 2023, 2024, 2025], "f_anios_serie")])
-    p.agregar("tabla_anios", "tableEx", 864, 458, 396, 246,
-              titulo="Total y media diaria, lado a lado",
-              roles={"Values": [(col("dim_anio", "anio_texto"), "Año"), (med("Víctimas"), "Total"),
-                                (med("Media diaria"), "Por día"), (med("Días con datos"), "Días"),
-                                (col("dim_anio", "nota_anio"), "Lectura")]},
-              objetos={"columnHeaders": [{"properties": {"fontColor": color(TEXTO), "backColor": color(BORDE)}}],
-                       "values": [{"properties": {"fontColorPrimary": color(TEXTO), "backColorPrimary": color(PANEL),
-                                                  "fontColorSecondary": color(TEXTO), "backColorSecondary": color(FONDO)}}],
-                       "total": [{"properties": {"fontColor": color(TEXTO), "backColor": color(BORDE)}}]},
-              filtros=[filtro_en("dim_anio", "anio", [2020, 2021, 2022, 2023, 2024, 2025], "f_anios_tabla")])
+              objetos=con_etiquetas({**ejes(), **barras_calor("Media diaria")}),
+              filtros=[filtro_en("dim_anio", "anio", ANIOS_SERIE, "f_anios_serie")])
+    p.agregar("tabla_anios", "tableEx", 20, 532, 820, 172,
+              titulo="Total y media diaria lado a lado (2025 llega hasta el 31 de octubre)",
+              roles={"Values": [(col("dim_anio", "anio_texto"), "Año"), (med("Víctimas"), "Víctimas"),
+                                (med("Media diaria"), "Por día"),
+                                (med("Var. media diaria vs año anterior"), "Vs. año anterior"),
+                                (col("dim_anio", "nota_anio"), "Cómo leerlo")]},
+              objetos=TABLA, filtros=[filtro_en("dim_anio", "anio", ANIOS_SERIE, "f_anios_tabla")])
+    p.agregar("tipo_dia", "donutChart", 852, 532, 408, 172,
+              titulo="Víctimas según el tipo de día",
+              roles={"Category": [(col("dim_calendario", "tipo_dia"), "Tipo de día")],
+                     "Y": [(med("Víctimas"), "Víctimas")]},
+              objetos={"legend": [{"properties": {"show": lit(True), "labelColor": color(TEXTO),
+                                                  "position": lit("Right"), "fontSize": lit(12.0)}}],
+                       "labels": [{"properties": {"color": color(TEXTO), "fontSize": lit(12.0),
+                                                  "labelStyle": lit("Percent of total")}}]})
+    return p
+
+
+def pagina_patrones():
+    p = Pagina("patrones", "¿Cuándo ocurre el hurto?",
+               "Patrones por día de la semana, mes y festivos · media de víctimas por día")
+    p.encabezado()
+    p.fila_tarjetas(80, [("Día pico", "Día de la semana con más hurtos"), ("Mes pico", "Mes con más hurtos"),
+                         ("Efecto festivo %", "Lunes festivo frente a laborable"),
+                         ("Media fin de semana vs laborable %", "Fin de semana frente a laborable")])
+    p.hallazgo("hallazgo_semana", 20, 184, 614, 76, "Hallazgo semana")
+    p.hallazgo("hallazgo_festivo", 646, 184, 614, 76, "Hallazgo festivo")
+    mm = med("Media diaria")
+    p.agregar("matriz_semana_mes", "pivotTable", 20, 272, 760, 432,
+              titulo="Mapa de calor: víctimas por día según día de la semana y mes",
+              roles={"Rows": [(col("dim_calendario", "dia_semana"), "Día")],
+                     "Columns": [(col("dim_periodo", "mes_corto"), "Mes")],
+                     "Values": [(mm, "Víctimas por día")]},
+              objetos={"values": [{"properties": {"backColor": gradiente(mm), "fontColorPrimary": color("#111827")},
+                                   "selector": selector_todos(mm)},
+                                  {"properties": {"fontColorPrimary": color("#111827"), "fontSize": lit(12.0)}}],
+                       "columnHeaders": [{"properties": {"fontColor": color(TEXTO), "backColor": color(BORDE),
+                                                         "fontSize": lit(12.0)}}],
+                       "rowHeaders": [{"properties": {"fontColor": color(TEXTO), "backColor": color(PANEL),
+                                                      "fontSize": lit(12.0)}}],
+                       "subTotals": [{"properties": {"rowSubtotals": lit(False), "columnSubtotals": lit(False)}}],
+                       "grid": [{"properties": {"rowPadding": lit(10)}}]})
+    p.agregar("dia_semana", "clusteredColumnChart", 792, 272, 468, 210,
+              titulo="Víctimas por día de la semana",
+              roles={"Category": [(col("dim_calendario", "dia_semana"), "Día")], "Y": [(mm, "Víctimas por día")]},
+              orden=(col("dim_calendario", "dia_semana"), "Ascending"),
+              objetos=con_etiquetas({**ejes(), **barras_calor("Media diaria")}))
+    p.agregar("mes", "clusteredColumnChart", 792, 494, 468, 210,
+              titulo="Víctimas por día según el mes",
+              roles={"Category": [(col("dim_periodo", "mes_corto"), "Mes")], "Y": [(mm, "Víctimas por día")]},
+              orden=(col("dim_periodo", "mes_corto"), "Ascending"),
+              objetos={**ejes(), **barras_calor("Media diaria")})
     return p
 
 
 def pagina_territorio():
-    p = Pagina("territorio", "Mapa de calor del hurto por localidad",
-               "Llamadas de hurto a la Línea 123 por 100.000 habitantes (personas-año, SDP). "
-               "Se colorea la tasa, no el conteo")
+    p = Pagina("territorio", "¿Dónde ocurre el hurto?",
+               "Mapa de calor por localidad · llamadas de hurto a la Línea 123 por 100.000 habitantes, 2020–2025")
     p.encabezado()
-    p.fila_tarjetas(80, [("Llamadas 123", "Llamadas de hurto (Línea 123)"),
+    p.fila_tarjetas(80, [("Llamadas 123", "Llamadas por hurto (Línea 123)"),
                          ("Tasa ciudad por 100k", "Tasa de la ciudad por 100.000 hab."),
-                         ("Peso 10 primeras UPZ %", "Peso de las 10 UPZ con más llamadas"),
-                         ("UPZ con llamadas", "UPZ con llamadas")])
+                         ("Localidad tasa máxima", "Localidad con la tasa más alta"),
+                         ("Peso 10 primeras UPZ %", "Peso de las 10 UPZ con más llamadas")])
+    p.hallazgo("hallazgo", 20, 184, 1240, 76, "Hallazgo territorio")
     tasa = med("Tasa 123 por 100k")
-    p.agregar("mapa_calor", "azureMap", 20, 184, 620, 520,
+    prom = lambda c: {"Aggregation": {"Expression": col("dim_localidad", c), "Function": 1}}
+    p.agregar("mapa_calor", "azureMap", 20, 272, 620, 432,
               titulo="Mapa de calor: tasa por localidad (área urbana)",
               roles={"Category": [(col("dim_localidad", "localidad"), "Localidad")],
                      # Con Ubicación en el visual, latitud y longitud deben ir agregadas (promedio).
-                     "Y": [({"Aggregation": {"Expression": col("dim_localidad", "latitud"), "Function": 1}},
-                            "Latitud")],
-                     "X": [({"Aggregation": {"Expression": col("dim_localidad", "longitud"), "Function": 1}},
-                            "Longitud")],
+                     "Y": [(prom("latitud"), "Latitud")],
+                     "X": [(prom("longitud"), "Longitud")],
                      "Size": [(tasa, "Tasa por 100.000")],
                      "Tooltips": [(med("Llamadas 123"), "Llamadas"), (med("Puesto por tasa"), "Puesto por tasa"),
-                                  (med("Puesto por conteo"), "Puesto por conteo"),
-                                  (col("dim_localidad", "lectura"), "Lectura")]},
+                                  (med("Puesto por conteo"), "Puesto por conteo")]},
               objetos={"heatMapLayer": [{"properties": {
-                           "show": lit(True), "heatMapUseSize": lit(True), "heatMapRadius": lit(1500.0),
+                           "show": lit(True), "heatMapUseSize": lit(True), "heatMapRadius": lit(1800.0),
                            "heatMapRadiusUnit": lit("meters"), "heatMapIntensity": lit(1.0),
                            "heatMapColorLow": color(CALOR[0]), "heatMapColorCenter": color(CALOR[1]),
-                           "heatMapColorHigh": color(CALOR[2]), "mapTransparency": lit(25.0)}}],
-                       "bubbleLayer": [{"properties": {"show": lit(True), "bubbleRadius": lit(6.0),
-                                                       "minBubbleRadius": lit(4.0), "maxRadius": lit(18.0),
+                           "heatMapColorHigh": color(CALOR[2]), "mapTransparency": lit(20.0)}}],
+                       "bubbleLayer": [{"properties": {"show": lit(True), "bubbleRadius": lit(7.0),
+                                                       "minBubbleRadius": lit(5.0), "maxRadius": lit(20.0),
                                                        "mapTransparency": lit(10.0)}}],
                        "dataPoint": [{"properties": {"fill": gradiente(tasa)}, "selector": selector_todos(tasa)}],
-                       "categoryLabels": [{"properties": {"show": lit(True), "color": color("#0F172A"),
-                                                          "fontSize": lit(8.0)}}],
+                       "categoryLabels": [{"properties": {"show": lit(True), "color": color(TEXTO),
+                                                          "fontSize": lit(10.0)}}],
                        "mapControls": [{"properties": {"autoZoom": lit(True), "defaultStyle": lit("grayscale_dark"),
                                                        "showNavigationControls": lit(True)}}],
                        "legend": [{"properties": {"show": lit(False)}}]},
               filtros=[filtro_en("dim_localidad", "en_mapa_urbano", [1], "f_urbano")])
-    p.agregar("matriz_calor", "pivotTable", 652, 184, 608, 300,
-              titulo="Matriz de calor: tasa por localidad y año",
+    p.agregar("matriz_calor", "pivotTable", 652, 272, 608, 268,
+              titulo="Tasa por localidad y año (más rojo = más llamadas por habitante)",
               roles={"Rows": [(col("dim_localidad", "localidad"), "Localidad")],
                      "Columns": [(col("dim_anio", "anio"), "Año")],
                      "Values": [(tasa, "Tasa")]},
-              objetos={"values": [{"properties": {"backColor": gradiente(tasa), "fontColorPrimary": color("#0F172A")},
+              objetos={"values": [{"properties": {"backColor": gradiente(tasa), "fontColorPrimary": color("#111827")},
                                    "selector": selector_todos(tasa)},
-                                  {"properties": {"fontColorPrimary": color("#0F172A"), "fontSize": lit(8.0)}}],
-                       "columnHeaders": [{"properties": {"fontColor": color(TEXTO), "backColor": color(BORDE)}}],
-                       "rowHeaders": [{"properties": {"fontColor": color(TEXTO), "backColor": color(PANEL), "fontSize": lit(8.0)}}],
+                                  {"properties": {"fontColorPrimary": color("#111827"), "fontSize": lit(11.0)}}],
+                       "columnHeaders": [{"properties": {"fontColor": color(TEXTO), "backColor": color(BORDE),
+                                                         "fontSize": lit(11.0)}}],
+                       "rowHeaders": [{"properties": {"fontColor": color(TEXTO), "backColor": color(PANEL),
+                                                      "fontSize": lit(11.0)}}],
                        "subTotals": [{"properties": {"rowSubtotals": lit(False), "columnSubtotals": lit(False)}}]},
-              filtros=[filtro_en("dim_anio", "anio", [2020, 2021, 2022, 2023, 2024, 2025], "f_anios_pob")])
-    p.agregar("barras_tasa", "clusteredBarChart", 652, 496, 300, 208,
-              titulo="Tasa por 100.000 hab. (orden de la tasa)",
-              roles={"Category": [(col("dim_localidad", "localidad"), "Localidad")], "Y": [(tasa, "Tasa")]},
-              orden=(tasa, "Descending"),
-              objetos={**ejes(), "dataPoint": [{"properties": {"fill": gradiente(tasa)}, "selector": selector_todos(tasa)}]})
-    p.agregar("dona_lectura", "donutChart", 964, 496, 296, 208,
-              titulo="Llamadas según el tipo de localidad",
-              roles={"Category": [(col("dim_localidad", "lectura"), "Tipo")], "Y": [(med("Llamadas 123"), "Llamadas")]},
-              objetos={"legend": [{"properties": {"show": lit(True), "labelColor": color(TEXTO_2), "position": lit("Bottom")}}],
-                       "labels": [{"properties": {"color": color(TEXTO), "labelStyle": lit("Percent of total")}}]})
-    p.texto("nota_mapa", 24, 676, 612, 24, [(
-        "Sumapaz (rural) y «SIN LOCALIZACION» quedan fuera del mapa. Kennedy es 1.ª por conteo y 13.ª por tasa.",
-        8, TEXTO_2, False)])
+              filtros=[filtro_en("dim_anio", "anio", ANIOS_SERIE, "f_anios_pob")])
+    p.agregar("conteo_vs_tasa", "tableEx", 652, 552, 608, 152,
+              titulo="Conteo frente a tasa: el tamaño no es el riesgo",
+              roles={"Values": [(col("dim_localidad", "localidad"), "Localidad"),
+                                (med("Llamadas 123"), "Llamadas"), (med("Puesto por conteo"), "Puesto conteo"),
+                                (tasa, "Tasa"), (med("Puesto por tasa"), "Puesto tasa"),
+                                (col("dim_localidad", "lectura"), "Lectura")]},
+              orden=(med("Llamadas 123"), "Descending"),
+              objetos=TABLA)
+    p.texto("nota_mapa", 24, 684, 612, 22, [(
+        "Sumapaz (rural) y «SIN LOCALIZACION» quedan fuera del mapa.", 9, TEXTO_2, False)])
     return p
 
 
-def pagina_fuentes():
-    p = Pagina("fuentes", "Fuentes y calidad de los datos",
-               "Cada fuente mide algo distinto: se comparan por índice (media mensual = 100) y nunca se suman")
-    p.encabezado()
-    p.fila_tarjetas(80, [("Registros Policía auditados", "Registros Policía (2020–2025)"),
-                         ("Fuentes que sostienen el mínimo", "Fuentes con ≥ 500.000 registros"),
-                         ("Media diaria periodo completo", "Víctimas por día (periodo completo)")])
-    p.agregar("indice_fuentes", "lineChart", 20, 184, 820, 300,
-              titulo="Índice mensual por fuente (media comparable = 100)",
-              roles={"Category": [(col("dim_periodo", "fecha_mes"), "Mes")],
-                     "Series": [(col("fact_fuentes_mensual", "fuente"), "Fuente")],
-                     "Y": [(med("Índice de la fuente"), "Índice")]},
-              objetos=ejes(),
-              filtros=[filtro_en("dim_periodo", "comparable", ["sí"], "f_comparable")])
-    p.agregar("embudo", "funnel", 852, 184, 408, 300,
-              titulo="Embudo del preprocesamiento (Policía)",
-              roles={"Category": [(col("qa_embudo", "paso"), "Paso")],
-                     "Y": [({"Aggregation": {"Expression": col("qa_embudo", "filas_despues"), "Function": 0}},
-                            "Filas")]},
-              objetos={"dataPoint": [{"properties": {"fill": color(ACENTO)}}],
-                       "labels": [{"properties": {"color": color(TEXTO)}}],
-                       "categoryAxis": [{"properties": {"color": color(TEXTO_2)}}]},
-              filtros=[filtro_en("qa_embudo", "fuente", ["policia_registro"], "f_policia")])
-    tabla_obj = {"columnHeaders": [{"properties": {"fontColor": color(TEXTO), "backColor": color(BORDE)}}],
-                 "values": [{"properties": {"fontColorPrimary": color(TEXTO), "backColorPrimary": color(PANEL),
-                                            "fontColorSecondary": color(TEXTO), "backColorSecondary": color(FONDO),
-                                            "wordWrap": lit(True)}}]}
-    p.agregar("tabla_fuentes", "tableEx", 20, 496, 620, 208, titulo="Las cuatro fuentes",
-              roles={"Values": [(col("dim_fuente", "fuente"), "Fuente"),
-                                (col("dim_fuente", "unidad_observacion"), "Unidad de observación"),
-                                (col("dim_fuente", "filas_auditadas"), "Filas auditadas"),
-                                (col("dim_fuente", "sostiene_el_minimo"), "≥ 500.000"),
-                                (col("dim_fuente", "es_la_serie_objetivo"), "Serie objetivo")]},
-              objetos=tabla_obj)
-    p.agregar("tabla_reglas", "tableEx", 652, 496, 608, 208, titulo="Reglas de lectura del tablero",
-              roles={"Values": [(col("qa_reglas", "regla"), "Regla"), (col("qa_reglas", "por_que"), "Por qué")]},
-              objetos=tabla_obj)
-    return p
-
-
-def pagina_modelado():
-    p = Pagina("modelado", "Pronóstico: la barra a batir",
-               "Comparadores de referencia sobre los últimos 184 días y validación rodante (6 pliegues)")
+def pagina_pronostico():
+    p = Pagina("pronostico", "¿Se puede anticipar el hurto?",
+               "Modelos de pronóstico diario evaluados en los últimos 184 días de la serie (2025)")
     p.encabezado(con_filtro=False)
-    p.fila_tarjetas(80, [("Barra MAE", "MAE de la barra (víctimas/día)"),
-                         ("Mejor comparador", "Mejor comparador"),
-                         ("MASE de la barra", "MASE de la barra")])
-    mae = {"Aggregation": {"Expression": col("fact_comparadores", "MAE"), "Function": 3}}
-    p.agregar("mae_comparador", "clusteredBarChart", 20, 184, 500, 300,
-              titulo="MAE por comparador (menor es mejor)",
-              roles={"Category": [(col("fact_comparadores", "comparador"), "Comparador")], "Y": [(mae, "MAE")]},
+    p.fila_tarjetas(80, [("Mejor modelo", "Mejor modelo"), ("MAE mejor modelo", "Error medio (víctimas/día)"),
+                         ("Mejora sobre la barra %", "Menos error que la referencia"),
+                         ("Barra MAE", "Error de la referencia ingenua")])
+    p.hallazgo("hallazgo", 20, 184, 1240, 64, "Hallazgo modelo")
+    p.agregar("real_vs_pronostico", "lineChart", 20, 260, 820, 444,
+              titulo="Lo observado frente al pronóstico del mejor modelo (ETS), últimos 184 días",
+              roles={"Category": [(col("fact_predicciones", "fecha"), "Fecha")],
+                     "Y": [(med("Observado"), "Observado"), (med("Pronóstico"), "Pronóstico ETS")]},
+              objetos={**ejes(), "lineStyles": [{"properties": {"strokeWidth": lit(2)}}]},
+              filtros=[filtro_en("fact_predicciones", "modelo", ["ets"], "f_ets"),
+                       filtro_en("fact_predicciones", "pliegue", ["final"], "f_final")])
+    mae = med("MAE modelo")
+    p.agregar("mae_modelos", "clusteredBarChart", 852, 260, 408, 444,
+              titulo="Error medio por modelo (menor es mejor)",
+              roles={"Category": [(col("fact_modelos", "nombre"), "Modelo")],
+                     "Series": [(col("fact_modelos", "familia"), "Familia")],
+                     "Y": [(mae, "MAE")]},
               orden=(mae, "Ascending"),
-              objetos=con_etiquetas({**ejes(), "dataPoint": [{"properties": {"fill": color(ACENTO)}}]}))
-    p.agregar("pliegues", "lineChart", 532, 184, 728, 300,
-              titulo="MAE por pliegue de validación rodante: el orden no es estable",
-              roles={"Category": [(col("fact_validacion_rodante", "fin_evaluacion"), "Fin de la evaluación")],
-                     "Series": [(col("fact_validacion_rodante", "comparador"), "Comparador")],
-                     "Y": [(med("MAE pliegue"), "MAE")]},
-              objetos=ejes())
-    p.agregar("tabla_metricas", "tableEx", 20, 496, 1240, 208, titulo="Métricas de evaluación final",
-              roles={"Values": [(col("fact_comparadores", "comparador"), "Comparador"),
-                                ({"Aggregation": {"Expression": col("fact_comparadores", "MAE"), "Function": 3}}, "MAE"),
-                                ({"Aggregation": {"Expression": col("fact_comparadores", "RMSE"), "Function": 3}}, "RMSE"),
-                                ({"Aggregation": {"Expression": col("fact_comparadores", "MAPE"), "Function": 3}}, "MAPE %"),
-                                ({"Aggregation": {"Expression": col("fact_comparadores", "MASE"), "Function": 3}}, "MASE")]},
-              objetos={"columnHeaders": [{"properties": {"fontColor": color(TEXTO), "backColor": color(BORDE)}}],
-                       "values": [{"properties": {"fontColorPrimary": color(TEXTO), "backColorPrimary": color(PANEL),
-                                                  "fontColorSecondary": color(TEXTO), "backColorSecondary": color(FONDO)}}]})
+              objetos=con_etiquetas(ejes()))
     return p
 
 
@@ -421,7 +428,7 @@ def tema():
             "callout": {"fontSize": 24, "fontFace": "Segoe UI Semibold", "color": TEXTO},
             "title": {"fontSize": 11, "fontFace": "Segoe UI Semibold", "color": TEXTO},
             "header": {"fontSize": 11, "fontFace": "Segoe UI Semibold", "color": TEXTO},
-            "label": {"fontSize": 9, "fontFace": "Segoe UI", "color": TEXTO_2}},
+            "label": {"fontSize": 11, "fontFace": "Segoe UI", "color": TEXTO_2}},
         "visualStyles": {
             "*": {"*": {
                 "background": [{"show": True, "color": {"solid": {"color": PANEL}}, "transparency": 0}],
@@ -456,7 +463,7 @@ def escribir(ruta: Path, datos):
 def main() -> int:
     if DEF.exists():
         shutil.rmtree(DEF)
-    paginas = [pagina_panorama(), pagina_territorio(), pagina_fuentes(), pagina_modelado()]
+    paginas = [pagina_panorama(), pagina_patrones(), pagina_territorio(), pagina_pronostico()]
 
     escribir(REPORTE / "definition.pbir",
              {"version": "4.0", "datasetReference": {"byPath": {"path": f"../{NOMBRE}.SemanticModel"}}})
@@ -480,8 +487,8 @@ def main() -> int:
     for p in paginas:
         escribir(DEF / "pages" / p.nombre / "page.json", {
             "$schema": f"{ESQ}/page/1.0.0/schema.json", "name": p.nombre, "displayName": {
-                "panorama": "Panorama", "territorio": "Territorio", "fuentes": "Fuentes y calidad",
-                "modelado": "Modelado"}[p.nombre],
+                "panorama": "Panorama", "patrones": "¿Cuándo?", "territorio": "¿Dónde?",
+                "pronostico": "Pronóstico"}[p.nombre],
             "displayOption": "FitToPage", "height": H, "width": W,
             "objects": {"background": [{"properties": {"color": color(FONDO), "transparency": lit(0.0)}}],
                         "outspace": [{"properties": {"color": color("#0B1220"), "transparency": lit(0.0)}}]}})

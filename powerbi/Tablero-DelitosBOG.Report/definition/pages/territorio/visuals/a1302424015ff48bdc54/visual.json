@@ -3,11 +3,11 @@
   "name": "a1302424015ff48bdc54",
   "position": {
     "x": 652,
-    "y": 184,
-    "z": 7000,
+    "y": 272,
+    "z": 8000,
     "width": 608,
-    "height": 300,
-    "tabOrder": 7000
+    "height": 268,
+    "tabOrder": 8000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -134,7 +134,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#0F172A'"
+                      "Value": "'#111827'"
                     }
                   }
                 }
@@ -159,7 +159,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#0F172A'"
+                      "Value": "'#111827'"
                     }
                   }
                 }
@@ -168,7 +168,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "8.0D"
+                  "Value": "11.0D"
                 }
               }
             }
@@ -183,7 +183,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F1F5F9'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
@@ -199,6 +199,13 @@
                   }
                 }
               }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "11.0D"
+                }
+              }
             }
           }
         }
@@ -211,7 +218,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F1F5F9'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
@@ -231,7 +238,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "8.0D"
+                  "Value": "11.0D"
                 }
               }
             }
@@ -273,7 +280,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Matriz de calor: tasa por localidad y año'"
+                  "Value": "'Tasa por localidad y año (más rojo = más llamadas por habitante)'"
                 }
               }
             },
@@ -282,7 +289,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F1F5F9'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
@@ -291,7 +298,14 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "11.0D"
+                  "Value": "14.0D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }

@@ -15,14 +15,14 @@ table dim_periodo
 	column anio
 		dataType: int64
 		lineageTag: 898a9038-37a4-4d67-9b13-16092b8b9614
-		sourceColumn: anio
 		summarizeBy: none
+		sourceColumn: anio
 
 	column mes
 		dataType: int64
 		lineageTag: fba99b66-6d25-494c-bb2e-11570be51196
-		sourceColumn: mes
 		summarizeBy: none
+		sourceColumn: mes
 
 	column nombre_mes
 		dataType: string

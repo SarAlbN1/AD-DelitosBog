@@ -20,10 +20,10 @@
               {
                 "textRuns": [
                   {
-                    "value": "Mapa de calor del hurto por localidad",
+                    "value": "¿Dónde ocurre el hurto?",
                     "textStyle": {
                       "fontSize": "20pt",
-                      "color": "#F1F5F9",
+                      "color": "#FFFFFF",
                       "fontWeight": "bold"
                     }
                   }
@@ -32,10 +32,10 @@
               {
                 "textRuns": [
                   {
-                    "value": "Llamadas de hurto a la Línea 123 por 100.000 habitantes (personas-año, SDP). Se colorea la tasa, no el conteo",
+                    "value": "Mapa de calor por localidad · llamadas de hurto a la Línea 123 por 100.000 habitantes, 2020–2025",
                     "textStyle": {
                       "fontSize": "10pt",
-                      "color": "#94A3B8"
+                      "color": "#E2E8F0"
                     }
                   }
                 ]

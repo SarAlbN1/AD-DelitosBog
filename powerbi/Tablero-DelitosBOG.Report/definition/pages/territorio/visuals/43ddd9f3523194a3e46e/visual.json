@@ -24,12 +24,12 @@
                       "Entity": "Medidas"
                     }
                   },
-                  "Property": "UPZ con llamadas"
+                  "Property": "Peso 10 primeras UPZ %"
                 }
               },
-              "queryRef": "Medidas.UPZ con llamadas",
-              "nativeQueryRef": "UPZ con llamadas",
-              "displayName": "UPZ con llamadas"
+              "queryRef": "Medidas.Peso 10 primeras UPZ %",
+              "nativeQueryRef": "Peso 10 primeras UPZ %",
+              "displayName": "Peso de las 10 UPZ con más llamadas"
             }
           ]
         }
@@ -44,7 +44,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F1F5F9'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
@@ -53,7 +53,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "24.0D"
+                  "Value": "30.0D"
                 }
               }
             }
@@ -75,7 +75,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#94A3B8'"
+                      "Value": "'#E2E8F0'"
                     }
                   }
                 }
@@ -84,7 +84,20 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10.0D"
+                  "Value": "13.0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "wordWrap": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }

@@ -10,8 +10,8 @@ table fact_fuentes_mensual
 	column anio
 		dataType: int64
 		lineageTag: 1c7a48c7-1313-4513-8b48-8bdeeca7994a
-		sourceColumn: anio
 		summarizeBy: none
+		sourceColumn: anio
 
 	column fuente
 		dataType: string

@@ -4,9 +4,9 @@ table fact_serie_diaria
 
 	column fecha
 		dataType: dateTime
+		isHidden
 		lineageTag: 6d025d48-a9f5-4554-bd87-ce5a176a149f
 		sourceColumn: fecha
-		isHidden
 
 	column victimas
 		dataType: double

@@ -3,11 +3,11 @@
   "name": "2706ec618342c5d02fe5",
   "position": {
     "x": 852,
-    "y": 184,
-    "z": 9000,
+    "y": 532,
+    "z": 11000,
     "width": 408,
-    "height": 262,
-    "tabOrder": 9000
+    "height": 172,
+    "tabOrder": 11000
   },
   "visual": {
     "visualType": "donutChart",
@@ -70,7 +70,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#94A3B8'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
@@ -79,7 +79,14 @@
             "position": {
               "expr": {
                 "Literal": {
-                  "Value": "'Bottom'"
+                  "Value": "'Right'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12.0D"
                 }
               }
             }
@@ -94,16 +101,23 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F1F5F9'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12.0D"
                 }
               }
             },
             "labelStyle": {
               "expr": {
                 "Literal": {
-                  "Value": "'Category, percent of total'"
+                  "Value": "'Percent of total'"
                 }
               }
             }
@@ -125,7 +139,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'¿Qué tipo de día? Reparto de las víctimas'"
+                  "Value": "'Víctimas según el tipo de día'"
                 }
               }
             },
@@ -134,7 +148,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F1F5F9'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
@@ -143,7 +157,14 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "11.0D"
+                  "Value": "14.0D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }

@@ -15,8 +15,8 @@ table qa_reglas
 	column n
 		dataType: int64
 		lineageTag: 0d33241e-b49b-413e-b03c-c23e4089cb0e
-		sourceColumn: n
 		summarizeBy: none
+		sourceColumn: n
 
 	partition qa_reglas = m
 		mode: import

@@ -35,8 +35,8 @@ table qa_embudo
 	column orden
 		dataType: int64
 		lineageTag: 36ea355f-dee0-4bc0-aa61-18e77a467b08
-		sourceColumn: orden
 		summarizeBy: none
+		sourceColumn: orden
 
 	partition qa_embudo = m
 		mode: import

@@ -2,15 +2,15 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "e4ccd0ebd448eab9bf60",
   "position": {
-    "x": 442,
-    "y": 458,
-    "z": 11000,
-    "width": 410,
-    "height": 246,
-    "tabOrder": 11000
+    "x": 852,
+    "y": 260,
+    "z": 9000,
+    "width": 408,
+    "height": 260,
+    "tabOrder": 9000
   },
   "visual": {
-    "visualType": "clusteredBarChart",
+    "visualType": "clusteredColumnChart",
     "drillFilterOtherVisuals": true,
     "query": {
       "queryState": {
@@ -81,7 +81,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#94A3B8'"
+                      "Value": "'#E2E8F0'"
                     }
                   }
                 }
@@ -91,6 +91,13 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12.0D"
                 }
               }
             }
@@ -105,7 +112,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#94A3B8'"
+                      "Value": "'#E2E8F0'"
                     }
                   }
                 }
@@ -128,6 +135,13 @@
                   "Value": "false"
                 }
               }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12.0D"
+                }
+              }
             }
           }
         }
@@ -140,7 +154,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#94A3B8'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
@@ -150,6 +164,13 @@
               "expr": {
                 "Literal": {
                   "Value": "'Top'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12.0D"
                 }
               }
             }
@@ -239,7 +260,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F1F5F9'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
@@ -248,7 +269,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "9.0D"
+                  "Value": "12.0D"
                 }
               }
             }
@@ -270,7 +291,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Media diaria por año (se compara la media, no el total)'"
+                  "Value": "'Media diaria por año'"
                 }
               }
             },
@@ -279,7 +300,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F1F5F9'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
@@ -288,7 +309,14 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "11.0D"
+                  "Value": "14.0D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }

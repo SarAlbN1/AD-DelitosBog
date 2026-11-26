@@ -23,7 +23,7 @@
                     "value": "Hurto a personas en Bogotá",
                     "textStyle": {
                       "fontSize": "20pt",
-                      "color": "#F1F5F9",
+                      "color": "#FFFFFF",
                       "fontWeight": "bold"
                     }
                   }
@@ -32,10 +32,10 @@
               {
                 "textRuns": [
                   {
-                    "value": "Panorama 2020–2025 · Policía Nacional (registro de víctimas). Serie hasta el 31-oct-2025",
+                    "value": "¿Cuánto hurto hay y hacia dónde va? · Policía Nacional, víctimas registradas 2020 – oct. 2025",
                     "textStyle": {
                       "fontSize": "10pt",
-                      "color": "#94A3B8"
+                      "color": "#E2E8F0"
                     }
                   }
                 ]

@@ -1,0 +1,57 @@
+/// Evaluación final (184 días) de comparadores de referencia y modelos estadísticos (#42, #43).
+table fact_modelos
+	lineageTag: 8b46e8ca-ac79-4e77-a091-f6db996f6478
+
+	column modelo
+		dataType: string
+		lineageTag: 613d3a88-f9b3-4791-bfbe-92890bcf0160
+		sourceColumn: modelo
+
+	column n
+		dataType: int64
+		lineageTag: 9c38928b-0274-4f28-9358-4bb343fa5b72
+		summarizeBy: none
+		sourceColumn: n
+
+	column MAE
+		dataType: double
+		lineageTag: 74522069-897d-4f46-8927-a0553fb8f474
+		sourceColumn: MAE
+
+	column RMSE
+		dataType: double
+		lineageTag: 809a92cf-5171-4d44-a543-bac937d1332e
+		sourceColumn: RMSE
+
+	column MAPE
+		dataType: double
+		lineageTag: 800cf751-24cd-4ed3-803e-dbd583db9d7d
+		sourceColumn: MAPE
+
+	column MASE
+		dataType: double
+		lineageTag: 22bc93eb-c580-4401-a1a3-49d63d49a20c
+		sourceColumn: MASE
+
+	column familia
+		dataType: string
+		lineageTag: 7c1a290d-89d6-4755-a88c-d0aec2c68496
+		sourceColumn: familia
+
+	column nombre
+		dataType: string
+		lineageTag: f8f9749b-9276-40e9-8178-6f6a677da3bf
+		sourceColumn: nombre
+
+	partition fact_modelos = m
+		mode: import
+		source =
+				let
+				    T = LeerSalida("modelado/experimentos.csv"),
+				    Sel = Table.SelectColumns(T, {"modelo", "n", "MAE", "RMSE", "MAPE", "MASE"}),
+				    Tipos = Table.TransformColumnTypes(Sel, {{"modelo", type text}, {"n", Int64.Type}, {"MAE", type number}, {"RMSE", type number}, {"MAPE", type number}, {"MASE", type number}}, "en-US"),
+				    Familia = Table.AddColumn(Tipos, "familia", each if Text.StartsWith([modelo], "referencia") then "Referencia" else "Estadístico", type text),
+				    Nombre = Table.AddColumn(Familia, "nombre", each let m = Text.AfterDelimiter([modelo], ".") in Text.Replace(Text.Replace(Text.Replace(Text.Replace(Text.Replace(Text.Replace(m, "media_movil_", "Media móvil "), "ingenuo_estacional", "Ingenuo estacional"), "ingenuo", "Ingenuo"), "sarima", "SARIMA"), "ets", "ETS"), "_desde_2021", " (desde 2021)"), type text)
+				in
+				    Nombre
+

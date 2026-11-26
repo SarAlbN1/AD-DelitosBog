@@ -3,11 +3,11 @@
   "name": "fbcd5ca0b7fd4782563e",
   "position": {
     "x": 20,
-    "y": 184,
-    "z": 6000,
+    "y": 272,
+    "z": 7000,
     "width": 620,
-    "height": 520,
-    "tabOrder": 6000
+    "height": 432,
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "azureMap",
@@ -146,21 +146,6 @@
               "queryRef": "Medidas.Puesto por conteo",
               "nativeQueryRef": "Puesto por conteo",
               "displayName": "Puesto por conteo"
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_localidad"
-                    }
-                  },
-                  "Property": "lectura"
-                }
-              },
-              "queryRef": "dim_localidad.lectura",
-              "nativeQueryRef": "lectura",
-              "displayName": "Lectura"
             }
           ]
         }
@@ -187,7 +172,7 @@
             "heatMapRadius": {
               "expr": {
                 "Literal": {
-                  "Value": "1500.0D"
+                  "Value": "1800.0D"
                 }
               }
             },
@@ -241,7 +226,7 @@
             "mapTransparency": {
               "expr": {
                 "Literal": {
-                  "Value": "25.0D"
+                  "Value": "20.0D"
                 }
               }
             }
@@ -261,21 +246,21 @@
             "bubbleRadius": {
               "expr": {
                 "Literal": {
-                  "Value": "6.0D"
+                  "Value": "7.0D"
                 }
               }
             },
             "minBubbleRadius": {
               "expr": {
                 "Literal": {
-                  "Value": "4.0D"
+                  "Value": "5.0D"
                 }
               }
             },
             "maxRadius": {
               "expr": {
                 "Literal": {
-                  "Value": "18.0D"
+                  "Value": "20.0D"
                 }
               }
             },
@@ -372,7 +357,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#0F172A'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
@@ -381,7 +366,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "8.0D"
+                  "Value": "10.0D"
                 }
               }
             }
@@ -452,7 +437,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F1F5F9'"
+                      "Value": "'#FFFFFF'"
                     }
                   }
                 }
@@ -461,7 +446,14 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "11.0D"
+                  "Value": "14.0D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }

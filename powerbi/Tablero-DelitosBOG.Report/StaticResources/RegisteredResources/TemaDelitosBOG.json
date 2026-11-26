@@ -11,7 +11,7 @@
     "#E879F9"
   ],
   "background": "#0F172A",
-  "foreground": "#F1F5F9",
+  "foreground": "#FFFFFF",
   "tableAccent": "#F97316",
   "good": "#34D399",
   "neutral": "#FACC15",
@@ -23,22 +23,22 @@
     "callout": {
       "fontSize": 24,
       "fontFace": "Segoe UI Semibold",
-      "color": "#F1F5F9"
+      "color": "#FFFFFF"
     },
     "title": {
       "fontSize": 11,
       "fontFace": "Segoe UI Semibold",
-      "color": "#F1F5F9"
+      "color": "#FFFFFF"
     },
     "header": {
       "fontSize": 11,
       "fontFace": "Segoe UI Semibold",
-      "color": "#F1F5F9"
+      "color": "#FFFFFF"
     },
     "label": {
-      "fontSize": 9,
+      "fontSize": 11,
       "fontFace": "Segoe UI",
-      "color": "#94A3B8"
+      "color": "#E2E8F0"
     }
   },
   "visualStyles": {
@@ -70,7 +70,7 @@
           {
             "fontColor": {
               "solid": {
-                "color": "#F1F5F9"
+                "color": "#FFFFFF"
               }
             },
             "fontSize": 11
@@ -80,7 +80,7 @@
           {
             "labelColor": {
               "solid": {
-                "color": "#94A3B8"
+                "color": "#E2E8F0"
               }
             }
           }
@@ -89,7 +89,7 @@
           {
             "labelColor": {
               "solid": {
-                "color": "#94A3B8"
+                "color": "#E2E8F0"
               }
             },
             "gridlineColor": {
@@ -103,7 +103,7 @@
           {
             "labelColor": {
               "solid": {
-                "color": "#94A3B8"
+                "color": "#E2E8F0"
               }
             }
           }
@@ -117,7 +117,7 @@
             },
             "foreground": {
               "solid": {
-                "color": "#94A3B8"
+                "color": "#E2E8F0"
               }
             }
           }
