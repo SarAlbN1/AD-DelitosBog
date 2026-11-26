@@ -157,19 +157,26 @@ Las filas de los archivos de la Policía son las de todo el país, antes de los 
 
 \section{Reproducibilidad}\label{ap:reproducibilidad}
 
-El código, los resultados agregados y el informe están en el repositorio \url{https://github.com/SarAlbN1/AD-DelitosBog}. La versión de la primera entrega es la etiqueta \texttt{entrega-1}. Los datos no se publican en el repositorio: se descargan con las instrucciones de \texttt{data/README.md}, y la guía completa está en \texttt{docs/REPRODUCIBILIDAD.md}. Esa guía distingue dos modos:
+% Pendiente (#57): añadir la etiqueta de la entrega final cuando se publique. No se cita antes.
+El código, los resultados agregados y el informe están en el repositorio \url{https://github.com/SarAlbN1/AD-DelitosBog}. Las versiones entregadas son las etiquetas \texttt{entrega-1} (primera entrega) y \texttt{entrega-2} (segunda entrega). Los datos no se publican en el repositorio: se descargan con las instrucciones de \texttt{data/README.md}, y la guía completa está en \texttt{docs/REPRODUCIBILIDAD.md}. Esa guía distingue dos modos:
 \begin{itemize}
   \item \textbf{copia congelada:} con los mismos archivos que usó el equipo, deben coincidir las huellas de la tabla~\ref{tab:archivos} y todas las cifras de \texttt{outputs/auditoria/};
   \item \textbf{descarga nueva:} con los datos del día, se reproduce el procedimiento, pero las huellas y las cifras pueden cambiar.
 \end{itemize}
 
-Las cifras y figuras de la sección~\ref{sec:datos} se regeneran en este orden:
+Las cifras y figuras de las secciones~\ref{sec:datos} a~\ref{sec:metodologia} se regeneran en este orden (secciones 4 y 5 de \texttt{docs/REPRODUCIBILIDAD.md}):
 \begin{enumerate}
   \item \texttt{scripts/policia\_\allowbreak{}registro\_\allowbreak{}a\_\allowbreak{}csv.py} convierte los archivos anuales de la Policía a CSV;
   \item \texttt{scripts/\allowbreak{}auditoria\_\allowbreak{}datasets.py} produce dos carpetas: \texttt{outputs/auditoria/}, con la Línea 123 y Fiscalía, y \texttt{outputs/auditoria\_\allowbreak{}policia/}, con el registro de la Policía y el agregado de MinDefensa;
   \item \texttt{scripts/serie\_\allowbreak{}objetivo\_\allowbreak{}policia.py} construye la serie objetivo en \texttt{outputs/serie\_\allowbreak{}objetivo/};
-  \item \texttt{scripts/fiscalia\_\allowbreak{}modalidades.py} y \texttt{scripts/figuras\_\allowbreak{}informe.py} producen las tablas y figuras de \texttt{outputs/informe/}.
+  \item \texttt{scripts/\allowbreak{}poblacion\_\allowbreak{}localidad.py} prepara en \texttt{outputs/\allowbreak{}poblacion/} la población por localidad y año;
+  \item \texttt{scripts/\allowbreak{}preprocesamiento.py} deja en \texttt{outputs/\allowbreak{}preprocesamiento/} la evidencia de los conjuntos procesados;
+  \item \texttt{scripts/\allowbreak{}features.py} construye las predictoras y su diccionario (\texttt{outputs/features/});
+  \item \texttt{scripts/fiscalia\_\allowbreak{}modalidades.py} y \texttt{scripts/figuras\_\allowbreak{}informe.py} producen las tablas y figuras de \texttt{outputs/informe/};
+  \item \texttt{scripts/\allowbreak{}eda.py} produce el análisis exploratorio (\texttt{outputs/eda/});
+  \item \texttt{scripts/\allowbreak{}baselines.py} calcula los comparadores triviales y la validación de origen rodante (\texttt{outputs/baselines/}).
 \end{enumerate}
+% Pendiente (#46): añadir los scripts de modelado (scripts/modelado/) cuando la sección 9 esté integrada.
 Las figuras de \texttt{Informe/figuras/} son copias de las de \texttt{outputs/} y hay que volver a copiarlas si se regeneran.
 
 \section{Tablas complementarias}\label{ap:tablas}
