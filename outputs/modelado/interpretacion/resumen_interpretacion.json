@@ -1,0 +1,135 @@
+{
+  "pregunta": "en qué variables se apoyan los modelos de árboles de #45; descriptivo, no causal",
+  "metodo": "importancia por permutación agrupada; aumento del MAE; semilla fija",
+  "repeticiones_evaluacion": 50,
+  "repeticiones_por_pliegue": 25,
+  "semilla": 42,
+  "grupos": {
+    "dia_semana": [
+      "dia_semana",
+      "fin_de_semana"
+    ],
+    "festivos": [
+      "festivo",
+      "vispera_de_festivo",
+      "dia_despues_de_festivo",
+      "puente"
+    ],
+    "calendario_lento": [
+      "anio",
+      "mes",
+      "dia_del_mes",
+      "semana_del_anio",
+      "quincena"
+    ],
+    "anio_2020": [
+      "anio_atipico_2020"
+    ],
+    "rezago_1": [
+      "rezago_1"
+    ],
+    "rezagos_semanales": [
+      "rezago_7",
+      "rezago_14",
+      "rezago_28"
+    ],
+    "medias_previas": [
+      "media_previa_7",
+      "desv_previa_7",
+      "media_previa_28",
+      "desv_previa_28",
+      "tendencia_7_28"
+    ]
+  },
+  "hiperparametros": {
+    "gradiente_histogramas": {
+      "max_iter": 300,
+      "learning_rate": 0.05,
+      "max_leaf_nodes": 15,
+      "min_samples_leaf": 7,
+      "max_depth": 8
+    },
+    "bosque_aleatorio": {
+      "n_estimators": 300,
+      "min_samples_leaf": 3,
+      "max_features": 0.5
+    }
+  },
+  "cotejo_con_45": {
+    "gradiente_histogramas": {
+      "MAE_reproducido": 32.7186,
+      "MAE_ajuste_45": 32.72,
+      "coincide": true
+    },
+    "bosque_aleatorio": {
+      "MAE_reproducido": 34.2247,
+      "MAE_ajuste_45": 34.22,
+      "coincide": true
+    }
+  },
+  "eda": {
+    "viernes_sobre_domingo_pct": 64.55,
+    "lunes_festivo_vs_laborable_pct": -37.8
+  },
+  "perfil_evaluacion_viernes_sobre_domingo_pct": {
+    "observado": 42.49,
+    "gradiente_histogramas": 47.28,
+    "bosque_aleatorio": 39.72
+  },
+  "respuesta_al_festivo_en_entrenamiento": {
+    "gradiente_histogramas": {
+      "n_lunes_laborables": 218,
+      "n_lunes_festivos": 56,
+      "laborable_a_festivo_pct": -37.27,
+      "festivo_a_laborable_pct": 59.04
+    },
+    "bosque_aleatorio": {
+      "n_lunes_laborables": 218,
+      "n_lunes_festivos": 56,
+      "laborable_a_festivo_pct": -30.17,
+      "festivo_a_laborable_pct": 46.99
+    }
+  },
+  "puesto_por_grupo": {
+    "gradiente_histogramas": {
+      "evaluacion": [
+        "rezago_1",
+        "dia_semana",
+        "rezagos_semanales",
+        "festivos",
+        "calendario_lento",
+        "medias_previas",
+        "anio_2020"
+      ],
+      "pliegues": [
+        "rezago_1",
+        "dia_semana",
+        "festivos",
+        "rezagos_semanales",
+        "calendario_lento",
+        "medias_previas",
+        "anio_2020"
+      ]
+    },
+    "bosque_aleatorio": {
+      "evaluacion": [
+        "rezago_1",
+        "rezagos_semanales",
+        "dia_semana",
+        "festivos",
+        "medias_previas",
+        "calendario_lento",
+        "anio_2020"
+      ],
+      "pliegues": [
+        "rezagos_semanales",
+        "rezago_1",
+        "dia_semana",
+        "festivos",
+        "medias_previas",
+        "calendario_lento",
+        "anio_2020"
+      ]
+    }
+  }
+}
