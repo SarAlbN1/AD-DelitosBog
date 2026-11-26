@@ -233,21 +233,38 @@ entrenamiento: ni el criterio ni la especificación elegida cambian.
 | SARIMA | 33,53 | 0,630 | 36,16 | 43,11 |
 | SARIMA, desde 2021 | 33,78 | 0,635 | 36,27 | 43,55 |
 | ETS | 32,96 | 0,620 | 36,70 | 44,61 |
-| ETS, desde 2021 | 32,99 | 0,620 | 52,72 | 84,00 |
+| ETS, desde 2021 | 32,99 | 0,620 | 37,04 | 44,60 |
 
 La variante «desde 2021» es la prueba de sensibilidad a 2020: en un modelo de series no se pueden
 quitar las filas de un año sin romper la continuidad, así que se entrena desde el 2021-01-01. En la
 evaluación final casi no cambia nada.
 
-### Un hallazgo que no es un error: el criterio de información elige mal en un pliegue
+### Un defecto corregido: el arranque del filtrado en las variantes «desde 2021»
 
-`ETS, desde 2021` tiene MAE 84,00 y 79,51 en los pliegues 2 y 3, frente a 36 y 31 del ETS normal. Se
-investigó: en esos pliegues la selección elige la estacionalidad **multiplicativa**, que gana por
-AICc en entrenamiento (12.352 frente a 12.363 de la aditiva) y falla fuera de muestra. Todos los
-ajustes convergen y no hay fuga. Es el criterio de información, no el código: **ganar en
-entrenamiento no predice ganar en el pliegue siguiente en esta serie**. No se corrige aquí porque
-cambiar el criterio de selección es una decisión de #45, y porque ocultarlo mejoraría la tabla y
-empeoraría la lectura. Es un dato para #45 y #46.
+La primera versión de esta tabla daba a `ETS, desde 2021` un MAE de 84,00 y 79,51 en los pliegues 2 y
+3, frente a 36 y 31 del ETS normal, y lo atribuía al criterio de información. **Esa explicación era
+falsa.** La revisión del #130 encontró la causa y se comprobó aparte: era un defecto del código.
+
+El modelo se ajustaba con el entrenamiento desde el 2021-01-01, pero los parámetros se aplicaban a la
+serie desde el 2020-01-01. En ETS los parámetros incluyen los **estados iniciales** (nivel y
+estacionalidad), estimados para el 2021-01-01. Aplicados desde 2020, el filtrado arrancaba con un
+estado que no correspondía a esa fecha y luego atravesaba el confinamiento. Con estacionalidad
+multiplicativa el error no se disipa.
+
+| Pliegue | Configuración | Filtrado desde 2020 (antes) | Filtrado desde 2021 (ahora) |
+|---|---|---|---|
+| 2 | multiplicativa | 84,00 | **35,67** |
+| 3 | multiplicativa | 79,51 | **33,79** |
+
+Mismos parámetros y misma configuración elegida: solo cambia dónde arranca el filtrado. Ahora los dos
+predictores arrancan en el primer día del entrenamiento, y una prueba exige que, con `desde`, la
+predicción no dependa de los días anteriores. Esa prueba falla con el código anterior, **también en
+SARIMA**, que tenía el mismo patrón con un efecto menor. Sin `desde` nada cambia, y la evaluación
+final de las cuatro variantes tampoco.
+
+**Lo que ya no se sostiene** de lo escrito antes: que ganar por AICc en entrenamiento no predice
+ganar fuera de muestra en esta serie. La evidencia citada no lo mostraba. Si ocurre o no es lo que
+pone a prueba la regla `mae_interno` del #45.
 
 ### La selección por pliegue puede cambiar entre plataformas
 
@@ -263,15 +280,14 @@ cuando dos candidatas están casi empatadas por AICc:
 | ETS desde 2021, 4 | estacionalidad aditiva | multiplicativa | 29,82 → 29,85 |
 | ETS desde 2021, 6 | multiplicativa | aditiva | 39,42 → **43,22** |
 
-(Cifras de la revisión de Juan Diego en Windows.) En esos casos el AICc de la ganadora difiere en
+(Cifras de la revisión de Juan Diego en Windows, medidas **antes** del arreglo de arriba para las
+variantes «desde 2021»; no se repitieron con el código corregido.) En esos casos el AICc de la ganadora difiere en
 menos de 4 puntos entre las dos corridas, así que una diferencia numérica mínima del optimizador
 basta para cambiar la ganadora. Las cifras finales no se mueven, pero **las métricas por pliegue sí**,
 y el #45 va a ajustar sobre ellas. Se recomienda una regla de desempate para el #45 (por ejemplo,
 preferir la configuración más simple si ΔAICc < 2), de modo que la selección no dependa del entorno.
 
-Dos precisiones a lo escrito arriba: «la multiplicativa falla fuera de muestra» vale para los
-pliegues 2 y 3 de `ETS, desde 2021`, no en general (en el pliegue 6 la aditiva sale peor); y «salidas
-idénticas byte a byte» se cumple en la misma máquina.
+Una precisión a lo escrito arriba: «salidas idénticas byte a byte» se cumple en la misma máquina.
 
 ### Diagnóstico de residuos (Ljung-Box, ajuste final con el entrenamiento)
 
