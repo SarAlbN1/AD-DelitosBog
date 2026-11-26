@@ -41,12 +41,12 @@ mes,julio,#43,ets,31,27.94,-4.83
 mes,agosto,#43,ets,31,32.1,1.04
 mes,septiembre,#43,ets,30,34.54,-4.56
 mes,octubre,#43,ets,31,39.01,10.91
-mes,mayo,#43,ets_desde_2021,31,27.59,11.14
-mes,junio,#43,ets_desde_2021,30,37.14,-1.84
-mes,julio,#43,ets_desde_2021,31,28.2,-4.33
-mes,agosto,#43,ets_desde_2021,31,31.55,1.16
-mes,septiembre,#43,ets_desde_2021,30,34.79,-4.01
-mes,octubre,#43,ets_desde_2021,31,38.85,10.61
+mes,mayo,#43,ets_desde_2021,31,27.49,11.08
+mes,junio,#43,ets_desde_2021,30,37.21,-1.85
+mes,julio,#43,ets_desde_2021,31,28.22,-4.32
+mes,agosto,#43,ets_desde_2021,31,31.57,1.13
+mes,septiembre,#43,ets_desde_2021,30,34.81,-4.0
+mes,octubre,#43,ets_desde_2021,31,38.82,10.59
 mes,mayo,#44,bosque_aleatorio,31,42.25,30.24
 mes,junio,#44,bosque_aleatorio,30,32.23,-13.23
 mes,julio,#44,bosque_aleatorio,31,28.96,-6.88
@@ -158,7 +158,7 @@ dia_semana,jueves,#43,sarima_desde_2021,27,28.41,2.01
 dia_semana,viernes,#43,sarima_desde_2021,27,32.87,-10.05
 dia_semana,sábado,#43,sarima_desde_2021,26,35.92,6.65
 dia_semana,domingo,#43,sarima_desde_2021,26,37.62,-3.73
-dia_semana,lunes,#43,sarima_desde_2021,26,36.44,12.72
+dia_semana,lunes,#43,sarima_desde_2021,26,36.44,12.73
 dia_semana,martes,#43,sarima_desde_2021,26,28.22,3.74
 dia_semana,miércoles,#43,sarima_desde_2021,26,37.21,0.8
 dia_semana,jueves,#43,ets,27,26.86,1.19
@@ -168,13 +168,13 @@ dia_semana,domingo,#43,ets,26,35.53,-5.34
 dia_semana,lunes,#43,ets,26,37.33,8.87
 dia_semana,martes,#43,ets,26,30.66,5.44
 dia_semana,miércoles,#43,ets,26,36.01,0.86
-dia_semana,jueves,#43,ets_desde_2021,27,26.62,3.62
-dia_semana,viernes,#43,ets_desde_2021,27,30.34,-3.38
-dia_semana,sábado,#43,ets_desde_2021,26,34.09,11.9
-dia_semana,domingo,#43,ets_desde_2021,26,35.43,-9.45
-dia_semana,lunes,#43,ets_desde_2021,26,36.93,6.53
-dia_semana,martes,#43,ets_desde_2021,26,31.54,4.88
-dia_semana,miércoles,#43,ets_desde_2021,26,36.31,1.3
+dia_semana,jueves,#43,ets_desde_2021,27,26.62,3.55
+dia_semana,viernes,#43,ets_desde_2021,27,30.34,-3.71
+dia_semana,sábado,#43,ets_desde_2021,26,34.04,11.59
+dia_semana,domingo,#43,ets_desde_2021,26,35.43,-9.51
+dia_semana,lunes,#43,ets_desde_2021,26,36.94,6.68
+dia_semana,martes,#43,ets_desde_2021,26,31.55,5.17
+dia_semana,miércoles,#43,ets_desde_2021,26,36.34,1.53
 dia_semana,jueves,#44,bosque_aleatorio,27,33.63,6.73
 dia_semana,viernes,#44,bosque_aleatorio,27,36.79,-15.76
 dia_semana,sábado,#44,bosque_aleatorio,26,36.69,8.82
@@ -273,8 +273,8 @@ tipo_dia,festivo,#43,sarima_desde_2021,8,72.06,58.27
 tipo_dia,no festivo,#43,sarima_desde_2021,176,32.04,-0.9
 tipo_dia,festivo,#43,ets,8,68.95,55.79
 tipo_dia,no festivo,#43,ets,176,31.32,-0.52
-tipo_dia,festivo,#43,ets_desde_2021,8,67.01,54.28
-tipo_dia,no festivo,#43,ets_desde_2021,176,31.44,-0.19
+tipo_dia,festivo,#43,ets_desde_2021,8,67.14,54.34
+tipo_dia,no festivo,#43,ets_desde_2021,176,31.44,-0.21
 tipo_dia,festivo,#44,bosque_aleatorio,8,36.68,-11.76
 tipo_dia,no festivo,#44,bosque_aleatorio,176,34.11,2.93
 tipo_dia,festivo,#44,bosque_aleatorio_sin_2020,8,39.84,-16.11
