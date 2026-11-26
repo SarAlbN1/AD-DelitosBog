@@ -154,9 +154,16 @@ def candidatas_estadisticas(familia: str, tr: pd.Series) -> list[dict]:
 
 def predecir_estadistico(familia: str, espec, tr: pd.Series, y: pd.Series,
                          indice: pd.DatetimeIndex) -> pd.Series:
-    """Ajusta con `tr` y predice `indice` un paso adelante con parámetros fijos (como en #43)."""
+    """Ajusta con `tr` y predice `indice` un paso adelante con parámetros fijos (como en #43).
+
+    El filtrado arranca en el primer día de `tr`, no en el de `y`. Los parámetros del ETS incluyen
+    los estados iniciales, estimados para el inicio de `tr`: si se aplicaran desde 2020 a un modelo
+    entrenado desde 2021, el nivel y la estacionalidad de partida serían los de otra fecha, y con
+    estacionalidad multiplicativa el error no se disipa (pliegues 2 y 3: MAE 84,0 y 79,5 en lugar
+    de 35,7 y 33,8). Sin `desde`, `tr` empieza donde `y` y nada cambia.
+    """
     est._silenciar()
-    hasta = y[:indice.max()]
+    hasta = y[tr.index.min():indice.max()]
     if familia == "sarima":
         m = est._ajustar_sarima(tr, *espec)
         return m.apply(est._con_frecuencia(hasta)).fittedvalues.reindex(indice)

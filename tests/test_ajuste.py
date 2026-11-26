@@ -130,6 +130,21 @@ def test_regla_mae_interno_solo_usa_el_tramo(monkeypatch):
         assert fin_y == tr.index.max() and fin_pred == tr.index.max()
 
 
+@pytest.mark.parametrize("familia", ["ets", "sarima"])
+def test_con_desde_la_prediccion_no_depende_de_lo_anterior(familia):
+    """La variante de sensibilidad no puede usar los días previos a `desde`, ni para elegir ni
+    para arrancar el filtrado (el defecto que llevaba el ETS desde 2021 a MAE 84 en un pliegue)."""
+    cfg, y = Cfg(), serie(700)
+    desde = pd.Timestamp("2020-07-01")
+    tr_p, ev_p = pliegues(cfg, y.index)[0].mascaras(y.index)
+    indice = y.index[ev_p][:5]
+    otra = y.copy()
+    otra[otra.index < desde] = otra[otra.index < desde] * 0.5 + 40
+    a = ajuste.predictor_estadistico(familia, "minimo", desde)(y, None, tr_p, indice)
+    b = ajuste.predictor_estadistico(familia, "minimo", desde)(otra, None, tr_p, indice)
+    pd.testing.assert_series_equal(a, b)
+
+
 @pytest.mark.parametrize("regla", ["minimo", "desempate"])
 def test_predictor_ets_ajustado_pasa_sin_fuga(regla):
     cfg, y = Cfg(), serie(700)
