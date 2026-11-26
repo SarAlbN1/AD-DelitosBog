@@ -99,3 +99,61 @@ def test_trazabilidad_acepta_lo_guardado_y_rechaza_una_cifra_distinta(tmp_path):
     _escribir_referencia(tmp_path / "mal", m.round(2), delta=0.5)
     with pytest.raises(RuntimeError, match="no coincide"):
         cmp.comprobar_trazabilidad(m, tmp_path / "mal")
+
+
+# ------------------------------------------------------------------ la regresión lineal (#144)
+def _tabla(filas):
+    """Una `tabla_comparativa` mínima: (origen, modelo, MAE medio por pliegues)."""
+    return pd.DataFrame([{"origen": o, "modelo": m, "sensibilidad": m.endswith(cmp.SUFIJOS_SENSIBILIDAD),
+                          "familia": "comparador" if o == "#42" else cmp.FAMILIA[
+                              m.replace("_sin_2020", "").replace("_desde_2021", "")],
+                          "MAE_medio_pliegues": v} for o, m, v in filas])
+
+
+def test_la_regresion_es_un_origen_con_su_familia():
+    assert cmp.ORIGENES["regresion"] == "#144"
+    assert cmp.FAMILIA["regresion_lineal"] == "regresión"
+    assert "#144" in cmp.FINALES and "#45" in cmp.FINALES
+
+
+def test_los_principales_incluyen_la_regresion_y_prefieren_lo_ajustado():
+    t = _tabla([("#42", "ingenuo_estacional", 58.0),
+                ("#43", "ets", 30.0), ("#45", "ets", 36.7), ("#45", "sarima", 36.1),
+                ("#44", "bosque_aleatorio", 20.0), ("#45", "bosque_aleatorio", 34.9),
+                ("#45", "gradiente_histogramas", 30.8),
+                ("#144", "regresion_lineal", 34.6), ("#144", "regresion_lineal_sin_2020", 34.5)])
+    p = cmp.principales(t)
+    # uno por familia, siempre de los finales (#45 o #144), nunca la primera versión de #43 o #44
+    assert p == [("#45", "sarima"), ("#45", "gradiente_histogramas"), ("#144", "regresion_lineal")]
+
+
+def test_los_principales_sin_ajuste_siguen_funcionando_sin_la_regresion():
+    t = _tabla([("#42", "ingenuo_estacional", 58.0), ("#43", "ets", 36.7), ("#44", "bosque_aleatorio", 34.9)])
+    assert cmp.principales(t) == [("#43", "ets"), ("#44", "bosque_aleatorio")]
+
+
+def test_dm_entre_modelos_incluye_los_pares_con_la_regresion():
+    rng = np.random.default_rng(0)
+    fechas = pd.date_range("2025-05-01", periods=60)
+    real = rng.normal(350, 40, 60)
+    filas = []
+    for origen, modelo, sd in [("#42", "ingenuo_estacional", 60), ("#45", "ets", 30),
+                               ("#45", "gradiente_histogramas", 28), ("#144", "regresion_lineal", 35)]:
+        filas += [{"origen": origen, "modelo": modelo, "pliegue": "final", "fecha": f, "real": r,
+                   "prediccion": r + rng.normal(0, sd)} for f, r in zip(fechas, real)]
+    pred = pd.DataFrame(filas)
+    t = _tabla([("#42", "ingenuo_estacional", 1.0), ("#45", "ets", 1.0),
+                ("#45", "gradiente_histogramas", 1.0), ("#144", "regresion_lineal", 1.0)])
+    d = cmp.dm_entre_modelos(pred, t)
+    assert len(d) == 3                                              # 3 modelos finales, 3 pares
+    assert any("regresion_lineal (#144)" in x for x in d["modelo_b"].tolist() + d["modelo_a"].tolist())
+    assert not any("#42" in x for x in d["modelo_a"].tolist() + d["modelo_b"].tolist())
+
+
+@pytest.mark.parametrize("origen,modelo,esperado", [
+    ("#144", "regresion_lineal", "Regresión lineal (ajustada)"),
+    ("#45", "gradiente_histogramas", "Gradiente por histogramas (ajustado)"),
+    ("#43", "ets", "ETS #43"),
+])
+def test_etiquetas_de_las_figuras(origen, modelo, esperado):
+    assert cmp.etiqueta(origen, modelo) == esperado
