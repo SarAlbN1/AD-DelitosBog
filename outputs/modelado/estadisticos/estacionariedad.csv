@@ -1,0 +1,5 @@
+serie,n,adf_p,kpss_p,estacionaria
+nivel,1947,0.091,0.01,False
+diferencia_1,1946,0.0,0.1,True
+diferencia_estacional_7,1940,0.0,0.1,True
+diferencia_1_y_estacional_7,1939,0.0,0.1,True
