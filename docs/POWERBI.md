@@ -3,9 +3,32 @@
 Las hojas las genera `python scripts/exportar_powerbi.py` desde las salidas versionadas. Quedan en
 `outputs/powerbi/`: un CSV por tabla y un `tablero_powerbi.xlsx` con una hoja por tabla.
 
-**El `.pbix` no está aquí, y no es un olvido.** Requiere Power BI Desktop, que solo corre en Windows
-y no se puede generar desde la línea de órdenes. Lo que sí es reproducible —las hojas, el modelo,
-las medidas y el guion— está en este documento. Con eso, montar el tablero es trabajo mecánico.
+## 0. El tablero ya montado: `powerbi/Tablero-DelitosBOG.pbip`
+
+El tablero está versionado como **proyecto de Power BI** (`.pbip`), no como `.pbix` binario. Todo es
+texto y se revisa en Git:
+
+| Carpeta | Qué contiene | Cómo se produce |
+|---|---|---|
+| `powerbi/Tablero-DelitosBOG.SemanticModel/` | El modelo en TMDL: 18 tablas, 11 relaciones y las medidas DAX | Se edita en Power BI Desktop y se guarda |
+| `powerbi/Tablero-DelitosBOG.Report/` | Las cuatro páginas (Panorama, Territorio, Fuentes y calidad, Modelado) | `python scripts/generar_reporte_powerbi.py` |
+| `outputs/powerbi/geo_localidades.csv`, `localidades_bogota.topojson` | Centroides y polígonos de las localidades para el mapa | `python scripts/geo_localidades_powerbi.py` (necesita `data/raw/localidades.geojson`, ver `data/README.md`) |
+
+**Flujo de datos.** `data/raw` → scripts del proyecto → `outputs/powerbi/*.csv` (versionados en
+`main`) → Power Query lee esos CSV de la **copia local del repositorio** con la función `LeerHoja` →
+modelo → páginas. No hay orígenes web, así que Power BI no pide niveles de privacidad.
+
+**Para abrirlo en otra máquina:**
+
+1. Clonar el repositorio y quedarse en `main` (o hacer `git pull`).
+2. Abrir `powerbi/Tablero-DelitosBOG.pbip` con Power BI Desktop.
+3. Si la carpeta del repositorio no es `C:\Users\saraa\Proy\AD-DelitosBog`: **Transformar datos →
+   Editar parámetros → `RutaRepo`** con la ruta propia, y **Actualizar**.
+
+El mapa usa el visual **Azure Maps** con capa de calor ponderada por la tasa. Si la organización lo
+desactiva, la matriz de calor de la misma página muestra la misma lectura.
+
+**Lo que no se versiona:** `powerbi/**/.pbi/localSettings.json` y `cache.abf` (en `powerbi/.gitignore`).
 
 ## 1. Cargar
 
@@ -171,7 +194,10 @@ el informe cuentan lo mismo. Comprobado al generar:
 
 ## 7. Lo que falta
 
-- **El `.pbix`.** Paso manual, con este guion.
-- **La página 6 con resultados de modelos**, no solo comparadores. Llega con #43 y #44.
-- **La capa de localidades para el mapa.** Power BI puede dibujar por nombre, pero el mapa fiel
-  necesita `data/raw/localidades.geojson` como forma personalizada.
+- ~~El `.pbix`~~: resuelto con el proyecto `powerbi/Tablero-DelitosBOG.pbip` (sección 0).
+- ~~La capa de localidades para el mapa~~: `scripts/geo_localidades_powerbi.py`.
+- **La página de modelado con resultados de modelos**, no solo comparadores. Llega con #43 y #44.
+- **Sumapaz en la tasa.** La medida `Tasa 123 por 100k` divide por las personas-año de 2020–2025.
+  Sumapaz no tiene llamadas en 2020 y da 179,3; `dim_localidad.tasa_100k_periodo` da 213,3 porque
+  omite ese año del denominador. Las otras 19 localidades coinciden. Falta decidir cuál definición
+  es la correcta (#22).

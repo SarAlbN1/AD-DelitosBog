@@ -1,0 +1,68 @@
+/// Una fila por fuente: unidad de observación, resolución y si sostiene el mínimo de 500.000 registros.
+table dim_fuente
+	lineageTag: b97c8228-5eaf-42f6-8807-2680c06e652f
+
+	column fuente
+		dataType: string
+		lineageTag: 447635b3-ed7c-4449-b7f5-580a54974cbd
+		sourceColumn: fuente
+
+	column clave
+		dataType: string
+		lineageTag: 88ebf473-64ce-4cf3-ba2e-987289bbc1be
+		sourceColumn: clave
+
+	column unidad_observacion
+		dataType: string
+		lineageTag: 04ea531f-9bdd-4712-a6cb-76ce5f109fe2
+		sourceColumn: unidad_observacion
+
+	column resolucion_temporal
+		dataType: string
+		lineageTag: ec1b55b8-1ac0-49a6-897d-ab5dc16cb06b
+		sourceColumn: resolucion_temporal
+
+	column resolucion_territorial
+		dataType: string
+		lineageTag: dd94b4ef-c006-4d0b-b69f-1a3b9c7ba560
+		sourceColumn: resolucion_territorial
+
+	column periodo_auditado
+		dataType: string
+		lineageTag: 1a056d80-d5bf-423c-91c3-555c8c698f91
+		sourceColumn: periodo_auditado
+
+	column periodo_serie
+		dataType: string
+		lineageTag: 4088bd88-1cfc-41f8-8ec1-adedbe889565
+		sourceColumn: periodo_serie
+
+	column filas_auditadas
+		dataType: int64
+		lineageTag: b6098260-56b5-40aa-bc9f-fd46c4fa1953
+		sourceColumn: filas_auditadas
+
+	column sostiene_el_minimo
+		dataType: string
+		lineageTag: bf8c6381-b2c7-43b4-9f2d-a4733fd58a23
+		sourceColumn: sostiene_el_minimo
+
+	column es_la_serie_objetivo
+		dataType: string
+		lineageTag: c95137ab-e0c6-444b-8d70-df67249552a1
+		sourceColumn: es_la_serie_objetivo
+
+	column victimas_en_la_serie
+		dataType: int64
+		lineageTag: 9ed437d7-08f5-4b79-bb29-56681f6c0f6a
+		sourceColumn: victimas_en_la_serie
+
+	partition dim_fuente = m
+		mode: import
+		source =
+				let
+				    T = LeerHoja("dim_fuente.csv"),
+				    Tipos = Table.TransformColumnTypes(T, {{"fuente", type text}, {"clave", type text}, {"unidad_observacion", type text}, {"resolucion_temporal", type text}, {"resolucion_territorial", type text}, {"periodo_auditado", type text}, {"periodo_serie", type text}, {"filas_auditadas", Int64.Type}, {"sostiene_el_minimo", type text}, {"es_la_serie_objetivo", type text}, {"victimas_en_la_serie", Int64.Type}}, "en-US")
+				in
+				    Tipos
+

@@ -1,0 +1,32 @@
+/// Años 2018-2025, con la nota de lectura de cada uno (2020 atípico, 2025 truncado).
+table dim_anio
+	lineageTag: 01a61829-cec3-46d5-883f-04c018ec327c
+
+	column anio
+		dataType: int64
+		lineageTag: eb8bf989-d649-4932-b6f1-79b4f263031c
+		sourceColumn: anio
+		summarizeBy: none
+
+	column nota_anio
+		dataType: string
+		lineageTag: 32ddb390-da06-4973-aeda-f2bdf333fbc6
+		sourceColumn: nota_anio
+
+	column anio_texto
+		dataType: string
+		lineageTag: 16820d13-a5f1-4dce-a5dd-bd6ce7b23287
+		sourceColumn: anio_texto
+		sortByColumn: anio
+
+	partition dim_anio = m
+		mode: import
+		source =
+				let
+				    Anios = Table.FromList({2018..2025}, Splitter.SplitByNothing(), {"anio"}),
+				    Tipo = Table.TransformColumnTypes(Anios, {{"anio", Int64.Type}}),
+				    Nota = Table.AddColumn(Tipo, "nota_anio", each if [anio] = 2020 then "Atípico: restricciones de movilidad" else if [anio] = 2025 then "Truncado: la serie acaba el 2025-10-31" else if [anio] < 2020 then "Solo Línea 123 y fuentes mensuales" else "Completo", type text),
+				    Texto = Table.AddColumn(Nota, "anio_texto", each Text.From([anio]) & (if [anio] = 2020 then " *" else if [anio] = 2025 then " †" else ""), type text)
+				in
+				    Texto
+

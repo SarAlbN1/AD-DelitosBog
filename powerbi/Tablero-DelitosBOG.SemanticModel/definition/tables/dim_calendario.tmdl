@@ -1,0 +1,96 @@
+/// Una fila por día de la serie, con festivo, día de la semana y año atípico.
+table dim_calendario
+	dataCategory: Time
+	lineageTag: 66b085c9-2f24-479e-bf2b-96fab212824f
+
+	column fecha
+		dataType: dateTime
+		lineageTag: 737f1e95-2a28-49bb-a731-d613eac986bd
+		sourceColumn: fecha
+		isKey
+
+	column anio
+		dataType: int64
+		lineageTag: dbf72fbf-6c7c-46ed-8e9a-3a711b7bf644
+		sourceColumn: anio
+		summarizeBy: none
+
+	column mes
+		dataType: int64
+		lineageTag: 977a225c-d1e9-4e80-9ddc-dd08117bb0bc
+		sourceColumn: mes
+		summarizeBy: none
+
+	column nombre_mes
+		dataType: string
+		lineageTag: d843a8bf-186b-46c2-a88b-883640847369
+		sourceColumn: nombre_mes
+		sortByColumn: mes
+
+	column anio_mes
+		dataType: string
+		lineageTag: 585f418e-5c9b-4dd1-b54b-c493184500a2
+		sourceColumn: anio_mes
+
+	column trimestre
+		dataType: int64
+		lineageTag: d29a3854-e8ea-45af-b898-b9a1172c92ba
+		sourceColumn: trimestre
+
+	column dia_del_mes
+		dataType: int64
+		lineageTag: 8f1e24a5-4529-4b6c-b539-545e2dad28c2
+		sourceColumn: dia_del_mes
+
+	column dia_semana_numero
+		dataType: int64
+		lineageTag: 09a18c2d-9b57-4680-92f3-4ffa60dd061e
+		sourceColumn: dia_semana_numero
+		summarizeBy: none
+
+	column dia_semana
+		dataType: string
+		lineageTag: 4ec6e5bd-44e1-458a-ada8-f71145fc86b7
+		sourceColumn: dia_semana
+		sortByColumn: dia_semana_numero
+
+	column fin_de_semana
+		dataType: int64
+		lineageTag: 32cbe90d-f05a-4e08-9a5a-fa0051f581a5
+		sourceColumn: fin_de_semana
+
+	column festivo
+		dataType: int64
+		lineageTag: 62f968c9-ff7a-41e5-aa02-c24bf476c6c3
+		sourceColumn: festivo
+
+	column vispera_de_festivo
+		dataType: int64
+		lineageTag: afaf7a4f-164c-477e-9a88-7d4845813e2d
+		sourceColumn: vispera_de_festivo
+
+	column quincena
+		dataType: int64
+		lineageTag: 74108003-ed36-40ff-acb8-e5aea3aaa629
+		sourceColumn: quincena
+
+	column anio_atipico
+		dataType: int64
+		lineageTag: 913d3adb-f981-47ea-aedf-6f8f8776588f
+		sourceColumn: anio_atipico
+
+	column tipo_dia
+		dataType: string
+		lineageTag: b3182f0c-f7a4-4481-bbac-c17805e55cc1
+		sourceColumn: tipo_dia
+
+	partition dim_calendario = m
+		mode: import
+		source =
+				let
+				    T = LeerHoja("dim_calendario.csv"),
+				    Tipos = Table.TransformColumnTypes(T, {{"fecha", type date}, {"anio", Int64.Type}, {"mes", Int64.Type}, {"nombre_mes", type text}, {"anio_mes", type text}, {"trimestre", Int64.Type}, {"dia_del_mes", Int64.Type}, {"dia_semana_numero", Int64.Type}, {"dia_semana", type text}, {"fin_de_semana", Int64.Type}, {"festivo", Int64.Type}, {"vispera_de_festivo", Int64.Type}, {"quincena", Int64.Type}, {"anio_atipico", Int64.Type}}, "en-US"),
+				    Tipo = Table.AddColumn(Tipos, "tipo_dia", each if [festivo] = 1 then "Festivo" else if [fin_de_semana] = 1 then "Fin de semana" else "Laborable", type text)
+				in
+				    Tipo
+

@@ -1,0 +1,44 @@
+relationship fact_serie_diaria_fecha_dim_calendario_fecha
+	fromColumn: fact_serie_diaria.fecha
+	toColumn: dim_calendario.fecha
+
+relationship dim_calendario_anio_mes_dim_periodo_anio_mes
+	fromColumn: dim_calendario.anio_mes
+	toColumn: dim_periodo.anio_mes
+
+relationship dim_periodo_anio_dim_anio_anio
+	fromColumn: dim_periodo.anio
+	toColumn: dim_anio.anio
+
+relationship fact_linea123_localidad_anio_mes_dim_periodo_anio_mes
+	fromColumn: fact_linea123_localidad.anio_mes
+	toColumn: dim_periodo.anio_mes
+
+relationship fact_linea123_localidad_localidad_dim_localidad_localidad_tabla
+	fromColumn: fact_linea123_localidad.localidad
+	toColumn: dim_localidad.localidad_tabla
+
+relationship fact_linea123_upz_anio_dim_anio_anio
+	fromColumn: fact_linea123_upz.anio
+	toColumn: dim_anio.anio
+
+relationship fact_linea123_upz_localidad_dim_localidad_localidad_tabla
+	fromColumn: fact_linea123_upz.localidad
+	toColumn: dim_localidad.localidad_tabla
+
+relationship fact_poblacion_anio_dim_anio_anio
+	fromColumn: fact_poblacion.anio
+	toColumn: dim_anio.anio
+
+relationship fact_poblacion_clave_dim_localidad_clave
+	fromColumn: fact_poblacion.clave
+	toColumn: dim_localidad.clave
+
+relationship fact_fuentes_mensual_anio_mes_dim_periodo_anio_mes
+	fromColumn: fact_fuentes_mensual.anio_mes
+	toColumn: dim_periodo.anio_mes
+
+relationship fact_fuentes_mensual_fuente_dim_fuente_fuente
+	fromColumn: fact_fuentes_mensual.fuente
+	toColumn: dim_fuente.fuente
+

@@ -1,0 +1,44 @@
+/// Llamadas de hurto tramitadas por la Línea 123, por año, mes y localidad. Se suman los incidentes; nunca se cuentan filas.
+table fact_linea123_localidad
+	lineageTag: 39bbe05c-f012-4a46-9c9d-9c427cef254f
+
+	column anio
+		dataType: int64
+		lineageTag: 662ee539-84d2-46c5-8b74-6c51d0458d39
+		sourceColumn: anio
+		isHidden
+		summarizeBy: none
+
+	column mes
+		dataType: int64
+		lineageTag: ab13d545-7a5a-4e61-b1c3-11a6c99ff01e
+		sourceColumn: mes
+		isHidden
+		summarizeBy: none
+
+	column localidad
+		dataType: string
+		lineageTag: de201acc-3c7b-48ce-8b4b-cd43d752c2c7
+		sourceColumn: localidad
+
+	column incidentes
+		dataType: int64
+		lineageTag: ba71f386-6696-432d-890d-399b6e87eafa
+		sourceColumn: incidentes
+
+	column anio_mes
+		dataType: string
+		lineageTag: 38743df5-f044-43b2-b0de-b1e34074bed1
+		sourceColumn: anio_mes
+		isHidden
+
+	partition fact_linea123_localidad = m
+		mode: import
+		source =
+				let
+				    T = LeerHoja("fact_linea123_localidad.csv"),
+				    Tipos = Table.TransformColumnTypes(T, {{"anio", Int64.Type}, {"mes", Int64.Type}, {"localidad", type text}, {"incidentes", Int64.Type}}, "en-US"),
+				    Am = Table.AddColumn(Tipos, "anio_mes", each Text.From([anio]) & "-" & Text.PadStart(Text.From([mes]), 2, "0"), type text)
+				in
+				    Am
+

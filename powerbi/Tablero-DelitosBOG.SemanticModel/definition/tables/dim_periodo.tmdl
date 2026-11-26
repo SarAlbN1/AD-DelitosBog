@@ -1,0 +1,59 @@
+/// Meses de 2018-01 a 2025-12. Noviembre y diciembre de 2025 quedan marcados como no comparables (#86).
+table dim_periodo
+	lineageTag: 9d4ef4a0-b062-4ae8-9826-92137d1d76b1
+
+	column fecha_mes
+		dataType: dateTime
+		lineageTag: f09f0adf-11bf-4725-9136-b41b4ba61038
+		sourceColumn: fecha_mes
+
+	column anio_mes
+		dataType: string
+		lineageTag: 45bbb97b-14e1-41f2-9f4c-73220fce44bb
+		sourceColumn: anio_mes
+
+	column anio
+		dataType: int64
+		lineageTag: 898a9038-37a4-4d67-9b13-16092b8b9614
+		sourceColumn: anio
+		summarizeBy: none
+
+	column mes
+		dataType: int64
+		lineageTag: fba99b66-6d25-494c-bb2e-11570be51196
+		sourceColumn: mes
+		summarizeBy: none
+
+	column nombre_mes
+		dataType: string
+		lineageTag: a2bffca8-d149-47c4-b5df-563820997094
+		sourceColumn: nombre_mes
+		sortByColumn: mes
+
+	column mes_corto
+		dataType: string
+		lineageTag: 919ce9e7-47fd-4448-9720-1a6d4689d597
+		sourceColumn: mes_corto
+		sortByColumn: mes
+
+	column comparable
+		dataType: string
+		lineageTag: 89748a73-7a13-48be-98db-47d847eddd62
+		sourceColumn: comparable
+
+	partition dim_periodo = m
+		mode: import
+		source =
+				let
+				    Meses = List.Transform({0..95}, each Date.AddMonths(#date(2018, 1, 1), _)),
+				    T = Table.FromList(Meses, Splitter.SplitByNothing(), {"fecha_mes"}),
+				    Tipo = Table.TransformColumnTypes(T, {{"fecha_mes", type date}}),
+				    Am = Table.AddColumn(Tipo, "anio_mes", each Date.ToText([fecha_mes], "yyyy-MM"), type text),
+				    A = Table.AddColumn(Am, "anio", each Date.Year([fecha_mes]), Int64.Type),
+				    M = Table.AddColumn(A, "mes", each Date.Month([fecha_mes]), Int64.Type),
+				    N = Table.AddColumn(M, "nombre_mes", each {"enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"}{[mes] - 1}, type text),
+				    Ab = Table.AddColumn(N, "mes_corto", each Text.Proper(Text.Start([nombre_mes], 3)), type text),
+				    C = Table.AddColumn(Ab, "comparable", each if [anio_mes] = "2025-11" or [anio_mes] = "2025-12" then "no" else "sí", type text)
+				in
+				    C
+

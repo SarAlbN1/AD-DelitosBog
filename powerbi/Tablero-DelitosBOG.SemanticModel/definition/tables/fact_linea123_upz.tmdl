@@ -1,0 +1,34 @@
+/// Llamadas de hurto de la Línea 123 por año y UPZ.
+table fact_linea123_upz
+	lineageTag: ed6ca37c-081d-4057-af09-9ea38818080a
+
+	column anio
+		dataType: int64
+		lineageTag: 929426b0-09f5-463f-8b7e-d652fe020f53
+		sourceColumn: anio
+		summarizeBy: none
+
+	column localidad
+		dataType: string
+		lineageTag: bbb6b262-c1d5-4b12-b577-23ab37d76191
+		sourceColumn: localidad
+
+	column upz
+		dataType: string
+		lineageTag: 190f05f7-f912-4cf7-aa4a-6e1c97855db7
+		sourceColumn: upz
+
+	column incidentes
+		dataType: int64
+		lineageTag: 3a71fed7-e683-4644-9aed-415e3543b565
+		sourceColumn: incidentes
+
+	partition fact_linea123_upz = m
+		mode: import
+		source =
+				let
+				    T = LeerHoja("fact_linea123_upz.csv"),
+				    Tipos = Table.TransformColumnTypes(T, {{"anio", Int64.Type}, {"localidad", type text}, {"upz", type text}, {"incidentes", Int64.Type}}, "en-US")
+				in
+				    Tipos
+

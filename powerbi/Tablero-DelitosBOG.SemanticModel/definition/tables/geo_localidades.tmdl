@@ -1,0 +1,49 @@
+/// Centroides de las localidades (capa SCJ), generados por scripts/geo_localidades_powerbi.py.
+table geo_localidades
+	isHidden
+	lineageTag: 3abcb67c-8d9b-430c-9879-37c7af82ee11
+
+	column codigo_localidad
+		dataType: int64
+		lineageTag: 83e5cac1-d3d5-431d-95e5-1f8010e40fe8
+		sourceColumn: codigo_localidad
+
+	column localidad_capa
+		dataType: string
+		lineageTag: 60b302d3-55a6-41a9-82f0-69235a2e429e
+		sourceColumn: localidad_capa
+
+	column clave
+		dataType: string
+		lineageTag: bb293f45-edcd-4f00-a191-e50f4be54a6f
+		sourceColumn: clave
+
+	column latitud
+		dataType: double
+		lineageTag: e1dd1077-6a80-4b2c-9cf5-7728d6ca59ef
+		sourceColumn: latitud
+
+	column longitud
+		dataType: double
+		lineageTag: 04eb1e89-32c9-4e94-83e2-8e4514fafdce
+		sourceColumn: longitud
+
+	column area_grados2
+		dataType: double
+		lineageTag: 8d959fce-67ab-47d1-bd21-c92d8fc3192b
+		sourceColumn: area_grados2
+
+	column en_mapa_urbano
+		dataType: int64
+		lineageTag: 384db1ba-281c-4a92-897b-02755d88aab7
+		sourceColumn: en_mapa_urbano
+
+	partition geo_localidades = m
+		mode: import
+		source =
+				let
+				    T = LeerHoja("geo_localidades.csv"),
+				    Tipos = Table.TransformColumnTypes(T, {{"codigo_localidad", Int64.Type}, {"localidad_capa", type text}, {"clave", type text}, {"latitud", type number}, {"longitud", type number}, {"area_grados2", type number}, {"en_mapa_urbano", Int64.Type}}, "en-US")
+				in
+				    Tipos
+

@@ -1,0 +1,43 @@
+/// Métricas de los comparadores de referencia en la evaluación final (184 días).
+table fact_comparadores
+	lineageTag: a280fd4f-102b-4b23-93c7-b1fdea3a9ac9
+
+	column comparador
+		dataType: string
+		lineageTag: e5d56301-f447-4d5a-9aa3-ff3c1a755501
+		sourceColumn: comparador
+
+	column n
+		dataType: double
+		lineageTag: fbed89b3-89a3-4051-bad1-a7b8c5040bdc
+		sourceColumn: n
+
+	column MAE
+		dataType: double
+		lineageTag: 5e0299ad-6d15-4122-a818-b3b47d2816cb
+		sourceColumn: MAE
+
+	column RMSE
+		dataType: double
+		lineageTag: 53f4d790-8324-4be1-846f-095737311f63
+		sourceColumn: RMSE
+
+	column MAPE
+		dataType: double
+		lineageTag: 5948d359-339a-4db7-8874-b3f2fc1f8bec
+		sourceColumn: MAPE
+
+	column MASE
+		dataType: double
+		lineageTag: 4374540b-a2c8-4114-b5d9-99d510b52684
+		sourceColumn: MASE
+
+	partition fact_comparadores = m
+		mode: import
+		source =
+				let
+				    T = LeerHoja("fact_comparadores.csv"),
+				    Tipos = Table.TransformColumnTypes(T, {{"comparador", type text}, {"n", type number}, {"MAE", type number}, {"RMSE", type number}, {"MAPE", type number}, {"MASE", type number}}, "en-US")
+				in
+				    Tipos
+

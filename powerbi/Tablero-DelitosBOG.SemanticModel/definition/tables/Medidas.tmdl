@@ -1,0 +1,196 @@
+/// Tabla contenedora de las medidas del tablero.
+table Medidas
+	lineageTag: 82cc46fa-830b-4ada-82a8-1fbdf3676d83
+
+	/// Víctimas de hurto a personas (Policía, registro). Variable objetivo.
+	measure Víctimas = SUM ( fact_serie_diaria[victimas] )
+		formatString: #,0
+		displayFolder: 1 Serie Policía
+		lineageTag: 7ffdf105-ffa0-4c20-8028-c563b3a1be0d
+
+	measure 'Días con datos' = COUNTROWS ( fact_serie_diaria )
+		formatString: #,0
+		displayFolder: 1 Serie Policía
+		lineageTag: e576590b-275b-43f6-bedd-fb054064118f
+
+	/// Víctimas por día. Es la cifra que se compara entre años, porque 2025 está truncado.
+	measure 'Media diaria' = DIVIDE ( [Víctimas], [Días con datos] )
+		formatString: #,0.0
+		displayFolder: 1 Serie Policía
+		lineageTag: 46729d71-064f-4183-a414-400b79c425a2
+
+	measure 'Media diaria año anterior' =
+			VAR a = MAX ( dim_anio[anio] )
+			RETURN
+			    CALCULATE ( [Media diaria], REMOVEFILTERS ( dim_anio ), REMOVEFILTERS ( dim_periodo ), REMOVEFILTERS ( dim_calendario ), dim_anio[anio] = a - 1 )
+		formatString: #,0.0
+		displayFolder: 1 Serie Policía
+		lineageTag: b78434da-43bb-404f-a7af-3789317747c6
+
+	measure 'Var. media diaria vs año anterior' =
+			VAR prev = [Media diaria año anterior]
+			RETURN IF ( NOT ISBLANK ( prev ), DIVIDE ( [Media diaria] - prev, prev ) )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 1 Serie Policía
+		lineageTag: 83a1276b-0572-4a85-84ec-53991b92fe10
+
+	measure 'Máximo diario' = MAXX ( VALUES ( dim_calendario[fecha] ), [Víctimas] )
+		formatString: #,0
+		displayFolder: 1 Serie Policía
+		lineageTag: 89027179-cab3-4990-8b70-791e5a0ee701
+
+	measure 'Media lunes festivo' = CALCULATE ( [Media diaria], dim_calendario[dia_semana_numero] = 0, dim_calendario[festivo] = 1 )
+		formatString: #,0.0
+		displayFolder: 1 Serie Policía
+		lineageTag: 56c4c415-4c03-47e8-a1b5-39cfc3a9c5e5
+
+	measure 'Media lunes laborable' = CALCULATE ( [Media diaria], dim_calendario[dia_semana_numero] = 0, dim_calendario[festivo] = 0 )
+		formatString: #,0.0
+		displayFolder: 1 Serie Policía
+		lineageTag: e458f9b6-898a-41de-9354-ba5e85c89673
+
+	/// Lunes festivo frente a lunes laborable: controla el día de la semana.
+	measure 'Efecto festivo %' = DIVIDE ( [Media lunes festivo] - [Media lunes laborable], [Media lunes laborable] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 1 Serie Policía
+		lineageTag: dd3bb670-9e0f-4a43-ac32-4ceea316b7e6
+
+	measure 'Media diaria periodo completo' = CALCULATE ( [Media diaria], REMOVEFILTERS ( dim_calendario ), REMOVEFILTERS ( dim_periodo ), REMOVEFILTERS ( dim_anio ) )
+		formatString: #,0.0
+		displayFolder: 1 Serie Policía
+		lineageTag: a82dbdca-e636-4169-a5a4-9282b49db718
+
+	/// Suma de incidentes de hurto tramitados por la Línea 123. Se suman incidentes; nunca se cuentan filas.
+	measure 'Llamadas 123' = SUM ( fact_linea123_localidad[incidentes] )
+		formatString: #,0
+		displayFolder: 2 Territorio Línea 123
+		lineageTag: 9e80cb21-c87b-463a-ba58-0e50618c2619
+
+	measure Personas-año = SUM ( fact_poblacion[habitantes] )
+		formatString: #,0
+		displayFolder: 2 Territorio Línea 123
+		lineageTag: 7caf431f-7d38-4675-81aa-f0e8b4c5c7de
+
+	/// Llamadas de hurto por 100.000 personas-año. Solo usa los años con población (2020-2025).
+	measure 'Tasa 123 por 100k' =
+			VAR anios = FILTER ( VALUES ( dim_anio[anio] ), CALCULATE ( SUM ( fact_poblacion[habitantes] ) ) > 0 )
+			VAR inc = CALCULATE ( [Llamadas 123], anios )
+			VAR pob = CALCULATE ( [Personas-año], anios )
+			RETURN DIVIDE ( inc * 100000, pob )
+		formatString: #,0.0
+		displayFolder: 2 Territorio Línea 123
+		lineageTag: 6cae95a7-0b16-4dc7-a1b9-f9b7e9b20196
+
+	measure 'Participación llamadas %' = DIVIDE ( [Llamadas 123], CALCULATE ( [Llamadas 123], ALLSELECTED ( dim_localidad ) ) )
+		formatString: 0.0%
+		displayFolder: 2 Territorio Línea 123
+		lineageTag: ee2995ed-360d-415a-bd65-6810794610a0
+
+	measure 'Puesto por conteo' = IF ( HASONEVALUE ( dim_localidad[localidad] ), RANKX ( ALL ( dim_localidad ), [Llamadas 123], , DESC, DENSE ) )
+		formatString: 0
+		displayFolder: 2 Territorio Línea 123
+		lineageTag: c1b2d514-0b4e-4d54-9e09-3b7e38e95fb8
+
+	measure 'Puesto por tasa' = IF ( HASONEVALUE ( dim_localidad[localidad] ), RANKX ( ALL ( dim_localidad ), [Tasa 123 por 100k], , DESC, DENSE ) )
+		formatString: 0
+		displayFolder: 2 Territorio Línea 123
+		lineageTag: ee0e50ee-c627-4a8e-a2cf-3f9f197b5f6d
+
+	measure 'Tasa ciudad por 100k' = CALCULATE ( [Tasa 123 por 100k], REMOVEFILTERS ( dim_localidad ) )
+		formatString: #,0.0
+		displayFolder: 2 Territorio Línea 123
+		lineageTag: 64e16de1-4db8-41a4-81e5-851219bd98aa
+
+	measure 'Llamadas 123 UPZ' = SUM ( fact_linea123_upz[incidentes] )
+		formatString: #,0
+		displayFolder: 2 Territorio Línea 123
+		lineageTag: 8ca1bcc9-da10-4ce5-aea1-b881db71a95f
+
+	measure 'UPZ con llamadas' = CALCULATE ( DISTINCTCOUNT ( fact_linea123_upz[upz] ), fact_linea123_upz[incidentes] > 0 )
+		formatString: #,0
+		displayFolder: 2 Territorio Línea 123
+		lineageTag: a12adecb-a435-4029-8f33-e88fe76a4834
+
+	measure 'Peso 10 primeras UPZ %' =
+			VAR top10 = TOPN ( 10, SUMMARIZE ( fact_linea123_upz, fact_linea123_upz[localidad], fact_linea123_upz[upz] ), [Llamadas 123 UPZ], DESC )
+			RETURN DIVIDE ( CALCULATE ( [Llamadas 123 UPZ], top10 ), [Llamadas 123 UPZ] )
+		formatString: 0.0%
+		displayFolder: 2 Territorio Línea 123
+		lineageTag: 64671293-6441-4b86-8a6d-e40245d8ef60
+
+	/// Valor mensual de UNA fuente. Devuelve vacío si se mezclan fuentes: las fuentes no se suman entre sí.
+	measure 'Valor de la fuente' = IF ( HASONEVALUE ( fact_fuentes_mensual[fuente] ), SUM ( fact_fuentes_mensual[valor] ) )
+		formatString: #,0
+		displayFolder: 3 Fuentes
+		lineageTag: 794d5f96-57c0-401d-98c0-d815deb0de7b
+
+	/// Valor del mes sobre la media mensual comparable de la misma fuente (=100).
+	measure 'Índice de la fuente' =
+			VAR v = [Valor de la fuente]
+			VAR base = CALCULATE ( AVERAGEX ( VALUES ( dim_periodo[anio_mes] ), [Valor de la fuente] ), REMOVEFILTERS ( dim_periodo ), REMOVEFILTERS ( dim_anio ), dim_periodo[comparable] = "sí" )
+			RETURN IF ( NOT ISBLANK ( v ), DIVIDE ( v, base ) * 100 )
+		formatString: 0
+		displayFolder: 3 Fuentes
+		lineageTag: 036377cd-1c60-4139-b00c-2743021010c9
+
+	measure 'Registros Policía auditados' = CALCULATE ( SUM ( dim_fuente[filas_auditadas] ), dim_fuente[clave] = "policia_registro" )
+		formatString: #,0
+		displayFolder: 3 Fuentes
+		lineageTag: 72183f1a-7027-42e6-ac97-a40d48d2c1d4
+
+	measure 'Fuentes que sostienen el mínimo' = CALCULATE ( COUNTROWS ( dim_fuente ), dim_fuente[sostiene_el_minimo] = "sí" )
+		formatString: 0
+		displayFolder: 3 Fuentes
+		lineageTag: 95fd061a-9cc1-4641-9460-ef68d5f8f564
+
+	measure 'Barra MAE' = MINX ( ALL ( fact_comparadores ), fact_comparadores[MAE] )
+		formatString: 0.00
+		displayFolder: 4 Modelado
+		lineageTag: b2e66572-ab79-4112-932e-15acd16e8636
+
+	measure 'Mejor comparador' =
+			VAR m = [Barra MAE]
+			RETURN CALCULATE ( SELECTEDVALUE ( fact_comparadores[comparador] ), FILTER ( ALL ( fact_comparadores ), fact_comparadores[MAE] = m ) )
+		displayFolder: 4 Modelado
+		lineageTag: e9cd6297-3797-4784-85d4-bc871d9ee866
+
+	measure 'MASE de la barra' =
+			VAR m = [Barra MAE]
+			RETURN CALCULATE ( MIN ( fact_comparadores[MASE] ), FILTER ( ALL ( fact_comparadores ), fact_comparadores[MAE] = m ) )
+		formatString: 0.000
+		displayFolder: 4 Modelado
+		lineageTag: 55989851-29c6-4e1b-afda-40f26d9eadb4
+
+	measure 'MAE pliegue' = AVERAGE ( fact_validacion_rodante[MAE] )
+		formatString: 0.00
+		displayFolder: 4 Modelado
+		lineageTag: f3605cff-946c-40a8-8efa-a5e0a884d2d2
+
+	measure 'Periodo seleccionado' =
+			VAR a0 = MIN ( dim_anio[anio] ) VAR a1 = MAX ( dim_anio[anio] )
+			RETURN IF ( a0 = a1, "Año " & a0, "Años " & a0 & "–" & a1 )
+		displayFolder: 0 Textos
+		lineageTag: 87ae7190-9401-4305-85f2-c9e388832286
+
+	measure 'Aviso de lectura' =
+			VAR a = VALUES ( dim_anio[anio] )
+			VAR t2020 = IF ( 2020 IN a, "2020 es atípico (restricciones de movilidad). " )
+			VAR t2025 = IF ( 2025 IN a, "2025 llega hasta el 31 de octubre: compare la media diaria, no el total." )
+			RETURN COALESCE ( t2020 & t2025, "" )
+		displayFolder: 0 Textos
+		lineageTag: 9738dfda-1fec-4421-a1cd-27bd1695f405
+
+	column ancla
+		dataType: int64
+		isHidden
+		lineageTag: 0a8e8289-bc99-4220-a1f0-5de8ec15d39a
+		sourceColumn: ancla
+
+	partition Medidas = m
+		mode: import
+		source =
+				let
+				    T = #table(type table [ancla = Int64.Type], {})
+				in
+				    T
+

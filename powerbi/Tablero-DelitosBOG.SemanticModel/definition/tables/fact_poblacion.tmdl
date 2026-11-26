@@ -1,0 +1,32 @@
+/// Población residente proyectada (SDP) por localidad y año, 2020-2025. Denominador de la tasa.
+table fact_poblacion
+	lineageTag: 8a1220e9-a031-4431-977a-21853ec818ca
+
+	column clave
+		dataType: string
+		lineageTag: aa5d7d57-d47b-4cdc-8afe-564c07edbb95
+		sourceColumn: clave
+		isHidden
+
+	column anio
+		dataType: int64
+		lineageTag: 3e17dcba-0100-49f6-a550-ca7c08bd4c56
+		sourceColumn: anio
+		isHidden
+		summarizeBy: none
+
+	column habitantes
+		dataType: int64
+		lineageTag: 665488c9-b3de-4ffa-82e6-623f24bc68c4
+		sourceColumn: habitantes
+
+	partition fact_poblacion = m
+		mode: import
+		source =
+				let
+				    T = LeerHoja("dim_localidad.csv"),
+				    Sel = Table.SelectColumns(T, {"clave", "anio", "habitantes"}),
+				    Tipos = Table.TransformColumnTypes(Sel, {{"clave", type text}, {"anio", Int64.Type}, {"habitantes", Int64.Type}}, "en-US")
+				in
+				    Tipos
+

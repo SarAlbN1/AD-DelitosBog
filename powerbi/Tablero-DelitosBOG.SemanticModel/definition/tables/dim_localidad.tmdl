@@ -1,0 +1,81 @@
+/// Una fila por localidad: claves de cruce, puestos del periodo 2020-2025 y marcas de lectura.
+table dim_localidad
+	lineageTag: f55bd94d-bba9-41c0-92fd-da4009c17cc3
+
+	column codigo_localidad
+		dataType: int64
+		lineageTag: 5141155b-7ac3-412e-9e0c-a0e624413953
+		sourceColumn: codigo_localidad
+		summarizeBy: none
+
+	column localidad
+		dataType: string
+		lineageTag: ab3abe3e-1e98-43c1-b9b2-e943e2ae7d64
+		sourceColumn: localidad
+
+	column clave
+		dataType: string
+		lineageTag: 1d4be80e-4a49-40f3-90ba-951b271e12a8
+		sourceColumn: clave
+
+	column localidad_tabla
+		dataType: string
+		lineageTag: 66985cd1-673c-4d8c-b4b9-b758b4e71c7a
+		sourceColumn: localidad_tabla
+
+	column puesto_conteo
+		dataType: int64
+		lineageTag: 1f08b084-a9f0-4194-968c-6028ade364e2
+		sourceColumn: puesto_conteo
+		summarizeBy: none
+
+	column puesto_tasa
+		dataType: int64
+		lineageTag: 5e233dc6-b3a0-4c60-abf1-1702a0e6896d
+		sourceColumn: puesto_tasa
+		summarizeBy: none
+
+	column es_rural_sumapaz
+		dataType: int64
+		lineageTag: 91212dc7-3314-4a33-8d2c-cf872850b710
+		sourceColumn: es_rural_sumapaz
+
+	column poblacion_flotante_alta
+		dataType: int64
+		lineageTag: 85767511-5572-4a07-a641-6d5f437ea1b6
+		sourceColumn: poblacion_flotante_alta
+
+	column lectura
+		dataType: string
+		lineageTag: 72cabe9f-79ff-4d4a-a801-725ea75c85ca
+		sourceColumn: lectura
+
+	column latitud = LOOKUPVALUE ( geo_localidades[latitud], geo_localidades[clave], dim_localidad[clave] )
+		dataType: double
+		lineageTag: 448c417e-c122-464b-9111-e508f562560a
+		dataCategory: Latitude
+		summarizeBy: none
+
+	column longitud = LOOKUPVALUE ( geo_localidades[longitud], geo_localidades[clave], dim_localidad[clave] )
+		dataType: double
+		lineageTag: bf8c0a73-b20e-4e3d-b3d8-07183e006bce
+		dataCategory: Longitude
+		summarizeBy: none
+
+	column en_mapa_urbano = LOOKUPVALUE ( geo_localidades[en_mapa_urbano], geo_localidades[clave], dim_localidad[clave] )
+		dataType: int64
+		lineageTag: 90f14520-9996-4d1c-8d8f-05268add875d
+		summarizeBy: none
+
+	partition dim_localidad = m
+		mode: import
+		source =
+				let
+				    T = LeerHoja("dim_localidad.csv"),
+				    Tipos = Table.TransformColumnTypes(T, {{"codigo_localidad", Int64.Type}, {"localidad", type text}, {"clave", type text}, {"anio", Int64.Type}, {"localidad_tabla", type text}, {"puesto_conteo", Int64.Type}, {"puesto_tasa", Int64.Type}, {"es_rural_sumapaz", Int64.Type}, {"poblacion_flotante_alta", Int64.Type}}, "en-US"),
+				    UnAnio = Table.SelectRows(Tipos, each [anio] = 2025),
+				    Sel = Table.SelectColumns(UnAnio, {"codigo_localidad", "localidad", "clave", "localidad_tabla", "puesto_conteo", "puesto_tasa", "es_rural_sumapaz", "poblacion_flotante_alta"}),
+				    Lectura = Table.AddColumn(Sel, "lectura", each if [es_rural_sumapaz] = 1 then "Rural: no comparable" else if [poblacion_flotante_alta] = 1 then "Alta población flotante" else "Residencial", type text)
+				in
+				    Lectura
+
