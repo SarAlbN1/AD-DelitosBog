@@ -1,0 +1,9 @@
+modelo,familia,candidata,n,MAE,RMSE,MAPE,MASE,MAE_vs_barra,MAE_medio,MAE_desv,MAE_peor,pliegues
+bosque_aleatorio,arboles,fija_44,184,34.22,42.69,9.86,0.643,-14.82,34.89,7.46,43.12,6
+bosque_aleatorio_sin_2020,arboles,fija_44,184,33.82,42.5,9.77,0.636,-15.22,34.87,7.51,43.51,6
+gradiente_histogramas,arboles,profundidad_8_hoja_7,184,32.72,42.39,9.68,0.615,-16.32,30.82,4.34,35.49,6
+gradiente_histogramas_sin_2020,arboles,profundidad_8_hoja_7,184,32.15,41.82,9.56,0.604,-16.89,31.15,4.94,36.95,6
+sarima,estadisticos,desempate,184,33.57,42.97,9.8,0.631,-15.47,36.11,5.6,42.58,6
+sarima_desde_2021,estadisticos,desempate,184,33.8,43.14,9.88,0.635,-15.24,36.15,5.74,42.73,6
+ets,estadisticos,mae_interno,184,32.95,42.21,9.5,0.619,-16.09,36.04,5.89,44.61,6
+ets_desde_2021,estadisticos,mae_interno,184,32.99,42.34,9.49,0.62,-16.05,36.88,4.97,44.6,6

@@ -1,0 +1,68 @@
+{
+  "huella": "bf4d7104aa2302ed",
+  "momento": "2026-11-26T13:12:23+00:00",
+  "modelo": "ajuste.sarima_desde_2021",
+  "hiperparametros": {
+    "regla": "desempate",
+    "sensibilidad_2020": true
+  },
+  "semilla": 42,
+  "config": {
+    "config": "/repo/config/modelado.json",
+    "config_sha256": "3a2acaee20a458aeac74f8760f7044d6afafec76fc73856439c43aa8f0e88713",
+    "semilla": 42,
+    "horizonte_dias": 1,
+    "fin_entrenamiento": "2025-04-30",
+    "esquema_validacion": "origen_rodante",
+    "pliegues": 6,
+    "dias_pliegue": 90,
+    "metrica_principal": "MAE",
+    "metricas": [
+      "MAE",
+      "RMSE",
+      "MAPE",
+      "MASE"
+    ]
+  },
+  "datos": {
+    "serie": "serie_objetivo_diaria.csv",
+    "serie_sha256": "531def4c801ff8bc97d04c8b1421083c27a92bb2b70dcf57e2bf6b503dcc421c",
+    "huella_pliegues": "35c29ec29e6d6b5a",
+    "version_arnes": 2,
+    "entorno": "referencia-docker-py3.12.8"
+  },
+  "metricas": {
+    "n": 184,
+    "MAE": 33.8,
+    "RMSE": 43.14,
+    "MAPE": 9.88,
+    "MASE": 0.635
+  },
+  "versiones": {
+    "python": "3.12.8",
+    "plataforma": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "pandas": "3.1.1",
+    "numpy": "2.5.5",
+    "sklearn": "1.9.1",
+    "statsmodels": "0.15.0",
+    "xgboost": "3.4.1"
+  },
+  "extra": {
+    "resumen_pliegues": {
+      "MAE_medio": 36.15,
+      "MAE_desv": 5.74,
+      "MAE_peor": 42.73,
+      "pliegues": 6
+    },
+    "MAE_validacion_seleccion": 36.11,
+    "especificaciones": [
+      "[[1, 1, 2], [1, 0, 1, 7]]",
+      "[[1, 1, 1], [1, 0, 1, 7]]",
+      "[[1, 1, 2], [1, 0, 1, 7]]",
+      "[[1, 1, 2], [1, 0, 1, 7]]",
+      "[[1, 1, 2], [1, 0, 1, 7]]",
+      "[[1, 1, 2], [1, 0, 1, 7]]",
+      "[[2, 1, 1], [1, 0, 1, 7]]"
+    ]
+  }
+}
