@@ -286,3 +286,76 @@ entrenamiento arrastra los años 2020 y 2021, de nivel muy distinto. Los modelos
 estacionalidad semanal; la anual y los festivos, que los modelos con variables derivadas (#44) sí
 usan, quedan en el residuo. Es una lectura para la sección de resultados y no invalida las
 métricas, que se calculan fuera de muestra.
+
+## Modelos de árboles con rezagos (#44)
+
+`scripts/modelado/arboles.py` entrena un `RandomForestRegressor` y un `HistGradientBoostingRegressor`
+con las 21 variables derivadas de `features.py`, y los evalúa con **el mismo arnés** que los
+comparadores: mismos pliegues, misma evaluación final.
+
+```sh
+python scripts/modelado/arboles.py
+```
+
+Salidas en `outputs/modelado/arboles/`: `metricas_finales.csv`, `metricas_por_pliegue.csv`,
+`predicciones_por_pliegue.csv` (real y predicción de cada día de cada pliegue y de la evaluación
+final) y `resumen_arboles.json`.
+
+**Los hiperparámetros son fijos, no ajustados.** La selección con validación temporal es el #45. Lo
+que sigue es el punto de partida que el ajuste tiene que superar, no el resultado final.
+
+| Modelo | MAE final | MASE final | MAE medio por pliegue | Peor pliegue |
+|---|---|---|---|---|
+| Barra (ingenuo estacional) | 49,04 | 0,922 | | |
+| Bosque aleatorio | 34,22 | 0,643 | 34,89 | 43,12 |
+| Bosque aleatorio, sin 2020 | 33,82 | 0,636 | 34,87 | 43,51 |
+| Gradiente por histogramas | 32,89 | 0,618 | 31,51 | 36,19 |
+| Gradiente por histogramas, sin 2020 | 32,94 | 0,619 | 32,56 | 38,41 |
+
+Los cuatro quedan por debajo de la barra en la evaluación final. Es una sola partición de 184 días y
+una sola semilla, así que **no es una conclusión de estabilidad**; la comparación con el resto de
+modelos y la lectura de los pliegues van en el #46.
+
+### El gradiente por histogramas no se reproduce entre plataformas
+
+La revisión del #117 repitió la corrida con la misma semilla (42) en otros entornos. MAE de la
+evaluación final:
+
+| Entorno | Gradiente, con 2020 | Gradiente, sin 2020 | Bosque, con 2020 | Bosque, sin 2020 |
+|---|---|---|---|---|
+| macOS arm64, Python 3.9.6, scikit-learn 1.6.1 (este registro) | 32,89 | 32,94 | 34,22 | 33,82 |
+| Linux x86 (Docker), **las mismas versiones** | 32,89 | 33,17 | | |
+| Windows, Python 3.14, scikit-learn 1.9.1 | 32,77 | 33,68 | 34,22 | 33,82 |
+
+(Las cifras de Linux y Windows son las que reportó la revisión de Juan Diego; la corrida de
+este registro es la de macOS.)
+
+* **El bosque aleatorio se reproduce exacto** en Windows, el único entorno distinto donde se probó.
+* **El gradiente no.** En cada entorno el resultado es determinista (en Windows da lo mismo con 1 y
+  con 8 hilos), así que la diferencia viene de la plataforma y de la versión, no del azar. Se mueve
+  hasta 0,7 de MAE, mucho más que la cuarta cifra decimal que la sección de la semilla da por
+  esperable, y la versión sin 2020 cambia incluso con las mismas versiones.
+* **Consecuencia 1:** el criterio «las predicciones se reproducen con la semilla» se cumple en la
+  misma máquina, no entre máquinas. Las cifras del registro valen para el entorno que guarda cada
+  corrida (`versiones` en `outputs/modelado/corridas/`).
+* **Consecuencia 2:** la sensibilidad a 2020 del gradiente depende del entorno. Quitar 2020 empeora
+  el MAE final 0,05 en macOS, 0,28 en Linux y 0,91 en Windows. **Se presenta como no concluyente**
+  hasta fijar un entorno de referencia; es la comparación que interpreta el #46. El bosque, en
+  los dos entornos donde se corrió, mueve su MAE menos de 0,5 al quitar 2020; no se probó en Linux.
+* **Pendiente de equipo, antes del #46:** fijar un entorno de referencia para las cifras del informe
+  (por ejemplo, una imagen con versiones fijas). Con Python 3.9 no se puede instalar scikit-learn
+  1.9, ni con 3.14 la 1.6.1, así que fijar versiones en `requirements.txt` no basta para los dos
+  equipos.
+
+### Los dos criterios de aceptación
+
+* **La prueba anti-fuga pasa.** `evaluacion.sin_fuga` altera `y[t:]`, reconstruye las 21 variables
+  desde la serie alterada (`construir_X`) y exige que la predicción de `t` no cambie.
+  `tests/test_arboles.py` la aplica a los dos modelos sobre días de un pliegue y de la evaluación
+  final, y comprueba con un modelo que sí usa `y[t]` que la prueba **falla** cuando debe.
+* **Las predicciones se reproducen con la semilla.** Dos corridas dan las mismas predicciones y
+  `outputs/modelado/arboles/` sale idéntico byte a byte al repetir el script en el mismo equipo. El
+  registro de experimentos se niega a guardar dos resultados distintos para la misma huella.
+
+El ajuste descarta las filas sin historia para los rezagos (los primeros 28 días; la primera fila
+completa es el 2020-01-29). Con `sin_2020` se descartan además las filas del año atípico.
