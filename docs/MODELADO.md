@@ -359,3 +359,97 @@ este registro es la de macOS.)
 
 El ajuste descarta las filas sin historia para los rezagos (los primeros 28 días; la primera fila
 completa es el 2020-01-29). Con `sin_2020` se descartan además las filas del año atípico.
+
+## Ajuste de hiperparámetros con validación temporal (#45)
+
+`scripts/modelado/ajuste.py` elige la configuración de cada modelo con los **seis pliegues de origen
+rodante** y evalúa **una sola vez** la elegida en los 184 días finales. Reutiliza sin cambios el
+arnés y los modelos de #43 y #44. Las salidas están en `outputs/modelado/ajuste/`:
+`busqueda.csv` (todas las candidatas, con el MAE de cada pliegue), `seleccion.json` (lo elegido,
+el espacio de búsqueda, el commit, el entorno y las versiones), `metricas_finales.csv`,
+`metricas_por_pliegue.csv` y `predicciones_por_pliegue.csv`.
+
+### La evaluación final no interviene, y se comprueba
+
+La selección recibe la serie **recortada** al 2025-04-30: no puede ver los días de evaluación ni por
+error. `validar_en_pliegues` rechaza una serie que pase de esa fecha. Gana el menor MAE sobre las
+540 fechas de validación combinadas (6 × 90). Solo la elegida pasa por `evaluacion.evaluar`.
+`tests/test_ajuste.py` lo comprueba de tres maneras:
+
+* la validación rechaza la serie completa y solo pide predicciones de días de los pliegues;
+* si se alteran los días de evaluación, la selección da exactamente lo mismo;
+* los predictores ajustados pasan `sin_fuga`.
+
+### Espacio de búsqueda
+
+* **Árboles.** `max_depth` ∈ {3, 5, 8} × `min_samples_leaf` ∈ {7, 14}, sobre los demás
+  hiperparámetros de #44, más la configuración fija de #44 como candidata (7 por modelo).
+  Desempate: menor profundidad y luego mayor hoja mínima.
+* **SARIMA y ETS.** Se ajusta la **regla con que se eligen** los órdenes o la configuración dentro
+  de cada tramo, con la malla de #43:
+  - `minimo`: el menor criterio (AIC en SARIMA, AICc en ETS), que es la regla de #43.
+  - `desempate`: entre las candidatas a menos de 2 puntos de la mejor, la de menos parámetros. Así la
+    elección no depende de diferencias mínimas entre plataformas.
+  - `mae_interno`: elige por MAE de un paso en los últimos 90 días del tramo y reajusta con el tramo
+    completo.
+
+### Resultados de la selección (MAE en las 540 fechas de validación)
+
+| Modelo | Candidatas | Elegida | MAE de la elegida | MAE de la regla o configuración de #43/#44 |
+|---|---|---|---|---|
+| Bosque aleatorio | 7 | la fija de #44 | 34,89 | 34,89 |
+| Gradiente por histogramas | 7 | profundidad 8, hoja 7 | 30,74 | 30,97 |
+| SARIMA | 3 reglas | `desempate` | 36,11 | 36,17 |
+| ETS | 3 reglas | `mae_interno` | 36,04 | 36,70 |
+
+La rejilla no mejora el bosque aleatorio: la configuración de #44, sin límite de profundidad y con
+hoja 3, es mejor que cualquier árbol limitado. En el bosque, limitar la profundidad empeora mucho
+el MAE (42,2 con profundidad 3). En el gradiente, las diferencias entre candidatas son de menos de
+1,4. En SARIMA las tres reglas quedan a menos de 0,2. En ETS, elegir por MAE interno gana 0,66.
+
+### Resultados en la evaluación final (184 días; barra: ingenuo estacional, MAE 49,04)
+
+| Modelo | MAE | RMSE | MASE | MAE medio en pliegues | Desviación entre pliegues |
+|---|---|---|---|---|---|
+| Gradiente por histogramas | 32,72 | 42,39 | 0,615 | 30,82 | 4,34 |
+| ETS | 32,95 | 42,21 | 0,619 | 36,04 | 5,89 |
+| SARIMA | 33,57 | 42,97 | 0,631 | 36,11 | 5,60 |
+| Bosque aleatorio | 34,22 | 42,69 | 0,643 | 34,89 | 7,46 |
+| *Sensibilidad:* gradiente sin 2020 | 32,15 | 41,82 | 0,604 | 31,15 | 4,94 |
+| *Sensibilidad:* ETS desde 2021 | 32,99 | 42,34 | 0,620 | 36,88 | 4,97 |
+| *Sensibilidad:* SARIMA desde 2021 | 33,80 | 43,14 | 0,635 | 36,15 | 5,74 |
+| *Sensibilidad:* bosque sin 2020 | 33,82 | 42,50 | 0,636 | 34,87 | 7,51 |
+
+**El ajuste cambia poco.** Frente a #43 y #44, el MAE final se mueve entre −0,17 (gradiente) y
++0,04 (SARIMA). El aporte del ajuste es otro: la configuración ya no es una elección a mano, sino
+la mejor de un espacio declarado, elegida sin mirar la evaluación. La comparación entre modelos y
+contra la barra, con pruebas de significancia, es el #46.
+
+### Un defecto encontrado y corregido: dónde arranca el filtrado
+
+En la primera corrida, «ETS, desde 2021» daba MAE de 84,0 y 79,5 en los pliegues 2 y 3, como en
+#43. La causa estaba en el código, no en la selección. El modelo se ajustaba con el tramo desde
+2021, pero sus parámetros, que en el ETS incluyen los estados iniciales, se aplicaban a la serie
+desde 2020. El filtrado arrancaba con un nivel y una estacionalidad que no correspondían a esa
+fecha y luego atravesaba el confinamiento. Con estacionalidad multiplicativa, el error no se
+disipaba.
+
+`predecir_estadistico` arranca ahora en el primer día del tramo, y esos pliegues bajan a 35,67 y
+33,79 con la misma configuración. Sin variante de sensibilidad, el tramo empieza donde la serie y
+nada cambia (los modelos principales dan lo mismo en las dos corridas). La prueba
+`test_con_desde_la_prediccion_no_depende_de_lo_anterior` falla con el código anterior. El mismo
+patrón está en `estadisticos.py` de #43 y quedó reportado en esa issue.
+
+### Entorno y reproducción
+
+Las cifras salen del entorno de referencia (`Dockerfile`, Python 3.12.8, versiones fijas en
+`requirements-lock.txt`, `OMP_NUM_THREADS=1`; ver `docs/REPRODUCIBILIDAD.md`). La búsqueda tarda
+unos 9 minutos. El registro guarda el entorno en la huella (`AD_ENTORNO`), porque el gradiente por
+histogramas y la selección por AICc cambian entre plataformas. Una corrida en otro equipo no choca
+con estas cifras, sino que queda como otra corrida.
+
+```
+docker build -t ad-delitosbog:referencia .
+docker run --rm -v "<repo>:/repo" -e AD_COMMIT=$(git rev-parse HEAD) \
+    ad-delitosbog:referencia python scripts/modelado/ajuste.py
+```

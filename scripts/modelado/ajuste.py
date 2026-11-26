@@ -28,8 +28,10 @@ arnés (`evaluacion`), los árboles de #44 (`arboles`) y SARIMA/ETS de #43 (`est
   - `desempate`: entre las candidatas a menos de 2 puntos de la mejor, la de menos parámetros. Así
     la elección no depende de diferencias numéricas mínimas entre plataformas (revisión de #118);
   - `mae_interno`: reserva los últimos 90 días del entrenamiento del tramo, elige la candidata con
-    menor MAE de un paso en ellos y la reajusta con todo el tramo. Responde a que en «ETS, desde
-    2021» la candidata que gana por AICc falla fuera de muestra (#118).
+    menor MAE de un paso en ellos y la reajusta con todo el tramo. Pone a prueba si ganar por
+    AICc en entrenamiento predice ganar fuera de muestra. La sospecha venía de «ETS, desde 2021»
+    (#118), aunque allí la causa resultó ser el arranque del filtrado (ver
+    `predecir_estadistico`).
   Si dos reglas empatan, gana la más simple, en ese orden.
 
 La sensibilidad a 2020 de D-04 se corre con la configuración elegida: árboles sin las filas de 2020
