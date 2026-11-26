@@ -136,13 +136,10 @@ año**, y eso es justo lo que un modelo con calendario debería capturar mejor q
 
 ## 5. Familias de modelos propuestas
 
-Tres familias, de menos a más capacidad, para que la comparación muestre qué aporta cada salto:
+Dos familias: una que ve solo la propia serie y otra que añade calendario y rezagos, para que la
+comparación muestre qué aporta ese salto:
 
-**a. Regresión lineal con rezagos y calendario.** El modelo transparente de referencia. Permite leer
-los coeficientes y comprobar que las señales que el análisis exploratorio encontró —día de la
-semana, festivo— entran con el signo esperado.
-
-**b. Series de tiempo estacionales: SARIMA y ETS.** Se justifican por **la propia serie**, no por
+**a. Series de tiempo estacionales: SARIMA y ETS.** Se justifican por **la propia serie**, no por
 la literatura local: la estacionalidad semanal es la señal dominante del análisis exploratorio
 (viernes 403,1 frente a domingo 245,0, un 65 % de diferencia) y esta familia la modela de forma
 explícita.
@@ -153,7 +150,7 @@ corrección de errores frente a un VECM, con pruebas ADF, de Granger y de cointe
 series **mensuales** de ciudad \[garzon2025\]. Sirve para situar este trabajo frente a un
 antecedente econométrico mensual, no para respaldar la elección de SARIMA.
 
-**c. Conjuntos de árboles: Random Forest y potenciación del gradiente.** Capturan interacciones y no
+**b. Conjuntos de árboles: Random Forest y potenciación del gradiente.** Capturan interacciones y no
 linealidades entre calendario y rezagos sin especificarlas.
 
 En el antecedente más cercano, un modelo espacio-temporal de hurto en Bogotá, **Random Forest
@@ -166,7 +163,13 @@ fue 80/20 y no se describe como temporal**. Con rezagos y medias móviles, una p
 deja futuro en el entrenamiento, así que sus métricas no son directamente comparables con las de
 aquí, donde la evaluación es posterior al entrenamiento por construcción.
 
-Esta progresión responde a la pregunta del proyecto, que no es «cuál es el mejor modelo posible»
+**Una tercera familia que no se implementó.** La versión inicial proponía una regresión lineal con
+rezagos y calendario, como modelo transparente cuyos coeficientes permitieran comprobar el signo de
+las señales del análisis exploratorio. No estaba entre las tareas del proyecto (#43 son SARIMA y
+ETS; #44, los árboles), y añadirla al final habría obligado a repetir la comparación con todos los
+demás modelos. Queda como trabajo futuro.
+
+Esta comparación responde a la pregunta del proyecto, que no es «cuál es el mejor modelo posible»
 sino **cuánto mejora el pronóstico al añadir calendario y rezagos** sobre lo trivial
 \[provost2013\].
 

@@ -121,14 +121,15 @@ La estacionalidad semanal es fuerte, pero no constante a lo largo del año. Un m
 
 \subsection{Familias de modelos}\label{sec:familias}
 
-Se proponen tres familias de modelos, de menor a mayor capacidad, para que la comparación muestre qué aporta cada salto:
+Se proponen dos familias de modelos: una que ve solo la propia serie y otra que añade calendario y rezagos, para que la comparación muestre qué aporta ese salto:
 \begin{enumerate}
-  \item \textbf{Regresión lineal con rezagos y calendario.} Es el modelo transparente de referencia. Sus coeficientes permiten comprobar que las señales del análisis exploratorio, como el día de la semana y los festivos, entran con el signo esperado.
   \item \textbf{Modelos estacionales de series de tiempo: SARIMA y ETS.} Se justifican por la propia serie: la estacionalidad semanal es su señal dominante (sección~\ref{sec:eda-semana}), y estos modelos la representan de forma explícita. Ninguno de los antecedentes revisados usa SARIMA ni ETS. El más cercano en series de tiempo, \citet{garzon2025}, compara un modelo de corrección de errores con un VECM sobre series mensuales de la ciudad. Sirve para situar este trabajo frente a un antecedente econométrico, no para respaldar la elección de SARIMA.
   \item \textbf{Conjuntos de árboles: Random Forest y potenciación del gradiente.} Captan interacciones y relaciones no lineales entre el calendario y los rezagos sin especificarlas. En \citet{martinez2025}, Random Forest superó a una regresión de Poisson, con un MAE de 7,13 frente a 9,94 y un RMSE de 16,62 frente a 21,10. Esa comparación es solo contra la regresión de Poisson. Además, el estudio usó una partición 80/20 que no describe como temporal, así que sus métricas no son comparables con las de este trabajo, donde la evaluación es siempre posterior al entrenamiento.
 \end{enumerate}
 
-Esta progresión responde a la pregunta del proyecto. No se busca el mejor modelo posible, sino medir cuánto mejora el pronóstico al añadir calendario y rezagos frente a los comparadores triviales \citep{provost2013}.
+Se consideró una tercera familia, una regresión lineal con rezagos y calendario, como modelo transparente cuyos coeficientes permitieran comprobar que las señales del análisis exploratorio, como el día de la semana y los festivos, entran con el signo esperado. No se implementó: no estaba entre las tareas del proyecto y añadirla al final habría obligado a repetir la comparación con todos los demás modelos. Queda como trabajo futuro.
+
+Esta comparación responde a la pregunta del proyecto. No se busca el mejor modelo posible, sino medir cuánto mejora el pronóstico al añadir calendario y rezagos frente a los comparadores triviales \citep{provost2013}.
 
 \subsection{Prevención de la fuga de información}\label{sec:fuga}
 

@@ -24,7 +24,7 @@ No son matices de redacción: cambió la serie que se modela y cambió el protoc
 | Validación en tres bloques anuales: 2022, 2023, 2024 | Partición hasta 2025-04-30 y **seis pliegues de origen rodante** de 90 días | D-04 |
 | Evaluación en las 365 fechas de 2025 | **184 días**, del 2025-05-01 al 2025-10-31 | La serie termina el 2025-10-31 (#86) |
 | MAE y RMSE | MAE principal, RMSE, MAPE informativa y **MASE** | D-04 y #38. MASE es la única adimensional, así que compara entre ventanas |
-| `LinearRegression` y `DecisionTreeRegressor` | Tres familias: lineal con rezagos, SARIMA y ETS, y conjuntos de árboles | `METODOLOGIA.md`, sección 5 |
+| `LinearRegression` y `DecisionTreeRegressor` | Dos familias: SARIMA y ETS, y conjuntos de árboles. La regresión lineal quedó como trabajo futuro | `METODOLOGIA.md`, sección 5 |
 
 ## Lo que sí sigue vigente de este documento
 
@@ -45,7 +45,7 @@ D-04 de calcular la barra sobre el conjunto en que se evalúa.
 | Comprensión del negocio | Estimar víctimas registradas para el día siguiente en Bogotá y describir la distribución territorial. |
 | Comprensión de los datos | Verificar cobertura, unidades, calidad y patrones descriptivos de cada fuente. |
 | Preparación de los datos | Limpiar, auditar y construir atributos temporales con Python y pandas; figuras con Matplotlib y mapas con GeoPandas. |
-| Modelado | Ajustar las tres familias de `METODOLOGIA.md` y compararlas con los cuatro comparadores triviales. |
+| Modelado | Ajustar las dos familias de `METODOLOGIA.md` y compararlas con los cuatro comparadores triviales. |
 | Evaluación | Validación de origen rodante dentro del entrenamiento; evaluación final una sola vez, en los 184 días posteriores al corte. |
 | Despliegue | Documentar cómo emitir el pronóstico con el calendario del día objetivo y los conteos disponibles al cierre del día anterior. |
 
