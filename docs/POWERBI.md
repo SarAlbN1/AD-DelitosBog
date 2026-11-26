@@ -48,8 +48,8 @@ uno.
 | `fact_fuentes_mensual` | hecho | mes × fuente | 360 |
 | `fact_comparadores` | hecho | comparador | 4 |
 | `fact_validacion_rodante` | hecho | pliegue | 6 |
-| `fact_modelos` | hecho | modelo | 12 con los tres grupos |
-| `fact_modelos_pliegue` | hecho | modelo × pliegue | 72 con los tres grupos |
+| `fact_modelos` | hecho | modelo × origen | 20 (4 comparadores y 16 modelos) |
+| `fact_modelos_pliegue` | hecho | modelo × origen × pliegue | 120 |
 | `dim_calendario` | dimensión | un día | 2.131 |
 | `dim_localidad` | dimensión | localidad × año | 120 |
 | `dim_fuente` | dimensión | fuente | 4 |
@@ -122,10 +122,12 @@ VAR m = [Barra MAE]
 RETURN CALCULATE ( SELECTEDVALUE ( fact_comparadores[comparador] ),
     FILTER ( ALL ( fact_comparadores ), fact_comparadores[MAE] = m ) )
 
--- Modelos (página 6). fact_modelos trae comparadores y modelos juntos, con `familia`.
--- Sin modelos todavía, estas medidas dan vacío en lugar de un número falso.
+-- Modelos (página 6). fact_modelos trae comparadores y modelos juntos, con `familia` y `origen`.
+-- Los modelos del informe son los de origen "#45" y variante "completo". Sin ellos, estas medidas
+-- dan vacío en lugar de un número falso.
 Mejor modelo MAE =
-MINX ( FILTER ( ALL ( fact_modelos ), fact_modelos[familia] <> "comparador" ),
+MINX ( FILTER ( ALL ( fact_modelos ),
+        fact_modelos[origen] = "#45" && fact_modelos[variante] = "completo" ),
     fact_modelos[MAE] )
 
 Mejora sobre la barra =
@@ -140,6 +142,11 @@ modelo. Se cargan siempre con el mismo esquema, también cuando solo hay compara
 `variante` distingue las pruebas de sensibilidad a 2020 (`sin_2020` en los árboles, `desde_2021` en
 los modelos de series): **no son modelos distintos**, y una barra que las trate como tales exagera la
 oferta de modelos. Filtrar por `variante = "completo"` en la vista principal.
+
+La columna `origen` dice qué issue produjo cada fila: `#42` (comparadores), `#43` y `#44` (primera
+versión de los modelos, con configuración fija) y `#45` (hiperparámetros elegidos en los pliegues).
+**Un mismo modelo aparece una vez por origen**, así que sumar o promediar sin filtrar lo duplica. La
+vista del informe es `origen` en `#42` y `#45`: son las cifras de la sección 9.
 
 **Una medida que no debe existir**, y conviene decirlo explícitamente porque es fácil de escribir:
 
@@ -196,10 +203,11 @@ exactos de 741.986** y el texto de por qué **no** se eliminan. `qa_reglas` como
 barra marcada (`es_barra`). Tarjetas con `Barra MAE`, `Mejor modelo MAE` y `Mejora sobre la barra`.
 `fact_modelos_pliegue` por pliegue: el orden entre comparadores no es estable (el ingenuo gana 4 de
 6 aunque el estacional gane en la ventana final), y la lectura por pliegue dice si la mejora de un
-modelo se sostiene. Vista principal con `variante = "completo"`; las otras, en una página aparte
-de sensibilidad a 2020. **Las cifras de los modelos de #44 no se reproducen exactas entre
-plataformas** (ver `docs/MODELADO.md`): el tablero muestra las del registro, y debe decirlo en una
-nota.
+modelo se sostiene. Vista principal con `variante = "completo"` y `origen` en `#42` y `#45`; las
+otras, en una página aparte de sensibilidad a 2020. **Las cifras del gradiente por histogramas no se
+reproducen exactas entre plataformas** (ver `docs/MODELADO.md`): el tablero muestra las de la imagen
+Docker de referencia (#128), y debe decirlo en una nota. **Entre los cuatro modelos no hay diferencias
+significativas** (sección 9): el tablero no debe presentar un ganador.
 
 ## 6. Comprobación
 
@@ -222,11 +230,10 @@ el informe cuentan lo mismo. Comprobado al generar:
 - ~~El `.pbix`~~: resuelto con el proyecto `powerbi/Tablero-DelitosBOG.pbip` (sección 0).
 - ~~La capa de localidades para el mapa~~: `scripts/geo_localidades_powerbi.py`.
 - ~~La página de modelado con resultados de modelos~~: la página Pronóstico lee las hojas que genera
-  `scripts/exportar_powerbi.py` (`fact_modelos`, con la barra calculada, la familia y la variante) y,
-  para la serie diaria, las predicciones de `outputs/modelado/estadisticos` y `arboles` (#43, #44).
-- **Los resultados ajustados de #45 no están en el tablero.** El exportador lee `referencia`,
-  `estadisticos` y `arboles`; falta añadir la familia `ajuste` para que la página Pronóstico muestre
-  las cifras de la sección 9 del informe.
+  `scripts/exportar_powerbi.py` (`fact_modelos`, con la barra calculada, la familia, la variante y el
+  origen) y, para la serie diaria, las predicciones de `outputs/modelado/ajuste` (#45).
+- ~~Los resultados ajustados de #45~~: ya están. La página Pronóstico muestra las cifras de la
+  sección 9 del informe (origen `#45`).
 - **Sumapaz en la tasa.** La medida `Tasa 123 por 100k` divide por las personas-año de 2020–2025.
   Sumapaz no tiene llamadas en 2020 y da 179,3; `dim_localidad.tasa_100k_periodo` da 213,3 porque
   omite ese año del denominador. Las otras 19 localidades coinciden. Falta decidir cuál definición

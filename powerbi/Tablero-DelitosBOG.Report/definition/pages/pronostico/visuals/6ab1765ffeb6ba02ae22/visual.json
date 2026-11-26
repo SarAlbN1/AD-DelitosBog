@@ -63,7 +63,7 @@
               },
               "queryRef": "Medidas.Pronóstico",
               "nativeQueryRef": "Pronóstico",
-              "displayName": "Pronóstico ETS"
+              "displayName": "Pronóstico del gradiente"
             }
           ]
         }
@@ -202,7 +202,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Lo observado frente al pronóstico del mejor modelo (ETS), últimos 184 días'"
+                  "Value": "'Lo observado frente al pronóstico del mejor modelo (gradiente por histogramas), últimos 184 días'"
                 }
               }
             },
@@ -301,7 +301,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "f_ets",
+        "name": "f_modelo",
         "field": {
           "Column": {
             "Expression": {
@@ -342,7 +342,7 @@
                     [
                       {
                         "Literal": {
-                          "Value": "'ets'"
+                          "Value": "'gradiente_histogramas'"
                         }
                       }
                     ]

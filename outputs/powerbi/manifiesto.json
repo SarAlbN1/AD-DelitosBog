@@ -83,12 +83,14 @@
       ]
     },
     "fact_modelos": {
-      "filas": 4,
+      "filas": 20,
       "columnas": [
         "modelo",
         "modelo_base",
         "variante",
         "familia",
+        "origen",
+        "candidata",
         "n",
         "MAE",
         "RMSE",
@@ -100,12 +102,13 @@
       ]
     },
     "fact_modelos_pliegue": {
-      "filas": 24,
+      "filas": 120,
       "columnas": [
         "modelo",
         "modelo_base",
         "variante",
         "familia",
+        "origen",
         "pliegue",
         "MAE",
         "RMSE",
@@ -221,6 +224,9 @@
     "Ninguna página presenta un ranking de peligrosidad"
   ],
   "familias_de_modelos": [
-    "comparador"
+    "comparador",
+    "estadistico",
+    "arboles",
+    "ajuste"
   ]
 }

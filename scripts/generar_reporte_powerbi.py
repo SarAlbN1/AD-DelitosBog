@@ -367,11 +367,11 @@ def pagina_pronostico():
     p.hallazgo("hallazgo", M, Y_HALL, ANCHO, H_HALL, "Hallazgo modelo")
     (x1, w1), (x2, w2) = columnas(2, 1)
     p.agregar("real_vs_pronostico", "lineChart", x1, Y_CUERPO, w1, H_CUERPO,
-              titulo="Lo observado frente al pronóstico del mejor modelo (ETS), últimos 184 días",
+              titulo="Lo observado frente al pronóstico del mejor modelo (gradiente por histogramas), últimos 184 días",
               roles={"Category": [(col("fact_predicciones", "fecha"), "Fecha")],
-                     "Y": [(med("Observado"), "Observado"), (med("Pronóstico"), "Pronóstico ETS")]},
+                     "Y": [(med("Observado"), "Observado"), (med("Pronóstico"), "Pronóstico del gradiente")]},
               objetos={**ejes(), "lineStyles": [{"properties": {"strokeWidth": lit(2)}}]},
-              filtros=[filtro_en("fact_predicciones", "modelo", ["ets"], "f_ets"),
+              filtros=[filtro_en("fact_predicciones", "modelo", ["gradiente_histogramas"], "f_modelo"),
                        filtro_en("fact_predicciones", "pliegue", ["final"], "f_final")])
     mae = med("MAE modelo")
     p.agregar("mae_modelos", "clusteredBarChart", x2, Y_CUERPO, w2, H_CUERPO,
@@ -381,7 +381,8 @@ def pagina_pronostico():
                      "Y": [(mae, "MAE")]},
               orden=(mae, "Ascending"),
               objetos=con_etiquetas(ejes()),
-              filtros=[filtro_en("fact_modelos", "variante", ["completo"], "f_completo")])
+              filtros=[filtro_en("fact_modelos", "variante", ["completo"], "f_completo"),
+                       filtro_en("fact_modelos", "origen", ["#42", "#45"], "f_origen")])
     return p
 
 

@@ -97,3 +97,47 @@ def test_modelos_falla_si_faltan_los_comparadores(tmp_path):
     _metricas(tmp_path, "arboles", "modelo", [("bosque", 34.0)])
     with pytest.raises(SystemExit):
         ep.modelos(tmp_path)
+
+
+def _ajuste(carpeta, filas):
+    """Resultados de #45: el archivo trae la familia y la candidata elegida de cada modelo."""
+    d = carpeta / "ajuste"
+    d.mkdir(parents=True)
+    pd.DataFrame([{"modelo": n, "familia": fam, "candidata": cand, "n": 184, "MAE": mae,
+                   "RMSE": mae + 5, "MAPE": 10.0, "MASE": mae / 50}
+                  for n, fam, cand, mae in filas]).to_csv(d / "metricas_finales.csv", index=False)
+    pd.DataFrame([{"modelo": n, "pliegue": k, "MAE": mae, "RMSE": mae + 5, "MAPE": 10.0, "MASE": 1.0}
+                  for n, _, _, mae in filas for k in (1, 2)]).to_csv(d / "metricas_por_pliegue.csv",
+                                                                     index=False)
+
+
+def test_ajuste_aparece_con_su_origen_y_la_familia_del_modelo(tmp_path):
+    _metricas(tmp_path, "referencia", "comparador", [("ingenuo_estacional", 49.0)])
+    _metricas(tmp_path, "estadisticos", "modelo", [("ets", 33.0)])
+    _ajuste(tmp_path, [("ets", "estadisticos", "mae_interno", 32.9),
+                       ("bosque_aleatorio", "arboles", "fija_44", 34.2)])
+    fm, fp, fuentes = ep.modelos(tmp_path)
+    assert fuentes == ["comparador", "estadistico", "ajuste"]
+    ets = fm[fm["modelo"] == "ets"].set_index("origen")
+    assert set(ets.index) == {"#43", "#45"}               # el mismo modelo, una vez por origen
+    assert ets.loc["#45", "candidata"] == "mae_interno" and ets.loc["#43", "candidata"] == ""
+    assert fm.set_index(["origen", "modelo"]).loc[("#45", "bosque_aleatorio"), "familia"] == "arboles"
+    assert ets.loc["#45", "familia"] == "estadistico"       # «estadisticos» de #45 se normaliza
+    assert set(fp["origen"]) == {"#42", "#43", "#45"} and fp["familia"].notna().all()
+
+
+def test_el_esquema_no_cambia_al_añadir_el_ajuste(tmp_path):
+    solo, todo = tmp_path / "solo", tmp_path / "todo"
+    _metricas(solo, "referencia", "comparador", [("ingenuo", 52.9)])
+    _metricas(todo, "referencia", "comparador", [("ingenuo", 52.9)])
+    _ajuste(todo, [("ets", "estadisticos", "mae_interno", 32.9)])
+    a, pa, _ = ep.modelos(solo)
+    b, pb, _ = ep.modelos(todo)
+    assert list(a.columns) == list(b.columns) and list(pa.columns) == list(pb.columns)
+
+
+def test_ajuste_con_una_familia_desconocida_falla(tmp_path):
+    _metricas(tmp_path, "referencia", "comparador", [("ingenuo", 52.9)])
+    _ajuste(tmp_path, [("modelo_raro", "otra_cosa", "x", 30.0)])
+    with pytest.raises(SystemExit):
+        ep.modelos(tmp_path)
