@@ -1,0 +1,48 @@
+% Sección 11. Responsable: Juan Diego. Limitaciones (#48); conclusiones y trabajo futuro (#49).
+% Cifras: outputs/verificacion_caida_2025/veredicto.json, outputs/eda/territorial_tasas.csv y
+% data/README.md (correspondencia registro–agregado). Las limitaciones del protocolo de evaluación
+% están en la sección 7 (sec:limitaciones-metodo) y no se repiten aquí.
+\section{Conclusiones y trabajo futuro}\label{sec:conclusiones}
+
+\subsection{Limitaciones, riesgos de sesgo y subregistro}\label{sec:limitaciones}
+
+Las limitaciones del protocolo de evaluación (un solo horizonte, una sola ventana final y el retraso de publicación sin medir) se describieron en la sección~\ref{sec:limitaciones-metodo}. Esta subsección trata las que vienen de los datos y de cómo podrían usarse los resultados.
+
+\subsubsection{Subregistro y cambios en el registro}
+
+\textbf{Se modela el registro, no la victimización.} La variable objetivo cuenta las víctimas que la Policía registró (sección~\ref{sec:objetivo}). Un hurto que no se denuncia ni llega a conocimiento de la autoridad no aparece en la serie. \citet{riascos2023} estudian precisamente esa brecha en Bogotá: proponen un modelo de eventos espacio-temporales con subregistro y estiman, con datos de la ciudad, las tasas «verdaderas» de delito y las de subregistro. Con las fuentes de este proyecto el subregistro no se puede observar, así que un buen pronóstico es un buen pronóstico del conteo oficial, y nada más.
+
+\textbf{El registro puede cambiar por razones administrativas.} La serie tiene un ejemplo documentado. En noviembre y diciembre de 2025, el registro de la Policía cae un 51,6\,\% y un 49,1\,\% frente a la media de los diez meses anteriores, mientras la Línea 123 apenas se mueve (+1,0\,\% y $-$5,4\,\%) (\texttt{outputs/\allowbreak{}verificacion\_\allowbreak{}caida\_\allowbreak{}2025/}). La causa no está establecida: puede ser una consolidación incompleta o un cambio en el registro. Por eso esos dos meses se excluyeron (sección~\ref{sec:decisiones-eval}). La consecuencia general es que los últimos meses publicados de una fuente viva no tienen la misma fiabilidad que los consolidados, y un cambio de este tipo dentro del periodo de evaluación movería las métricas sin que cambie el fenómeno.
+
+\textbf{2020 no es comparable con el resto.} Su nivel coincide con las restricciones de movilidad (sección~\ref{sec:eda-anual}). Con los datos disponibles no se puede separar cuánto de la caída corresponde a menos hechos y cuánto a menos denuncias o menos registro. Por eso ese año entra marcado y con prueba de sensibilidad (sección~\ref{sec:decisiones-eval}).
+
+\textbf{Los atributos de la víctima no están validados.} El propio archivo de la Policía advierte que el género y la edad no tienen calidad validada en completitud. Por eso solo se describen en la sección~\ref{sec:datos}: no son predictoras, porque la serie objetivo agrega todas las víctimas del día, y ninguna conclusión del informe se apoya en ellos.
+
+\subsubsection{Sesgo territorial}
+
+El modelo es de toda la ciudad, porque el registro de la Policía no identifica la localidad (sección~\ref{sec:limitaciones-metodo}). Toda la descripción territorial del informe proviene de la Línea 123 y hereda sus sesgos:
+\begin{itemize}
+  \item \textbf{Mide llamadas tramitadas, no hechos.} Depende de que alguien decida llamar (sección~\ref{sec:fuentes-eda}). Si la propensión a llamar varía entre zonas, el reparto territorial de las llamadas no coincide con el de los hechos, y con estas fuentes esa diferencia no se puede medir.
+  \item \textbf{El orden depende del denominador.} Kennedy es la primera localidad por conteo y la 13.ª por tasa (\texttt{outputs/\allowbreak{}eda/\allowbreak{}territorial\_\allowbreak{}tasas.csv}). La tasa usa la población residente, y en las localidades del centro, con mucha población flotante, eso la sobrestima (sección~\ref{sec:territorial}).
+  \item \textbf{Ninguno de los dos órdenes mide peligrosidad}, ni dice nada de quienes viven en cada localidad (sección~\ref{sec:datos}).
+\end{itemize}
+
+\subsubsection{Bucles de retroalimentación}
+
+Un pronóstico de delitos registrados puede alterar los registros futuros si se usa para decidir dónde patrullar. \citet{ensign2018} formalizan este riesgo: cuando un sistema predictivo asigna la policía por zonas y se actualiza con los incidentes que esa misma policía descubre, puede enviarla una y otra vez a los mismos barrios con independencia de la tasa real. Según su modelo, los incidentes reportados por los residentes atenúan ese efecto, pero no lo eliminan.
+
+En este proyecto el riesgo es menor, pero no nulo:
+\begin{itemize}
+  \item El modelo no asigna recursos entre zonas: pronostica un solo total diario para la ciudad, así que no puede concentrar la vigilancia en unos barrios.
+  \item Si el pronóstico se usara para aumentar la presencia policial en toda la ciudad los días previstos como altos, esa presencia podría aumentar los hechos conocidos por la autoridad esos mismos días y reforzar el patrón aprendido. Con los datos disponibles este efecto no se puede medir, porque el registro no distingue los hechos denunciados por la víctima de los conocidos directamente por la Policía.
+  \item El riesgo territorial aparece si los órdenes de la Línea 123 se usan para asignar patrullaje. Esos órdenes son descriptivos, no se calcularon para ese fin y, por las razones del apartado anterior, no deberían usarse así.
+\end{itemize}
+
+\subsubsection{Validez externa}
+
+% Pendiente (#46): completar con los resultados de la sección 9. Qué modelo, cuánto mejora sobre
+% la barra (MAE 49,04) y si la mejora se sostiene en los pliegues; sin esas cifras no se escribe.
+Los resultados valen para Bogotá, para el periodo 2020--2025 y para el registro de la Policía tal como se publicó en la descarga usada. No se trasladan a otras ciudades, a otros delitos ni a horizontes distintos de un día. También pueden dejar de valer si cambia la forma de registrar, como ocurrió a finales de 2025.
+
+% Pendiente (#49): conclusiones, respuesta a la pregunta de investigación, tabla de objetivos y
+% trabajo futuro. Dependen de las secciones 9 y 10 (#46, #47).
