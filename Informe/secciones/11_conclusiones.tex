@@ -44,5 +44,36 @@ En este proyecto el riesgo es menor, pero no nulo:
 % la barra (MAE 49,04) y si la mejora se sostiene en los pliegues; sin esas cifras no se escribe.
 Los resultados valen para Bogotá, para el periodo 2020--2025 y para el registro de la Policía tal como se publicó en la descarga usada. No se trasladan a otras ciudades, a otros delitos ni a horizontes distintos de un día. También pueden dejar de valer si cambia la forma de registrar, como ocurrió a finales de 2025.
 
-% Pendiente (#49): conclusiones, respuesta a la pregunta de investigación, tabla de objetivos y
-% trabajo futuro. Dependen de las secciones 9 y 10 (#46, #47).
+% Pendiente (#49): conclusiones, respuesta a la pregunta de investigación y trabajo futuro.
+% Dependen de las secciones 9 y 10 (#46, #47).
+
+\subsection{Cumplimiento de los objetivos}\label{sec:objetivos-cumplimiento}
+
+La tabla~\ref{tab:objetivos} contrasta cada objetivo específico de la introducción con la evidencia del informe. Un objetivo se da por cumplido solo si hay una sección y un archivo de \texttt{outputs/} que lo respalden.
+
+% Pendiente (#46, #47): estado y evidencia de los objetivos 4 y 5 con los resultados de las secciones 9 y 10.
+{\small
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{4.6cm}>{\raggedright\arraybackslash}p{7.6cm}>{\raggedright\arraybackslash}p{2.6cm}@{}}
+\caption{Objetivos específicos y evidencia de su cumplimiento.}\label{tab:objetivos}\\
+\toprule
+\textbf{Objetivo} & \textbf{Evidencia} & \textbf{Estado} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Objetivo} & \textbf{Evidencia} & \textbf{Estado} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+1. Recolectar y auditar las tres fuentes y documentar sus variables, cobertura, unidad de observación y limitaciones & Sección~\ref{sec:datos} y apéndices~\ref{ap:diccionario} y~\ref{ap:archivos}: embudo de filtros, nulos, duplicados, cobertura y SHA-256 de cada archivo (\texttt{outputs/\allowbreak{}auditoria/} y \texttt{outputs/\allowbreak{}auditoria\_\allowbreak{}policia/}) & Cumplido \\
+\addlinespace
+2. Construir la serie diaria de víctimas registradas por la Policía y describir su tendencia, su estacionalidad semanal y anual y sus valores atípicos & Serie de 2.131 días, del 2020-01-01 al 2025-10-31, que suma 730.870 víctimas (sección~\ref{sec:objetivo}, \texttt{outputs/\allowbreak{}serie\_\allowbreak{}objetivo/}). Tendencia, perfil semanal, estacionalidad mensual y atípicos en las secciones~\ref{sec:eda-anual} a~\ref{sec:eda-atipicos} (\texttt{outputs/eda/}) & Cumplido, con la serie cortada el 2025-10-31 (sección~\ref{sec:decisiones-eval}) \\
+\addlinespace
+3. Comparar las tendencias mensuales de las tres fuentes sin sumar sus conteos y describir la distribución por localidad de la Línea 123 & Series mensuales y correlaciones en 70 meses (sección~\ref{sec:fuentes-eda}). Conteos y tasas por localidad y UPZ (sección~\ref{sec:territorial}, \texttt{outputs/\allowbreak{}eda/\allowbreak{}territorial\_\allowbreak{}*.csv}) & Cumplido \\
+\addlinespace
+4. Implementar y comparar modelos de pronóstico, incluidos una línea base ingenua y métodos estadísticos y de aprendizaje automático, con validación temporal & Protocolo y comparadores triviales en la sección~\ref{sec:metodologia} (\texttt{outputs/baselines/}). Modelos y comparación: sección 9 & En curso \\
+\addlinespace
+5. Evaluar los pronósticos con MAE y RMSE frente a la línea base y discutir su utilidad, sus sesgos y sus límites & Limitaciones de los datos y del uso en la sección~\ref{sec:limitaciones}. Evaluación frente a la barra: sección 9 & En curso \\
+\end{longtable}
+}
