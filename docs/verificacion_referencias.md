@@ -15,8 +15,8 @@ Fecha de consulta: **2026-11-11**. Cada referencia de `Informe/primera_entrega.t
 | `riascos2023` | Riascos Villegas, Ñungo, Gómez Tobón, Dulce Rubio y Gómez (2023), *PLOS ONE, 18*(7), e0287776 | Crossref (DOI `10.1371/journal.pone.0287776`) | Sí | Sí: modelado espacio-temporal con subregistro | ✅ |
 | `provost2013` | Provost y Fawcett (2013), *Data science for business*, O'Reilly Media | Open Library (ISBN 9781449361327) | Sí | Sí: referencia metodológica general | ✅ |
 | `sdp2025` | Secretaría Distrital de Planeación (2025), *Proyecciones y retroproyecciones de población (2005–2035)*, Datos Abiertos Bogotá | API CKAN del portal (`package_show`, 2026-11-16): organización «Secretaría Distrital de Planeación - SDP», licencia CC BY 4.0, recurso por localidad `202503_…_2005_2035.ods` creado el 2025-05-14 | Sí. El año de la referencia es el de la versión publicada (2025) | Sí: población por localidad y año, usada como denominador de las tasas de la Línea 123 | ✅ |
-| `hyndman2006` | Hyndman y Koehler (2006), *Another look at measures of forecast accuracy*, *International Journal of Forecasting, 22*(4), 679–688 | Crossref (DOI `10.1016/j.ijforecast.2006.03.001`) y preprint de los autores (`robjhyndman.com/papers/mase.pdf`) | Sí | Ver [referencias de la metodología](#referencias-de-la-metodología-38) | ✅ Pendiente de citar en la sección 7 (#39) |
-| `hyndman2021` | Hyndman y Athanasopoulos (2021), *Forecasting: Principles and practice* (3.ª ed.), OTexts | Open Library (ISBN 9780987507136, OTexts, 2021) y la edición en línea `otexts.com/fpp3`, secciones 5.8 y 5.10 | Sí. La edición en línea se actualiza; se cita la 3.ª edición | Ver [referencias de la metodología](#referencias-de-la-metodología-38) | ✅ Pendiente de citar en la sección 7 (#39) |
+| `hyndman2006` | Hyndman y Koehler (2006), *Another look at measures of forecast accuracy*, *International Journal of Forecasting, 22*(4), 679–688 | Crossref (DOI `10.1016/j.ijforecast.2006.03.001`) y preprint de los autores (`robjhyndman.com/papers/mase.pdf`) | Sí | Ver [referencias de la metodología](#referencias-de-la-metodología-38) | ✅ Citada en la sección 7 |
+| `hyndman2021` | Hyndman y Athanasopoulos (2021), *Forecasting: Principles and practice* (3.ª ed.), OTexts | Open Library (ISBN 9780987507136, OTexts, 2021) y la edición en línea `otexts.com/fpp3`, secciones 5.8 y 5.10 | Sí. La edición en línea se actualiza; se cita la 3.ª edición | Ver [referencias de la metodología](#referencias-de-la-metodología-38) | ✅ Citada en la sección 7 |
 
 ## Referencias de la metodología (#38)
 
@@ -53,4 +53,47 @@ Consulta del **2026-11-24**. Cada una respalda lo siguiente, y nada más.
 ## Pendientes
 - [x] Confirmar el número de la nota de política de Riascos et al. (34 o 38) en el listado de notas de política de la Escuela de Gobierno Alberto Lleras Camargo.
 - [ ] Martínez Chitiva (2025): leer el PDF para extraer las fuentes de datos y los modelos comparados, que la matriz del #25 necesita.
-- [ ] Las referencias de los datasets (Línea 123, Policía y Fiscalía) llevan «(s. f.)». En APA 7 deben incluir la fecha de consulta; esto se aborda en el #26.
+- [x] Las referencias de los datasets (Línea 123, Policía y Fiscalía) llevan «(s. f.)». En APA 7 deben incluir la fecha de consulta; esto se aborda en el #26. Resuelto: las tres llevan año (2026) y «Recuperado el 11 de noviembre de 2026».
+
+## Verificación final (#53)
+
+### Pasada preliminar: 2026-11-25
+
+Sobre `main` (`9acfece`, secciones 2–7 y apéndices) más la referencia que añade el #113 (`ensign2018`, sección 11). Las secciones 1 y 8 a 11 aún no están en el informe. Cuando se integren, se repite la comprobación solo para sus citas y referencias nuevas.
+
+**Citas y referencias.** Se extrajeron todas las claves de `\citet` y `\citep` de `Informe/informe.tex` y `Informe/secciones/*.tex`, y se compararon con los `\bibitem` de `Informe/referencias.tex`.
+
+- `main`: 14 claves citadas y 14 entradas. No hay citas sin entrada ni entradas sin cita.
+- Con el #113: 15 y 15 (`ensign2018` se cita en la sección 11 y tiene entrada).
+
+**Enlaces.** Se consultó cada `\url` de `referencias.tex` siguiendo redirecciones.
+
+| Clave | Enlace | Resultado |
+|---|---|---|
+| `campo2017` | `hdl.handle.net/1992/50785` | Resuelve. El repositorio Uniandes responde a clientes automáticos con una página de verificación. El registro ya se había verificado por su API (#24) |
+| `fonseca2019` | `hdl.handle.net/10654/31958` | Resuelve al registro de UMNG. **Cambiado:** antes enlazaba al archivo (`…/bitstreams/…/content`). El handle es persistente y se obtuvo de la API DSpace del repositorio (`dc.identifier.uri`; título y fecha 2019-06-11 coinciden) |
+| `garzon2025` | `hdl.handle.net/11371/8075` | Resuelve al registro de Los Libertadores. **Cambiado:** antes enlazaba a una descarga (`…/bitstreams/…/download`), que ya redirigía a otra ruta. El handle se obtuvo igual que el anterior (título y fecha 2025-06 coinciden) |
+| `martinez2025` | `ridum.umanizales.edu.co/handle/20.500.12746/7648` | Resuelve. Igual que Uniandes, muestra una página de verificación a clientes automáticos |
+| `riascos2020` | `gobierno.uniandes.edu.co/…/NP-38.pdf` | Resuelve (PDF) |
+| `hyndman2021` | `otexts.com/fpp3/` | Resuelve |
+| `ensign2018` | `proceedings.mlr.press/v81/ensign18a.html` | Resuelve |
+| `fiscalia` | `datos.gov.co/d/dbdv-iihs` | Resuelve a la ficha «Procesos Fiscalía V3» |
+| `policia` | `policia.gov.co/estadistica-delictiva` | Resuelve |
+| `linea123` | `datosabiertos.bogota.gov.co/dataset/incidentes` | Resuelve |
+| `sdp2025` | `datosabiertos.bogota.gov.co/dataset/proyecciones-y-retroproyecciones-de-poblacion-2005-2035` | Resuelve |
+
+`provost2013` es un libro impreso y no lleva enlace.
+
+**DOI.** Los tres resuelven a la página de su editorial. Sus metadatos en Crossref coinciden con la entrada: autores, año, revista o actas, volumen, número y páginas.
+
+| Clave | DOI | Crossref |
+|---|---|---|
+| `hyndman2006` | `10.1016/j.ijforecast.2006.03.001` | Hyndman y Koehler, 2006, *International Journal of Forecasting* 22(4), 679–688 |
+| `urcuqui2020` | `10.1109/BESC51023.2020.9348315` | Cinco autores, 2020, BESC 2020, pp. 1–6 |
+| `riascos2023` | `10.1371/journal.pone.0287776` | Cinco autores, 2023, *PLOS ONE* 18(7), e0287776 |
+
+**Queda para la pasada final.** Esta pasada no reemplaza a la del cierre:
+
+- [ ] Repetir la comparación de citas y referencias cuando entren las secciones 1 y 8–11 (#46, #47, #49 y #50).
+- [ ] Verificar las referencias nuevas que traigan esas secciones, con el mismo criterio: la fuente primaria y lo que respalda.
+- [ ] Compilar el PDF y confirmar que no hay citas indefinidas (`Citation … undefined`) en el registro de LaTeX. En esta pasada no se compiló.
