@@ -470,6 +470,7 @@ def main() -> int:
     escribir(DEF / "version.json", {"$schema": f"{ESQ}/versionMetadata/1.0.0/schema.json", "version": "2.0.0"})
     escribir(DEF / "report.json", {
         "$schema": f"{ESQ}/report/1.0.0/schema.json",
+        "layoutOptimization": "None",
         "themeCollection": {
             "baseTheme": {"name": "CY24SU10", "reportVersionAtImport": "5.59", "type": "SharedResources"},
             "customTheme": {"name": "TemaDelitosBOG.json", "reportVersionAtImport": "5.59",
