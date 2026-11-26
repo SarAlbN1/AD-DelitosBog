@@ -1,0 +1,131 @@
+{
+  "criterio": "menor MAE sobre las fechas de validación combinadas de los pliegues de origen rodante; la evaluación final no interviene",
+  "pliegues": [
+    {
+      "pliegue": 1,
+      "fin_entrenamiento": "2023-11-07",
+      "fin_evaluacion": "2024-02-05"
+    },
+    {
+      "pliegue": 2,
+      "fin_entrenamiento": "2024-02-05",
+      "fin_evaluacion": "2024-05-05"
+    },
+    {
+      "pliegue": 3,
+      "fin_entrenamiento": "2024-05-05",
+      "fin_evaluacion": "2024-08-03"
+    },
+    {
+      "pliegue": 4,
+      "fin_entrenamiento": "2024-08-03",
+      "fin_evaluacion": "2024-11-01"
+    },
+    {
+      "pliegue": 5,
+      "fin_entrenamiento": "2024-11-01",
+      "fin_evaluacion": "2025-01-30"
+    },
+    {
+      "pliegue": 6,
+      "fin_entrenamiento": "2025-01-30",
+      "fin_evaluacion": "2025-04-30"
+    }
+  ],
+  "espacio": {
+    "arboles": {
+      "rejilla": {
+        "max_depth": [
+          3,
+          5,
+          8
+        ],
+        "min_samples_leaf": [
+          7,
+          14
+        ]
+      },
+      "fija_44": {
+        "bosque_aleatorio": {
+          "n_estimators": 300,
+          "min_samples_leaf": 3,
+          "max_features": 0.5
+        },
+        "gradiente_histogramas": {
+          "max_iter": 300,
+          "learning_rate": 0.05,
+          "max_leaf_nodes": 15,
+          "min_samples_leaf": 20
+        }
+      },
+      "desempate": "menor max_depth y después mayor min_samples_leaf"
+    },
+    "estadisticos": {
+      "reglas": [
+        "minimo",
+        "desempate",
+        "mae_interno"
+      ],
+      "delta_criterio": 2.0,
+      "dias_validacion_interna": 90,
+      "desempate": "la regla más simple, en el orden de 'reglas'"
+    }
+  },
+  "semilla": 42,
+  "elegidos": {
+    "arboles.bosque_aleatorio": {
+      "candidata": "fija_44",
+      "hiperparametros": {
+        "n_estimators": 300,
+        "min_samples_leaf": 3,
+        "max_features": 0.5
+      },
+      "MAE_validacion": 34.89
+    },
+    "arboles.gradiente_histogramas": {
+      "candidata": "profundidad_8_hoja_7",
+      "hiperparametros": {
+        "max_iter": 300,
+        "learning_rate": 0.05,
+        "max_leaf_nodes": 15,
+        "min_samples_leaf": 7,
+        "max_depth": 8
+      },
+      "MAE_validacion": 30.74
+    },
+    "estadisticos.sarima": {
+      "candidata": "desempate",
+      "hiperparametros": {
+        "regla": "desempate"
+      },
+      "MAE_validacion": 36.11
+    },
+    "estadisticos.ets": {
+      "candidata": "mae_interno",
+      "hiperparametros": {
+        "regla": "mae_interno"
+      },
+      "MAE_validacion": 36.04
+    }
+  },
+  "barra": {
+    "criterio": "mejor_comparador_en_evaluacion",
+    "mejor_por_MAE": "ingenuo_estacional",
+    "MAE": 49.04,
+    "mejor_por_RMSE": "ingenuo_estacional",
+    "RMSE": 61.44,
+    "MASE_a_superar": 0.922
+  },
+  "segundos_busqueda": 512.6,
+  "entorno": "referencia-docker-py3.12.8",
+  "commit": "421b8af7ac4975a32ff705de76cde40db3dff1e4",
+  "versiones": {
+    "python": "3.12.8",
+    "plataforma": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.36",
+    "pandas": "3.1.1",
+    "numpy": "2.5.5",
+    "sklearn": "1.9.1",
+    "statsmodels": "0.15.0",
+    "xgboost": "3.4.1"
+  }
+}
