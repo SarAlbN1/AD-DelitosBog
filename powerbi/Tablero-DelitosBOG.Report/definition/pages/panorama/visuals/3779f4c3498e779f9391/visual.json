@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "3779f4c3498e779f9391",
   "position": {
-    "x": 521,
-    "y": 80,
+    "x": 650,
+    "y": 84,
     "z": 4000,
-    "width": 238,
-    "height": 92,
+    "width": 293,
+    "height": 100,
     "tabOrder": 4000
   },
   "visual": {
@@ -29,7 +29,7 @@
               },
               "queryRef": "Medidas.Var. media diaria vs año anterior",
               "nativeQueryRef": "Var. media diaria vs año anterior",
-              "displayName": "Variación frente al año anterior"
+              "displayName": "Frente al año anterior"
             }
           ]
         }

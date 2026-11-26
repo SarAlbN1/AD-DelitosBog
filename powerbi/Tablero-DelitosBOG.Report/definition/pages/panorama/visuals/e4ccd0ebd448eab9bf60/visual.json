@@ -3,11 +3,11 @@
   "name": "e4ccd0ebd448eab9bf60",
   "position": {
     "x": 852,
-    "y": 260,
-    "z": 9000,
-    "width": 408,
-    "height": 260,
-    "tabOrder": 9000
+    "y": 296,
+    "z": 8000,
+    "width": 404,
+    "height": 400,
+    "tabOrder": 8000
   },
   "visual": {
     "visualType": "clusteredColumnChart",
@@ -291,7 +291,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Media diaria por año'"
+                  "Value": "'Media diaria por año (* atípico · † hasta octubre)'"
                 }
               }
             },

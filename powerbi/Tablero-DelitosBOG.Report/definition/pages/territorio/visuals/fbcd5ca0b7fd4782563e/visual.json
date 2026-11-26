@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "fbcd5ca0b7fd4782563e",
   "position": {
-    "x": 20,
-    "y": 272,
+    "x": 24,
+    "y": 296,
     "z": 7000,
-    "width": 620,
-    "height": 432,
+    "width": 606,
+    "height": 400,
     "tabOrder": 7000
   },
   "visual": {
@@ -428,7 +428,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Mapa de calor: tasa por localidad (área urbana)'"
+                  "Value": "'Mapa de calor: tasa por localidad (área urbana; sin Sumapaz ni «sin localización»)'"
                 }
               }
             },

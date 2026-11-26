@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "aef2d28e18e0b9b08c97",
   "position": {
-    "x": 20,
-    "y": 272,
+    "x": 24,
+    "y": 296,
     "z": 8000,
-    "width": 760,
-    "height": 432,
+    "width": 727,
+    "height": 400,
     "tabOrder": 8000
   },
   "visual": {
@@ -271,7 +271,7 @@
             "rowPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "10L"
+                  "Value": "14L"
                 }
               }
             }

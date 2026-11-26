@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "446a16e7976711b27b6a",
   "position": {
-    "x": 959,
-    "y": 80,
+    "x": 963,
+    "y": 84,
     "z": 5000,
-    "width": 301,
-    "height": 92,
+    "width": 293,
+    "height": 100,
     "tabOrder": 5000
   },
   "visual": {
@@ -29,7 +29,7 @@
               },
               "queryRef": "Medidas.Media fin de semana vs laborable %",
               "nativeQueryRef": "Media fin de semana vs laborable %",
-              "displayName": "Fin de semana frente a laborable"
+              "displayName": "Fin de semana vs. laborable"
             }
           ]
         }

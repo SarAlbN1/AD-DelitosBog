@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "bb234c9bec3a864fdd4e",
   "position": {
-    "x": 20,
-    "y": 10,
+    "x": 24,
+    "y": 8,
     "z": 0,
-    "width": 760,
-    "height": 60,
+    "width": 940,
+    "height": 68,
     "tabOrder": 0
   },
   "visual": {
@@ -22,7 +22,7 @@
                   {
                     "value": "¿Dónde ocurre el hurto?",
                     "textStyle": {
-                      "fontSize": "20pt",
+                      "fontSize": "22pt",
                       "color": "#FFFFFF",
                       "fontWeight": "bold"
                     }
@@ -34,7 +34,7 @@
                   {
                     "value": "Mapa de calor por localidad · llamadas de hurto a la Línea 123 por 100.000 habitantes, 2020–2025",
                     "textStyle": {
-                      "fontSize": "10pt",
+                      "fontSize": "11pt",
                       "color": "#E2E8F0"
                     }
                   }

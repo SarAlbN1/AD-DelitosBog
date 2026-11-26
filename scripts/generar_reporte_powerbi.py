@@ -160,10 +160,10 @@ class Pagina:
                                  "border": [{"properties": {"show": lit(False)}}]})
 
     def encabezado(self, con_filtro=True):
-        self.texto("titulo", 20, 10, 760, 60, [
-            (self.titulo, 20, TEXTO, True), (self.subtitulo, 10, TEXTO_2, False)])
+        self.texto("titulo", 24, 8, 940, 68, [
+            (self.titulo, 22, TEXTO, True), (self.subtitulo, 11, TEXTO_2, False)])
         if con_filtro:
-            self.agregar("filtro_anio", "slicer", 1010, 12, 250, 58,
+            self.agregar("filtro_anio", "slicer", W - 24 - 260, 14, 260, 58,
                          roles={"Values": [(col("dim_anio", "anio_texto"), "Año")]},
                          objetos={"data": [{"properties": {"mode": lit("Dropdown")}}],
                                   "header": [{"properties": {"show": lit(True), "fontColor": color(TEXTO_2),
@@ -196,11 +196,11 @@ class Pagina:
                                                            "fontColor": color(ACENTO), "fontSize": lit(12.0),
                                                            "bold": lit(True)}}]})
 
-    def fila_tarjetas(self, y, tarjetas, h=92):
+    def fila_tarjetas(self, y, tarjetas, h=100, margen=24, sep=20):
         n = len(tarjetas)
-        ancho = (W - 40 - (n - 1) * 12) / n
+        ancho = (W - 2 * margen - (n - 1) * sep) / n
         for i, (medida, rotulo, *c) in enumerate(tarjetas):
-            self.tarjeta(f"kpi_{i}", round(20 + i * (ancho + 12)), y, round(ancho), h, medida, rotulo,
+            self.tarjeta(f"kpi_{i}", round(margen + i * (ancho + sep)), y, round(ancho), h, medida, rotulo,
                          *(c or []))
 
 
@@ -219,56 +219,69 @@ def con_etiquetas(obj, formato=None):
 
 
 # ---------------------------------------------------------------- páginas
+# Rejilla: margen M, separación G. Filas fijas: encabezado, tarjetas, hallazgo y cuerpo.
+M, G = 24, 20
+Y_KPI, H_KPI = 84, 100
+Y_HALL, H_HALL = Y_KPI + H_KPI + G, 72
+Y_CUERPO = Y_HALL + H_HALL + G
+H_CUERPO = H - M - Y_CUERPO
+ANCHO = W - 2 * M
+
+
+def columnas(*fracciones):
+    """Reparte el ancho útil en columnas proporcionales: devuelve (x, ancho) de cada una."""
+    util = ANCHO - G * (len(fracciones) - 1)
+    total = sum(fracciones)
+    x, out = M, []
+    for f in fracciones:
+        w = round(util * f / total)
+        out.append((x, w))
+        x += w + G
+    return out
+
+
 ANIOS_SERIE = [2020, 2021, 2022, 2023, 2024, 2025]
-TABLA = {"columnHeaders": [{"properties": {"fontColor": color(TEXTO), "backColor": color(BORDE),
-                                           "fontSize": lit(12.0)}}],
-         "values": [{"properties": {"fontColorPrimary": color(TEXTO), "backColorPrimary": color(PANEL),
-                                    "fontColorSecondary": color(TEXTO), "backColorSecondary": color(FONDO),
-                                    "fontSize": lit(12.0), "wordWrap": lit(True)}}],
-         "total": [{"properties": {"fontColor": color(TEXTO), "backColor": color(BORDE), "fontSize": lit(12.0)}}]}
 
 
 def barras_calor(medida):
     return {"dataPoint": [{"properties": {"fill": gradiente(med(medida))}, "selector": selector_todos(med(medida))}]}
 
 
+def matriz_calor(medida, filas, columnas_):
+    m = med(medida)
+    return {"values": [{"properties": {"backColor": gradiente(m), "fontColorPrimary": color("#111827")},
+                        "selector": selector_todos(m)},
+                       {"properties": {"fontColorPrimary": color("#111827"), "fontSize": lit(12.0)}}],
+            "columnHeaders": [{"properties": {"fontColor": color(TEXTO), "backColor": color(BORDE),
+                                              "fontSize": lit(12.0)}}],
+            "rowHeaders": [{"properties": {"fontColor": color(TEXTO), "backColor": color(PANEL),
+                                           "fontSize": lit(12.0)}}],
+            "subTotals": [{"properties": {"rowSubtotals": lit(False), "columnSubtotals": lit(False)}}],
+            "grid": [{"properties": {"rowPadding": lit(filas)}}]}
+
+
 def pagina_panorama():
     p = Pagina("panorama", "Hurto a personas en Bogotá",
                "¿Cuánto hurto hay y hacia dónde va? · Policía Nacional, víctimas registradas 2020 – oct. 2025")
     p.encabezado()
-    p.fila_tarjetas(80, [("Víctimas", "Víctimas registradas"), ("Media diaria", "Víctimas por día"),
-                         ("Var. media diaria vs año anterior", "Variación frente al año anterior"),
-                         ("Máximo diario", "Día con más víctimas"),
-                         ("Registros Policía auditados", "Registros auditados (mín. 500.000)")])
-    p.hallazgo("hallazgo", 20, 184, 1240, 64, "Hallazgo tendencia")
-    p.agregar("serie_mensual", "lineChart", 20, 260, 820, 260,
+    p.fila_tarjetas(Y_KPI, [("Víctimas", "Víctimas registradas"), ("Media diaria", "Víctimas por día"),
+                            ("Var. media diaria vs año anterior", "Frente al año anterior"),
+                            ("Registros Policía auditados", "Registros auditados (mín. 500.000)")], h=H_KPI)
+    p.hallazgo("hallazgo", M, Y_HALL, ANCHO, H_HALL, "Hallazgo tendencia")
+    (x1, w1), (x2, w2) = columnas(2, 1)
+    p.agregar("serie_mensual", "lineChart", x1, Y_CUERPO, w1, H_CUERPO,
               titulo="Víctimas por día, mes a mes: la caída de 2020 y el pico de 2023",
               roles={"Category": [(col("dim_periodo", "fecha_mes"), "Mes")],
                      "Y": [(med("Media diaria"), "Víctimas por día")]},
               objetos={**ejes(), "dataPoint": [{"properties": {"fill": color(ACENTO)}}],
                        "lineStyles": [{"properties": {"strokeWidth": lit(3)}}]})
-    p.agregar("por_anio", "clusteredColumnChart", 852, 260, 408, 260,
-              titulo="Media diaria por año",
+    p.agregar("por_anio", "clusteredColumnChart", x2, Y_CUERPO, w2, H_CUERPO,
+              titulo="Media diaria por año (* atípico · † hasta octubre)",
               roles={"Category": [(col("dim_anio", "anio_texto"), "Año")],
                      "Y": [(med("Media diaria"), "Víctimas por día")]},
               orden=(col("dim_anio", "anio_texto"), "Ascending"),
               objetos=con_etiquetas({**ejes(), **barras_calor("Media diaria")}),
               filtros=[filtro_en("dim_anio", "anio", ANIOS_SERIE, "f_anios_serie")])
-    p.agregar("tabla_anios", "tableEx", 20, 532, 820, 172,
-              titulo="Total y media diaria lado a lado (2025 llega hasta el 31 de octubre)",
-              roles={"Values": [(col("dim_anio", "anio_texto"), "Año"), (med("Víctimas"), "Víctimas"),
-                                (med("Media diaria"), "Por día"),
-                                (med("Var. media diaria vs año anterior"), "Vs. año anterior"),
-                                (col("dim_anio", "nota_anio"), "Cómo leerlo")]},
-              objetos=TABLA, filtros=[filtro_en("dim_anio", "anio", ANIOS_SERIE, "f_anios_tabla")])
-    p.agregar("tipo_dia", "donutChart", 852, 532, 408, 172,
-              titulo="Víctimas según el tipo de día",
-              roles={"Category": [(col("dim_calendario", "tipo_dia"), "Tipo de día")],
-                     "Y": [(med("Víctimas"), "Víctimas")]},
-              objetos={"legend": [{"properties": {"show": lit(True), "labelColor": color(TEXTO),
-                                                  "position": lit("Right"), "fontSize": lit(12.0)}}],
-                       "labels": [{"properties": {"color": color(TEXTO), "fontSize": lit(12.0),
-                                                  "labelStyle": lit("Percent of total")}}]})
     return p
 
 
@@ -276,36 +289,25 @@ def pagina_patrones():
     p = Pagina("patrones", "¿Cuándo ocurre el hurto?",
                "Patrones por día de la semana, mes y festivos · media de víctimas por día")
     p.encabezado()
-    p.fila_tarjetas(80, [("Día pico", "Día de la semana con más hurtos"), ("Mes pico", "Mes con más hurtos"),
-                         ("Efecto festivo %", "Lunes festivo frente a laborable"),
-                         ("Media fin de semana vs laborable %", "Fin de semana frente a laborable")])
-    p.hallazgo("hallazgo_semana", 20, 184, 614, 76, "Hallazgo semana")
-    p.hallazgo("hallazgo_festivo", 646, 184, 614, 76, "Hallazgo festivo")
-    mm = med("Media diaria")
-    p.agregar("matriz_semana_mes", "pivotTable", 20, 272, 760, 432,
+    p.fila_tarjetas(Y_KPI, [("Día pico", "Día con más hurtos"), ("Mes pico", "Mes con más hurtos"),
+                            ("Efecto festivo %", "Lunes festivo vs. laborable"),
+                            ("Media fin de semana vs laborable %", "Fin de semana vs. laborable")], h=H_KPI)
+    (xa, wa), (xb, wb) = columnas(1, 1)
+    p.hallazgo("hallazgo_semana", xa, Y_HALL, wa, H_HALL, "Hallazgo semana")
+    p.hallazgo("hallazgo_festivo", xb, Y_HALL, wb, H_HALL, "Hallazgo festivo")
+    (x1, w1), (x2, w2) = columnas(3, 2)
+    p.agregar("matriz_semana_mes", "pivotTable", x1, Y_CUERPO, w1, H_CUERPO,
               titulo="Mapa de calor: víctimas por día según día de la semana y mes",
               roles={"Rows": [(col("dim_calendario", "dia_semana"), "Día")],
                      "Columns": [(col("dim_periodo", "mes_corto"), "Mes")],
-                     "Values": [(mm, "Víctimas por día")]},
-              objetos={"values": [{"properties": {"backColor": gradiente(mm), "fontColorPrimary": color("#111827")},
-                                   "selector": selector_todos(mm)},
-                                  {"properties": {"fontColorPrimary": color("#111827"), "fontSize": lit(12.0)}}],
-                       "columnHeaders": [{"properties": {"fontColor": color(TEXTO), "backColor": color(BORDE),
-                                                         "fontSize": lit(12.0)}}],
-                       "rowHeaders": [{"properties": {"fontColor": color(TEXTO), "backColor": color(PANEL),
-                                                      "fontSize": lit(12.0)}}],
-                       "subTotals": [{"properties": {"rowSubtotals": lit(False), "columnSubtotals": lit(False)}}],
-                       "grid": [{"properties": {"rowPadding": lit(10)}}]})
-    p.agregar("dia_semana", "clusteredColumnChart", 792, 272, 468, 210,
+                     "Values": [(med("Media diaria"), "Víctimas por día")]},
+              objetos=matriz_calor("Media diaria", 14, None))
+    p.agregar("dia_semana", "clusteredColumnChart", x2, Y_CUERPO, w2, H_CUERPO,
               titulo="Víctimas por día de la semana",
-              roles={"Category": [(col("dim_calendario", "dia_semana"), "Día")], "Y": [(mm, "Víctimas por día")]},
+              roles={"Category": [(col("dim_calendario", "dia_semana"), "Día")],
+                     "Y": [(med("Media diaria"), "Víctimas por día")]},
               orden=(col("dim_calendario", "dia_semana"), "Ascending"),
               objetos=con_etiquetas({**ejes(), **barras_calor("Media diaria")}))
-    p.agregar("mes", "clusteredColumnChart", 792, 494, 468, 210,
-              titulo="Víctimas por día según el mes",
-              roles={"Category": [(col("dim_periodo", "mes_corto"), "Mes")], "Y": [(mm, "Víctimas por día")]},
-              orden=(col("dim_periodo", "mes_corto"), "Ascending"),
-              objetos={**ejes(), **barras_calor("Media diaria")})
     return p
 
 
@@ -313,15 +315,16 @@ def pagina_territorio():
     p = Pagina("territorio", "¿Dónde ocurre el hurto?",
                "Mapa de calor por localidad · llamadas de hurto a la Línea 123 por 100.000 habitantes, 2020–2025")
     p.encabezado()
-    p.fila_tarjetas(80, [("Llamadas 123", "Llamadas por hurto (Línea 123)"),
-                         ("Tasa ciudad por 100k", "Tasa de la ciudad por 100.000 hab."),
-                         ("Localidad tasa máxima", "Localidad con la tasa más alta"),
-                         ("Peso 10 primeras UPZ %", "Peso de las 10 UPZ con más llamadas")])
-    p.hallazgo("hallazgo", 20, 184, 1240, 76, "Hallazgo territorio")
+    p.fila_tarjetas(Y_KPI, [("Llamadas 123", "Llamadas por hurto (Línea 123)"),
+                            ("Tasa ciudad por 100k", "Tasa de la ciudad por 100.000 hab."),
+                            ("Localidad tasa máxima", "Localidad con la tasa más alta"),
+                            ("Peso 10 primeras UPZ %", "Peso de las 10 UPZ con más llamadas")], h=H_KPI)
+    p.hallazgo("hallazgo", M, Y_HALL, ANCHO, H_HALL, "Hallazgo territorio")
     tasa = med("Tasa 123 por 100k")
     prom = lambda c: {"Aggregation": {"Expression": col("dim_localidad", c), "Function": 1}}
-    p.agregar("mapa_calor", "azureMap", 20, 272, 620, 432,
-              titulo="Mapa de calor: tasa por localidad (área urbana)",
+    (x1, w1), (x2, w2) = columnas(1, 1)
+    p.agregar("mapa_calor", "azureMap", x1, Y_CUERPO, w1, H_CUERPO,
+              titulo="Mapa de calor: tasa por localidad (área urbana; sin Sumapaz ni «sin localización»)",
               roles={"Category": [(col("dim_localidad", "localidad"), "Localidad")],
                      # Con Ubicación en el visual, latitud y longitud deben ir agregadas (promedio).
                      "Y": [(prom("latitud"), "Latitud")],
@@ -344,30 +347,13 @@ def pagina_territorio():
                                                        "showNavigationControls": lit(True)}}],
                        "legend": [{"properties": {"show": lit(False)}}]},
               filtros=[filtro_en("dim_localidad", "en_mapa_urbano", [1], "f_urbano")])
-    p.agregar("matriz_calor", "pivotTable", 652, 272, 608, 268,
+    p.agregar("matriz_calor", "pivotTable", x2, Y_CUERPO, w2, H_CUERPO,
               titulo="Tasa por localidad y año (más rojo = más llamadas por habitante)",
               roles={"Rows": [(col("dim_localidad", "localidad"), "Localidad")],
                      "Columns": [(col("dim_anio", "anio"), "Año")],
                      "Values": [(tasa, "Tasa")]},
-              objetos={"values": [{"properties": {"backColor": gradiente(tasa), "fontColorPrimary": color("#111827")},
-                                   "selector": selector_todos(tasa)},
-                                  {"properties": {"fontColorPrimary": color("#111827"), "fontSize": lit(11.0)}}],
-                       "columnHeaders": [{"properties": {"fontColor": color(TEXTO), "backColor": color(BORDE),
-                                                         "fontSize": lit(11.0)}}],
-                       "rowHeaders": [{"properties": {"fontColor": color(TEXTO), "backColor": color(PANEL),
-                                                      "fontSize": lit(11.0)}}],
-                       "subTotals": [{"properties": {"rowSubtotals": lit(False), "columnSubtotals": lit(False)}}]},
+              objetos=matriz_calor("Tasa 123 por 100k", 2, None),
               filtros=[filtro_en("dim_anio", "anio", ANIOS_SERIE, "f_anios_pob")])
-    p.agregar("conteo_vs_tasa", "tableEx", 652, 552, 608, 152,
-              titulo="Conteo frente a tasa: el tamaño no es el riesgo",
-              roles={"Values": [(col("dim_localidad", "localidad"), "Localidad"),
-                                (med("Llamadas 123"), "Llamadas"), (med("Puesto por conteo"), "Puesto conteo"),
-                                (tasa, "Tasa"), (med("Puesto por tasa"), "Puesto tasa"),
-                                (col("dim_localidad", "lectura"), "Lectura")]},
-              orden=(med("Llamadas 123"), "Descending"),
-              objetos=TABLA)
-    p.texto("nota_mapa", 24, 684, 612, 22, [(
-        "Sumapaz (rural) y «SIN LOCALIZACION» quedan fuera del mapa.", 9, TEXTO_2, False)])
     return p
 
 
@@ -375,11 +361,12 @@ def pagina_pronostico():
     p = Pagina("pronostico", "¿Se puede anticipar el hurto?",
                "Modelos de pronóstico diario evaluados en los últimos 184 días de la serie (2025)")
     p.encabezado(con_filtro=False)
-    p.fila_tarjetas(80, [("Mejor modelo", "Mejor modelo"), ("MAE mejor modelo", "Error medio (víctimas/día)"),
-                         ("Mejora sobre la barra %", "Menos error que la referencia"),
-                         ("Barra MAE", "Error de la referencia ingenua")])
-    p.hallazgo("hallazgo", 20, 184, 1240, 64, "Hallazgo modelo")
-    p.agregar("real_vs_pronostico", "lineChart", 20, 260, 820, 444,
+    p.fila_tarjetas(Y_KPI, [("Mejor modelo", "Mejor modelo"), ("MAE mejor modelo", "Error medio (víctimas/día)"),
+                            ("Mejora sobre la barra %", "Menos error que la referencia"),
+                            ("Barra MAE", "Error de la referencia ingenua")], h=H_KPI)
+    p.hallazgo("hallazgo", M, Y_HALL, ANCHO, H_HALL, "Hallazgo modelo")
+    (x1, w1), (x2, w2) = columnas(2, 1)
+    p.agregar("real_vs_pronostico", "lineChart", x1, Y_CUERPO, w1, H_CUERPO,
               titulo="Lo observado frente al pronóstico del mejor modelo (ETS), últimos 184 días",
               roles={"Category": [(col("fact_predicciones", "fecha"), "Fecha")],
                      "Y": [(med("Observado"), "Observado"), (med("Pronóstico"), "Pronóstico ETS")]},
@@ -387,7 +374,7 @@ def pagina_pronostico():
               filtros=[filtro_en("fact_predicciones", "modelo", ["ets"], "f_ets"),
                        filtro_en("fact_predicciones", "pliegue", ["final"], "f_final")])
     mae = med("MAE modelo")
-    p.agregar("mae_modelos", "clusteredBarChart", 852, 260, 408, 444,
+    p.agregar("mae_modelos", "clusteredBarChart", x2, Y_CUERPO, w2, H_CUERPO,
               titulo="Error medio por modelo (menor es mejor)",
               roles={"Category": [(col("fact_modelos", "nombre"), "Modelo")],
                      "Series": [(col("fact_modelos", "familia"), "Familia")],

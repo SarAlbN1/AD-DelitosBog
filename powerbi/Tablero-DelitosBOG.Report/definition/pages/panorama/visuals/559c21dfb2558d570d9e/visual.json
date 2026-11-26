@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "559c21dfb2558d570d9e",
   "position": {
-    "x": 771,
-    "y": 80,
+    "x": 963,
+    "y": 84,
     "z": 5000,
-    "width": 238,
-    "height": 92,
+    "width": 293,
+    "height": 100,
     "tabOrder": 5000
   },
   "visual": {
@@ -24,12 +24,12 @@
                       "Entity": "Medidas"
                     }
                   },
-                  "Property": "Máximo diario"
+                  "Property": "Registros Policía auditados"
                 }
               },
-              "queryRef": "Medidas.Máximo diario",
-              "nativeQueryRef": "Máximo diario",
-              "displayName": "Día con más víctimas"
+              "queryRef": "Medidas.Registros Policía auditados",
+              "nativeQueryRef": "Registros Policía auditados",
+              "displayName": "Registros auditados (mín. 500.000)"
             }
           ]
         }
