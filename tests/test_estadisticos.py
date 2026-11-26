@@ -175,3 +175,23 @@ def test_ljung_box_detecta_autocorrelacion_residual():
     assert d["autocorrelacion_residual"]
     bien = es.diagnostico_residuos(Cfg(), y, "sarima", ((1, 0, 0), (0, 0, 0, 7)))
     assert not bien["autocorrelacion_residual"]
+
+
+@pytest.mark.parametrize("fabrica", [lambda **k: es.predictor_sarima(ORDEN, ESTACIONAL, **k),
+                                     lambda **k: es.predictor_ets(("add", None, False, "mul"), **k)])
+def test_con_desde_la_prediccion_no_depende_de_los_dias_anteriores(fabrica):
+    """El filtrado arranca donde arranca el entrenamiento, no donde arranca la serie.
+
+    Regresión: con `desde`, ETS filtraba desde el inicio de la serie con los estados iniciales
+    estimados para `desde`, y con estacionalidad multiplicativa el error no se disipaba
+    (MAE de 84,00 y 79,51 en los pliegues 2 y 3 de «ETS, desde 2021»).
+    """
+    cfg, y = Cfg(), serie()
+    tr, ev = particion(cfg, y.index)
+    dias = y.index[ev][:20]
+    desde = pd.Timestamp("2021-01-01")
+    alterada = y.copy()
+    alterada[alterada.index < desde] = alterada[alterada.index < desde] * 3 + 500
+    a = fabrica(desde=desde)(y, None, tr, dias)
+    b = fabrica(desde=desde)(alterada, None, tr, dias)
+    pd.testing.assert_series_equal(a, b)

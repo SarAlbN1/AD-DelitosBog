@@ -1,0 +1,5 @@
+modelo,modelo_base,variante,familia,n,MAE,RMSE,MAPE,MASE,es_barra,mae_vs_barra,supera_barra
+ingenuo,ingenuo,completo,comparador,184,52.92,68.41,15.62,0.995,False,3.88,False
+ingenuo_estacional,ingenuo_estacional,completo,comparador,184,49.04,61.44,14.39,0.922,True,0.0,False
+media_movil_7,media_movil_7,completo,comparador,184,49.42,61.86,14.59,0.929,False,0.38,False
+media_movil_28,media_movil_28,completo,comparador,184,55.83,70.72,16.75,1.05,False,6.79,False

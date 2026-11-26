@@ -1,6 +1,6 @@
 {
   "huella": "7a5e41d81d3a9492",
-  "momento": "2026-11-24T23:20:49-05:00",
+  "momento": "2026-11-26T09:18:41-05:00",
   "modelo": "estadisticos.ets_desde_2021",
   "hiperparametros": {
     "familia": "ets",
@@ -50,9 +50,9 @@
   },
   "extra": {
     "resumen_pliegues": {
-      "MAE_medio": 52.72,
-      "MAE_desv": 23.03,
-      "MAE_peor": 84.0,
+      "MAE_medio": 37.04,
+      "MAE_desv": 5.12,
+      "MAE_peor": 44.6,
       "pliegues": 6
     }
   }

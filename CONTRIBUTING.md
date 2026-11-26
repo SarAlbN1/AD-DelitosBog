@@ -57,6 +57,8 @@ Esta página es la fuente de las reglas de revisión, aprobación y fusión de A
 ### Fusión y publicación
 
 - Integra mediante **squash** con aprobación vigente del otro integrante, controles requeridos aprobados, conversaciones resueltas y sin solicitudes de cambio activas. Comprueba el commit antes de ejecutar la fusión.
+- **Quien aprueba, fusiona.** El revisor que emite la aprobación vigente ejecuta también la fusión, sin esperar a que el autor lo haga: el autor no puede fusionar su propio PR, así que dejarlo sin fusionar solo retrasa a quien depende de él. La fusión se hace sobre el mismo commit que se aprobó; si el autor sube un commit nuevo, hay que volver a aprobar antes de fusionar. Si el PR depende de otro que aún no está en `main`, se espera a que ese entre y se avisa en el PR. Si el revisor no puede fusionar en las 24 horas siguientes a su aprobación, lo avisa en el PR.
+- Un revisor que aprueba **con observaciones que no bloquean** fusiona igualmente y las deja escritas en la aprobación. Las que quiera ver corregidas antes, las marca como cambios solicitados en lugar de aprobar.
 - Respeta las protecciones de GitHub. Las acciones administrativas, los cambios de reglas, la fusión automática, el `force push` y el borrado de `main` quedan fuera del flujo de integración.
 - Después de fusionar, registra la evidencia y actualiza el estado de la tarjeta. Comprueba qué dependencias quedaron desbloqueadas y devuelve a **To-do** las tarjetas que ya no tengan dependencias abiertas.
 - Publica el tag de entrega sobre el commit integrado y verificado, una vez cumplidos los criterios de calidad de #7 y autorizada la publicación. Una etiqueta por entrega.
