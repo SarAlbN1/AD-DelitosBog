@@ -1,4 +1,4 @@
-/// Predicción diaria frente a lo observado, por modelo y pliegue de validación (#43 estadísticos y #44 árboles).
+/// Predicción diaria frente a lo observado, por modelo y pliegue de validación (#45, modelos con hiperparámetros ajustados).
 table fact_predicciones
 	lineageTag: f5f1cff3-5b19-4c03-b194-89185611fa73
 
@@ -32,9 +32,7 @@ table fact_predicciones
 		mode: import
 		source =
 				let
-				    E = LeerSalida("modelado/estadisticos/predicciones_por_pliegue.csv"),
-				    A = LeerSalida("modelado/arboles/predicciones_por_pliegue.csv"),
-				    T = Table.Combine({E, A}),
+				    T = LeerSalida("modelado/ajuste/predicciones_por_pliegue.csv"),
 				    Tipos = Table.TransformColumnTypes(T, {{"modelo", type text}, {"pliegue", type text}, {"fecha", type date}, {"real", type number}, {"prediccion", type number}}, "en-US")
 				in
 				    Tipos

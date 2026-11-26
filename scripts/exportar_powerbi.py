@@ -194,14 +194,21 @@ def dim_fuente(auditoria: Path, auditoria_policia: Path, resumen_serie: Path) ->
     return t
 
 
-#: Familias de modelos y dónde están sus métricas. La de comparadores existe siempre; las demás se
-#: añaden cuando se fusionan #43 y #44. El esquema de las tablas no cambia al añadirlas, así que
-#: el tablero no se rompe: solo aparecen filas nuevas.
+#: Origen de cada resultado: carpeta de `outputs/modelado`, columna con el nombre del modelo, issue que
+#: lo produjo y familia fija (None si el archivo la trae). Los comparadores existen siempre; los demás
+#: se añaden cuando están en `main`. El esquema de las tablas no cambia al añadirlos, así que el
+#: tablero no se rompe: solo aparecen filas nuevas.
+#:
+#: `ajuste` (#45) son los modelos con hiperparámetros elegidos en los pliegues, que son los que cita la
+#: sección 9. `estadisticos` (#43) y `arboles` (#44) son la primera versión, con configuración fija.
 FAMILIAS = [
-    ("comparador", "referencia", "comparador"),
-    ("estadistico", "estadisticos", "modelo"),
-    ("arboles", "arboles", "modelo"),
+    ("comparador", "referencia", "comparador", "#42", "comparador"),
+    ("estadistico", "estadisticos", "modelo", "#43", "estadistico"),
+    ("arboles", "arboles", "modelo", "#44", "arboles"),
+    ("ajuste", "ajuste", "modelo", "#45", None),
 ]
+#: Nombre de la familia en los archivos de #45 -> el que usan las demás tablas.
+FAMILIA_DE_AJUSTE = {"estadisticos": "estadistico", "arboles": "arboles"}
 SUFIJOS = {"_sin_2020": "sin_2020", "_desde_2021": "desde_2021"}
 METRICAS = ["MAE", "RMSE", "MAPE", "MASE"]
 
@@ -215,43 +222,59 @@ def _variante(nombre: str) -> tuple[str, str]:
 
 
 def modelos(carpeta: Path) -> tuple[pd.DataFrame, pd.DataFrame, list[str]]:
-    """`fact_modelos`, `fact_modelos_pliegue` y las familias que había.
+    """`fact_modelos`, `fact_modelos_pliegue` y las fuentes de resultados que había.
 
     La barra es el mejor comparador por MAE en la evaluación final, como fija D-04: no se escribe
-    aquí, se calcula de los comparadores. Una familia ausente se omite y se avisa, no falla.
+    aquí, se calcula de los comparadores. Una fuente ausente se omite y se avisa, no falla.
+
+    `origen` dice qué issue produjo la fila. Un mismo modelo aparece una vez por origen (por ejemplo,
+    `ets` en #43 con la selección por AICc y en #45 con la regla elegida en los pliegues), así que
+    una vista que quiera «el modelo» debe filtrar por origen: la del informe es `#45`.
     """
     finales, por_pliegue, presentes = [], [], []
-    for familia, sub, col in FAMILIAS:
+    for clave, sub, col, origen, familia in FAMILIAS:
         base = carpeta / sub
         f, p = base / "metricas_finales.csv", base / "metricas_por_pliegue.csv"
         if not (f.is_file() and p.is_file()):
-            if familia == "comparador":
+            if clave == "comparador":
                 raise SystemExit(f"falta {f}. Ejecute antes scripts/modelado/referencia.py")
-            log.warning("no hay métricas de la familia %s (%s): se omite", familia, base)
+            log.warning("no hay métricas de %s (%s): se omite", clave, base)
             continue
         fin = pd.read_csv(f)
         fin = fin.rename(columns={fin.columns[0]: "modelo"})
-        fin["familia"] = familia
-        finales.append(fin[["modelo", "familia", "n", *METRICAS]])
+        if familia is None:                       # el archivo trae la familia de cada modelo
+            fin["familia"] = fin["familia"].map(FAMILIA_DE_AJUSTE)
+            if fin["familia"].isna().any():
+                raise SystemExit(f"{f}: familia desconocida en {sorted(fin.loc[fin['familia'].isna(), 'modelo'])}")
+        else:
+            fin["familia"] = familia
+        fin["origen"] = origen
+        fin["candidata"] = fin["candidata"] if "candidata" in fin.columns else ""
+        finales.append(fin[["modelo", "familia", "origen", "candidata", "n", *METRICAS]])
+
         pl = pd.read_csv(p).rename(columns={col: "modelo"})
-        pl["familia"] = familia
-        por_pliegue.append(pl[["modelo", "familia", "pliegue", *METRICAS]])
-        presentes.append(familia)
+        pl["familia"] = pl["modelo"].map(dict(zip(fin["modelo"], fin["familia"])))
+        pl["origen"] = origen
+        por_pliegue.append(pl[["modelo", "familia", "origen", "pliegue", *METRICAS]])
+        presentes.append(clave)
 
     fm = pd.concat(finales, ignore_index=True)
     fm["n"] = fm["n"].astype(int)
+    fm["candidata"] = fm["candidata"].fillna("")
     barra = fm.loc[fm["familia"] == "comparador", "MAE"].min()
     fm["es_barra"] = (fm["familia"] == "comparador") & (fm["MAE"] == barra)
     fm["mae_vs_barra"] = (fm["MAE"] - barra).round(2)
     fm["supera_barra"] = fm["MAE"] < barra
     fm[["modelo_base", "variante"]] = fm["modelo"].apply(lambda m: pd.Series(_variante(m)))
-    fm = fm[["modelo", "modelo_base", "variante", "familia", "n", *METRICAS, "es_barra",
-             "mae_vs_barra", "supera_barra"]]
+    fm = fm[["modelo", "modelo_base", "variante", "familia", "origen", "candidata", "n", *METRICAS,
+             "es_barra", "mae_vs_barra", "supera_barra"]]
 
     fp = pd.concat(por_pliegue, ignore_index=True)
+    if fp["familia"].isna().any():
+        raise SystemExit("hay métricas por pliegue de modelos que no están en las métricas finales")
     fp[["modelo_base", "variante"]] = fp["modelo"].apply(lambda m: pd.Series(_variante(m)))
-    fp = fp[["modelo", "modelo_base", "variante", "familia", "pliegue", *METRICAS]]
-    return fm, fp.sort_values(["familia", "modelo", "pliegue"]).reset_index(drop=True), presentes
+    fp = fp[["modelo", "modelo_base", "variante", "familia", "origen", "pliegue", *METRICAS]]
+    return (fm, fp.sort_values(["origen", "modelo", "pliegue"]).reset_index(drop=True), presentes)
 
 
 def fuentes_largo(series: Path) -> pd.DataFrame:
