@@ -91,7 +91,7 @@
         "min_samples_leaf": 7,
         "max_depth": 8
       },
-      "MAE_validacion": 30.74
+      "MAE_validacion": 30.82
     },
     "estadisticos.sarima": {
       "candidata": "desempate",
@@ -116,9 +116,9 @@
     "RMSE": 61.44,
     "MASE_a_superar": 0.922
   },
-  "segundos_busqueda": 512.6,
+  "segundos_busqueda": 539.6,
   "entorno": "referencia-docker-py3.12.8",
-  "commit": "421b8af7ac4975a32ff705de76cde40db3dff1e4",
+  "commit": "73c421fea552a4ee6c0d7892264d07b028840986",
   "versiones": {
     "python": "3.12.8",
     "plataforma": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.36",
