@@ -214,8 +214,20 @@ def predictor_estadistico(familia: str, regla: str, desde: pd.Timestamp | None =
 
 
 # ------------------------------------------------------------------ búsqueda
-def buscar_arboles(cfg, y_sel: pd.Series, semilla: int) -> tuple[list[dict], dict]:
-    X_sel = arboles.construir_X(y_sel)
+def predictoras_seleccion(y: pd.Series, fin: pd.Timestamp) -> pd.DataFrame:
+    """Predictoras de los días hasta `fin`, construidas desde la serie completa.
+
+    Construirlas desde la serie recortada falsea el último día: `vispera_de_festivo` mira el
+    día siguiente, que el calendario conoce de antemano, y en la serie recortada no existe.
+    Pasó el 2025-04-30, víspera del 1 de mayo, último día del pliegue 6. Los rezagos y las
+    medias solo miran hacia atrás, así que ningún valor de la evaluación entra en estas filas.
+    """
+    X = arboles.construir_X(y)
+    return X[X.index <= fin]
+
+
+def buscar_arboles(cfg, y_sel: pd.Series, semilla: int, X_sel: pd.DataFrame
+                   ) -> tuple[list[dict], dict]:
     filas, elegidos = [], {}
     for nombre in arboles.HIPERPARAMETROS:
         resultados = []
@@ -319,7 +331,8 @@ def main(argv=None) -> int:
     busqueda, elegidos = [], {}
     if a.solo in (None, "arboles"):
         log.info("búsqueda de árboles en %d pliegues", len(pliegues(cfg, y_sel.index)))
-        f, e = buscar_arboles(cfg, y_sel, semilla)
+        X_sel = predictoras_seleccion(y, pd.Timestamp(cfg.fin_entrenamiento))
+        f, e = buscar_arboles(cfg, y_sel, semilla, X_sel)
         busqueda += f
         elegidos.update({("arboles", k): v for k, v in e.items()})
     if a.solo in (None, "estadisticos"):

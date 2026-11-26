@@ -83,6 +83,25 @@ def test_la_seleccion_de_arboles_no_cambia_si_se_altera_la_evaluacion():
     assert a == b
 
 
+def test_las_predictoras_de_la_seleccion_ven_el_calendario_del_dia_siguiente():
+    """El 2025-04-30 es víspera del 1 de mayo aunque la selección termine ese día."""
+    y = serie(600, inicio="2024-01-01")
+    fin = pd.Timestamp("2025-04-30")
+    X = ajuste.predictoras_seleccion(y, fin)
+    assert X.index.max() == fin
+    assert X.loc[fin, "vispera_de_festivo"] == 1
+    pd.testing.assert_frame_equal(X, arboles.construir_X(y).loc[X.index])
+
+
+def test_las_predictoras_de_la_seleccion_no_dependen_de_la_evaluacion():
+    y = serie(600, inicio="2024-01-01")
+    fin = pd.Timestamp("2025-04-30")
+    otra = y.copy()
+    otra[otra.index > fin] = otra[otra.index > fin] * 3 + 500
+    pd.testing.assert_frame_equal(ajuste.predictoras_seleccion(y, fin),
+                                  ajuste.predictoras_seleccion(otra, fin))
+
+
 def test_rejilla_de_arboles_incluye_la_configuracion_de_44():
     for nombre in arboles.HIPERPARAMETROS:
         c = ajuste.candidatas_arboles(nombre)

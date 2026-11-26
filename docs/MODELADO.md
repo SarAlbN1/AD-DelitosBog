@@ -414,7 +414,7 @@ error. `validar_en_pliegues` rechaza una serie que pase de esa fecha. Gana el me
 | Modelo | Candidatas | Elegida | MAE de la elegida | MAE de la regla o configuración de #43/#44 |
 |---|---|---|---|---|
 | Bosque aleatorio | 7 | la fija de #44 | 34,89 | 34,89 |
-| Gradiente por histogramas | 7 | profundidad 8, hoja 7 | 30,74 | 30,97 |
+| Gradiente por histogramas | 7 | profundidad 8, hoja 7 | 30,82 | 31,06 |
 | SARIMA | 3 reglas | `desempate` | 36,11 | 36,17 |
 | ETS | 3 reglas | `mae_interno` | 36,04 | 36,70 |
 
@@ -456,6 +456,27 @@ nada cambia (los modelos principales dan lo mismo en las dos corridas). La prueb
 `test_con_desde_la_prediccion_no_depende_de_lo_anterior` falla con el código anterior. El mismo
 patrón estaba en `estadisticos.py` de #43, y lo corrigió el #132 (ver «Un defecto corregido: el
 arranque del filtrado en las variantes "desde 2021"»).
+
+### Un defecto corregido: la víspera de festivo en la selección
+
+La búsqueda construía las predictoras desde la serie recortada al 2025-04-30. Ese día es el último
+del pliegue 6 y la víspera del 1 de mayo, pero `vispera_de_festivo` mira el día siguiente, que en
+la serie recortada no existe, y salía 0 en vez de 1. La evaluación del elegido, en cambio,
+construye las predictoras desde la serie completa. Por eso el MAE del pliegue 6 de los árboles no
+coincidía entre `busqueda.csv` (gradiente: 30,19) y `metricas_por_pliegue.csv` (30,68).
+
+`predictoras_seleccion` construye ahora las predictoras desde la serie completa y se queda con los
+días hasta el fin del entrenamiento. Usar ese calendario no es una fuga: los festivos se conocen de
+antemano, y los rezagos y las medias solo miran hacia atrás. Dos pruebas lo cubren:
+`test_las_predictoras_de_la_seleccion_ven_el_calendario_del_dia_siguiente` y
+`test_las_predictoras_de_la_seleccion_no_dependen_de_la_evaluacion`.
+
+**La selección no cambia.** Con la corrección, en la imagen de referencia, las cuatro
+configuraciones elegidas son las mismas, y `metricas_finales.csv`, `metricas_por_pliegue.csv` y
+`predicciones_por_pliegue.csv` salen idénticos. Solo cambia el criterio de las candidatas del
+gradiente, entre +0,07 y +0,10, y el del bosque elegido en el pliegue 6 (34,56 → 34,61, sin efecto
+en su media). El criterio del gradiente elegido pasa de 30,74 a 30,82, el mismo MAE medio en
+pliegues que cita la sección 9.
 
 ### Entorno y reproducción
 
