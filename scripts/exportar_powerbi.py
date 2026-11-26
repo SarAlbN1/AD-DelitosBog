@@ -21,6 +21,8 @@ En `outputs/powerbi/`: un CSV por tabla y un `.xlsx` con una hoja por tabla, par
 * `fact_fuentes_mensual` — mes × fuente, en formato largo para poder comparar sin sumar.
 * `fact_comparadores` — comparador × métrica, evaluación final.
 * `fact_validacion_rodante` — pliegue × comparador.
+* `fact_modelos` — modelo × métricas de la evaluación final, con la barra y la diferencia contra ella.
+* `fact_modelos_pliegue` — modelo × pliegue, en formato largo.
 
 **Dimensiones**
 
@@ -192,6 +194,66 @@ def dim_fuente(auditoria: Path, auditoria_policia: Path, resumen_serie: Path) ->
     return t
 
 
+#: Familias de modelos y dónde están sus métricas. La de comparadores existe siempre; las demás se
+#: añaden cuando se fusionan #43 y #44. El esquema de las tablas no cambia al añadirlas, así que
+#: el tablero no se rompe: solo aparecen filas nuevas.
+FAMILIAS = [
+    ("comparador", "referencia", "comparador"),
+    ("estadistico", "estadisticos", "modelo"),
+    ("arboles", "arboles", "modelo"),
+]
+SUFIJOS = {"_sin_2020": "sin_2020", "_desde_2021": "desde_2021"}
+METRICAS = ["MAE", "RMSE", "MAPE", "MASE"]
+
+
+def _variante(nombre: str) -> tuple[str, str]:
+    """`(modelo_base, variante)`: «ets_desde_2021» -> («ets», «desde_2021»)."""
+    for suf, var in SUFIJOS.items():
+        if nombre.endswith(suf):
+            return nombre.removesuffix(suf), var
+    return nombre, "completo"
+
+
+def modelos(carpeta: Path) -> tuple[pd.DataFrame, pd.DataFrame, list[str]]:
+    """`fact_modelos`, `fact_modelos_pliegue` y las familias que había.
+
+    La barra es el mejor comparador por MAE en la evaluación final, como fija D-04: no se escribe
+    aquí, se calcula de los comparadores. Una familia ausente se omite y se avisa, no falla.
+    """
+    finales, por_pliegue, presentes = [], [], []
+    for familia, sub, col in FAMILIAS:
+        base = carpeta / sub
+        f, p = base / "metricas_finales.csv", base / "metricas_por_pliegue.csv"
+        if not (f.is_file() and p.is_file()):
+            if familia == "comparador":
+                raise SystemExit(f"falta {f}. Ejecute antes scripts/modelado/referencia.py")
+            log.warning("no hay métricas de la familia %s (%s): se omite", familia, base)
+            continue
+        fin = pd.read_csv(f)
+        fin = fin.rename(columns={fin.columns[0]: "modelo"})
+        fin["familia"] = familia
+        finales.append(fin[["modelo", "familia", "n", *METRICAS]])
+        pl = pd.read_csv(p).rename(columns={col: "modelo"})
+        pl["familia"] = familia
+        por_pliegue.append(pl[["modelo", "familia", "pliegue", *METRICAS]])
+        presentes.append(familia)
+
+    fm = pd.concat(finales, ignore_index=True)
+    fm["n"] = fm["n"].astype(int)
+    barra = fm.loc[fm["familia"] == "comparador", "MAE"].min()
+    fm["es_barra"] = (fm["familia"] == "comparador") & (fm["MAE"] == barra)
+    fm["mae_vs_barra"] = (fm["MAE"] - barra).round(2)
+    fm["supera_barra"] = fm["MAE"] < barra
+    fm[["modelo_base", "variante"]] = fm["modelo"].apply(lambda m: pd.Series(_variante(m)))
+    fm = fm[["modelo", "modelo_base", "variante", "familia", "n", *METRICAS, "es_barra",
+             "mae_vs_barra", "supera_barra"]]
+
+    fp = pd.concat(por_pliegue, ignore_index=True)
+    fp[["modelo_base", "variante"]] = fp["modelo"].apply(lambda m: pd.Series(_variante(m)))
+    fp = fp[["modelo", "modelo_base", "variante", "familia", "pliegue", *METRICAS]]
+    return fm, fp.sort_values(["familia", "modelo", "pliegue"]).reset_index(drop=True), presentes
+
+
 def fuentes_largo(series: Path) -> pd.DataFrame:
     """Formato largo a propósito: en ancho es trivial sumar las tres fuentes, y está prohibido."""
     df = _leer(series)
@@ -219,6 +281,7 @@ def main(argv=None) -> int:
     o, d = RAIZ / "outputs", RAIZ / "data" / "processed"
     serie = hechos_serie(d / "features_diarias.csv")
 
+    fm, fp, familias = modelos(o / "modelado")
     tablas: dict[str, pd.DataFrame] = {
         "fact_serie_diaria": serie,
         "fact_linea123_localidad": _leer(d / "linea123_hurto_mensual_localidad.csv"),
@@ -230,6 +293,8 @@ def main(argv=None) -> int:
         "fact_comparadores": _leer(o / "baselines" / "comparadores.csv").rename(
             columns={"Unnamed: 0": "comparador"}),
         "fact_validacion_rodante": _leer(o / "baselines" / "validacion_rodante.csv"),
+        "fact_modelos": fm,
+        "fact_modelos_pliegue": fp,
         "dim_calendario": dim_calendario(serie),
         "dim_localidad": dim_localidad(o / "eda" / "territorial_tasas.csv",
                                       o / "poblacion" / "poblacion_localidad_2020_2025.csv",
@@ -263,6 +328,7 @@ def main(argv=None) -> int:
                       "está en docs/POWERBI.md"),
         "tablas": {n: {"filas": int(len(t)), "columnas": list(t.columns)} for n, t in tablas.items()},
         "reglas": [r[0] for r in REGLAS],
+        "familias_de_modelos": familias,
     }
     (a.salida / "manifiesto.json").write_text(
         json.dumps(manifiesto, ensure_ascii=False, indent=2), encoding="utf-8")
