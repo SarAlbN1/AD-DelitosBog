@@ -40,9 +40,22 @@ En este proyecto el riesgo es menor, pero no nulo:
 
 \subsubsection{Validez externa}
 
-% Pendiente (#46): completar con los resultados de la sección 9. Qué modelo, cuánto mejora sobre
-% la barra (MAE 49,04) y si la mejora se sostiene en los pliegues; sin esas cifras no se escribe.
-Los resultados valen para Bogotá, para el periodo 2020--2025 y para el registro de la Policía tal como se publicó en la descarga usada. No se trasladan a otras ciudades, a otros delitos ni a horizontes distintos de un día. También pueden dejar de valer si cambia la forma de registrar, como ocurrió a finales de 2025.
+Los cuatro modelos bajan el MAE de la barra entre un 30 y un 33\,\% en los 184 días de evaluación, y la superan en los seis pliegues (secciones~\ref{sec:res-barra} y~\ref{sec:res-estabilidad}). Eso indica que la mejora no depende de una sola ventana. Aun así, su alcance tiene tres límites:
+\begin{itemize}
+  \item \textbf{La época del año.} La evaluación final va de mayo a octubre de 2025 y no incluye la temporada de noviembre a enero, cuando el ciclo semanal se debilita (sección~\ref{sec:barra}). Los pliegues 1 y 5 cubren esa temporada, y en ellos el MAE de los modelos sube a entre 32,95 y 44,61. En la evaluación final está entre 32,72 y 34,22 (\texttt{outputs/\allowbreak{}modelado/\allowbreak{}comparacion/\allowbreak{}mae\_\allowbreak{}por\_\allowbreak{}pliegue.csv}). Para diciembre y enero cabe esperar errores mayores que los de la tabla~\ref{tab:resultados}.
+  \item \textbf{El registro.} Los resultados valen para Bogotá, para el periodo 2020--2025 y para el registro de la Policía tal como se publicó en la descarga usada. Pueden dejar de valer si cambia la forma de registrar, como ocurrió a finales de 2025 (sección~\ref{sec:decisiones-eval}). Los modelos aprenden el nivel reciente de la serie a partir del rezago de 1 día (sección~\ref{sec:int-arboles}). Un cambio de registro se trasladaría al pronóstico sin aviso, como si fuera un cambio real del hurto.
+  \item \textbf{El horizonte y el territorio.} No se trasladan a otras ciudades, a otros delitos, a horizontes distintos de un día ni al nivel de localidad, porque la serie modelada es la de toda la ciudad (sección~\ref{sec:limitaciones-metodo}).
+\end{itemize}
+
+\subsubsection{Limitaciones de los modelos}
+
+\begin{itemize}
+  \item \textbf{No hay un modelo ganador.} Entre los cuatro modelos, la prueba de Diebold-Mariano no encuentra diferencias significativas, con valores $p$ entre 0,17 y 0,91 (tabla~\ref{tab:dm-pares}). El orden de la tabla~\ref{tab:resultados} describe esta ventana y no debe leerse como una clasificación general.
+  \item \textbf{Queda autocorrelación en los residuos.} En los SARIMA y ETS de referencia, la prueba de Ljung-Box rechaza la ausencia de autocorrelación a los 7, 14 y 28 rezagos, con $p < 0{,}001$ (\texttt{outputs/\allowbreak{}modelado/\allowbreak{}estadisticos/\allowbreak{}diagnostico\_\allowbreak{}residuos.csv}). Queda estructura sin modelar. Por la misma razón, un intervalo de predicción que supusiera errores independientes sería demasiado estrecho. El informe no reporta intervalos de predicción.
+  \item \textbf{Los modelos de series no ven el calendario.} SARIMA y ETS sobrestiman los festivos en entre 56 y 59 víctimas de media (tabla~\ref{tab:festivos}). La estimación descansa en solo ocho festivos, así que su magnitud es imprecisa.
+  \item \textbf{Algunas cifras dependen de la plataforma.} Con las mismas versiones, el gradiente por histogramas cambia hasta 0,7 de MAE entre sistemas operativos y arquitecturas. Además, la selección por AICc de SARIMA y ETS cambia de candidata cuando hay casi empate. Por eso las cifras de las secciones~\ref{sec:resultados} y~\ref{sec:interpretacion} se generan en una sola imagen de Docker, con la arquitectura fijada. En otro equipo pueden variar en las centésimas o décimas, sin que cambien las conclusiones (\texttt{docs/\allowbreak{}REPRODUCIBILIDAD.md}).
+  \item \textbf{La interpretación es parcial y no causal.} La importancia por permutación solo se calcula para los árboles y describe de qué información depende el pronóstico. La dependencia del gradiente respecto al día del mes queda sin explicar (sección~\ref{sec:int-arboles}).
+\end{itemize}
 
 % Pendiente (#49): conclusiones, respuesta a la pregunta de investigación, tabla de objetivos y
 % trabajo futuro. Dependen de las secciones 9 y 10 (#46, #47).
