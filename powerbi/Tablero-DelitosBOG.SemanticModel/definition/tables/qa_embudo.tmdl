@@ -1,0 +1,50 @@
+/// Filas antes y después de cada paso del preprocesamiento.
+table qa_embudo
+	lineageTag: 6848f115-2529-4b2c-b310-eb086448fb37
+
+	column fuente
+		dataType: string
+		lineageTag: eab9f519-92e2-4bb2-a72f-cfbe2b632f55
+		sourceColumn: fuente
+
+	column paso
+		dataType: string
+		lineageTag: e3b11dea-a8fd-4f4d-85d3-69975a843442
+		sourceColumn: paso
+
+	column filas_antes
+		dataType: int64
+		lineageTag: 644d9ed7-001e-4939-8286-a84bf0261cc8
+		sourceColumn: filas_antes
+
+	column filas_despues
+		dataType: int64
+		lineageTag: 5dbcbaf5-cc73-49bf-99df-6224d32d7b1b
+		sourceColumn: filas_despues
+
+	column excluidas
+		dataType: int64
+		lineageTag: ced0b490-1cdb-4ba0-87e3-3ae96402dbef
+		sourceColumn: excluidas
+
+	column motivo
+		dataType: string
+		lineageTag: 9732ce56-feaf-4e0f-a4e2-0b001f4027e2
+		sourceColumn: motivo
+
+	column orden
+		dataType: int64
+		lineageTag: 36ea355f-dee0-4bc0-aa61-18e77a467b08
+		summarizeBy: none
+		sourceColumn: orden
+
+	partition qa_embudo = m
+		mode: import
+		source =
+				let
+				    T = LeerHoja("qa_embudo.csv"),
+				    Tipos = Table.TransformColumnTypes(T, {{"fuente", type text}, {"paso", type text}, {"filas_antes", Int64.Type}, {"filas_despues", Int64.Type}, {"excluidas", Int64.Type}, {"motivo", type text}}, "en-US"),
+				    Orden = Table.AddIndexColumn(Tipos, "orden", 1, 1, Int64.Type)
+				in
+				    Orden
+

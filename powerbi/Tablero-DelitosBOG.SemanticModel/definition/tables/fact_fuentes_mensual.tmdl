@@ -1,0 +1,40 @@
+/// Mes × fuente en formato largo. Las fuentes NO se suman entre sí.
+table fact_fuentes_mensual
+	lineageTag: 6be5748e-626a-4cbd-8907-c77ec6e8493b
+
+	column anio_mes
+		dataType: string
+		lineageTag: 942b12ad-5436-466f-ae69-117a7255313a
+		sourceColumn: anio_mes
+
+	column anio
+		dataType: int64
+		lineageTag: 1c7a48c7-1313-4513-8b48-8bdeeca7994a
+		summarizeBy: none
+		sourceColumn: anio
+
+	column fuente
+		dataType: string
+		lineageTag: 7b8d90dd-f6bc-4af6-be19-17746d8ad4ae
+		sourceColumn: fuente
+
+	column valor
+		dataType: double
+		lineageTag: 8e31ffa4-9f65-46c9-b520-c0e86585f7f5
+		sourceColumn: valor
+
+	column comparable
+		dataType: string
+		lineageTag: 19a78f53-b2a4-49c6-b78e-097c8adf4b76
+		sourceColumn: comparable
+
+	partition fact_fuentes_mensual = m
+		mode: import
+		source =
+				let
+				    T = LeerHoja("fact_fuentes_mensual.csv"),
+				    Ren = Table.RenameColumns(T, {{"fecha", "anio_mes"}}),
+				    Tipos = Table.TransformColumnTypes(Ren, {{"anio_mes", type text}, {"anio", Int64.Type}, {"fuente", type text}, {"valor", type number}, {"comparable", type text}}, "en-US")
+				in
+				    Tipos
+

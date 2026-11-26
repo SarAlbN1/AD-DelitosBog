@@ -1,0 +1,48 @@
+/// Días atípicos de la serie, con su z respecto a la media de su día de la semana.
+table qa_atipicos
+	lineageTag: dd64d455-003e-4dd5-ae29-5d1adc019686
+
+	column fecha
+		dataType: dateTime
+		lineageTag: e5aefda5-d438-4a52-b15a-1cd0da8b5334
+		sourceColumn: fecha
+
+	column victimas
+		dataType: double
+		lineageTag: 925fcd80-cb46-4965-bd7b-20dfb08ca7ec
+		sourceColumn: victimas
+
+	column media_su_dia
+		dataType: double
+		lineageTag: a5e6c7e4-0334-4d10-b553-2177a1c4c4f6
+		sourceColumn: media_su_dia
+
+	column z
+		dataType: double
+		lineageTag: e9d306f9-c36d-4814-a4a7-662ce5cd72fe
+		sourceColumn: z
+
+	column dia_semana
+		dataType: string
+		lineageTag: d21a877d-484a-45e8-8a29-ce3d23d4e4b5
+		sourceColumn: dia_semana
+
+	column festivo
+		dataType: int64
+		lineageTag: 315bfc20-50d8-49a7-b6c2-0fb73a04698b
+		sourceColumn: festivo
+
+	column tipo
+		dataType: string
+		lineageTag: bd042339-066b-4db0-be15-b7b37ad5a630
+		sourceColumn: tipo
+
+	partition qa_atipicos = m
+		mode: import
+		source =
+				let
+				    T = LeerHoja("qa_atipicos.csv"),
+				    Tipos = Table.TransformColumnTypes(T, {{"fecha", type date}, {"victimas", type number}, {"media_su_dia", type number}, {"z", type number}, {"dia_semana", type text}, {"festivo", Int64.Type}, {"tipo", type text}}, "en-US")
+				in
+				    Tipos
+

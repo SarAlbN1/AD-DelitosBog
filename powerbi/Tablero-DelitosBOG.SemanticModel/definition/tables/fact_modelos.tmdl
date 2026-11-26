@@ -1,0 +1,82 @@
+/// Evaluación final (184 días) de comparadores y modelos (#42, #43, #44). Lee la hoja `fact_modelos.csv` que genera
+/// `scripts/exportar_powerbi.py`: allí la barra se calcula, y están la familia, la variante y `supera_barra`.
+table fact_modelos
+	lineageTag: 8b46e8ca-ac79-4e77-a091-f6db996f6478
+
+	column modelo
+		dataType: string
+		lineageTag: 613d3a88-f9b3-4791-bfbe-92890bcf0160
+		sourceColumn: modelo
+
+	column modelo_base
+		dataType: string
+		lineageTag: 5e416caf-b0f6-463a-ad16-2d08de6c9a97
+		sourceColumn: modelo_base
+
+	column variante
+		dataType: string
+		lineageTag: 40f90b32-61c3-4128-8042-6cdeb0eaa031
+		sourceColumn: variante
+
+	column familia
+		dataType: string
+		lineageTag: 7c1a290d-89d6-4755-a88c-d0aec2c68496
+		sourceColumn: familia
+
+	column n
+		dataType: int64
+		lineageTag: 9c38928b-0274-4f28-9358-4bb343fa5b72
+		summarizeBy: none
+		sourceColumn: n
+
+	column MAE
+		dataType: double
+		lineageTag: 74522069-897d-4f46-8927-a0553fb8f474
+		sourceColumn: MAE
+
+	column RMSE
+		dataType: double
+		lineageTag: 809a92cf-5171-4d44-a543-bac937d1332e
+		sourceColumn: RMSE
+
+	column MAPE
+		dataType: double
+		lineageTag: 800cf751-24cd-4ed3-803e-dbd583db9d7d
+		sourceColumn: MAPE
+
+	column MASE
+		dataType: double
+		lineageTag: 22bc93eb-c580-4401-a1a3-49d63d49a20c
+		sourceColumn: MASE
+
+	column es_barra
+		dataType: boolean
+		lineageTag: 0b9579c7-af2f-4cd7-8fb9-10d408b762e4
+		sourceColumn: es_barra
+
+	column mae_vs_barra
+		dataType: double
+		lineageTag: 79b7d5ee-288a-493c-be53-641f2c624e44
+		sourceColumn: mae_vs_barra
+
+	column supera_barra
+		dataType: boolean
+		lineageTag: 4cdd4340-2d6e-4a4d-87ca-5432f3c40483
+		sourceColumn: supera_barra
+
+	column nombre
+		dataType: string
+		lineageTag: f8f9749b-9276-40e9-8178-6f6a677da3bf
+		sourceColumn: nombre
+
+	partition fact_modelos = m
+		mode: import
+		source =
+				let
+				    T = LeerHoja("fact_modelos.csv"),
+				    Tipos = Table.TransformColumnTypes(T, {{"modelo", type text}, {"modelo_base", type text}, {"variante", type text}, {"familia", type text}, {"n", Int64.Type}, {"MAE", type number}, {"RMSE", type number}, {"MAPE", type number}, {"MASE", type number}, {"es_barra", type logical}, {"mae_vs_barra", type number}, {"supera_barra", type logical}}, "en-US"),
+				    Familia = Table.TransformColumns(Tipos, {{"familia", each if _ = "comparador" then "Referencia" else if _ = "estadistico" then "Estadístico" else "Árboles", type text}}),
+				    Base = [ingenuo = "Ingenuo", ingenuo_estacional = "Ingenuo estacional", media_movil_7 = "Media móvil 7", media_movil_28 = "Media móvil 28", sarima = "SARIMA", ets = "ETS", bosque_aleatorio = "Bosque aleatorio", gradiente_histogramas = "Gradiente por histogramas"],
+				    Nombre = Table.AddColumn(Familia, "nombre", each Record.FieldOrDefault(Base, [modelo_base], [modelo_base]) & (if [variante] = "sin_2020" then " (sin 2020)" else if [variante] = "desde_2021" then " (desde 2021)" else ""), type text)
+				in
+				    Nombre

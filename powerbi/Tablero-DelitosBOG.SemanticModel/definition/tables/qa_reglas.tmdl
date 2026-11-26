@@ -1,0 +1,30 @@
+/// Las reglas de lectura que el tablero no puede romper.
+table qa_reglas
+	lineageTag: 6a395878-7cf7-456e-87ce-39f2386c2fbf
+
+	column regla
+		dataType: string
+		lineageTag: 345cdcae-cb47-4324-8352-43f5d3a9cce8
+		sourceColumn: regla
+
+	column por_que
+		dataType: string
+		lineageTag: 414c8a67-8809-49ee-84c5-f36218015c06
+		sourceColumn: por_que
+
+	column n
+		dataType: int64
+		lineageTag: 0d33241e-b49b-413e-b03c-c23e4089cb0e
+		summarizeBy: none
+		sourceColumn: n
+
+	partition qa_reglas = m
+		mode: import
+		source =
+				let
+				    T = LeerHoja("qa_reglas.csv"),
+				    Tipos = Table.TransformColumnTypes(T, {{"regla", type text}, {"por_que", type text}}),
+				    Orden = Table.AddIndexColumn(Tipos, "n", 1, 1, Int64.Type)
+				in
+				    Orden
+

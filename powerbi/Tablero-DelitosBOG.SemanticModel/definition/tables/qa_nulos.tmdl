@@ -1,0 +1,43 @@
+/// Nulos por fuente y columna.
+table qa_nulos
+	lineageTag: f3736df4-3ca6-44b0-b0c7-3b0de7f96069
+
+	column fuente
+		dataType: string
+		lineageTag: 1fd7f717-1a5e-4d7b-b6f8-626fad845996
+		sourceColumn: fuente
+
+	column columna
+		dataType: string
+		lineageTag: d60139c5-baef-4c28-a25a-a5dea29d0ddf
+		sourceColumn: columna
+
+	column filas_evaluadas
+		dataType: int64
+		lineageTag: 8dc70a5b-3201-477b-8d55-94bc234c247f
+		sourceColumn: filas_evaluadas
+
+	column nulos
+		dataType: int64
+		lineageTag: 2a99072b-cf1f-4945-bd05-783b68a38aa1
+		sourceColumn: nulos
+
+	column pct_nulos
+		dataType: double
+		lineageTag: 77730530-25ac-41b0-9d3b-cf790d885df0
+		sourceColumn: pct_nulos
+
+	column nota
+		dataType: string
+		lineageTag: 75e74696-1503-4eb8-b822-c04b48fdfdbd
+		sourceColumn: nota
+
+	partition qa_nulos = m
+		mode: import
+		source =
+				let
+				    T = LeerHoja("qa_nulos.csv"),
+				    Tipos = Table.TransformColumnTypes(T, {{"fuente", type text}, {"columna", type text}, {"filas_evaluadas", Int64.Type}, {"nulos", Int64.Type}, {"pct_nulos", type number}, {"nota", type text}}, "en-US")
+				in
+				    Tipos
+

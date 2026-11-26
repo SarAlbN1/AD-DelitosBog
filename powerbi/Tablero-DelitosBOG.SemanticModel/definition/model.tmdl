@@ -1,0 +1,36 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["MCP-PBIModeling"]
+
+ref table fact_serie_diaria
+ref table dim_calendario
+ref table dim_anio
+ref table dim_periodo
+ref table fact_linea123_localidad
+ref table fact_linea123_upz
+ref table fact_poblacion
+ref table fact_fuentes_mensual
+ref table dim_fuente
+ref table fact_comparadores
+ref table fact_validacion_rodante
+ref table qa_embudo
+ref table qa_nulos
+ref table qa_atipicos
+ref table qa_reglas
+ref table geo_localidades
+ref table dim_localidad
+ref table Medidas
+ref table fact_modelos
+ref table fact_predicciones
+
+ref cultureInfo en-US
+

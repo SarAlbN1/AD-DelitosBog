@@ -1,0 +1,45 @@
+/// MAE de cada comparador por pliegue de validación rodante, en formato largo.
+table fact_validacion_rodante
+	lineageTag: 16f25dac-905a-4efc-875d-79e3467a476a
+
+	column fin_entrenamiento
+		dataType: dateTime
+		lineageTag: 7fc253a9-8d8d-439e-9a97-923cb3c32df1
+		sourceColumn: fin_entrenamiento
+
+	column fin_evaluacion
+		dataType: dateTime
+		lineageTag: 24ff0afb-5453-4d0e-a5f9-d9aa8ac57c48
+		sourceColumn: fin_evaluacion
+
+	column dias_entrenamiento
+		dataType: int64
+		lineageTag: 81f761b9-7556-48ef-90f9-cd43977db521
+		sourceColumn: dias_entrenamiento
+
+	column dias_evaluacion
+		dataType: int64
+		lineageTag: 0ba96422-060c-4500-867b-79a903e6822c
+		sourceColumn: dias_evaluacion
+
+	column comparador
+		dataType: string
+		lineageTag: 825f702e-79a4-4a59-9cfd-67540c6ce7da
+		sourceColumn: comparador
+
+	column MAE
+		dataType: double
+		lineageTag: f83fa656-f71a-4bb8-9b69-01a6b3196118
+		sourceColumn: MAE
+
+	partition fact_validacion_rodante = m
+		mode: import
+		source =
+				let
+				    T = LeerHoja("fact_validacion_rodante.csv"),
+				    Tipos = Table.TransformColumnTypes(T, {{"fin_entrenamiento", type date}, {"fin_evaluacion", type date}, {"dias_entrenamiento", Int64.Type}, {"dias_evaluacion", Int64.Type}, {"ingenuo", type number}, {"ingenuo_estacional", type number}, {"media_movil_7", type number}, {"media_movil_28", type number}}, "en-US"),
+				    Largo = Table.UnpivotOtherColumns(Tipos, {"fin_entrenamiento", "fin_evaluacion", "dias_entrenamiento", "dias_evaluacion"}, "comparador", "MAE"),
+				    Tipo = Table.TransformColumnTypes(Largo, {{"MAE", type number}, {"comparador", type text}})
+				in
+				    Tipo
+

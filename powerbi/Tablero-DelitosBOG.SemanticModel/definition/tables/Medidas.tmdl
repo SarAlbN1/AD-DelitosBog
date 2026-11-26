@@ -1,0 +1,317 @@
+/// Tabla contenedora de las medidas del tablero.
+table Medidas
+	lineageTag: 82cc46fa-830b-4ada-82a8-1fbdf3676d83
+
+	/// Víctimas de hurto a personas (Policía, registro). Variable objetivo.
+	measure Víctimas = SUM ( fact_serie_diaria[victimas] )
+		formatString: #,0
+		displayFolder: 1 Serie Policía
+		lineageTag: 7ffdf105-ffa0-4c20-8028-c563b3a1be0d
+
+	measure 'Días con datos' = COUNTROWS ( fact_serie_diaria )
+		formatString: #,0
+		displayFolder: 1 Serie Policía
+		lineageTag: e576590b-275b-43f6-bedd-fb054064118f
+
+	/// Víctimas por día. Es la cifra que se compara entre años, porque 2025 está truncado.
+	measure 'Media diaria' = DIVIDE ( [Víctimas], [Días con datos] )
+		formatString: #,0.0
+		displayFolder: 1 Serie Policía
+		lineageTag: 46729d71-064f-4183-a414-400b79c425a2
+
+	measure 'Media diaria año anterior' =
+			VAR a = MAX ( dim_anio[anio] )
+			RETURN
+			    CALCULATE ( [Media diaria], REMOVEFILTERS ( dim_anio ), REMOVEFILTERS ( dim_periodo ), REMOVEFILTERS ( dim_calendario ), dim_anio[anio] = a - 1 )
+		formatString: #,0.0
+		displayFolder: 1 Serie Policía
+		lineageTag: b78434da-43bb-404f-a7af-3789317747c6
+
+	measure 'Var. media diaria vs año anterior' =
+			VAR prev = [Media diaria año anterior]
+			RETURN IF ( NOT ISBLANK ( prev ), DIVIDE ( [Media diaria] - prev, prev ) )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 1 Serie Policía
+		lineageTag: 83a1276b-0572-4a85-84ec-53991b92fe10
+
+	measure 'Máximo diario' = MAXX ( VALUES ( dim_calendario[fecha] ), [Víctimas] )
+		formatString: #,0
+		displayFolder: 1 Serie Policía
+		lineageTag: 89027179-cab3-4990-8b70-791e5a0ee701
+
+	measure 'Media lunes festivo' = CALCULATE ( [Media diaria], dim_calendario[dia_semana_numero] = 0, dim_calendario[festivo] = 1 )
+		formatString: #,0.0
+		displayFolder: 1 Serie Policía
+		lineageTag: 56c4c415-4c03-47e8-a1b5-39cfc3a9c5e5
+
+	measure 'Media lunes laborable' = CALCULATE ( [Media diaria], dim_calendario[dia_semana_numero] = 0, dim_calendario[festivo] = 0 )
+		formatString: #,0.0
+		displayFolder: 1 Serie Policía
+		lineageTag: e458f9b6-898a-41de-9354-ba5e85c89673
+
+	/// Lunes festivo frente a lunes laborable: controla el día de la semana.
+	measure 'Efecto festivo %' = DIVIDE ( [Media lunes festivo] - [Media lunes laborable], [Media lunes laborable] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 1 Serie Policía
+		lineageTag: dd3bb670-9e0f-4a43-ac32-4ceea316b7e6
+
+	measure 'Media diaria periodo completo' = CALCULATE ( [Media diaria], REMOVEFILTERS ( dim_calendario ), REMOVEFILTERS ( dim_periodo ), REMOVEFILTERS ( dim_anio ) )
+		formatString: #,0.0
+		displayFolder: 1 Serie Policía
+		lineageTag: a82dbdca-e636-4169-a5a4-9282b49db718
+
+	/// Suma de incidentes de hurto tramitados por la Línea 123. Se suman incidentes; nunca se cuentan filas.
+	measure 'Llamadas 123' = SUM ( fact_linea123_localidad[incidentes] )
+		formatString: #,0
+		displayFolder: 2 Territorio Línea 123
+		lineageTag: 9e80cb21-c87b-463a-ba58-0e50618c2619
+
+	measure Personas-año = SUM ( fact_poblacion[habitantes] )
+		formatString: #,0
+		displayFolder: 2 Territorio Línea 123
+		lineageTag: 7caf431f-7d38-4675-81aa-f0e8b4c5c7de
+
+	/// Llamadas de hurto por 100.000 personas-año. Solo usa los años con población (2020-2025).
+	measure 'Tasa 123 por 100k' =
+			VAR anios = FILTER ( VALUES ( dim_anio[anio] ), CALCULATE ( SUM ( fact_poblacion[habitantes] ) ) > 0 )
+			VAR inc = CALCULATE ( [Llamadas 123], anios )
+			VAR pob = CALCULATE ( [Personas-año], anios )
+			RETURN DIVIDE ( inc * 100000, pob )
+		formatString: #,0.0
+		displayFolder: 2 Territorio Línea 123
+		lineageTag: 6cae95a7-0b16-4dc7-a1b9-f9b7e9b20196
+
+	measure 'Participación llamadas %' = DIVIDE ( [Llamadas 123], CALCULATE ( [Llamadas 123], ALLSELECTED ( dim_localidad ) ) )
+		formatString: 0.0%
+		displayFolder: 2 Territorio Línea 123
+		lineageTag: ee2995ed-360d-415a-bd65-6810794610a0
+
+	measure 'Puesto por conteo' = IF ( HASONEVALUE ( dim_localidad[localidad] ), RANKX ( ALL ( dim_localidad ), [Llamadas 123], , DESC, DENSE ) )
+		formatString: 0
+		displayFolder: 2 Territorio Línea 123
+		lineageTag: c1b2d514-0b4e-4d54-9e09-3b7e38e95fb8
+
+	measure 'Puesto por tasa' = IF ( HASONEVALUE ( dim_localidad[localidad] ), RANKX ( ALL ( dim_localidad ), [Tasa 123 por 100k], , DESC, DENSE ) )
+		formatString: 0
+		displayFolder: 2 Territorio Línea 123
+		lineageTag: ee0e50ee-c627-4a8e-a2cf-3f9f197b5f6d
+
+	measure 'Tasa ciudad por 100k' = CALCULATE ( [Tasa 123 por 100k], REMOVEFILTERS ( dim_localidad ) )
+		formatString: #,0.0
+		displayFolder: 2 Territorio Línea 123
+		lineageTag: 64e16de1-4db8-41a4-81e5-851219bd98aa
+
+	measure 'Llamadas 123 UPZ' = SUM ( fact_linea123_upz[incidentes] )
+		formatString: #,0
+		displayFolder: 2 Territorio Línea 123
+		lineageTag: 8ca1bcc9-da10-4ce5-aea1-b881db71a95f
+
+	measure 'UPZ con llamadas' = CALCULATE ( DISTINCTCOUNT ( fact_linea123_upz[upz] ), fact_linea123_upz[incidentes] > 0 )
+		formatString: #,0
+		displayFolder: 2 Territorio Línea 123
+		lineageTag: a12adecb-a435-4029-8f33-e88fe76a4834
+
+	measure 'Peso 10 primeras UPZ %' =
+			VAR top10 = TOPN ( 10, SUMMARIZE ( fact_linea123_upz, fact_linea123_upz[localidad], fact_linea123_upz[upz] ), [Llamadas 123 UPZ], DESC )
+			RETURN DIVIDE ( CALCULATE ( [Llamadas 123 UPZ], top10 ), [Llamadas 123 UPZ] )
+		formatString: 0.0%
+		displayFolder: 2 Territorio Línea 123
+		lineageTag: 64671293-6441-4b86-8a6d-e40245d8ef60
+
+	/// Valor mensual de UNA fuente. Devuelve vacío si se mezclan fuentes: las fuentes no se suman entre sí.
+	measure 'Valor de la fuente' = IF ( HASONEVALUE ( fact_fuentes_mensual[fuente] ), SUM ( fact_fuentes_mensual[valor] ) )
+		formatString: #,0
+		displayFolder: 3 Fuentes
+		lineageTag: 794d5f96-57c0-401d-98c0-d815deb0de7b
+
+	/// Valor del mes sobre la media mensual comparable de la misma fuente (=100).
+	measure 'Índice de la fuente' =
+			VAR v = [Valor de la fuente]
+			VAR base = CALCULATE ( AVERAGEX ( VALUES ( dim_periodo[anio_mes] ), [Valor de la fuente] ), REMOVEFILTERS ( dim_periodo ), REMOVEFILTERS ( dim_anio ), dim_periodo[comparable] = "sí" )
+			RETURN IF ( NOT ISBLANK ( v ), DIVIDE ( v, base ) * 100 )
+		formatString: 0
+		displayFolder: 3 Fuentes
+		lineageTag: 036377cd-1c60-4139-b00c-2743021010c9
+
+	measure 'Registros Policía auditados' = CALCULATE ( SUM ( dim_fuente[filas_auditadas] ), dim_fuente[clave] = "policia_registro" )
+		formatString: #,0
+		displayFolder: 3 Fuentes
+		lineageTag: 72183f1a-7027-42e6-ac97-a40d48d2c1d4
+
+	measure 'Fuentes que sostienen el mínimo' = CALCULATE ( COUNTROWS ( dim_fuente ), dim_fuente[sostiene_el_minimo] = "sí" )
+		formatString: 0
+		displayFolder: 3 Fuentes
+		lineageTag: 95fd061a-9cc1-4641-9460-ef68d5f8f564
+
+	measure 'Barra MAE' = MINX ( ALL ( fact_comparadores ), fact_comparadores[MAE] )
+		formatString: 0.00
+		displayFolder: 4 Modelado
+		lineageTag: b2e66572-ab79-4112-932e-15acd16e8636
+
+	measure 'Mejor comparador' =
+			VAR m = [Barra MAE]
+			RETURN CALCULATE ( SELECTEDVALUE ( fact_comparadores[comparador] ), FILTER ( ALL ( fact_comparadores ), fact_comparadores[MAE] = m ) )
+		displayFolder: 4 Modelado
+		lineageTag: e9cd6297-3797-4784-85d4-bc871d9ee866
+
+	measure 'MASE de la barra' =
+			VAR m = [Barra MAE]
+			RETURN CALCULATE ( MIN ( fact_comparadores[MASE] ), FILTER ( ALL ( fact_comparadores ), fact_comparadores[MAE] = m ) )
+		formatString: 0.000
+		displayFolder: 4 Modelado
+		lineageTag: 55989851-29c6-4e1b-afda-40f26d9eadb4
+
+	measure 'MAE pliegue' = AVERAGE ( fact_validacion_rodante[MAE] )
+		formatString: 0.00
+		displayFolder: 4 Modelado
+		lineageTag: f3605cff-946c-40a8-8efa-a5e0a884d2d2
+
+	measure 'Periodo seleccionado' =
+			VAR a0 = MIN ( dim_anio[anio] ) VAR a1 = MAX ( dim_anio[anio] )
+			RETURN IF ( a0 = a1, "Año " & a0, "Años " & a0 & "–" & a1 )
+		displayFolder: 0 Textos
+		lineageTag: 87ae7190-9401-4305-85f2-c9e388832286
+
+	measure 'Aviso de lectura' =
+			VAR a = VALUES ( dim_anio[anio] )
+			VAR t2020 = IF ( 2020 IN a, "2020 es atípico (restricciones de movilidad). " )
+			VAR t2025 = IF ( 2025 IN a, "2025 llega hasta el 31 de octubre: compare la media diaria, no el total." )
+			RETURN COALESCE ( t2020 & t2025, "" )
+		displayFolder: 0 Textos
+		lineageTag: 9738dfda-1fec-4421-a1cd-27bd1695f405
+
+	measure 'Día pico' =
+			VAR t = ADDCOLUMNS ( VALUES ( dim_calendario[dia_semana] ), "@m", [Media diaria] )
+			RETURN MAXX ( TOPN ( 1, t, [@m], DESC ), dim_calendario[dia_semana] )
+		displayFolder: 5 Hallazgos
+		lineageTag: b8d949be-afa0-405e-aaed-c712b5e714f9
+
+	measure 'Día valle' =
+			VAR t = FILTER ( ADDCOLUMNS ( VALUES ( dim_calendario[dia_semana] ), "@m", [Media diaria] ), NOT ISBLANK ( [@m] ) )
+			RETURN MAXX ( TOPN ( 1, t, [@m], ASC ), dim_calendario[dia_semana] )
+		displayFolder: 5 Hallazgos
+		lineageTag: faf40dc5-9caa-477a-9d15-349d1ede89cb
+
+	measure 'Brecha pico-valle %' =
+			VAR t = FILTER ( ADDCOLUMNS ( VALUES ( dim_calendario[dia_semana] ), "@m", [Media diaria] ), NOT ISBLANK ( [@m] ) )
+			VAR mx = MAXX ( t, [@m] ) VAR mn = MINX ( t, [@m] )
+			RETURN DIVIDE ( mx - mn, mn )
+		formatString: 0%
+		displayFolder: 5 Hallazgos
+		lineageTag: 697f4630-d4ce-42b6-9924-036559e91edd
+
+	measure 'Mes pico' =
+			VAR t = ADDCOLUMNS ( VALUES ( dim_calendario[nombre_mes] ), "@m", [Media diaria] )
+			RETURN MAXX ( TOPN ( 1, t, [@m], DESC ), dim_calendario[nombre_mes] )
+		displayFolder: 5 Hallazgos
+		lineageTag: 87ac2b7a-6c47-4a53-9291-b1bf24f55d80
+
+	measure 'Media fin de semana vs laborable %' =
+			VAR fs = CALCULATE ( [Media diaria], dim_calendario[fin_de_semana] = 1, dim_calendario[festivo] = 0 )
+			VAR lab = CALCULATE ( [Media diaria], dim_calendario[tipo_dia] = "Laborable" )
+			RETURN DIVIDE ( fs - lab, lab )
+		formatString: +0%;-0%;0%
+		displayFolder: 1 Serie Policía
+		lineageTag: 168e7407-dfd0-45cc-b34b-d6b0276fb7ae
+
+	measure 'Hallazgo tendencia' =
+			VAR a = MAX ( fact_serie_diaria[fecha] )
+			VAR anio = YEAR ( a )
+			VAR m = CALCULATE ( [Media diaria], dim_anio[anio] = anio )
+			VAR v = CALCULATE ( [Var. media diaria vs año anterior], dim_anio[anio] = anio )
+			VAR t = FILTER ( ADDCOLUMNS ( VALUES ( dim_anio[anio] ), "@m", [Media diaria] ), NOT ISBLANK ( [@m] ) )
+			VAR apico = MAXX ( TOPN ( 1, t, [@m], DESC ), dim_anio[anio] )
+			VAR mpico = MAXX ( t, [@m] )
+			RETURN
+			"En " & anio & " se registran " & FORMAT ( m, "#,0", "es-CO" ) & " víctimas de hurto por día (" & FORMAT ( v, "+0%;-0%", "es-CO" ) & " frente a " & ( anio - 1 ) & "). El año más alto del periodo fue " & apico & ", con " & FORMAT ( mpico, "#,0", "es-CO" ) & " por día."
+		displayFolder: 5 Hallazgos
+		lineageTag: 05153032-2033-400e-8fb4-3fd8b43f9c2c
+
+	measure 'Hallazgo semana' =
+			VAR pico = [Día pico] VAR valle = [Día valle]
+			VAR mp = CALCULATE ( [Media diaria], dim_calendario[dia_semana] = pico )
+			VAR mv = CALCULATE ( [Media diaria], dim_calendario[dia_semana] = valle )
+			RETURN "El " & pico & " es el día con más hurtos (" & FORMAT ( mp, "#,0", "es-CO" ) & " víctimas por día): " & FORMAT ( DIVIDE ( mp - mv, mv ), "0%", "es-CO" ) & " más que el " & valle & " (" & FORMAT ( mv, "#,0", "es-CO" ) & ")."
+		displayFolder: 5 Hallazgos
+		lineageTag: a74901f0-583f-4973-a09d-161a31bd1fee
+
+	measure 'Hallazgo festivo' = "Un lunes festivo registra " & FORMAT ( - [Efecto festivo %], "0%", "es-CO" ) & " menos víctimas que un lunes laborable (" & FORMAT ( [Media lunes festivo], "#,0", "es-CO" ) & " frente a " & FORMAT ( [Media lunes laborable], "#,0", "es-CO" ) & "): un indicio de que el hurto acompaña la actividad laboral."
+		displayFolder: 5 Hallazgos
+		lineageTag: fce85186-d004-4cb8-badb-17e0c66304a8
+
+	measure 'Localidad tasa máxima' =
+			VAR t = ADDCOLUMNS ( VALUES ( dim_localidad[localidad] ), "@t", [Tasa 123 por 100k] )
+			RETURN MAXX ( TOPN ( 1, t, [@t], DESC ), dim_localidad[localidad] )
+		displayFolder: 5 Hallazgos
+		lineageTag: 5a0b4b8f-e239-4f7b-a726-d7861b037ab4
+
+	measure 'Hallazgo territorio' =
+			VAR loc = [Localidad tasa máxima]
+			VAR t = CALCULATE ( [Tasa 123 por 100k], dim_localidad[localidad] = loc )
+			VAR lect = CALCULATE ( SELECTEDVALUE ( dim_localidad[lectura] ), dim_localidad[localidad] = loc )
+			VAR tc = [Tasa ciudad por 100k]
+			VAR tc2 = ADDCOLUMNS ( VALUES ( dim_localidad[localidad] ), "@c", [Llamadas 123] )
+			VAR locc = MAXX ( TOPN ( 1, tc2, [@c], DESC ), dim_localidad[localidad] )
+			VAR pc = DIVIDE ( CALCULATE ( [Llamadas 123], dim_localidad[localidad] = locc ), CALCULATE ( [Llamadas 123], REMOVEFILTERS ( dim_localidad ) ) )
+			VAR rt = CALCULATE ( [Puesto por tasa], dim_localidad[localidad] = locc )
+			RETURN
+			loc & " tiene la tasa más alta: " & FORMAT ( t, "#,0", "es-CO" ) & " llamadas por hurto por cada 100.000 habitantes, " & FORMAT ( DIVIDE ( t, tc ), "0.0", "es-CO" ) & " veces la de la ciudad (" & LOWER ( lect ) & "). " & locc & " concentra el " & FORMAT ( pc, "0%", "es-CO" ) & " de las llamadas, pero por tasa es la n.º " & rt & ": su volumen refleja su población, no un mayor riesgo."
+		displayFolder: 5 Hallazgos
+		lineageTag: 573aa06a-d1fb-4863-8f35-f8a36a04f15e
+
+	measure 'MAE mejor modelo' = MINX ( FILTER ( ALL ( fact_modelos ), fact_modelos[familia] <> "Referencia" && fact_modelos[variante] = "completo" ), fact_modelos[MAE] )
+		formatString: 0.0
+		displayFolder: 4 Modelado
+		lineageTag: ec5c2557-0199-4616-8f40-88447ddf99f6
+
+	measure 'Mejor modelo' =
+			VAR m = [MAE mejor modelo]
+			RETURN CALCULATE ( MIN ( fact_modelos[nombre] ), FILTER ( ALL ( fact_modelos ), fact_modelos[MAE] = m && fact_modelos[familia] <> "Referencia" && fact_modelos[variante] = "completo" ) )
+		displayFolder: 4 Modelado
+		lineageTag: 243ebc99-6bc3-4c21-b5ab-1ccb08f9b454
+
+	measure 'MAPE mejor modelo' =
+			VAR m = [MAE mejor modelo]
+			RETURN CALCULATE ( MIN ( fact_modelos[MAPE] ), FILTER ( ALL ( fact_modelos ), fact_modelos[MAE] = m && fact_modelos[familia] <> "Referencia" && fact_modelos[variante] = "completo" ) )
+		formatString: 0.0
+		displayFolder: 4 Modelado
+		lineageTag: db3776d7-179d-47db-8747-01d7fda36bba
+
+	measure 'Mejora sobre la barra %' = DIVIDE ( [Barra MAE] - [MAE mejor modelo], [Barra MAE] )
+		formatString: 0%
+		displayFolder: 4 Modelado
+		lineageTag: 24b1800d-8e1a-41dd-a063-a8fc743c16dd
+
+	measure 'MAE modelo' = MIN ( fact_modelos[MAE] )
+		formatString: 0.0
+		displayFolder: 4 Modelado
+		lineageTag: c93026cd-093c-4ec6-9b26-0e0f0f90bc27
+
+	measure Observado = AVERAGE ( fact_predicciones[real] )
+		formatString: #,0
+		displayFolder: 4 Modelado
+		lineageTag: 3e4129d2-55c2-46a7-bcba-66600ef036f8
+
+	measure Pronóstico = AVERAGE ( fact_predicciones[prediccion] )
+		formatString: #,0
+		displayFolder: 4 Modelado
+		lineageTag: 4fe36d5c-f704-4d6e-89f8-fdb8592d5c91
+
+	measure 'Hallazgo modelo' = "El mejor modelo, " & [Mejor modelo] & ", pronostica las víctimas diarias con un error medio de " & FORMAT ( [MAE mejor modelo], "0", "es-CO" ) & " víctimas por día (" & FORMAT ( [MAPE mejor modelo] / 100, "0%", "es-CO" ) & "): " & FORMAT ( [Mejora sobre la barra %], "0%", "es-CO" ) & " menos error que el mejor comparador ingenuo (" & FORMAT ( [Barra MAE], "0", "es-CO" ) & ")."
+		displayFolder: 5 Hallazgos
+		lineageTag: 9f219372-1061-4841-a67b-3db56ad634fa
+
+	column ancla
+		dataType: int64
+		isHidden
+		lineageTag: 0a8e8289-bc99-4220-a1f0-5de8ec15d39a
+		sourceColumn: ancla
+
+	partition Medidas = m
+		mode: import
+		source =
+				let
+				    T = #table(type table [ancla = Int64.Type], {})
+				in
+				    T
+

@@ -1,0 +1,40 @@
+/// Víctimas diarias de hurto a personas (Policía, registro). Variable objetivo, 2020-01-01 a 2025-10-31.
+table fact_serie_diaria
+	lineageTag: 49e78b3a-323a-4416-9aab-a0e03e696b24
+
+	column fecha
+		dataType: dateTime
+		isHidden
+		lineageTag: 6d025d48-a9f5-4554-bd87-ce5a176a149f
+		sourceColumn: fecha
+
+	column victimas
+		dataType: double
+		lineageTag: 203e0618-0fbb-43eb-afa1-1b3179f8a74f
+		sourceColumn: victimas
+
+	column festivo
+		dataType: int64
+		lineageTag: 666448b1-eae3-4ee3-a189-c57b02c4e609
+		sourceColumn: festivo
+
+	column fin_de_semana
+		dataType: int64
+		lineageTag: de661be1-4cb2-4af3-be87-08b50471b620
+		sourceColumn: fin_de_semana
+
+	column anio_atipico_2020
+		dataType: int64
+		lineageTag: a028861f-5bde-42a0-9e47-5848d1ae7784
+		sourceColumn: anio_atipico_2020
+
+	partition fact_serie_diaria = m
+		mode: import
+		source =
+				let
+				    T = LeerHoja("fact_serie_diaria.csv"),
+				    Sel = Table.SelectColumns(T, {"fecha", "victimas", "festivo", "fin_de_semana", "anio_atipico_2020"}),
+				    Tipos = Table.TransformColumnTypes(Sel, {{"fecha", type date}, {"victimas", type number}, {"festivo", Int64.Type}, {"fin_de_semana", Int64.Type}, {"anio_atipico_2020", Int64.Type}}, "en-US")
+				in
+				    Tipos
+
