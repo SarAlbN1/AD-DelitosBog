@@ -1,0 +1,65 @@
+% Sección 8, Juan Diego (#142). Hechos: docs/MODELADO.md, scripts/modelado/, tests/ y docs/REPRODUCIBILIDAD.md.
+% Describe cómo se implementó el protocolo de la sección 7; los resultados están en la sección 9.
+\section{Implementación}\label{sec:implementacion}
+
+La sección~\ref{sec:metodologia} fijó el protocolo: la partición, los pliegues, las métricas y la barra. Esta sección explica cómo se programó para que los resultados de la sección~\ref{sec:resultados} se puedan verificar. Cada afirmación remite a un script de \texttt{scripts/\allowbreak{}modelado/} o a una prueba de \texttt{tests/}. El detalle está en \texttt{docs/\allowbreak{}MODELADO.md}.
+
+\subsection{Estructura del código}\label{sec:imp-codigo}
+
+El modelado se apoya en una configuración única y en un arnés compartido (tabla~\ref{tab:imp-scripts}). Cada script lee la partición, los pliegues y la semilla de \texttt{config/\allowbreak{}modelado.json}, en lugar de definirlos por su cuenta. Así, un modelo no puede evaluarse con otra partición sin que nada avise. Al cargarla, \texttt{config.py} rechaza lo que daría cifras plausibles pero falsas: una validación que no sea de origen rodante, fechas mal formadas o pliegues que no caben en el entrenamiento.
+
+\begin{table}[H]
+\centering
+\caption{Scripts del modelado, en el orden en que se ejecutan. Todos están en \texttt{scripts/\allowbreak{}modelado/}.}\label{tab:imp-scripts}
+\small
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}p{8.2cm}l@{}}
+\toprule
+\textbf{Script} & \textbf{Qué hace} & \textbf{Issue} \\
+\midrule
+\texttt{config.py}, \texttt{semillas.py}, \texttt{registro.py} & Cargan y validan el protocolo, fijan la semilla y registran cada corrida & \#41 \\
+\texttt{evaluacion.py} & Partición, pliegues, métricas y la función \texttt{evaluar}, comunes a todos los modelos & \#42 \\
+\texttt{referencia.py} & Los cuatro comparadores triviales, expresados como modelos & \#42 \\
+\texttt{estadisticos.py} & SARIMA y ETS & \#43 \\
+\texttt{arboles.py} & Bosque aleatorio y gradiente por histogramas & \#44 \\
+\texttt{ajuste.py} & Selección de hiperparámetros en los seis pliegues y evaluación final del elegido & \#45 \\
+\texttt{comparacion.py} & Tablas, pruebas de Diebold-Mariano y figuras de la sección~\ref{sec:resultados} & \#46 \\
+\texttt{interpretacion.py} & Importancia por permutación de la sección~\ref{sec:interpretacion} & \#47 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Un arnés de evaluación compartido}\label{sec:imp-arnes}
+
+\texttt{evaluacion.py} es la única definición de la partición, los pliegues y las métricas. Los comparadores y los cuatro modelos pasan por la misma función \texttt{evaluar}, así que se evalúan exactamente en los mismos días. \texttt{tests/\allowbreak{}test\_\allowbreak{}evaluacion.py} lo comprueba: compara los límites de los pliegues de un modelo con los de los comparadores, y falla si divergen.
+
+Todo modelo es un \emph{predictor} con la misma firma: recibe la serie observada, sus predictoras, la máscara de los días con que puede ajustarse y los días que debe predecir. Ve la serie completa porque el horizonte es de un día: para predecir el día $t$ usa el conteo de $t-1$, que ya está observado también dentro de la evaluación. Por eso la fuga no se evita ocultando la serie, sino con dos pruebas:
+\begin{itemize}
+  \item \textbf{Perturbación por pliegues.} Alterar la serie a partir de un pliegue no puede cambiar las métricas de ese pliegue.
+  \item \textbf{\texttt{sin\_fuga}, día a día.} Para cada día $t$ se altera la serie desde $t$ en adelante, y la predicción de $t$ no puede cambiar. Si el modelo usa rezagos o medias, las predictoras se reconstruyen desde la serie alterada. Esta prueba detecta lo que la anterior deja pasar: un modelo que mira el valor del mismo día que predice. Las pruebas de los cuatro modelos la usan.
+\end{itemize}
+
+\subsection{Cómo predice cada familia sin mirar el día que predice}\label{sec:imp-modelos}
+
+\textbf{SARIMA y ETS.} En cada tramo, el modelo se ajusta solo con el entrenamiento de ese tramo. Después se aplica, con los parámetros fijos, a la serie observada hasta el último día que hay que predecir. La predicción de $t$ es el valor ajustado un paso adelante, que depende de los días anteriores y no de $t$. Los órdenes de SARIMA y la configuración de ETS se eligen dentro de cada tramo, no una vez con todo el entrenamiento. Si se eligieran una sola vez, cada pliegue se evaluaría con un modelo elegido viendo sus propios días.
+
+\textbf{Árboles.} Usan las 21 predictoras de \texttt{scripts/\allowbreak{}features.py}, construidas desde la serie: rezagos, medias de días previos y calendario (sección~\ref{sec:fuga}). Los primeros 28 días no tienen historia suficiente y no entran en el ajuste. Cada estimador recibe la semilla de forma explícita y el bosque usa un solo hilo, porque muchos estimadores de \texttt{scikit-learn} no leen la semilla global y varios hilos pueden cambiar los últimos decimales.
+
+\textbf{Selección de hiperparámetros.} \texttt{ajuste.py} recibe la serie recortada al 2025-04-30 y se detiene si le llega un día posterior. La candidata con menor MAE en las 540 fechas de los pliegues es la única que se evalúa en los 184 días finales. Una prueba altera los días de evaluación y exige que la selección no cambie.
+
+\subsection{Registro de corridas y entorno de referencia}\label{sec:imp-registro}
+
+Cada corrida deja un archivo en \texttt{outputs/\allowbreak{}modelado/\allowbreak{}corridas/} y una fila en \texttt{experimentos.csv}, identificados por una \emph{huella}. La huella es el SHA-256 de lo que determina el resultado: la configuración, el modelo, los hiperparámetros, la semilla, los datos de entrada y la versión del arnés. Dos corridas con la misma huella deben dar las mismas métricas. Si no las dan, el registro falla en lugar de sobrescribir. La versión del arnés se sube a mano cuando cambia cómo se calcula un resultado, para que la corrida corregida no choque con la anterior.
+
+Con la misma semilla y las mismas versiones, dos sistemas no dan siempre la misma cifra. El gradiente por histogramas cambia hasta 0,7 de MAE entre macOS, Linux y Windows, y la selección por AICc cambia de candidata cuando hay casi empate. Por eso las cifras de las secciones~\ref{sec:resultados} y~\ref{sec:interpretacion} se generan en una imagen de Docker que fija el sistema, Python 3.12.8, las versiones exactas de las bibliotecas, la arquitectura \texttt{linux/amd64} y un solo hilo de cálculo. El apéndice~\ref{ap:reproducibilidad} da el orden de ejecución.
+
+Antes de escribir sus tablas, \texttt{comparacion.py} recalcula cada métrica desde las predicciones guardadas y se detiene si alguna no coincide con la que publicó su issue. Unas 190 pruebas automáticas, con datos sintéticos, cubren el arnés, los modelos, el ajuste, la comparación y la interpretación.
+
+\subsection{Defectos encontrados durante la implementación}\label{sec:imp-defectos}
+
+Las comprobaciones anteriores no son una formalidad: detectaron cuatro errores. Los tres primeros habrían dado cifras plausibles y falsas.
+\begin{itemize}
+  \item \textbf{El arnés retenía la evaluación.} La primera versión ocultaba al predictor los días de evaluación, y el comparador ingenuo daba un MAE de 13,00 calculado sobre un solo día en lugar de 52,92 sobre 184. Se detectó al comparar con las cifras conocidas de los comparadores, y de ahí sale el contrato descrito arriba.
+  \item \textbf{La fuga del mismo día no se detectaba.} La prueba por pliegues la dejaba pasar. Se añadió \texttt{sin\_fuga}.
+  \item \textbf{El filtrado de las variantes «desde 2021» arrancaba en 2020.} El ETS se ajustaba desde 2021, pero sus estados iniciales se aplicaban a la serie desde 2020 y atravesaban el confinamiento. En los pliegues 2 y 3 daba un MAE de 84,0 y 79,5. Con el arranque corregido, bajan a 35,67 y 33,79. Solo afectaba a esas variantes de sensibilidad.
+  \item \textbf{La selección no veía la víspera del 1 de mayo.} Construía las predictoras desde la serie recortada, y el último día del pliegue 6 no quedaba marcado como víspera de festivo. Corregido, las configuraciones elegidas y las cifras finales no cambian.
+\end{itemize}
