@@ -4,9 +4,11 @@
 # no dependan de la máquina (ver «Entorno de referencia» en docs/REPRODUCIBILIDAD.md).
 # La imagen no contiene datos ni código: el repositorio se monta en /repo al ejecutar.
 #
-#   docker build -t ad-delitosbog:referencia .
-#   docker run --rm -v "<ruta del repo>:/repo" ad-delitosbog:referencia python -m pytest -q tests
-FROM python:3.12.8-slim-bookworm
+#   docker build --platform linux/amd64 -t ad-delitosbog:referencia .
+#   docker run --rm --platform linux/amd64 -v "<ruta del repo>:/repo" ad-delitosbog:referencia python -m pytest -q tests
+# La plataforma se fija porque Docker no fija la arquitectura: en Apple Silicon usaría
+# linux/arm64, y el gradiente por histogramas da otras cifras en arm64 con las mismas versiones (#117).
+FROM --platform=linux/amd64 python:3.12.8-slim-bookworm
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONHASHSEED=0 \

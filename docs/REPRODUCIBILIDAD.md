@@ -39,13 +39,14 @@ Los datos van en `data/raw/<fuente>/`. Esa carpeta está en `.gitignore`: **nunc
 Algunos modelos no dan el mismo resultado en todas las máquinas, aunque usen la misma semilla. El gradiente por histogramas cambia hasta 0,7 de MAE entre macOS, Linux y Windows (#117). La selección por AICc de SARIMA y ETS cambia de candidata cuando hay casi empate (#118). Por eso **las cifras de modelado del informe (secciones 9 y 10) se generan en una sola imagen Docker**, con el sistema, Python 3.12.8 y las versiones exactas de [`requirements-lock.txt`](../requirements-lock.txt) fijados. `requirements.txt` sigue siendo el entorno de desarrollo, con versiones mínimas.
 
 ```bash
-docker build -t ad-delitosbog:referencia .
+docker build --platform linux/amd64 -t ad-delitosbog:referencia .
 # Linux / macOS
-docker run --rm -v "$PWD:/repo" -e AD_COMMIT=$(git rev-parse HEAD) ad-delitosbog:referencia python -m pytest -q tests
-docker run --rm -v "$PWD:/repo" -e AD_COMMIT=$(git rev-parse HEAD) ad-delitosbog:referencia python scripts/modelado/ajuste.py
+docker run --rm --platform linux/amd64 -v "$PWD:/repo" -e AD_COMMIT=$(git rev-parse HEAD) ad-delitosbog:referencia python -m pytest -q tests
+docker run --rm --platform linux/amd64 -v "$PWD:/repo" -e AD_COMMIT=$(git rev-parse HEAD) ad-delitosbog:referencia python scripts/modelado/ajuste.py
 # Windows (Git Bash): añada MSYS_NO_PATHCONV=1 delante y use "$(pwd -W):/repo"
 ```
 
+- **La arquitectura también se fija: `linux/amd64`.** Docker fija el sistema y las versiones, pero no la CPU. En un Mac con Apple Silicon usaría `linux/arm64` por defecto, y el gradiente por histogramas da otro MAE en arm64 con las mismas versiones (#117). Allí la imagen corre emulada y tarda más, pero da las cifras del informe.
 - La imagen no contiene datos ni código: monta el repositorio en `/repo`, así que `data/processed/` debe existir antes (sección 5).
 - Fija `OMP_NUM_THREADS=1` y `PYTHONHASHSEED=0`, y define `AD_ENTORNO`. Ese valor entra en la huella de las corridas que lo registran, así que una corrida en Docker no choca en el registro con la misma corrida hecha en otra máquina.
 - Las cifras de otras máquinas valen como comprobación, pero el informe cita las de este entorno. Cada corrida guarda sus versiones y su plataforma en `outputs/modelado/corridas/`.
