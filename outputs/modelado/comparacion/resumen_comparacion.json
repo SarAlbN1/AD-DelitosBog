@@ -1,0 +1,26 @@
+{
+  "barra": "ingenuo_estacional",
+  "origenes": [
+    "#42",
+    "#43",
+    "#44",
+    "#45"
+  ],
+  "cifras_cotejadas": 560,
+  "rezagos_hac": 7,
+  "principales": [
+    [
+      "#45",
+      "ets"
+    ],
+    [
+      "#45",
+      "gradiente_histogramas"
+    ]
+  ],
+  "figuras": [
+    "modelos_pronostico_observado",
+    "modelos_mae_por_pliegue"
+  ],
+  "nota_localidad": "la serie objetivo es distrital (D-01): no hay error por localidad"
+}

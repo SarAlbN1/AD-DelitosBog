@@ -259,20 +259,20 @@ table Medidas
 		displayFolder: 5 Hallazgos
 		lineageTag: 573aa06a-d1fb-4863-8f35-f8a36a04f15e
 
-	measure 'MAE mejor modelo' = MINX ( FILTER ( ALL ( fact_modelos ), fact_modelos[familia] = "Estadístico" ), fact_modelos[MAE] )
+	measure 'MAE mejor modelo' = MINX ( FILTER ( ALL ( fact_modelos ), fact_modelos[familia] <> "Referencia" && fact_modelos[variante] = "completo" ), fact_modelos[MAE] )
 		formatString: 0.0
 		displayFolder: 4 Modelado
 		lineageTag: ec5c2557-0199-4616-8f40-88447ddf99f6
 
 	measure 'Mejor modelo' =
 			VAR m = [MAE mejor modelo]
-			RETURN CALCULATE ( MIN ( fact_modelos[nombre] ), FILTER ( ALL ( fact_modelos ), fact_modelos[MAE] = m ) )
+			RETURN CALCULATE ( MIN ( fact_modelos[nombre] ), FILTER ( ALL ( fact_modelos ), fact_modelos[MAE] = m && fact_modelos[familia] <> "Referencia" && fact_modelos[variante] = "completo" ) )
 		displayFolder: 4 Modelado
 		lineageTag: 243ebc99-6bc3-4c21-b5ab-1ccb08f9b454
 
 	measure 'MAPE mejor modelo' =
 			VAR m = [MAE mejor modelo]
-			RETURN CALCULATE ( MIN ( fact_modelos[MAPE] ), FILTER ( ALL ( fact_modelos ), fact_modelos[MAE] = m ) )
+			RETURN CALCULATE ( MIN ( fact_modelos[MAPE] ), FILTER ( ALL ( fact_modelos ), fact_modelos[MAE] = m && fact_modelos[familia] <> "Referencia" && fact_modelos[variante] = "completo" ) )
 		formatString: 0.0
 		displayFolder: 4 Modelado
 		lineageTag: db3776d7-179d-47db-8747-01d7fda36bba

@@ -44,3 +44,56 @@ def test_serie_se_redondea_a_cuatro_decimales(tmp_path):
     pd.DataFrame({"fecha": ["2020-01-01"], "victimas": [1.0],
                   "m7": [472.1428571428572]}).to_csv(f, index=False)
     assert ep.hechos_serie(f)["m7"].iloc[0] == 472.1429
+
+
+# ------------------------------------------------------------------ modelos (página 6)
+def _metricas(carpeta, sub, col, filas):
+    d = carpeta / sub
+    d.mkdir(parents=True)
+    fin = pd.DataFrame([{"n": 184.0, "MAE": mae, "RMSE": mae + 5, "MAPE": 10.0, "MASE": mae / 50}
+                        for _, mae in filas], index=[n for n, _ in filas])
+    fin.to_csv(d / "metricas_finales.csv")
+    pd.DataFrame([{col: n, "pliegue": k, "MAE": mae, "RMSE": mae + 5, "MAPE": 10.0, "MASE": 1.0}
+                  for n, mae in filas for k in (1, 2)]).to_csv(d / "metricas_por_pliegue.csv",
+                                                               index=False)
+
+
+def test_modelos_con_solo_comparadores_marca_la_barra_y_no_falla(tmp_path):
+    _metricas(tmp_path, "referencia", "comparador", [("ingenuo", 52.9), ("estacional", 49.0)])
+    fm, fp, familias = ep.modelos(tmp_path)
+    assert familias == ["comparador"]
+    assert fm.set_index("modelo").loc["estacional", "es_barra"]
+    assert not fm["supera_barra"].any()
+
+
+def test_modelos_calcula_la_barra_de_los_comparadores_y_la_diferencia(tmp_path):
+    _metricas(tmp_path, "referencia", "comparador", [("ingenuo", 52.9), ("estacional", 49.0)])
+    _metricas(tmp_path, "arboles", "modelo", [("bosque", 34.0), ("bosque_sin_2020", 33.0)])
+    fm, fp, familias = ep.modelos(tmp_path)
+    t = fm.set_index("modelo")
+    assert familias == ["comparador", "arboles"]
+    assert t.loc["bosque", "mae_vs_barra"] == -15.0
+    assert t.loc["bosque", "supera_barra"] and not t.loc["ingenuo", "supera_barra"]
+    assert int(fm["es_barra"].sum()) == 1                      # solo un comparador es la barra
+    assert t.loc["bosque_sin_2020", "variante"] == "sin_2020"
+    assert t.loc["bosque_sin_2020", "modelo_base"] == "bosque"
+    assert len(fp) == 8 and set(fp["pliegue"]) == {1, 2}
+
+
+def test_el_esquema_es_el_mismo_con_y_sin_modelos(tmp_path):
+    """Añadir familias no puede cambiar las columnas: el modelo de Power BI no se rompe."""
+    solo = tmp_path / "solo"
+    todo = tmp_path / "todo"
+    _metricas(solo, "referencia", "comparador", [("ingenuo", 52.9)])
+    _metricas(todo, "referencia", "comparador", [("ingenuo", 52.9)])
+    _metricas(todo, "estadisticos", "modelo", [("ets_desde_2021", 33.0)])
+    a, pa, _ = ep.modelos(solo)
+    b, pb, _ = ep.modelos(todo)
+    assert list(a.columns) == list(b.columns) and list(pa.columns) == list(pb.columns)
+    assert b.set_index("modelo").loc["ets_desde_2021", "variante"] == "desde_2021"
+
+
+def test_modelos_falla_si_faltan_los_comparadores(tmp_path):
+    _metricas(tmp_path, "arboles", "modelo", [("bosque", 34.0)])
+    with pytest.raises(SystemExit):
+        ep.modelos(tmp_path)

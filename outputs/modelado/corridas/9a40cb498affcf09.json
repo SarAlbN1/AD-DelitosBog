@@ -1,6 +1,6 @@
 {
   "huella": "9a40cb498affcf09",
-  "momento": "2026-11-24T23:20:49-05:00",
+  "momento": "2026-11-26T09:18:41-05:00",
   "modelo": "estadisticos.sarima_desde_2021",
   "hiperparametros": {
     "familia": "sarima",

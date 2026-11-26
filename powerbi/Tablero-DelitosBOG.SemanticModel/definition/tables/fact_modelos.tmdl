@@ -1,4 +1,5 @@
-/// Evaluación final (184 días) de comparadores de referencia y modelos estadísticos (#42, #43).
+/// Evaluación final (184 días) de comparadores y modelos (#42, #43, #44). Lee la hoja `fact_modelos.csv` que genera
+/// `scripts/exportar_powerbi.py`: allí la barra se calcula, y están la familia, la variante y `supera_barra`.
 table fact_modelos
 	lineageTag: 8b46e8ca-ac79-4e77-a091-f6db996f6478
 
@@ -6,6 +7,21 @@ table fact_modelos
 		dataType: string
 		lineageTag: 613d3a88-f9b3-4791-bfbe-92890bcf0160
 		sourceColumn: modelo
+
+	column modelo_base
+		dataType: string
+		lineageTag: 5e416caf-b0f6-463a-ad16-2d08de6c9a97
+		sourceColumn: modelo_base
+
+	column variante
+		dataType: string
+		lineageTag: 40f90b32-61c3-4128-8042-6cdeb0eaa031
+		sourceColumn: variante
+
+	column familia
+		dataType: string
+		lineageTag: 7c1a290d-89d6-4755-a88c-d0aec2c68496
+		sourceColumn: familia
 
 	column n
 		dataType: int64
@@ -33,10 +49,20 @@ table fact_modelos
 		lineageTag: 22bc93eb-c580-4401-a1a3-49d63d49a20c
 		sourceColumn: MASE
 
-	column familia
-		dataType: string
-		lineageTag: 7c1a290d-89d6-4755-a88c-d0aec2c68496
-		sourceColumn: familia
+	column es_barra
+		dataType: boolean
+		lineageTag: 0b9579c7-af2f-4cd7-8fb9-10d408b762e4
+		sourceColumn: es_barra
+
+	column mae_vs_barra
+		dataType: double
+		lineageTag: 79b7d5ee-288a-493c-be53-641f2c624e44
+		sourceColumn: mae_vs_barra
+
+	column supera_barra
+		dataType: boolean
+		lineageTag: 4cdd4340-2d6e-4a4d-87ca-5432f3c40483
+		sourceColumn: supera_barra
 
 	column nombre
 		dataType: string
@@ -47,11 +73,10 @@ table fact_modelos
 		mode: import
 		source =
 				let
-				    T = LeerSalida("modelado/experimentos.csv"),
-				    Sel = Table.SelectColumns(T, {"modelo", "n", "MAE", "RMSE", "MAPE", "MASE"}),
-				    Tipos = Table.TransformColumnTypes(Sel, {{"modelo", type text}, {"n", Int64.Type}, {"MAE", type number}, {"RMSE", type number}, {"MAPE", type number}, {"MASE", type number}}, "en-US"),
-				    Familia = Table.AddColumn(Tipos, "familia", each if Text.StartsWith([modelo], "referencia") then "Referencia" else "Estadístico", type text),
-				    Nombre = Table.AddColumn(Familia, "nombre", each let m = Text.AfterDelimiter([modelo], ".") in Text.Replace(Text.Replace(Text.Replace(Text.Replace(Text.Replace(Text.Replace(m, "media_movil_", "Media móvil "), "ingenuo_estacional", "Ingenuo estacional"), "ingenuo", "Ingenuo"), "sarima", "SARIMA"), "ets", "ETS"), "_desde_2021", " (desde 2021)"), type text)
+				    T = LeerHoja("fact_modelos.csv"),
+				    Tipos = Table.TransformColumnTypes(T, {{"modelo", type text}, {"modelo_base", type text}, {"variante", type text}, {"familia", type text}, {"n", Int64.Type}, {"MAE", type number}, {"RMSE", type number}, {"MAPE", type number}, {"MASE", type number}, {"es_barra", type logical}, {"mae_vs_barra", type number}, {"supera_barra", type logical}}, "en-US"),
+				    Familia = Table.TransformColumns(Tipos, {{"familia", each if _ = "comparador" then "Referencia" else if _ = "estadistico" then "Estadístico" else "Árboles", type text}}),
+				    Base = [ingenuo = "Ingenuo", ingenuo_estacional = "Ingenuo estacional", media_movil_7 = "Media móvil 7", media_movil_28 = "Media móvil 28", sarima = "SARIMA", ets = "ETS", bosque_aleatorio = "Bosque aleatorio", gradiente_histogramas = "Gradiente por histogramas"],
+				    Nombre = Table.AddColumn(Familia, "nombre", each Record.FieldOrDefault(Base, [modelo_base], [modelo_base]) & (if [variante] = "sin_2020" then " (sin 2020)" else if [variante] = "desde_2021" then " (desde 2021)" else ""), type text)
 				in
 				    Nombre
-

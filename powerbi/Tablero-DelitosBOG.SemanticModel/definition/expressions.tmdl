@@ -10,7 +10,7 @@ expression LeerHoja =
 	lineageTag: f884340b-b1b2-4c0f-b5f5-b057fb3fca1a
 
 /// Carpeta local del repositorio AD-DelitosBog (clonado en main). Cada persona cambia solo este valor.
-expression RutaRepo = "C:\Users\saraa\Proy\AD-DelitosBog" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+expression RutaRepo = "C:\ruta\al\AD-DelitosBog" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
 	lineageTag: 516f6b3e-f285-4c0e-8a84-4cb285fd7786
 
 /// Lee un CSV de outputs/ en la copia local del repositorio (ruta relativa a outputs).

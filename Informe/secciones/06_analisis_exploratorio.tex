@@ -38,7 +38,7 @@ Las cifras de esta sección están en \texttt{outputs/eda/}.
 
 \subsection{Perfil semanal y festivos}\label{sec:eda-semana}
 
-La figura~\ref{fig:eda-semana} muestra la media de víctimas por día de la semana. El viernes es el día más alto, con 403,1, y el domingo el más bajo, con 245,0: un 64\,\% más. Es la señal más fuerte de la serie, y por eso el día de la semana es una predictora.
+La figura~\ref{fig:eda-semana} muestra la media de víctimas por día de la semana. El viernes es el día más alto, con 403,1, y el domingo el más bajo, con 245,0: un 65\,\% más. Es la señal más fuerte de la serie, y por eso el día de la semana es una predictora.
 
 \begin{figure}[H]
 \centering
@@ -70,7 +70,7 @@ El efecto se sostiene al controlar el día de la semana: un lunes festivo regist
 
 \subsection{Estacionalidad mensual}\label{sec:eda-mes}
 
-La figura~\ref{fig:eda-mes} muestra la media diaria por mes. Va de 312,7 en abril a 386,9 en octubre, un 24\,\% entre el mínimo y el máximo, frente al 64\,\% del perfil semanal. La estacionalidad mensual existe, pero es mucho más débil que la semanal. Eso sugiere que un modelo con rezagos semanales y calendario captará la mayor parte de la estructura de la serie. Noviembre aparece alto, con 382,1, porque solo promedia los noviembres de 2020 a 2024: el de 2025 está fuera de la serie.
+La figura~\ref{fig:eda-mes} muestra la media diaria por mes. Va de 312,7 en abril a 386,9 en octubre, un 24\,\% entre el mínimo y el máximo, frente al 65\,\% del perfil semanal. La estacionalidad mensual existe, pero es mucho más débil que la semanal. Eso sugiere que un modelo con rezagos semanales y calendario captará la mayor parte de la estructura de la serie. Noviembre aparece alto, con 382,1, porque solo promedia los noviembres de 2020 a 2024: el de 2025 está fuera de la serie.
 
 \begin{figure}[H]
 \centering
@@ -82,7 +82,7 @@ La figura~\ref{fig:eda-mes} muestra la media diaria por mes. Va de 312,7 en abri
 
 Para detectar días atípicos, cada día se compara con la media y la desviación de su propio día de la semana. Un percentil sobre toda la serie no serviría: el perfil semanal domina, y un domingo con 300 víctimas es alto mientras que un viernes con 300 es bajo. Ese percentil, además, marcaría como atípicos los días normales de los años altos.
 
-Con un umbral de $|z| > 3$ hay 10 días atípicos de 2.131, el 0,47\,\%. Los nueve bajos caen todos en marzo y abril de 2020, durante el confinamiento estricto; la tabla~\ref{tab:eda-atipicos} muestra los cinco más extremos. Dos de esos nueve días son festivos.
+Con un umbral de $|z| > 3$ hay 10 días atípicos de 2.131, el 0,47\,\%. Ocho de los nueve bajos caen en marzo y abril de 2020, durante el confinamiento estricto; la tabla~\ref{tab:eda-atipicos} muestra los cinco más extremos. El noveno es el 25 de diciembre de 2024, Navidad, con 70 víctimas frente a una media de 365,0 para un miércoles ($z = -3{,}04$). Dos de los nueve son festivos: el Jueves Santo de 2020 (9 de abril) y esa Navidad.
 
 \begin{table}[H]
 \centering
@@ -101,7 +101,7 @@ Con un umbral de $|z| > 3$ hay 10 días atípicos de 2.131, el 0,47\,\%. Los nue
 \end{tabular}
 \end{table}
 
-Los días atípicos no se eliminan. No son errores de medición, sino el efecto de una restricción real, y borrarlos ocultaría lo que el indicador de año atípico recoge. El único día atípico alto es el 1 de diciembre de 2022, un jueves, con 678 víctimas frente a una media de 364,8 ($z = 3{,}18$). Coincide con el inicio de la temporada de compras de fin de año, pero con un solo día esa explicación no se puede verificar (\texttt{outputs/\allowbreak{}eda/\allowbreak{}atipicos\_\allowbreak{}altos.csv}).
+Los días atípicos no se eliminan, porque no son errores de medición. Los de 2020 son el efecto de una restricción real, que recoge el indicador de año atípico, y el de 2024 es un festivo, que recoge el calendario. El único día atípico alto es el 1 de diciembre de 2022, un jueves, con 678 víctimas frente a una media de 364,8 ($z = 3{,}18$). Coincide con el inicio de la temporada de compras de fin de año, pero con un solo día esa explicación no se puede verificar (\texttt{outputs/\allowbreak{}eda/\allowbreak{}atipicos\_\allowbreak{}altos.csv}).
 
 \subsection{Distribución territorial}\label{sec:territorial}
 
@@ -203,10 +203,10 @@ La diferencia entre fuentes es compatible con el origen de cada una. Policía y 
 \subsection{Implicaciones para el modelado}\label{sec:eda-implicaciones}
 
 \begin{enumerate}
-  \item \textbf{El día de la semana es la señal dominante}: el viernes registra un 64\,\% más de víctimas que el domingo.
+  \item \textbf{El día de la semana es la señal dominante}: el viernes registra un 65\,\% más de víctimas que el domingo.
   \item \textbf{Un festivo reduce las víctimas registradas un 38\,\%}, incluso comparando lunes con lunes, y se conoce de antemano.
   \item \textbf{La estacionalidad mensual es débil} frente a la semanal.
-  \item \textbf{2020 entra marcado} con el indicador de año atípico. Sus días atípicos son el efecto del confinamiento y no se eliminan.
+  \item \textbf{2020 entra marcado} con el indicador de año atípico. Sus días atípicos son el efecto del confinamiento y no se eliminan. El único atípico bajo fuera de 2020 es la Navidad de 2024, un festivo.
   \item \textbf{Se comparan medias diarias y no totales}, mientras 2025 esté truncado.
   \item \textbf{Las localidades se comparan por tasa y no por conteo}, sin presentar ninguno de los dos órdenes como un ranking de peligrosidad.
   \item \textbf{El fenómeno está disperso en el territorio}, lo que respalda modelar la serie de toda la ciudad.

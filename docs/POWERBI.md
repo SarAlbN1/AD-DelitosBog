@@ -10,7 +10,7 @@ texto y se revisa en Git:
 
 | Carpeta | Qué contiene | Cómo se produce |
 |---|---|---|
-| `powerbi/Tablero-DelitosBOG.SemanticModel/` | El modelo en TMDL: 20 tablas (incluidos `fact_modelos` y `fact_predicciones` de `outputs/modelado`), 11 relaciones y las medidas DAX | Se edita en Power BI Desktop y se guarda |
+| `powerbi/Tablero-DelitosBOG.SemanticModel/` | El modelo en TMDL: 20 tablas (`fact_modelos` lee la hoja del exportador, y `fact_predicciones` lee `outputs/modelado`), 11 relaciones y las medidas DAX | Se edita en Power BI Desktop y se guarda |
 | `powerbi/Tablero-DelitosBOG.Report/` | Las cuatro páginas (Panorama, ¿Cuándo?, ¿Dónde? con el mapa de calor, Pronóstico), cada una con un hallazgo calculado por medida | `python scripts/generar_reporte_powerbi.py` |
 | `outputs/powerbi/geo_localidades.csv`, `localidades_bogota.topojson` | Centroides y polígonos de las localidades para el mapa | `python scripts/geo_localidades_powerbi.py` (necesita `data/raw/localidades.geojson`, ver `data/README.md`) |
 
@@ -22,8 +22,8 @@ modelo → páginas. No hay orígenes web, así que Power BI no pide niveles de 
 
 1. Clonar el repositorio y quedarse en `main` (o hacer `git pull`).
 2. Abrir `powerbi/Tablero-DelitosBOG.pbip` con Power BI Desktop.
-3. Si la carpeta del repositorio no es `C:\Users\saraa\Proy\AD-DelitosBog`: **Transformar datos →
-   Editar parámetros → `RutaRepo`** con la ruta propia, y **Actualizar**.
+3. **Transformar datos → Editar parámetros → `RutaRepo`**: poner la ruta local del repositorio (el valor
+   por defecto es `C:\ruta\al\AD-DelitosBog`, que no existe) y **Actualizar**.
 
 El mapa usa el visual **Azure Maps** con capa de calor ponderada por la tasa. Si la organización lo
 desactiva, la matriz de calor de la misma página muestra la misma lectura.
@@ -33,7 +33,7 @@ desactiva, la matriz de calor de la misma página muestra la misma lectura.
 ## 1. Cargar
 
 En Power BI Desktop: **Obtener datos → Excel** y elegir `outputs/powerbi/tablero_powerbi.xlsx`,
-que trae las 13 hojas. Marcar todas.
+que trae las 15 hojas. Marcar todas.
 
 Si se prefieren los CSV, **Obtener datos → Carpeta** sobre `outputs/powerbi/` evita cargarlos uno a
 uno.
@@ -48,6 +48,8 @@ uno.
 | `fact_fuentes_mensual` | hecho | mes × fuente | 360 |
 | `fact_comparadores` | hecho | comparador | 4 |
 | `fact_validacion_rodante` | hecho | pliegue | 6 |
+| `fact_modelos` | hecho | modelo | 12 con los tres grupos |
+| `fact_modelos_pliegue` | hecho | modelo × pliegue | 72 con los tres grupos |
 | `dim_calendario` | dimensión | un día | 2.131 |
 | `dim_localidad` | dimensión | localidad × año | 120 |
 | `dim_fuente` | dimensión | fuente | 4 |
@@ -119,7 +121,25 @@ Mejor comparador =
 VAR m = [Barra MAE]
 RETURN CALCULATE ( SELECTEDVALUE ( fact_comparadores[comparador] ),
     FILTER ( ALL ( fact_comparadores ), fact_comparadores[MAE] = m ) )
+
+-- Modelos (página 6). fact_modelos trae comparadores y modelos juntos, con `familia`.
+-- Sin modelos todavía, estas medidas dan vacío en lugar de un número falso.
+Mejor modelo MAE =
+MINX ( FILTER ( ALL ( fact_modelos ), fact_modelos[familia] <> "comparador" ),
+    fact_modelos[MAE] )
+
+Mejora sobre la barra =
+IF ( ISBLANK ( [Mejor modelo MAE] ), BLANK (), [Barra MAE] - [Mejor modelo MAE] )
+
+Modelos que superan la barra =
+COUNTROWS ( FILTER ( ALL ( fact_modelos ), fact_modelos[supera_barra] ) )
 ```
+
+`fact_modelos` y `fact_modelos_pliegue` no se relacionan con ninguna otra tabla: su grano es el
+modelo. Se cargan siempre con el mismo esquema, también cuando solo hay comparadores. La columna
+`variante` distingue las pruebas de sensibilidad a 2020 (`sin_2020` en los árboles, `desde_2021` en
+los modelos de series): **no son modelos distintos**, y una barra que las trate como tales exagera la
+oferta de modelos. Filtrar por `variante = "completo"` en la vista principal.
 
 **Una medida que no debe existir**, y conviene decirlo explícitamente porque es fácil de escribir:
 
@@ -172,9 +192,14 @@ mantienen. Embudo de `qa_embudo`.
 **5. Calidad.** `qa_nulos` por fuente y columna. Una tarjeta destacada con los **713.344 duplicados
 exactos de 741.986** y el texto de por qué **no** se eliminan. `qa_reglas` como tabla.
 
-**6. Modelado.** `fact_comparadores` con las cuatro métricas. Tarjeta con `Barra MAE` y `Mejor
-comparador`. `fact_validacion_rodante` por pliegue, que muestra que el orden entre comparadores no
-es estable: el ingenuo gana 4 de 6 aunque el estacional gane en la ventana final.
+**6. Modelado.** `fact_modelos` con el MAE y el MASE de cada modelo, ordenado por MAE y con la
+barra marcada (`es_barra`). Tarjetas con `Barra MAE`, `Mejor modelo MAE` y `Mejora sobre la barra`.
+`fact_modelos_pliegue` por pliegue: el orden entre comparadores no es estable (el ingenuo gana 4 de
+6 aunque el estacional gane en la ventana final), y la lectura por pliegue dice si la mejora de un
+modelo se sostiene. Vista principal con `variante = "completo"`; las otras, en una página aparte
+de sensibilidad a 2020. **Las cifras de los modelos de #44 no se reproducen exactas entre
+plataformas** (ver `docs/MODELADO.md`): el tablero muestra las del registro, y debe decirlo en una
+nota.
 
 ## 6. Comprobación
 
@@ -196,7 +221,12 @@ el informe cuentan lo mismo. Comprobado al generar:
 
 - ~~El `.pbix`~~: resuelto con el proyecto `powerbi/Tablero-DelitosBOG.pbip` (sección 0).
 - ~~La capa de localidades para el mapa~~: `scripts/geo_localidades_powerbi.py`.
-- ~~La página de modelado con resultados de modelos~~: la página Pronóstico lee `outputs/modelado` (#43).
+- ~~La página de modelado con resultados de modelos~~: la página Pronóstico lee las hojas que genera
+  `scripts/exportar_powerbi.py` (`fact_modelos`, con la barra calculada, la familia y la variante) y,
+  para la serie diaria, las predicciones de `outputs/modelado/estadisticos` y `arboles` (#43, #44).
+- **Los resultados ajustados de #45 no están en el tablero.** El exportador lee `referencia`,
+  `estadisticos` y `arboles`; falta añadir la familia `ajuste` para que la página Pronóstico muestre
+  las cifras de la sección 9 del informe.
 - **Sumapaz en la tasa.** La medida `Tasa 123 por 100k` divide por las personas-año de 2020–2025.
   Sumapaz no tiene llamadas en 2020 y da 179,3; `dim_localidad.tasa_100k_periodo` da 213,3 porque
   omite ese año del denominador. Las otras 19 localidades coinciden. Falta decidir cuál definición

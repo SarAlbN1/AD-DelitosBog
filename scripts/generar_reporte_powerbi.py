@@ -380,7 +380,8 @@ def pagina_pronostico():
                      "Series": [(col("fact_modelos", "familia"), "Familia")],
                      "Y": [(mae, "MAE")]},
               orden=(mae, "Ascending"),
-              objetos=con_etiquetas(ejes()))
+              objetos=con_etiquetas(ejes()),
+              filtros=[filtro_en("fact_modelos", "variante", ["completo"], "f_completo")])
     return p
 
 
