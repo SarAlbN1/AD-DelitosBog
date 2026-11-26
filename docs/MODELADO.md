@@ -454,7 +454,8 @@ disipaba.
 33,79 con la misma configuración. Sin variante de sensibilidad, el tramo empieza donde la serie y
 nada cambia (los modelos principales dan lo mismo en las dos corridas). La prueba
 `test_con_desde_la_prediccion_no_depende_de_lo_anterior` falla con el código anterior. El mismo
-patrón está en `estadisticos.py` de #43 y quedó reportado en esa issue.
+patrón estaba en `estadisticos.py` de #43, y lo corrigió el #132 (ver «Un defecto corregido: el
+arranque del filtrado en las variantes "desde 2021"»).
 
 ### Entorno y reproducción
 
