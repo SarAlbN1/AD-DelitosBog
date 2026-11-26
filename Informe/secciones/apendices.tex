@@ -176,7 +176,9 @@ Las cifras y figuras de las secciones~\ref{sec:datos} a~\ref{sec:metodologia} se
   \item \texttt{scripts/\allowbreak{}eda.py} produce el análisis exploratorio (\texttt{outputs/eda/});
   \item \texttt{scripts/\allowbreak{}baselines.py} calcula los comparadores triviales y la validación de origen rodante (\texttt{outputs/baselines/}).
 \end{enumerate}
-% Pendiente (#46): añadir los scripts de modelado (scripts/modelado/) cuando la sección 9 esté integrada.
+
+Las cifras de modelado (sección~\ref{sec:resultados}) se regeneran después, dentro de la imagen de Docker de referencia, que fija el sistema, las versiones y la arquitectura (sección 6 de \texttt{docs/\allowbreak{}REPRODUCIBILIDAD.md}). El orden es \texttt{referencia.py}, \texttt{estadisticos.py}, \texttt{arboles.py}, \texttt{ajuste.py} y \texttt{comparacion.py}, todos en \texttt{scripts/\allowbreak{}modelado/}. El 2026-11-26, en un clon limpio con la copia congelada, se reprodujeron exactamente las cifras de modelado que cita el informe.
+
 Las figuras de \texttt{Informe/figuras/} son copias de las de \texttt{outputs/} y hay que volver a copiarlas si se regeneran.
 
 \section{Tablas complementarias}\label{ap:tablas}
