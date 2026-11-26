@@ -10,7 +10,7 @@ las medidas y el guion— está en este documento. Con eso, montar el tablero es
 ## 1. Cargar
 
 En Power BI Desktop: **Obtener datos → Excel** y elegir `outputs/powerbi/tablero_powerbi.xlsx`,
-que trae las 13 hojas. Marcar todas.
+que trae las 15 hojas. Marcar todas.
 
 Si se prefieren los CSV, **Obtener datos → Carpeta** sobre `outputs/powerbi/` evita cargarlos uno a
 uno.
@@ -25,6 +25,8 @@ uno.
 | `fact_fuentes_mensual` | hecho | mes × fuente | 360 |
 | `fact_comparadores` | hecho | comparador | 4 |
 | `fact_validacion_rodante` | hecho | pliegue | 6 |
+| `fact_modelos` | hecho | modelo | 12 con los tres grupos |
+| `fact_modelos_pliegue` | hecho | modelo × pliegue | 72 con los tres grupos |
 | `dim_calendario` | dimensión | un día | 2.131 |
 | `dim_localidad` | dimensión | localidad × año | 120 |
 | `dim_fuente` | dimensión | fuente | 4 |
@@ -96,7 +98,25 @@ Mejor comparador =
 VAR m = [Barra MAE]
 RETURN CALCULATE ( SELECTEDVALUE ( fact_comparadores[comparador] ),
     FILTER ( ALL ( fact_comparadores ), fact_comparadores[MAE] = m ) )
+
+-- Modelos (página 6). fact_modelos trae comparadores y modelos juntos, con `familia`.
+-- Sin modelos todavía, estas medidas dan vacío en lugar de un número falso.
+Mejor modelo MAE =
+MINX ( FILTER ( ALL ( fact_modelos ), fact_modelos[familia] <> "comparador" ),
+    fact_modelos[MAE] )
+
+Mejora sobre la barra =
+IF ( ISBLANK ( [Mejor modelo MAE] ), BLANK (), [Barra MAE] - [Mejor modelo MAE] )
+
+Modelos que superan la barra =
+COUNTROWS ( FILTER ( ALL ( fact_modelos ), fact_modelos[supera_barra] ) )
 ```
+
+`fact_modelos` y `fact_modelos_pliegue` no se relacionan con ninguna otra tabla: su grano es el
+modelo. Se cargan siempre con el mismo esquema, también cuando solo hay comparadores. La columna
+`variante` distingue las pruebas de sensibilidad a 2020 (`sin_2020` en los árboles, `desde_2021` en
+los modelos de series): **no son modelos distintos**, y una barra que las trate como tales exagera la
+oferta de modelos. Filtrar por `variante = "completo"` en la vista principal.
 
 **Una medida que no debe existir**, y conviene decirlo explícitamente porque es fácil de escribir:
 
@@ -149,9 +169,14 @@ mantienen. Embudo de `qa_embudo`.
 **5. Calidad.** `qa_nulos` por fuente y columna. Una tarjeta destacada con los **713.344 duplicados
 exactos de 741.986** y el texto de por qué **no** se eliminan. `qa_reglas` como tabla.
 
-**6. Modelado.** `fact_comparadores` con las cuatro métricas. Tarjeta con `Barra MAE` y `Mejor
-comparador`. `fact_validacion_rodante` por pliegue, que muestra que el orden entre comparadores no
-es estable: el ingenuo gana 4 de 6 aunque el estacional gane en la ventana final.
+**6. Modelado.** `fact_modelos` con el MAE y el MASE de cada modelo, ordenado por MAE y con la
+barra marcada (`es_barra`). Tarjetas con `Barra MAE`, `Mejor modelo MAE` y `Mejora sobre la barra`.
+`fact_modelos_pliegue` por pliegue: el orden entre comparadores no es estable (el ingenuo gana 4 de
+6 aunque el estacional gane en la ventana final), y la lectura por pliegue dice si la mejora de un
+modelo se sostiene. Vista principal con `variante = "completo"`; las otras, en una página aparte
+de sensibilidad a 2020. **Las cifras de los modelos de #44 no se reproducen exactas entre
+plataformas** (ver `docs/MODELADO.md`): el tablero muestra las del registro, y debe decirlo en una
+nota.
 
 ## 6. Comprobación
 
@@ -172,6 +197,7 @@ el informe cuentan lo mismo. Comprobado al generar:
 ## 7. Lo que falta
 
 - **El `.pbix`.** Paso manual, con este guion.
-- **La página 6 con resultados de modelos**, no solo comparadores. Llega con #43 y #44.
+- **La página 6 con los modelos.** El script ya genera `fact_modelos` y `fact_modelos_pliegue`; las filas de
+  los modelos aparecen al fusionar #43 y #44 y regenerar con `python scripts/exportar_powerbi.py`.
 - **La capa de localidades para el mapa.** Power BI puede dibujar por nombre, pero el mapa fiel
   necesita `data/raw/localidades.geojson` como forma personalizada.

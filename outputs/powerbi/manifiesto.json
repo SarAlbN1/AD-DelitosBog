@@ -82,6 +82,37 @@
         "media_movil_28"
       ]
     },
+    "fact_modelos": {
+      "filas": 4,
+      "columnas": [
+        "modelo",
+        "modelo_base",
+        "variante",
+        "familia",
+        "n",
+        "MAE",
+        "RMSE",
+        "MAPE",
+        "MASE",
+        "es_barra",
+        "mae_vs_barra",
+        "supera_barra"
+      ]
+    },
+    "fact_modelos_pliegue": {
+      "filas": 24,
+      "columnas": [
+        "modelo",
+        "modelo_base",
+        "variante",
+        "familia",
+        "pliegue",
+        "MAE",
+        "RMSE",
+        "MAPE",
+        "MASE"
+      ]
+    },
     "dim_calendario": {
       "filas": 2131,
       "columnas": [
@@ -188,5 +219,8 @@
     "El total de 2025 no se compara con años completos",
     "Noviembre y diciembre de 2025 están fuera de la serie",
     "Ninguna página presenta un ranking de peligrosidad"
+  ],
+  "familias_de_modelos": [
+    "comparador"
   ]
 }
