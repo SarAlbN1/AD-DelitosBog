@@ -44,14 +44,22 @@ En este proyecto el riesgo es menor, pero no nulo:
 % la barra (MAE 49,04) y si la mejora se sostiene en los pliegues; sin esas cifras no se escribe.
 Los resultados valen para Bogotá, para el periodo 2020--2025 y para el registro de la Policía tal como se publicó en la descarga usada. No se trasladan a otras ciudades, a otros delitos ni a horizontes distintos de un día. También pueden dejar de valer si cambia la forma de registrar, como ocurrió a finales de 2025.
 
-% Pendiente (#49): conclusiones, respuesta a la pregunta de investigación y trabajo futuro.
-% Dependen de las secciones 9 y 10 (#46, #47).
+\subsection{Respuesta a la pregunta de investigación}\label{sec:respuesta}
+
+La pregunta principal era en qué medida las fuentes oficiales permiten identificar patrones temporales del hurto a personas en Bogotá entre 2020 y 2025 y pronosticar el número diario de víctimas registradas con menor error que una línea base ingenua, tal como la plantea la introducción. La respuesta tiene dos partes.
+
+\textbf{Los patrones temporales se identifican con claridad.} La serie tiene un ciclo semanal marcado: el viernes registra un 65\,\% más de víctimas que el domingo, y un festivo un 37,8\,\% menos que un día laborable comparable (sección~\ref{sec:eda-semana}). Su nivel cambia de un año a otro: la media diaria sube de 227,1 víctimas en 2020 a 434,9 en 2023 y baja a 356,6 en 2024 (sección~\ref{sec:eda-anual}). La estacionalidad mensual existe, pero es mucho más débil que la semanal (sección~\ref{sec:eda-mes}), y entre noviembre y enero los festivos rompen la regularidad semanal (sección~\ref{sec:barra}). Los modelos ajustados confirman esos patrones por un camino independiente: el ciclo semanal y el nivel del día anterior son la información de la que más dependen los árboles, y su respuesta a un festivo ($-$37,3\,\% en el gradiente y $-$30,2\,\% en el bosque) es del mismo orden que la del EDA (sección~\ref{sec:int-eda}).
+
+\textbf{El pronóstico a un día supera a la línea base, pero ningún modelo supera a los demás.} Los cuatro modelos bajan el MAE del ingenuo estacional de 49,04 a entre 32,72 y 34,22 víctimas por día, entre un 30 y un 33\,\% menos, con $p < 10^{-7}$ en la prueba de Diebold-Mariano (tabla~\ref{tab:resultados}). La mejora se repite en los seis pliegues y no depende de cómo se trate 2020 (secciones~\ref{sec:res-estabilidad} y~\ref{sec:res-sensibilidad}). Entre los cuatro, en cambio, las diferencias no son significativas (sección~\ref{sec:res-entre-modelos}). La conclusión es que la historia de la serie y el calendario permiten anticipar el registro del día siguiente con un error de unas 33 víctimas, alrededor del 10\,\% del valor diario. No permiten elegir una familia de modelos sobre la otra.
+
+Esa respuesta tiene dos precisiones. Primera, lo que se pronostica es el \textbf{registro} de la Policía y no la victimización: el hurto que no se denuncia no está en la serie (sección~\ref{sec:limitaciones}). Segunda, el periodo es \textbf{2020--2025} y no 2018--2025, porque la Policía solo publica a nivel de registro esos seis años; 2018 y 2019 se usan solo como contexto, con el agregado del Ministerio de Defensa. Dentro de ese periodo, la serie modelada termina el 2025-10-31 (sección~\ref{sec:decisiones-eval}).
+
+\textbf{Pregunta complementaria.} Las tres fuentes no son intercambiables. La Policía cuenta víctimas, pero no publica la localidad. La Línea 123 da el territorio, pero cuenta llamadas tramitadas y no hechos. La Fiscalía cuenta filas proceso--delito (sección~\ref{sec:datos}). En la escala común, mes $\times$ Bogotá, los dos registros institucionales se mueven casi igual (correlación de 0,962), y la Línea 123 se separa de ellos: su correlación con la Policía es de 0,601 y cae a 0,284 sin 2020 (sección~\ref{sec:fuentes-eda}). Por eso las fuentes se comparan sin sumarse, el modelo usa solo la Policía y la descripción territorial queda como descriptiva.
 
 \subsection{Cumplimiento de los objetivos}\label{sec:objetivos-cumplimiento}
 
 La tabla~\ref{tab:objetivos} contrasta cada objetivo específico de la introducción con la evidencia del informe. Un objetivo se da por cumplido solo si hay una sección y un archivo de \texttt{outputs/} que lo respalden.
 
-% Pendiente (#46, #47): estado y evidencia de los objetivos 4 y 5 con los resultados de las secciones 9 y 10.
 {\small
 \setlength{\tabcolsep}{4pt}
 \begin{longtable}{@{}>{\raggedright\arraybackslash}p{4.6cm}>{\raggedright\arraybackslash}p{7.6cm}>{\raggedright\arraybackslash}p{2.6cm}@{}}
@@ -72,8 +80,21 @@ La tabla~\ref{tab:objetivos} contrasta cada objetivo específico de la introducc
 \addlinespace
 3. Comparar las tendencias mensuales de las tres fuentes sin sumar sus conteos y describir la distribución por localidad de la Línea 123 & Series mensuales y correlaciones en 70 meses (sección~\ref{sec:fuentes-eda}). Conteos y tasas por localidad y UPZ (sección~\ref{sec:territorial}, \texttt{outputs/\allowbreak{}eda/\allowbreak{}territorial\_\allowbreak{}*.csv}) & Cumplido \\
 \addlinespace
-4. Implementar y comparar modelos de pronóstico, incluidos una línea base ingenua y métodos estadísticos y de aprendizaje automático, con validación temporal & Protocolo y comparadores triviales en la sección~\ref{sec:metodologia} (\texttt{outputs/baselines/}). Modelos y comparación: sección 9 & En curso \\
+4. Implementar y comparar modelos de pronóstico, incluidos una línea base ingenua y métodos estadísticos y de aprendizaje automático, con validación temporal & Protocolo y comparadores triviales en la sección~\ref{sec:metodologia} (\texttt{outputs/baselines/}). Ingenuo estacional como barra; SARIMA y ETS; bosque aleatorio y gradiente por histogramas, con hiperparámetros elegidos en seis pliegues de origen rodante (sección~\ref{sec:resultados}, \texttt{outputs/\allowbreak{}modelado/}) & Cumplido \\
 \addlinespace
-5. Evaluar los pronósticos con MAE y RMSE frente a la línea base y discutir su utilidad, sus sesgos y sus límites & Limitaciones de los datos y del uso en la sección~\ref{sec:limitaciones}. Evaluación frente a la barra: sección 9 & En curso \\
+5. Evaluar los pronósticos con MAE y RMSE frente a la línea base y discutir su utilidad, sus sesgos y sus límites & MAE, RMSE, MAPE y MASE frente a la barra, con prueba de Diebold-Mariano, en la evaluación final y en los pliegues (sección~\ref{sec:resultados}, \texttt{outputs/\allowbreak{}modelado/\allowbreak{}comparacion/}). Interpretación en la sección~\ref{sec:interpretacion} y límites en la sección~\ref{sec:limitaciones} & Cumplido, sin intervalos de predicción \\
 \end{longtable}
 }
+
+\subsection{Trabajo futuro}\label{sec:trabajo-futuro}
+
+Cada propuesta responde a un límite concreto de las secciones 9 a 11:
+\begin{itemize}
+  \item \textbf{Calendario en los modelos de series.} SARIMA y ETS sobrestiman los festivos (tabla~\ref{tab:festivos}). Un SARIMA con los festivos y los puentes como regresores externos atacaría ese sesgo directamente, y podría compararse con los árboles con la misma barra y los mismos pliegues.
+  \item \textbf{Intervalos de predicción válidos.} Los residuos conservan autocorrelación, así que un intervalo que suponga errores independientes sería demasiado estrecho. Un remuestreo por bloques semanales o una predicción conforme calibrada en los pliegues daría intervalos con la cobertura medida, que es lo que necesita un uso operativo.
+  \item \textbf{Evaluar la temporada de fin de año.} La evaluación final no incluye de noviembre a enero, y ahí el error sube. Cuando la Policía consolide noviembre y diciembre de 2025, una nueva descarga permitiría comprobar si la caída era de registro y evaluar los modelos en esa temporada sin reajustarlos.
+  \item \textbf{Retraso de publicación y horizontes mayores.} El protocolo supone que el conteo de ayer está disponible hoy (sección~\ref{sec:limitaciones-metodo}). Medir ese retraso y pronosticar a 7 y 14 días acercaría el ejercicio a un uso real.
+  \item \textbf{El día del mes.} El gradiente depende de él y el EDA no lo estudió (sección~\ref{sec:int-arboles}). Un análisis descriptivo de la serie por día del mes diría si es un patrón real o un artefacto del ajuste.
+  \item \textbf{Una referencia lineal.} Una regresión lineal con rezagos y calendario daría una referencia más transparente que los árboles, con la misma información.
+  \item \textbf{Escala de localidad, con cautelas.} Si la Policía publicara la localidad del hecho, la serie podría modelarse por localidad. Ese paso solo tendría sentido junto con las salvaguardas de la sección~\ref{sec:limitaciones}, porque es la escala en la que aparecen los bucles de retroalimentación.
+\end{itemize}
