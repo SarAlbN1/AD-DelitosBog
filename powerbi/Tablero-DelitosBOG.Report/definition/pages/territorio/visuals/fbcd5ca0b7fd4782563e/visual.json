@@ -37,16 +37,21 @@
           "projections": [
             {
               "field": {
-                "Column": {
+                "Aggregation": {
                   "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_localidad"
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_localidad"
+                        }
+                      },
+                      "Property": "latitud"
                     }
                   },
-                  "Property": "latitud"
+                  "Function": 1
                 }
               },
-              "queryRef": "dim_localidad.latitud",
+              "queryRef": "Avg(dim_localidad.latitud)",
               "nativeQueryRef": "latitud",
               "displayName": "Latitud"
             }
@@ -56,16 +61,21 @@
           "projections": [
             {
               "field": {
-                "Column": {
+                "Aggregation": {
                   "Expression": {
-                    "SourceRef": {
-                      "Entity": "dim_localidad"
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "dim_localidad"
+                        }
+                      },
+                      "Property": "longitud"
                     }
                   },
-                  "Property": "longitud"
+                  "Function": 1
                 }
               },
-              "queryRef": "dim_localidad.longitud",
+              "queryRef": "Avg(dim_localidad.longitud)",
               "nativeQueryRef": "longitud",
               "displayName": "Longitud"
             }

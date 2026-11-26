@@ -267,8 +267,11 @@ def pagina_territorio():
     p.agregar("mapa_calor", "azureMap", 20, 184, 620, 520,
               titulo="Mapa de calor: tasa por localidad (área urbana)",
               roles={"Category": [(col("dim_localidad", "localidad"), "Localidad")],
-                     "Y": [(col("dim_localidad", "latitud"), "Latitud")],
-                     "X": [(col("dim_localidad", "longitud"), "Longitud")],
+                     # Con Ubicación en el visual, latitud y longitud deben ir agregadas (promedio).
+                     "Y": [({"Aggregation": {"Expression": col("dim_localidad", "latitud"), "Function": 1}},
+                            "Latitud")],
+                     "X": [({"Aggregation": {"Expression": col("dim_localidad", "longitud"), "Function": 1}},
+                            "Longitud")],
                      "Size": [(tasa, "Tasa por 100.000")],
                      "Tooltips": [(med("Llamadas 123"), "Llamadas"), (med("Puesto por tasa"), "Puesto por tasa"),
                                   (med("Puesto por conteo"), "Puesto por conteo"),
