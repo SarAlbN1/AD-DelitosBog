@@ -34,6 +34,23 @@ pytest -q tests
 
 Los datos van en `data/raw/<fuente>/`. Esa carpeta está en `.gitignore`: **nunca** se suben datos a GitHub.
 
+### 1.1 Entorno de referencia para las cifras de modelado
+
+Algunos modelos no dan el mismo resultado en todas las máquinas, aunque usen la misma semilla. El gradiente por histogramas cambia hasta 0,7 de MAE entre macOS, Linux y Windows (#117). La selección por AICc de SARIMA y ETS cambia de candidata cuando hay casi empate (#118). Por eso **las cifras de modelado del informe (secciones 9 y 10) se generan en una sola imagen Docker**, con el sistema, Python 3.12.8 y las versiones exactas de [`requirements-lock.txt`](../requirements-lock.txt) fijados. `requirements.txt` sigue siendo el entorno de desarrollo, con versiones mínimas.
+
+```bash
+docker build -t ad-delitosbog:referencia .
+# Linux / macOS
+docker run --rm -v "$PWD:/repo" -e AD_COMMIT=$(git rev-parse HEAD) ad-delitosbog:referencia python -m pytest -q tests
+docker run --rm -v "$PWD:/repo" -e AD_COMMIT=$(git rev-parse HEAD) ad-delitosbog:referencia python scripts/modelado/ajuste.py
+# Windows (Git Bash): añada MSYS_NO_PATHCONV=1 delante y use "$(pwd -W):/repo"
+```
+
+- La imagen no contiene datos ni código: monta el repositorio en `/repo`, así que `data/processed/` debe existir antes (sección 5).
+- Fija `OMP_NUM_THREADS=1` y `PYTHONHASHSEED=0`, y define `AD_ENTORNO`. Ese valor entra en la huella de las corridas que lo registran, así que una corrida en Docker no choca en el registro con la misma corrida hecha en otra máquina.
+- Las cifras de otras máquinas valen como comprobación, pero el informe cita las de este entorno. Cada corrida guarda sus versiones y su plataforma en `outputs/modelado/corridas/`.
+- El 2026-11-26, en Windows 11 con Docker 29.8.1, `pytest` dio **158 passed** dentro de la imagen.
+
 ## 2. Obtención de las fuentes
 
 ### 2.1 Línea 123: incidentes tramitados C4 (SDSCJ)
