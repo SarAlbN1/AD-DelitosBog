@@ -4,7 +4,7 @@
 % Los modelos finales son los ajustados en #45 (outputs/modelado/ajuste/).
 \section{Resultados}\label{sec:resultados}
 
-Esta sección compara los cuatro modelos ajustados, SARIMA, ETS, bosque aleatorio y potenciación del gradiente por histogramas, con la barra de D-04: el ingenuo estacional, con un MAE de 49,04 en el conjunto de evaluación (sección~\ref{sec:barra}). Sus configuraciones se eligieron con los seis pliegues de origen rodante, sin usar los 184 días de evaluación. La evaluación final se calculó una sola vez, después de la selección. Toda cifra de esta sección sale de \texttt{outputs/\allowbreak{}modelado/\allowbreak{}comparacion/}. El script que la produce recalcula cada métrica desde las predicciones guardadas y se detiene si alguna no coincide con la tabla de su issue. Así se cotejaron 560 cifras.
+Esta sección compara los cuatro modelos ajustados, SARIMA, ETS, bosque aleatorio y potenciación del gradiente por histogramas, con la barra de D-04: el ingenuo estacional, con un MAE de 49,04 en el conjunto de evaluación (sección~\ref{sec:barra}). Sus configuraciones se eligieron con los seis pliegues de origen rodante, sin usar los 184 días de evaluación (tabla~\ref{tab:busqueda} del apéndice). La evaluación final se calculó una sola vez, después de la selección. Toda cifra de esta sección sale de \texttt{outputs/\allowbreak{}modelado/\allowbreak{}comparacion/}. El script que la produce recalcula cada métrica desde las predicciones guardadas y se detiene si alguna no coincide con la tabla de su issue. Así se cotejaron 560 cifras.
 
 \subsection{Comparación con la barra}\label{sec:res-barra}
 

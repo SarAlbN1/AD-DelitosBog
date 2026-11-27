@@ -4,10 +4,11 @@
 %   ap:archivos     outputs/auditoria/resumen_archivos.csv, outputs/auditoria_policia/resumen_archivos.csv
 %                   y las fechas de descarga de data/README.md
 %   ap:localidad    outputs/informe/linea123_localidad_2020_2025.csv
+%   tab:busqueda    outputs/modelado/ajuste/busqueda.csv y seleccion.json (#45)
 
 \section{Diccionario de datos}\label{ap:diccionario}
 
-Este apéndice resume las variables de las fuentes complementarias, del agregado de control y las derivadas de la serie objetivo. Las del registro de la Policía están en la tabla~\ref{tab:variables-policia}. El diccionario completo, con el tipo, el número de valores distintos y el nombre original de cada columna, está en \texttt{docs/DICCIONARIO\_\allowbreak{}DATOS.md}. Las definiciones de Fiscalía siguen la ficha oficial del conjunto \citep{fiscalia}.
+Este apéndice resume las variables de las fuentes complementarias, del agregado de control y las derivadas de la serie objetivo. Las del registro de la Policía están en la tabla~\ref{tab:variables-policia}. Las tablas~\ref{tab:dic-agregado} a~\ref{tab:dic-features} cubren, en este orden, el agregado diario de MinDefensa, la Línea 123, Fiscalía y las variables derivadas de la serie. El diccionario completo, con el tipo, el número de valores distintos y el nombre original de cada columna, está en \texttt{docs/DICCIONARIO\_\allowbreak{}DATOS.md}. Las definiciones de Fiscalía siguen la ficha oficial del conjunto \citep{fiscalia}.
 
 La columna \emph{Uso} indica el papel previsto en el proyecto: \emph{objetivo}, \emph{predictora}, \emph{filtro}, \emph{trazabilidad}, \emph{descriptiva} (se analiza pero no entra en el modelo) o \emph{no se usa}.
 
@@ -221,5 +222,48 @@ Sumapaz & 33 & 38 & 0,00 \\
 \midrule
 \textbf{Total} & \textbf{19.286} & \textbf{821.304} & \textbf{100} \\
 \bottomrule
+\end{longtable}
+}
+
+La tabla~\ref{tab:busqueda} da todas las candidatas de la búsqueda de hiperparámetros de la sección~\ref{sec:resultados}, con su MAE en las 540 fechas de validación de los seis pliegues (90 por pliegue) y el MAE de su peor pliegue. En negrita, la elegida de cada modelo: la de menor MAE en los pliegues. Los 184 días de evaluación no intervienen. En los árboles se buscan la profundidad y la hoja mínima; los demás hiperparámetros son los de \#44 (bosque: 300 árboles y la mitad de las predictoras en cada división; gradiente: 300 iteraciones, tasa de aprendizaje 0,05 y 15 hojas como máximo). En SARIMA y ETS se elige la regla con que, dentro de cada tramo, se escogen los órdenes o la configuración.
+
+{\small
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{3.2cm}>{\raggedright\arraybackslash}p{7.4cm}rr@{}}
+\caption{Búsqueda de hiperparámetros: MAE de cada candidata en los seis pliegues. Fuente: \texttt{outputs/\allowbreak{}modelado/\allowbreak{}ajuste/\allowbreak{}busqueda.csv}.}\label{tab:busqueda}\\
+\toprule
+\textbf{Modelo} & \textbf{Candidata} & \textbf{MAE} & \textbf{Peor pliegue} \\
+\midrule
+\endfirsthead
+\caption[]{Búsqueda de hiperparámetros (continuación).}\\
+\toprule
+\textbf{Modelo} & \textbf{Candidata} & \textbf{MAE} & \textbf{Peor pliegue} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Bosque aleatorio & \textbf{Configuración fija de \#44: sin límite de profundidad, hoja mínima 3} & \textbf{34,89} & \textbf{43,12} \\
+ & profundidad 3, hoja mínima 7 & 42,23 & 52,06 \\
+ & profundidad 3, hoja mínima 14 & 42,34 & 52,62 \\
+ & profundidad 5, hoja mínima 7 & 37,71 & 47,05 \\
+ & profundidad 5, hoja mínima 14 & 38,13 & 48,04 \\
+ & profundidad 8, hoja mínima 7 & 35,82 & 44,78 \\
+ & profundidad 8, hoja mínima 14 & 36,92 & 47,50 \\
+\addlinespace
+Gradiente por histogramas & Configuración fija de \#44: sin límite de profundidad, hoja mínima 20 & 31,06 & 36,10 \\
+ & profundidad 3, hoja mínima 7 & 32,16 & 37,71 \\
+ & profundidad 3, hoja mínima 14 & 32,08 & 37,15 \\
+ & profundidad 5, hoja mínima 7 & 31,50 & 36,87 \\
+ & profundidad 5, hoja mínima 14 & 31,56 & 38,78 \\
+ & \textbf{profundidad 8, hoja mínima 7} & \textbf{30,82} & \textbf{35,49} \\
+ & profundidad 8, hoja mínima 14 & 32,05 & 38,21 \\
+\addlinespace
+SARIMA & Menor criterio de información (la regla de \#43) & 36,17 & 42,90 \\
+ & \textbf{Menos parámetros entre las candidatas a menos de 2 puntos de la mejor} & \textbf{36,11} & \textbf{42,58} \\
+ & Menor MAE de un paso en los últimos 90 días del tramo & 36,27 & 42,90 \\
+\addlinespace
+ETS & Menor criterio de información (la regla de \#43) & 36,70 & 44,61 \\
+ & Menos parámetros entre las candidatas a menos de 2 puntos de la mejor & 36,70 & 44,61 \\
+ & \textbf{Menor MAE de un paso en los últimos 90 días del tramo} & \textbf{36,04} & \textbf{44,61} \\
 \end{longtable}
 }
