@@ -1,4 +1,16 @@
 modelo,modelo_base,variante,familia,origen,pliegue,MAE,RMSE,MAPE,MASE
+regresion_lineal,regresion_lineal,completo,regresion,#144,1,41.27,52.02,12.88,0.806
+regresion_lineal,regresion_lineal,completo,regresion,#144,2,35.03,44.54,10.82,0.665
+regresion_lineal,regresion_lineal,completo,regresion,#144,3,32.39,39.65,10.38,0.611
+regresion_lineal,regresion_lineal,completo,regresion,#144,4,26.81,34.48,7.79,0.512
+regresion_lineal,regresion_lineal,completo,regresion,#144,5,38.43,49.12,16.44,0.741
+regresion_lineal,regresion_lineal,completo,regresion,#144,6,33.48,43.85,9.38,0.635
+regresion_lineal_sin_2020,regresion_lineal,sin_2020,regresion,#144,1,39.74,51.33,12.19,0.776
+regresion_lineal_sin_2020,regresion_lineal,sin_2020,regresion,#144,2,36.25,46.25,11.33,0.688
+regresion_lineal_sin_2020,regresion_lineal,sin_2020,regresion,#144,3,32.07,39.84,10.26,0.605
+regresion_lineal_sin_2020,regresion_lineal,sin_2020,regresion,#144,4,26.59,34.32,7.67,0.508
+regresion_lineal_sin_2020,regresion_lineal,sin_2020,regresion,#144,5,39.28,51.06,17.28,0.757
+regresion_lineal_sin_2020,regresion_lineal,sin_2020,regresion,#144,6,33.29,43.88,9.33,0.631
 ingenuo,ingenuo,completo,comparador,#42,1,75.48,96.52,23.4,1.473
 ingenuo,ingenuo,completo,comparador,#42,2,54.83,68.44,16.63,1.04
 ingenuo,ingenuo,completo,comparador,#42,3,49.87,63.0,16.27,0.941

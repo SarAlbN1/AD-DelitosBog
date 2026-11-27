@@ -83,7 +83,7 @@
       ]
     },
     "fact_modelos": {
-      "filas": 20,
+      "filas": 22,
       "columnas": [
         "modelo",
         "modelo_base",
@@ -102,7 +102,7 @@
       ]
     },
     "fact_modelos_pliegue": {
-      "filas": 120,
+      "filas": 132,
       "columnas": [
         "modelo",
         "modelo_base",
@@ -227,6 +227,7 @@
     "comparador",
     "estadistico",
     "arboles",
-    "ajuste"
+    "ajuste",
+    "regresion"
   ]
 }

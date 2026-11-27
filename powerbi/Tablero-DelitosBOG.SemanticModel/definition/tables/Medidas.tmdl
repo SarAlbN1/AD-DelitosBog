@@ -259,20 +259,20 @@ table Medidas
 		displayFolder: 5 Hallazgos
 		lineageTag: 573aa06a-d1fb-4863-8f35-f8a36a04f15e
 
-	measure 'MAE mejor modelo' = MINX ( FILTER ( ALL ( fact_modelos ), fact_modelos[origen] = "#45" && fact_modelos[variante] = "completo" ), fact_modelos[MAE] )
+	measure 'MAE mejor modelo' = MINX ( FILTER ( ALL ( fact_modelos ), fact_modelos[origen] IN { "#45", "#144" } && fact_modelos[variante] = "completo" ), fact_modelos[MAE] )
 		formatString: 0.0
 		displayFolder: 4 Modelado
 		lineageTag: ec5c2557-0199-4616-8f40-88447ddf99f6
 
 	measure 'Mejor modelo' =
 			VAR m = [MAE mejor modelo]
-			RETURN CALCULATE ( MIN ( fact_modelos[nombre] ), FILTER ( ALL ( fact_modelos ), fact_modelos[MAE] = m && fact_modelos[origen] = "#45" && fact_modelos[variante] = "completo" ) )
+			RETURN CALCULATE ( MIN ( fact_modelos[nombre] ), FILTER ( ALL ( fact_modelos ), fact_modelos[MAE] = m && fact_modelos[origen] IN { "#45", "#144" } && fact_modelos[variante] = "completo" ) )
 		displayFolder: 4 Modelado
 		lineageTag: 243ebc99-6bc3-4c21-b5ab-1ccb08f9b454
 
 	measure 'MAPE mejor modelo' =
 			VAR m = [MAE mejor modelo]
-			RETURN CALCULATE ( MIN ( fact_modelos[MAPE] ), FILTER ( ALL ( fact_modelos ), fact_modelos[MAE] = m && fact_modelos[origen] = "#45" && fact_modelos[variante] = "completo" ) )
+			RETURN CALCULATE ( MIN ( fact_modelos[MAPE] ), FILTER ( ALL ( fact_modelos ), fact_modelos[MAE] = m && fact_modelos[origen] IN { "#45", "#144" } && fact_modelos[variante] = "completo" ) )
 		formatString: 0.0
 		displayFolder: 4 Modelado
 		lineageTag: db3776d7-179d-47db-8747-01d7fda36bba
@@ -297,7 +297,7 @@ table Medidas
 		displayFolder: 4 Modelado
 		lineageTag: 4fe36d5c-f704-4d6e-89f8-fdb8592d5c91
 
-	measure 'Hallazgo modelo' = "El mejor modelo, " & [Mejor modelo] & ", pronostica las víctimas diarias con un error medio de " & FORMAT ( [MAE mejor modelo], "0", "es-CO" ) & " víctimas por día (" & FORMAT ( [MAPE mejor modelo] / 100, "0%", "es-CO" ) & "): " & FORMAT ( [Mejora sobre la barra %], "0%", "es-CO" ) & " menos error que el mejor comparador ingenuo (" & FORMAT ( [Barra MAE], "0", "es-CO" ) & "). Entre los cuatro modelos ajustados las diferencias no son significativas, así que el orden describe esta ventana y no un ganador."
+	measure 'Hallazgo modelo' = "El mejor modelo, " & [Mejor modelo] & ", pronostica las víctimas diarias con un error medio de " & FORMAT ( [MAE mejor modelo], "0", "es-CO" ) & " víctimas por día (" & FORMAT ( [MAPE mejor modelo] / 100, "0%", "es-CO" ) & "): " & FORMAT ( [Mejora sobre la barra %], "0%", "es-CO" ) & " menos error que el mejor comparador ingenuo (" & FORMAT ( [Barra MAE], "0", "es-CO" ) & "). Entre los cuatro mejores modelos las diferencias no son significativas, y la regresión lineal solo se distingue del gradiente: el orden describe esta ventana y no un ganador."
 		displayFolder: 5 Hallazgos
 		lineageTag: 9f219372-1061-4841-a67b-3db56ad634fa
 
