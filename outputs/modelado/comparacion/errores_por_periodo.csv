@@ -119,6 +119,18 @@ mes,julio,#45,ets_desde_2021,31,28.22,-4.32
 mes,agosto,#45,ets_desde_2021,31,31.57,1.13
 mes,septiembre,#45,ets_desde_2021,30,34.81,-4.0
 mes,octubre,#45,ets_desde_2021,31,38.82,10.59
+mes,mayo,#144,regresion_lineal,31,42.23,28.51
+mes,junio,#144,regresion_lineal,30,36.9,-12.19
+mes,julio,#144,regresion_lineal,31,34.07,-1.76
+mes,agosto,#144,regresion_lineal,31,28.63,14.18
+mes,septiembre,#144,regresion_lineal,30,36.78,2.04
+mes,octubre,#144,regresion_lineal,31,39.27,20.89
+mes,mayo,#144,regresion_lineal_sin_2020,31,45.53,33.94
+mes,junio,#144,regresion_lineal_sin_2020,30,37.93,-18.77
+mes,julio,#144,regresion_lineal_sin_2020,31,33.62,-3.44
+mes,agosto,#144,regresion_lineal_sin_2020,31,28.52,14.83
+mes,septiembre,#144,regresion_lineal_sin_2020,30,37.25,1.4
+mes,octubre,#144,regresion_lineal_sin_2020,31,39.77,21.65
 dia_semana,jueves,#42,ingenuo,27,29.74,0.7
 dia_semana,viernes,#42,ingenuo,27,59.11,-53.63
 dia_semana,sábado,#42,ingenuo,26,36.35,24.58
@@ -259,6 +271,20 @@ dia_semana,domingo,#45,ets_desde_2021,26,35.43,-9.51
 dia_semana,lunes,#45,ets_desde_2021,26,36.94,6.68
 dia_semana,martes,#45,ets_desde_2021,26,31.55,5.17
 dia_semana,miércoles,#45,ets_desde_2021,26,36.34,1.53
+dia_semana,jueves,#144,regresion_lineal,27,32.19,5.78
+dia_semana,viernes,#144,regresion_lineal,27,33.65,2.89
+dia_semana,sábado,#144,regresion_lineal,26,37.15,-1.28
+dia_semana,domingo,#144,regresion_lineal,26,39.89,-15.88
+dia_semana,lunes,#144,regresion_lineal,26,45.66,39.67
+dia_semana,martes,#144,regresion_lineal,26,28.27,18.68
+dia_semana,miércoles,#144,regresion_lineal,26,37.62,11.81
+dia_semana,jueves,#144,regresion_lineal_sin_2020,27,33.38,5.83
+dia_semana,viernes,#144,regresion_lineal_sin_2020,27,34.95,6.76
+dia_semana,sábado,#144,regresion_lineal_sin_2020,26,38.39,0.11
+dia_semana,domingo,#144,regresion_lineal_sin_2020,26,40.57,-22.22
+dia_semana,lunes,#144,regresion_lineal_sin_2020,26,44.51,36.53
+dia_semana,martes,#144,regresion_lineal_sin_2020,26,29.52,19.93
+dia_semana,miércoles,#144,regresion_lineal_sin_2020,26,38.6,12.4
 tipo_dia,festivo,#42,ingenuo,8,60.25,60.25
 tipo_dia,no festivo,#42,ingenuo,176,52.59,-1.8
 tipo_dia,festivo,#42,ingenuo_estacional,8,80.38,63.38
@@ -299,3 +325,7 @@ tipo_dia,festivo,#45,ets,8,68.81,55.67
 tipo_dia,no festivo,#45,ets,176,31.32,-0.49
 tipo_dia,festivo,#45,ets_desde_2021,8,67.14,54.34
 tipo_dia,no festivo,#45,ets_desde_2021,176,31.44,-0.21
+tipo_dia,festivo,#144,regresion_lineal,8,54.51,-30.7
+tipo_dia,no festivo,#144,regresion_lineal,176,35.48,10.55
+tipo_dia,festivo,#144,regresion_lineal_sin_2020,8,57.64,-38.51
+tipo_dia,no festivo,#144,regresion_lineal_sin_2020,176,36.17,10.59

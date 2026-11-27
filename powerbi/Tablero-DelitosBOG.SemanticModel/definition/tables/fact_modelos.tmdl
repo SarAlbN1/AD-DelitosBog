@@ -1,6 +1,6 @@
-/// Evaluación final (184 días) de comparadores y modelos (#42, #43, #44, #45). Lee la hoja `fact_modelos.csv` que genera
+/// Evaluación final (184 días) de comparadores y modelos (#42, #43, #44, #45, #144). Lee la hoja `fact_modelos.csv` que genera
 /// `scripts/exportar_powerbi.py`: allí la barra se calcula, y están la familia, la variante, el origen (#42 a #45) y
-/// `supera_barra`. La vista del informe es `origen` #42 (comparadores) y #45 (modelos con hiperparámetros ajustados).
+/// `supera_barra`. La vista del informe es `origen` #42 (comparadores), #45 (modelos con hiperparámetros ajustados) y #144 (regresión lineal).
 table fact_modelos
 	lineageTag: 8b46e8ca-ac79-4e77-a091-f6db996f6478
 
@@ -86,8 +86,8 @@ table fact_modelos
 				let
 				    T = LeerHoja("fact_modelos.csv"),
 				    Tipos = Table.TransformColumnTypes(T, {{"modelo", type text}, {"modelo_base", type text}, {"variante", type text}, {"familia", type text}, {"origen", type text}, {"candidata", type text}, {"n", Int64.Type}, {"MAE", type number}, {"RMSE", type number}, {"MAPE", type number}, {"MASE", type number}, {"es_barra", type logical}, {"mae_vs_barra", type number}, {"supera_barra", type logical}}, "en-US"),
-				    Familia = Table.TransformColumns(Tipos, {{"familia", each if _ = "comparador" then "Referencia" else if _ = "estadistico" then "Estadístico" else "Árboles", type text}}),
-				    Base = [ingenuo = "Ingenuo", ingenuo_estacional = "Ingenuo estacional", media_movil_7 = "Media móvil 7", media_movil_28 = "Media móvil 28", sarima = "SARIMA", ets = "ETS", bosque_aleatorio = "Bosque aleatorio", gradiente_histogramas = "Gradiente por histogramas"],
+				    Familia = Table.TransformColumns(Tipos, {{"familia", each if _ = "comparador" then "Referencia" else if _ = "estadistico" then "Estadístico" else if _ = "regresion" then "Regresión" else "Árboles", type text}}),
+				    Base = [ingenuo = "Ingenuo", ingenuo_estacional = "Ingenuo estacional", media_movil_7 = "Media móvil 7", media_movil_28 = "Media móvil 28", sarima = "SARIMA", ets = "ETS", bosque_aleatorio = "Bosque aleatorio", gradiente_histogramas = "Gradiente por histogramas", regresion_lineal = "Regresión lineal"],
 				    Nombre = Table.AddColumn(Familia, "nombre", each Record.FieldOrDefault(Base, [modelo_base], [modelo_base]) & (if [variante] = "sin_2020" then " (sin 2020)" else if [variante] = "desde_2021" then " (desde 2021)" else ""), type text)
 				in
 				    Nombre
