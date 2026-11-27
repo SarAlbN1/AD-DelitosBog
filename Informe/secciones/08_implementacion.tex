@@ -52,7 +52,7 @@ Cada corrida deja un archivo en \texttt{outputs/\allowbreak{}modelado/\allowbrea
 
 Con la misma semilla y las mismas versiones, dos sistemas no dan siempre la misma cifra. El gradiente por histogramas cambia hasta 0,7 de MAE entre macOS, Linux y Windows, y la selección por AICc cambia de candidata cuando hay casi empate. Por eso las cifras de las secciones~\ref{sec:resultados} y~\ref{sec:interpretacion} se generan en una imagen de Docker que fija el sistema, Python 3.12.8, las versiones exactas de las bibliotecas, la arquitectura \texttt{linux/amd64} y un solo hilo de cálculo. El apéndice~\ref{ap:reproducibilidad} da el orden de ejecución.
 
-Antes de escribir sus tablas, \texttt{comparacion.py} recalcula cada métrica desde las predicciones guardadas y se detiene si alguna no coincide con la que publicó su issue. Unas 190 pruebas automáticas, con datos sintéticos, cubren el arnés, los modelos, el ajuste, la comparación y la interpretación.
+Antes de escribir sus tablas, \texttt{comparacion.py} recalcula cada métrica desde las predicciones guardadas y se detiene si alguna no coincide con la que publicó su issue. Las pruebas automáticas del modelado, 131 de las 193 del repositorio, cubren el arnés, los modelos, el ajuste, la comparación y la interpretación. Todas usan datos sintéticos salvo una, que necesita la serie procesada (apéndice~\ref{ap:reproducibilidad}).
 
 \subsection{Defectos encontrados durante la implementación}\label{sec:imp-defectos}
 
