@@ -1,12 +1,13 @@
 {
   "barra": "ingenuo_estacional",
   "origenes": [
+    "#144",
     "#42",
     "#43",
     "#44",
     "#45"
   ],
-  "cifras_cotejadas": 560,
+  "cifras_cotejadas": 616,
   "rezagos_hac": 7,
   "principales": [
     [
@@ -16,6 +17,10 @@
     [
       "#45",
       "gradiente_histogramas"
+    ],
+    [
+      "#144",
+      "regresion_lineal"
     ]
   ],
   "figuras": [
