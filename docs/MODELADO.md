@@ -491,3 +491,72 @@ docker build -t ad-delitosbog:referencia .
 docker run --rm -v "<repo>:/repo" -e AD_COMMIT=$(git rev-parse HEAD) \
     ad-delitosbog:referencia python scripts/modelado/ajuste.py
 ```
+
+## Regresión lineal con rezagos y calendario (#144)
+
+El enunciado del laboratorio exige un modelo de regresión, y la sección 7 del informe ya la propone como primera familia: el modelo **transparente**, cuyos coeficientes se pueden leer. `scripts/modelado/regresion.py` la implementa con las mismas 21 predictoras de `features.py` y el mismo arnés que los demás modelos: mismos pliegues, misma evaluación final, misma prueba `sin_fuga`.
+
+```sh
+python scripts/modelado/regresion.py
+```
+
+Salidas en `outputs/modelado/regresion/`: `metricas_finales.csv`, `metricas_por_pliegue.csv`, `predicciones_por_pliegue.csv`, `busqueda.csv`, `coeficientes.csv` y `resumen_regresion.json`. Tarda un segundo.
+
+### Cómo se arma la matriz
+
+Dentro de un `Pipeline`, que se ajusta **por partición** para no filtrar información entre pliegues:
+
+* `dia_semana` y `mes` son categorías, no cantidades: un martes no es «el doble» de un lunes. Se codifican en indicadores.
+* El resto se escala con el entrenamiento, para que los coeficientes se puedan comparar entre sí.
+* Entran las 21 predictoras. Algunas son redundantes: `fin_de_semana` es función de `dia_semana`, y `semana_del_anio` casi lo es de `mes`. La regularización ridge lo tolera.
+
+### La regularización se elige en los pliegues
+
+Con los seis pliegues de origen rodante, dentro del entrenamiento y con la serie recortada al 2025-04-30, como en #45. Los 184 días de evaluación no intervienen: una prueba altera esos días y comprueba que la búsqueda no cambia. Gana el menor MAE sobre las 540 fechas de validación combinadas; **a igualdad, la regularización más alta**.
+
+| `alpha` | MAE de validación |
+|---|---|
+| 0 (mínimos cuadrados) | 34,57 |
+| **0,1 (elegida)** | **34,57** |
+| 1 | 34,58 |
+| 10 | 34,72 |
+| 100 | 36,03 |
+| 1000 | 40,50 |
+
+`alpha = 0` y `alpha = 0,1` empatan a dos decimales, y gana la segunda por la regla de desempate. La regularización casi no importa hasta `alpha = 100`: con cerca de 1.900 filas y 38 columnas el modelo apenas sobreajusta.
+
+### Resultados (evaluación final, 184 días)
+
+| Modelo | MAE final | MASE final | MAE medio por pliegue | Peor pliegue |
+|---|---|---|---|---|
+| Barra (ingenuo estacional) | 49,04 | 0,922 | | |
+| Regresión lineal | 36,31 | 0,683 | 34,57 | 41,27 |
+| Regresión lineal, sin 2020 | 37,10 | 0,697 | 34,54 | 39,74 |
+
+Baja el MAE de la barra un 26 %, pero **es la más débil de las cinco familias**: los otros cuatro modelos ajustados van de 32,72 a 34,22. Es lo esperado de un modelo que no capta interacciones entre el calendario y los rezagos. La diferencia con los demás se prueba con Diebold-Mariano en la comparación (#46), que hay que repetir con esta familia. Quitar 2020 empeora el MAE final en 0,79 y no cambia la media por pliegues.
+
+### Cómo leer los coeficientes
+
+`coeficientes.csv` trae dos columnas, porque dicen cosas distintas. El **coeficiente estandarizado** compara variables entre sí: cuántas víctimas por día cambia el pronóstico cuando la variable sube una desviación. El **coeficiente por unidad** es el efecto de pasar de 0 a 1 en un indicador, o de subir una unidad una variable numérica.
+
+| Variable | Coeficiente por unidad | Lectura |
+|---|---|---|
+| `rezago_1` | 0,49 | Cada víctima de ayer suma medio caso al pronóstico de hoy. Es el de mayor peso estandarizado (57,2) |
+| `festivo` | −117,9 | Un festivo baja el pronóstico unas 118 víctimas, con lo demás fijo. El EDA midió −37,8 %, unas 130 sobre una media de 343 |
+| `dia_semana_6` (domingo) | −46,6 | A esto se suma `fin_de_semana` (−62,8): el domingo queda unas 109 por debajo de la referencia |
+| `dia_semana_5` (sábado) | +33,8 | Con `fin_de_semana` (−62,8) queda en unas −29 |
+| `mes_12` (diciembre) | −29,5 | El mes con efecto más negativo |
+
+**Dos precauciones.**
+1. **Un coeficiente no es un efecto aislado.** Describe cómo usa el modelo la variable **junto con las demás**. `fin_de_semana` y `dia_semana` son redundantes, y los rezagos y las medias previas son muy parecidos entre sí: hay que leer cada grupo completo, no una variable suelta. Por eso el sábado muestra +33,8 aunque sea un día de pocos casos.
+2. **No es causal.** El festivo no «produce» 118 víctimas menos: el modelo las asocia con ese día.
+
+### Plataforma
+
+La regresión es una solución cerrada, sin semilla ni aleatoriedad, así que no se espera la dependencia de plataforma del gradiente (#117). Aun así, **estas salidas se generaron en macOS, no en la imagen de Docker de referencia** (sección 1.1 de `REPRODUCIBILIDAD.md`), y deben regenerarse allí como las de #43 y #44.
+
+En macOS con numpy 2.0.2, el producto de matrices de Accelerate emite avisos falsos (`divide by zero`, `overflow`, `invalid value` en `matmul`). Se comprobó que los resultados son correctos: el ajuste final cumple las ecuaciones normales calculadas sin BLAS (residuo de 5e-10 sobre una escala de 1,7e5), y las predicciones y el MAE de evaluación coinciden. El script los silencia solo dentro del ajuste, y una comprobación exige que las predicciones sean finitas, para que no oculten un fallo real.
+
+### Qué falta
+
+Esta familia todavía no está en `comparacion.py`, ni en las secciones 1, 9, 10 y 11 del informe, ni en el tablero de Power BI. Es el trabajo que sigue a este PR.

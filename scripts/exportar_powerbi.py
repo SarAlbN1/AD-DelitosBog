@@ -201,11 +201,14 @@ def dim_fuente(auditoria: Path, auditoria_policia: Path, resumen_serie: Path) ->
 #:
 #: `ajuste` (#45) son los modelos con hiperparámetros elegidos en los pliegues, que son los que cita la
 #: sección 9. `estadisticos` (#43) y `arboles` (#44) son la primera versión, con configuración fija.
+#: `regresion` (#144) es la regresión lineal: su regularización ya se elige en los pliegues dentro de su
+#: propio script, así que no tiene una versión aparte y cuenta como modelo final.
 FAMILIAS = [
     ("comparador", "referencia", "comparador", "#42", "comparador"),
     ("estadistico", "estadisticos", "modelo", "#43", "estadistico"),
     ("arboles", "arboles", "modelo", "#44", "arboles"),
     ("ajuste", "ajuste", "modelo", "#45", None),
+    ("regresion", "regresion", "modelo", "#144", "regresion"),
 ]
 #: Nombre de la familia en los archivos de #45 -> el que usan las demás tablas.
 FAMILIA_DE_AJUSTE = {"estadisticos": "estadistico", "arboles": "arboles"}
@@ -249,7 +252,9 @@ def modelos(carpeta: Path) -> tuple[pd.DataFrame, pd.DataFrame, list[str]]:
         else:
             fin["familia"] = familia
         fin["origen"] = origen
-        fin["candidata"] = fin["candidata"] if "candidata" in fin.columns else ""
+        if "candidata" not in fin.columns:        # la regresión no trae candidata: se anota su alpha
+            fin["candidata"] = (fin["alpha"].map(lambda a: f"alpha_{a:g}") if "alpha" in fin.columns
+                                else "")
         finales.append(fin[["modelo", "familia", "origen", "candidata", "n", *METRICAS]])
 
         pl = pd.read_csv(p).rename(columns={col: "modelo"})

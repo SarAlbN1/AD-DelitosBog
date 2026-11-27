@@ -141,3 +141,38 @@ def test_ajuste_con_una_familia_desconocida_falla(tmp_path):
     _ajuste(tmp_path, [("modelo_raro", "otra_cosa", "x", 30.0)])
     with pytest.raises(SystemExit):
         ep.modelos(tmp_path)
+
+
+def _regresion(carpeta, filas):
+    """Resultados de #144: sin `familia` ni `candidata`, con el `alpha` elegido."""
+    d = carpeta / "regresion"
+    d.mkdir(parents=True)
+    pd.DataFrame([{"n": 184.0, "MAE": mae, "RMSE": mae + 5, "MAPE": 10.0, "MASE": mae / 50, "alpha": 0.1}
+                  for _, mae in filas], index=[n for n, _ in filas]).rename_axis("modelo").to_csv(
+        d / "metricas_finales.csv")
+    pd.DataFrame([{"modelo": n, "pliegue": k, "MAE": mae, "RMSE": mae + 5, "MAPE": 10.0, "MASE": 1.0}
+                  for n, mae in filas for k in (1, 2)]).to_csv(d / "metricas_por_pliegue.csv", index=False)
+
+
+def test_la_regresion_aparece_con_su_origen_familia_y_alpha(tmp_path):
+    _metricas(tmp_path, "referencia", "comparador", [("ingenuo_estacional", 49.0)])
+    _regresion(tmp_path, [("regresion_lineal", 36.3), ("regresion_lineal_sin_2020", 37.1)])
+    fm, fp, fuentes = ep.modelos(tmp_path)
+    assert fuentes == ["comparador", "regresion"]
+    r = fm[fm["origen"] == "#144"].set_index("modelo")
+    assert set(r.index) == {"regresion_lineal", "regresion_lineal_sin_2020"}
+    assert (r["familia"] == "regresion").all() and (r["candidata"] == "alpha_0.1").all()
+    assert r.loc["regresion_lineal_sin_2020", "variante"] == "sin_2020"
+    assert r.loc["regresion_lineal", "modelo_base"] == "regresion_lineal"
+    assert r.loc["regresion_lineal", "mae_vs_barra"] == pytest.approx(-12.7) and r["supera_barra"].all()
+    assert set(fp["origen"]) == {"#42", "#144"} and fp["familia"].notna().all()
+
+
+def test_el_esquema_no_cambia_al_añadir_la_regresion(tmp_path):
+    solo, todo = tmp_path / "solo", tmp_path / "todo"
+    _metricas(solo, "referencia", "comparador", [("ingenuo", 52.9)])
+    _metricas(todo, "referencia", "comparador", [("ingenuo", 52.9)])
+    _regresion(todo, [("regresion_lineal", 36.3)])
+    a, pa, _ = ep.modelos(solo)
+    b, pb, _ = ep.modelos(todo)
+    assert list(a.columns) == list(b.columns) and list(pa.columns) == list(pb.columns)

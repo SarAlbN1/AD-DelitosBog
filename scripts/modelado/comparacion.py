@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Evaluación y comparación de todos los modelos contra la barra (#46, sección 9).
 
-No entrena nada. Lee las predicciones que ya dejaron #43 (`estadisticos/`), #44 (`arboles/`) y #45
-(`ajuste/`, si existe), y recalcula las de los comparadores triviales de #42, que no tienen estado.
+No entrena nada. Lee las predicciones que ya dejaron #43 (`estadisticos/`), #44 (`arboles/`), #45
+(`ajuste/`) y #144 (`regresion/`, si existe), y recalcula las de los comparadores triviales de #42,
+que no tienen estado.
 Con eso arma:
 
 * ``tabla_comparativa.csv``: métricas de la evaluación final, distancia a la barra, estabilidad
@@ -66,9 +67,13 @@ from modelado.referencia import COMPARADORES, predictor  # noqa: E402
 log = logging.getLogger("modelado.comparacion")
 
 #: Carpeta de cada issue dentro de outputs/modelado y la etiqueta con que aparece en las tablas.
-ORIGENES: dict[str, str] = {"estadisticos": "#43", "arboles": "#44", "ajuste": "#45"}
+ORIGENES: dict[str, str] = {"estadisticos": "#43", "arboles": "#44", "ajuste": "#45",
+                            "regresion": "#144"}
+#: Los modelos finales de cada familia. SARIMA, ETS y los árboles son los ajustados de #45; la regresión
+#: no tiene una versión aparte porque su regularización ya se elige en los pliegues dentro de #144.
+FINALES = ("#45", "#144")
 FAMILIA = {"sarima": "estadístico", "ets": "estadístico", "bosque_aleatorio": "árboles",
-           "gradiente_histogramas": "árboles"}
+           "gradiente_histogramas": "árboles", "regresion_lineal": "regresión"}
 SUFIJOS_SENSIBILIDAD = ("_sin_2020", "_desde_2021")
 REZAGOS_HAC = 7
 TOLERANCIA = 0.011  # las métricas guardadas están redondeadas a 2 decimales (MASE a 3)
@@ -233,7 +238,7 @@ def dm_entre_modelos(pred: pd.DataFrame, t: pd.DataFrame) -> pd.DataFrame:
     """
     c = t[(~t["sensibilidad"]) & (t["origen"] != "#42")]
     if (c["origen"] == "#45").any():  # los modelos finales son los ajustados
-        c = c[c["origen"] == "#45"]
+        c = c[c["origen"].isin(FINALES)]
     c = list(c[["origen", "modelo"]].itertuples(index=False))
     ev = pred[pred["pliegue"] == "final"]
     err = {(o, m): g.set_index("fecha").eval("real - prediccion")
@@ -276,24 +281,27 @@ def principales(t: pd.DataFrame) -> list[tuple[str, str]]:
     """Por familia, el modelo sin sensibilidad de menor MAE medio en los pliegues.
 
     Se elige por los pliegues (que están dentro del entrenamiento), no por la evaluación final, para
-    que la figura no destaque al ganador de la prueba. Se prefiere la versión ajustada (#45).
+    que la figura no destaque al ganador de la prueba. Se prefiere la versión ajustada (#45), y la
+    regresión entra con su propia versión (#144).
     """
     c = t[(~t["sensibilidad"]) & (t["origen"] != "#42")]
     if (c["origen"] == "#45").any():
-        c = c[c["origen"] == "#45"]
+        c = c[c["origen"].isin(FINALES)]
     return [tuple(c[c["familia"] == f].nsmallest(1, "MAE_medio_pliegues")[["origen", "modelo"]].iloc[0])
-            for f in ("estadístico", "árboles") if (c["familia"] == f).any()]
+            for f in ("estadístico", "árboles", "regresión") if (c["familia"] == f).any()]
 
 
 # ------------------------------------------------------------------ figuras
 NOMBRES = {"sarima": "SARIMA", "ets": "ETS", "bosque_aleatorio": "Bosque aleatorio",
-           "gradiente_histogramas": "Gradiente por histogramas"}
+           "gradiente_histogramas": "Gradiente por histogramas", "regresion_lineal": "Regresión lineal"}
 
 
 def etiqueta(origen: str, modelo: str) -> str:
-    """Nombre legible para las figuras; los de #45 son los modelos finales (ajustados)."""
+    """Nombre legible para las figuras; los de #45 y #144 son los modelos finales (ajustados)."""
     nombre = NOMBRES.get(modelo, modelo.replace("_", " "))
-    return f"{nombre} (ajustado)" if origen == "#45" else f"{nombre} {origen}"
+    if origen in FINALES:
+        return f"{nombre} (ajustada)" if modelo.startswith("regresion") else f"{nombre} (ajustado)"
+    return f"{nombre} {origen}"
 
 
 def coma(v: float) -> str:
@@ -311,7 +319,7 @@ def figuras(pred: pd.DataFrame, t: pd.DataFrame, pp: pd.DataFrame, barra: str, c
     plt.rcParams.update({"savefig.dpi": 200, "font.size": 9, "axes.spines.top": False,
                          "axes.spines.right": False})
     elegidos = principales(t)
-    colores = ["#1f4e79", "#c0504d"]
+    colores = ["#1f4e79", "#c0504d", "#4f8a3b"]
     ev = pred[pred["pliegue"] == "final"]
     obs = ev[(ev["origen"] == "#42") & (ev["modelo"] == barra)].set_index("fecha")["real"]
     hechas = []
