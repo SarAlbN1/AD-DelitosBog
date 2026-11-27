@@ -36,7 +36,7 @@ El modelado se apoya en una configuración única y en un arnés compartido (tab
 Todo modelo es un \emph{predictor} con la misma firma: recibe la serie observada, sus predictoras, la máscara de los días con que puede ajustarse y los días que debe predecir. Ve la serie completa porque el horizonte es de un día: para predecir el día $t$ usa el conteo de $t-1$, que ya está observado también dentro de la evaluación. Por eso la fuga no se evita ocultando la serie, sino con dos pruebas:
 \begin{itemize}
   \item \textbf{Perturbación por pliegues.} Alterar la serie a partir de un pliegue no puede cambiar las métricas de ese pliegue.
-  \item \textbf{\texttt{sin\_fuga}, día a día.} Para cada día $t$ se altera la serie desde $t$ en adelante, y la predicción de $t$ no puede cambiar. Si el modelo usa rezagos o medias, las predictoras se reconstruyen desde la serie alterada. Esta prueba detecta lo que la anterior deja pasar: un modelo que mira el valor del mismo día que predice. Las pruebas de los cuatro modelos la usan.
+  \item \textbf{\texttt{sin\_fuga}, día a día.} Para cada día $t$ se altera la serie desde $t$ en adelante, y la predicción de $t$ no puede cambiar. Si el modelo usa rezagos o medias, las predictoras se reconstruyen desde la serie alterada. Esta prueba detecta lo que la anterior deja pasar: un modelo que mira el valor del mismo día que predice. Las pruebas de los cinco modelos la usan.
 \end{itemize}
 
 \subsection{Cómo predice cada familia sin mirar el día que predice}\label{sec:imp-modelos}
