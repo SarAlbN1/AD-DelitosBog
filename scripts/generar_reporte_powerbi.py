@@ -382,7 +382,7 @@ def pagina_pronostico():
               orden=(mae, "Ascending"),
               objetos=con_etiquetas(ejes()),
               filtros=[filtro_en("fact_modelos", "variante", ["completo"], "f_completo"),
-                       filtro_en("fact_modelos", "origen", ["#42", "#45"], "f_origen")])
+                       filtro_en("fact_modelos", "origen", ["#42", "#45", "#144"], "f_origen")])
     return p
 
 

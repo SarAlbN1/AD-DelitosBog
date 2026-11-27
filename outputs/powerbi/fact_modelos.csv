@@ -19,3 +19,5 @@ sarima,sarima,completo,estadistico,#45,desempate,184,33.57,42.97,9.8,0.631,False
 sarima_desde_2021,sarima,desde_2021,estadistico,#45,desempate,184,33.8,43.14,9.88,0.635,False,-15.24,True
 ets,ets,completo,estadistico,#45,mae_interno,184,32.95,42.21,9.5,0.619,False,-16.09,True
 ets_desde_2021,ets,desde_2021,estadistico,#45,mae_interno,184,32.99,42.34,9.49,0.62,False,-16.05,True
+regresion_lineal,regresion_lineal,completo,regresion,#144,alpha_0.1,184,36.31,46.54,10.47,0.683,False,-12.73,True
+regresion_lineal_sin_2020,regresion_lineal,sin_2020,regresion,#144,alpha_0.1,184,37.1,48.11,10.7,0.697,False,-11.94,True
