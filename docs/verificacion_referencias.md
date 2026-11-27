@@ -124,7 +124,9 @@ Sobre `main` (`628b99d`, secciones 1 a 7 y 9 a 11, y apéndices). La sección 8 
 
 **Queda para la pasada final.** Esta pasada no reemplaza a la del cierre:
 
-- [x] Repetir la comparación de citas y referencias con las secciones 1, 9, 10 y 11 (2026-11-26: 19 y 19). Queda repetirla cuando entre la sección 8.
+- [x] Repetir la comparación de citas y referencias con las secciones 1, 9, 10 y 11 (2026-11-26: 19 y 19). La sección 8 (#143) no tiene ningún `\cite`, así que no cambia la cuenta.
 - [x] Verificar las referencias nuevas de las secciones 9 y 10 (Breiman, Diebold y Mariano, Harvey et al. y Newey y West). Queda lo que traiga la sección 8, si trae alguna.
-- [ ] Abrir a mano en un navegador la dirección de Martínez Chitiva (2025) y la última página de Newey y West (708), que esta pasada no pudo confirmar.
-- [ ] Compilar el PDF y confirmar que no hay citas indefinidas (`Citation … undefined`) en el registro de LaTeX. En esta pasada no se compiló.
+- [x] Abrir a mano en un navegador la dirección de Martínez Chitiva (2025) y la última página de Newey y West (708), que esta pasada no pudo confirmar. **2026-11-27:**
+  - **Martínez Chitiva (2025).** En un navegador, `https://ridum.umanizales.edu.co/handle/20.500.12746/7648` pasa la página de verificación y redirige a la ficha del ítem en RIDUM. La ficha coincide con la entrada: título, autora (Martínez Chitiva, Angela Viviana), 2025, Universidad de Manizales, colección «Maestría en Tecnología de la Información Geográfica» y URI igual a la dirección citada. Su resumen dice que los hallazgos se basan en datos hasta 2020, como ya recoge la sección 3. La dirección funciona aunque el handle no esté en el sistema global.
+  - **Newey y West (1987).** La ficha de RePEc/IDEAS (`ideas.repec.org/a/ecm/emetrp/v55y1987i3p703-08.html`) da las páginas 703–08. La entrada dice 703–708, así que es correcta.
+- [x] Compilar el PDF y confirmar que no hay citas indefinidas (`Citation … undefined`) en el registro de LaTeX. **2026-11-27:** `main` en `5254c55`, compilado con TeX Live 2026 en Docker (`latexmk -pdf`): 0 citas y 0 referencias indefinidas. Repetir en la compilación final (#55).
