@@ -1,5 +1,7 @@
 # Cobertura, distribuciones y figuras del informe (#21)
 
+> **Documento de la primera entrega; no se actualiza.** Se conserva como evidencia de procedencia de esa entrega.
+
 Documenta la cobertura temporal y territorial de las cuatro fuentes y selecciona las figuras que
 entran en el informe de la primera entrega, cada una con su párrafo de interpretación.
 

@@ -1,5 +1,7 @@
 # Bitácora de la Entrega 1
 
+> **Documento de la primera entrega; no se actualiza.** Se conserva como evidencia de procedencia de esa entrega.
+
 Registro de qué se hizo, a qué hora, qué se decidió y con qué evidencia. Sirve para reconstruir el
 trabajo sin releer los PR y para que el informe cite la procedencia de cada cifra.
 
