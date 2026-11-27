@@ -4,7 +4,7 @@
 %   ap:archivos     outputs/auditoria/resumen_archivos.csv, outputs/auditoria_policia/resumen_archivos.csv
 %                   y las fechas de descarga de data/README.md
 %   ap:localidad    outputs/informe/linea123_localidad_2020_2025.csv
-%   tab:busqueda    outputs/modelado/ajuste/busqueda.csv y seleccion.json (#45)
+%   tab:busqueda    outputs/modelado/ajuste/busqueda.csv y seleccion.json (#45); outputs/modelado/regresion/busqueda.csv (#144)
 
 \section{Diccionario de datos}\label{ap:diccionario}
 
@@ -225,12 +225,12 @@ Sumapaz & 33 & 38 & 0,00 \\
 \end{longtable}
 }
 
-La tabla~\ref{tab:busqueda} da todas las candidatas de la búsqueda de hiperparámetros de la sección~\ref{sec:resultados}, con su MAE en las 540 fechas de validación de los seis pliegues (90 por pliegue) y el MAE de su peor pliegue. En negrita, la elegida de cada modelo: la de menor MAE en los pliegues. Los 184 días de evaluación no intervienen. En los árboles se buscan la profundidad y la hoja mínima; los demás hiperparámetros son los de \#44 (bosque: 300 árboles y la mitad de las predictoras en cada división; gradiente: 300 iteraciones, tasa de aprendizaje 0,05 y 15 hojas como máximo). En SARIMA y ETS se elige la regla con que, dentro de cada tramo, se escogen los órdenes o la configuración.
+La tabla~\ref{tab:busqueda} da todas las candidatas de la búsqueda de hiperparámetros de la sección~\ref{sec:resultados}, con su MAE en las 540 fechas de validación de los seis pliegues (90 por pliegue) y el MAE de su peor pliegue. En negrita, la elegida de cada modelo: la de menor MAE en los pliegues. Los 184 días de evaluación no intervienen. En los árboles se buscan la profundidad y la hoja mínima; los demás hiperparámetros son los de \#44 (bosque: 300 árboles y la mitad de las predictoras en cada división; gradiente: 300 iteraciones, tasa de aprendizaje 0,05 y 15 hojas como máximo). En SARIMA y ETS se elige la regla con que, dentro de cada tramo, se escogen los órdenes o la configuración. En la regresión lineal se elige la regularización ridge $\alpha$ ($\alpha = 0$ es mínimos cuadrados ordinarios). $\alpha = 0{,}1$ empata con $\alpha = 0$ a dos decimales y se elige por la regla de desempate: a igual MAE, la más regularizada.
 
 {\small
 \setlength{\tabcolsep}{4pt}
 \begin{longtable}{@{}>{\raggedright\arraybackslash}p{3.2cm}>{\raggedright\arraybackslash}p{7.4cm}rr@{}}
-\caption{Búsqueda de hiperparámetros: MAE de cada candidata en los seis pliegues. Fuente: \texttt{outputs/\allowbreak{}modelado/\allowbreak{}ajuste/\allowbreak{}busqueda.csv}.}\label{tab:busqueda}\\
+\caption{Búsqueda de hiperparámetros: MAE de cada candidata en los seis pliegues. Fuente: \texttt{outputs/\allowbreak{}modelado/\allowbreak{}ajuste/\allowbreak{}busqueda.csv} y \texttt{outputs/\allowbreak{}modelado/\allowbreak{}regresion/\allowbreak{}busqueda.csv}.}\label{tab:busqueda}\\
 \toprule
 \textbf{Modelo} & \textbf{Candidata} & \textbf{MAE} & \textbf{Peor pliegue} \\
 \midrule
@@ -265,5 +265,12 @@ SARIMA & Menor criterio de información (la regla de \#43) & 36,17 & 42,90 \\
 ETS & Menor criterio de información (la regla de \#43) & 36,70 & 44,61 \\
  & Menos parámetros entre las candidatas a menos de 2 puntos de la mejor & 36,70 & 44,61 \\
  & \textbf{Menor MAE de un paso en los últimos 90 días del tramo} & \textbf{36,04} & \textbf{44,61} \\
+\addlinespace
+Regresión lineal & $\alpha = 0$ (mínimos cuadrados) & 34,57 & 41,27 \\
+ & \boldmath$\alpha = 0{,}1$ & \textbf{34,57} & \textbf{41,27} \\
+ & $\alpha = 1$ & 34,58 & 41,33 \\
+ & $\alpha = 10$ & 34,72 & 41,98 \\
+ & $\alpha = 100$ & 36,03 & 45,80 \\
+ & $\alpha = 1000$ & 40,50 & 52,25 \\
 \end{longtable}
 }
