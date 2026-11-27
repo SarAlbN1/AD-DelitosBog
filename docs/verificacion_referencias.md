@@ -50,6 +50,17 @@ Consulta del **2026-11-24**. Cada una respalda lo siguiente, y nada más.
 
 **Descartada: Lum e Isaac (2016)**, *To predict and serve?*, *Significance, 13*(5), 14–19 (DOI `10.1111/j.1740-9713.2016.00960.x`, verificado en Crossref). El texto completo es de pago y solo se pudo leer el resumen, que no menciona los bucles de retroalimentación. No se cita para no atribuirle lo que no se comprobó.
 
+## Referencias de las secciones 9 y 10 (#46, #47)
+
+Consulta del **2026-11-26**. Cada una respalda lo siguiente, y nada más. Los metadatos de Crossref (autores, año, revista, volumen, número y páginas) coinciden con la entrada de `Informe/referencias.tex`.
+
+| Clave | Referencia | Cómo se verificó | Qué respalda | Estado |
+|---|---|---|---|---|
+| `breiman2001` | Breiman (2001), *Random forests*, *Machine Learning, 45*(1), 5–32 | Crossref (DOI `10.1023/A:1010933404324`) | Sección 10: medir la importancia de una variable como el aumento del error al permutar sus valores | ✅ |
+| `diebold1995` | Diebold y Mariano (1995), *Comparing predictive accuracy*, *Journal of Business & Economic Statistics, 13*(3), 253–263 | Crossref (DOI `10.1080/07350015.1995.10524599`) | Sección 9: la prueba de igualdad de exactitud predictiva entre dos pronósticos | ✅ |
+| `harvey1997` | Harvey, Leybourne y Newbold (1997), *Testing the equality of prediction mean squared errors*, *International Journal of Forecasting, 13*(2), 281–291 | Crossref (DOI `10.1016/S0169-2070(96)00719-4`) | Sección 9: la corrección para muestras pequeñas de la prueba anterior | ✅ |
+| `newey1987` | Newey y West (1987), *A simple, positive semi-definite, heteroskedasticity and autocorrelation consistent covariance matrix*, *Econometrica, 55*(3), 703–708 | Crossref (DOI `10.2307/1913610`) | Sección 9: la varianza robusta a la autocorrelación con 7 rezagos | ✅ con una salvedad: Crossref solo registra la primera página (703). La última (708) no se pudo confirmar en esta pasada |
+
 ## Pendientes
 - [x] Confirmar el número de la nota de política de Riascos et al. (34 o 38) en el listado de notas de política de la Escuela de Gobierno Alberto Lleras Camargo.
 - [ ] Martínez Chitiva (2025): leer el PDF para extraer las fuentes de datos y los modelos comparados, que la matriz del #25 necesita.
@@ -92,8 +103,30 @@ Sobre `main` (`9acfece`, secciones 2–7 y apéndices) más la referencia que a�
 | `urcuqui2020` | `10.1109/BESC51023.2020.9348315` | Cinco autores, 2020, BESC 2020, pp. 1–6 |
 | `riascos2023` | `10.1371/journal.pone.0287776` | Cinco autores, 2023, *PLOS ONE* 18(7), e0287776 |
 
+### Pasada de DOI y enlaces: 2026-11-26
+
+Sobre `main` (`628b99d`, secciones 1 a 7 y 9 a 11, y apéndices). La sección 8 aún no existe.
+
+**Citas y referencias.** 19 entradas y 19 claves citadas: no hay citas sin entrada ni entradas sin cita.
+
+**DOI.** Los siete DOI de `referencias.tex` se consultaron en Crossref y coinciden con la entrada: `breiman2001`, `diebold1995`, `harvey1997`, `hyndman2006`, `newey1987`, `riascos2023` y `urcuqui2020` (las cuatro primeras, nuevas, en la sección anterior). Newey y West: ver la salvedad sobre la última página.
+
+**Ensign et al. (2018).** La ficha de PMLR (`proceedings.mlr.press/v81/ensign18a.html`) da el título *Runaway Feedback Loops in Predictive Policing*, los cinco autores de la entrada, la fecha 2018, las páginas 160–171 y la *Conference on Fairness, Accountability and Transparency*. Coincide.
+
+**Enlaces.** Se siguieron las redirecciones de cada `\url`.
+
+| Resultado | Claves |
+|---|---|
+| Resuelven (200 o 202) | `breiman2001`, `ensign2018`, `fiscalia`, `fonseca2019`, `garzon2025`, `harvey1997`, `hyndman2021`, `hyndman2006`, `newey1987`, `policia`, `riascos2020`, `riascos2023`, `sdp2025`, `linea123`, `urcuqui2020` |
+| **403 por protección contra clientes automáticos** | `campo2017` y `martinez2025` (página de verificación de los repositorios) y `diebold1995` (T&F). El DOI de `diebold1995` sí se verificó en Crossref |
+
+**Identificadores persistentes.** El sistema de handles resuelve `1992/50785`, `10654/31958` y `11371/8075` a la página de su repositorio. **`20.500.12746/7648`, el de Martínez Chitiva (2025), no está registrado en el sistema global de handles** (código de respuesta 2). La entrada cita directamente la dirección del repositorio de la Universidad de Manizales, que sí responde, pero detrás de una página de verificación. Hay que abrirla a mano en un navegador para confirmar que el registro existe; su metadato se verificó por API en el #24.
+
 **Queda para la pasada final.** Esta pasada no reemplaza a la del cierre:
 
-- [ ] Repetir la comparación de citas y referencias cuando entren las secciones 1 y 8–11 (#46, #47, #49 y #50).
-- [ ] Verificar las referencias nuevas que traigan esas secciones, con el mismo criterio: la fuente primaria y lo que respalda.
-- [ ] Compilar el PDF y confirmar que no hay citas indefinidas (`Citation … undefined`) en el registro de LaTeX. En esta pasada no se compiló.
+- [x] Repetir la comparación de citas y referencias con las secciones 1, 9, 10 y 11 (2026-11-26: 19 y 19). La sección 8 (#143) no tiene ningún `\cite`, así que no cambia la cuenta.
+- [x] Verificar las referencias nuevas de las secciones 9 y 10 (Breiman, Diebold y Mariano, Harvey et al. y Newey y West). Queda lo que traiga la sección 8, si trae alguna.
+- [x] Abrir a mano en un navegador la dirección de Martínez Chitiva (2025) y la última página de Newey y West (708), que esta pasada no pudo confirmar. **2026-11-27:**
+  - **Martínez Chitiva (2025).** En un navegador, `https://ridum.umanizales.edu.co/handle/20.500.12746/7648` pasa la página de verificación y redirige a la ficha del ítem en RIDUM. La ficha coincide con la entrada: título, autora (Martínez Chitiva, Angela Viviana), 2025, Universidad de Manizales, colección «Maestría en Tecnología de la Información Geográfica» y URI igual a la dirección citada. Su resumen dice que los hallazgos se basan en datos hasta 2020, como ya recoge la sección 3. La dirección funciona aunque el handle no esté en el sistema global.
+  - **Newey y West (1987).** La ficha de RePEc/IDEAS (`ideas.repec.org/a/ecm/emetrp/v55y1987i3p703-08.html`) da las páginas 703–08. La entrada dice 703–708, así que es correcta.
+- [x] Compilar el PDF y confirmar que no hay citas indefinidas (`Citation … undefined`) en el registro de LaTeX. **2026-11-27:** `main` en `5254c55`, compilado con TeX Live 2026 en Docker (`latexmk -pdf`): 0 citas y 0 referencias indefinidas. Repetir en la compilación final (#55).
