@@ -21,6 +21,7 @@ El modelado se apoya en una configuración única y en un arnés compartido (tab
 \texttt{referencia.py} & Los cuatro comparadores triviales, expresados como modelos & \#42 \\
 \texttt{estadisticos.py} & SARIMA y ETS & \#43 \\
 \texttt{arboles.py} & Bosque aleatorio y gradiente por histogramas & \#44 \\
+\texttt{regresion.py} & Regresión lineal con regularización ridge, elegida en los seis pliegues, y sus coeficientes & \#144 \\
 \texttt{ajuste.py} & Selección de hiperparámetros en los seis pliegues y evaluación final del elegido & \#45 \\
 \texttt{comparacion.py} & Tablas, pruebas de Diebold-Mariano y figuras de la sección~\ref{sec:resultados} & \#46 \\
 \texttt{interpretacion.py} & Importancia por permutación de la sección~\ref{sec:interpretacion} & \#47 \\
@@ -30,7 +31,7 @@ El modelado se apoya en una configuración única y en un arnés compartido (tab
 
 \subsection{Un arnés de evaluación compartido}\label{sec:imp-arnes}
 
-\texttt{evaluacion.py} es la única definición de la partición, los pliegues y las métricas. Los comparadores y los cuatro modelos pasan por la misma función \texttt{evaluar}, así que se evalúan exactamente en los mismos días. \texttt{tests/\allowbreak{}test\_\allowbreak{}evaluacion.py} lo comprueba: compara los límites de los pliegues de un modelo con los de los comparadores, y falla si divergen.
+\texttt{evaluacion.py} es la única definición de la partición, los pliegues y las métricas. Los comparadores y los cinco modelos pasan por la misma función \texttt{evaluar}, así que se evalúan exactamente en los mismos días. \texttt{tests/\allowbreak{}test\_\allowbreak{}evaluacion.py} lo comprueba: compara los límites de los pliegues de un modelo con los de los comparadores, y falla si divergen.
 
 Todo modelo es un \emph{predictor} con la misma firma: recibe la serie observada, sus predictoras, la máscara de los días con que puede ajustarse y los días que debe predecir. Ve la serie completa porque el horizonte es de un día: para predecir el día $t$ usa el conteo de $t-1$, que ya está observado también dentro de la evaluación. Por eso la fuga no se evita ocultando la serie, sino con dos pruebas:
 \begin{itemize}
@@ -42,9 +43,9 @@ Todo modelo es un \emph{predictor} con la misma firma: recibe la serie observada
 
 \textbf{SARIMA y ETS.} En cada tramo, el modelo se ajusta solo con el entrenamiento de ese tramo. Después se aplica, con los parámetros fijos, a la serie observada hasta el último día que hay que predecir. La predicción de $t$ es el valor ajustado un paso adelante, que depende de los días anteriores y no de $t$. Los órdenes de SARIMA y la configuración de ETS se eligen dentro de cada tramo, no una vez con todo el entrenamiento. Si se eligieran una sola vez, cada pliegue se evaluaría con un modelo elegido viendo sus propios días.
 
-\textbf{Árboles.} Usan las 21 predictoras de \texttt{scripts/\allowbreak{}features.py}, construidas desde la serie: rezagos, medias de días previos y calendario (sección~\ref{sec:fuga}). Los primeros 28 días no tienen historia suficiente y no entran en el ajuste. Cada estimador recibe la semilla de forma explícita y el bosque usa un solo hilo, porque muchos estimadores de \texttt{scikit-learn} no leen la semilla global y varios hilos pueden cambiar los últimos decimales.
+\textbf{Árboles y regresión lineal.} Usan las 21 predictoras de \texttt{scripts/\allowbreak{}features.py}, construidas desde la serie: rezagos, medias de días previos y calendario (sección~\ref{sec:fuga}). Los primeros 28 días no tienen historia suficiente y no entran en el ajuste. Cada estimador recibe la semilla de forma explícita y el bosque usa un solo hilo, porque muchos estimadores de \texttt{scikit-learn} no leen la semilla global y varios hilos pueden cambiar los últimos decimales. La regresión convierte el día de la semana y el mes en indicadores y escala el resto de predictoras. Ese preprocesamiento se ajusta dentro de cada tramo, con el resto del modelo, para que la media y la desviación no incluyan días posteriores.
 
-\textbf{Selección de hiperparámetros.} \texttt{ajuste.py} recibe la serie recortada al 2025-04-30 y se detiene si le llega un día posterior. La candidata con menor MAE en las 540 fechas de los pliegues es la única que se evalúa en los 184 días finales. Una prueba altera los días de evaluación y exige que la selección no cambie.
+\textbf{Selección de hiperparámetros.} \texttt{ajuste.py} recibe la serie recortada al 2025-04-30 y se detiene si le llega un día posterior. \texttt{regresion.py} elige del mismo modo la regularización. La candidata con menor MAE en las 540 fechas de los pliegues es la única que se evalúa en los 184 días finales. Una prueba altera los días de evaluación y exige que la selección no cambie.
 
 \subsection{Registro de corridas y entorno de referencia}\label{sec:imp-registro}
 
@@ -52,7 +53,7 @@ Cada corrida deja un archivo en \texttt{outputs/\allowbreak{}modelado/\allowbrea
 
 Con la misma semilla y las mismas versiones, dos sistemas no dan siempre la misma cifra. El gradiente por histogramas cambia hasta 0,7 de MAE entre macOS, Linux y Windows, y la selección por AICc cambia de candidata cuando hay casi empate. Por eso las cifras de las secciones~\ref{sec:resultados} y~\ref{sec:interpretacion} se generan en una imagen de Docker que fija el sistema, Python 3.12.8, las versiones exactas de las bibliotecas, la arquitectura \texttt{linux/amd64} y un solo hilo de cálculo. El apéndice~\ref{ap:reproducibilidad} da el orden de ejecución.
 
-Antes de escribir sus tablas, \texttt{comparacion.py} recalcula cada métrica desde las predicciones guardadas y se detiene si alguna no coincide con la que publicó su issue. Las pruebas automáticas del modelado, 131 de las 193 del repositorio, cubren el arnés, los modelos, el ajuste, la comparación y la interpretación. Todas usan datos sintéticos salvo una, que necesita la serie procesada (apéndice~\ref{ap:reproducibilidad}).
+Antes de escribir sus tablas, \texttt{comparacion.py} recalcula cada métrica desde las predicciones guardadas y se detiene si alguna no coincide con la que publicó su issue. Las pruebas automáticas del modelado, 152 de las 216 del repositorio, cubren el arnés, los modelos, el ajuste, la comparación y la interpretación. Todas usan datos sintéticos salvo una, que necesita la serie procesada (apéndice~\ref{ap:reproducibilidad}).
 
 \subsection{Defectos encontrados durante la implementación}\label{sec:imp-defectos}
 
