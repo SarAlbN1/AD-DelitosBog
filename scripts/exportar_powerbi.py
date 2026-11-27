@@ -11,7 +11,7 @@ que alguien transcribió mal.
 
 ## Qué produce
 
-En `outputs/powerbi/`: un CSV por tabla y un `.xlsx` con una hoja por tabla, para cargar de una vez.
+En `outputs/powerbi/`: un CSV por tabla, que es lo que lee el tablero `powerbi/Tablero-DelitosBOG.pbip`.
 
 **Hechos**
 
@@ -297,7 +297,6 @@ def fuentes_largo(series: Path) -> pd.DataFrame:
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("--salida", type=Path, default=RAIZ / "outputs" / "powerbi")
-    p.add_argument("--sin-xlsx", action="store_true", help="Solo los CSV.")
     a = p.parse_args(argv)
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 
@@ -335,15 +334,6 @@ def main(argv=None) -> int:
     a.salida.mkdir(parents=True, exist_ok=True)
     for nombre, t in tablas.items():
         t.to_csv(a.salida / f"{nombre}.csv", index=False)
-
-    if not a.sin_xlsx:
-        try:
-            with pd.ExcelWriter(a.salida / "tablero_powerbi.xlsx", engine="openpyxl") as w:
-                for nombre, t in tablas.items():
-                    # Excel limita el nombre de hoja a 31 caracteres.
-                    t.to_excel(w, sheet_name=nombre[:31], index=False)
-        except ImportError:
-            log.warning("falta openpyxl: se omite el .xlsx y quedan los CSV")
 
     manifiesto = {
         "generado_por": "scripts/exportar_powerbi.py",
