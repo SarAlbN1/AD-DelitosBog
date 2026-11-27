@@ -1,7 +1,7 @@
 # Tablero de Power BI: modelo de datos y montaje (#106)
 
 Las hojas las genera `python scripts/exportar_powerbi.py` desde las salidas versionadas. Quedan en
-`outputs/powerbi/`: un CSV por tabla y un `tablero_powerbi.xlsx` con una hoja por tabla.
+`outputs/powerbi/`: un CSV por tabla.
 
 ## 0. El tablero ya montado: `powerbi/Tablero-DelitosBOG.pbip`
 
@@ -32,10 +32,8 @@ desactiva, la matriz de calor de la misma página muestra la misma lectura.
 
 ## 1. Cargar
 
-En Power BI Desktop: **Obtener datos → Excel** y elegir `outputs/powerbi/tablero_powerbi.xlsx`,
-que trae las 15 hojas. Marcar todas.
-
-Si se prefieren los CSV, **Obtener datos → Carpeta** sobre `outputs/powerbi/` evita cargarlos uno a
+El tablero `.pbip` ya carga las hojas (sección 0). Para montar un informe nuevo desde cero, en Power BI
+Desktop **Obtener datos → Carpeta** sobre `outputs/powerbi/` evita cargar los CSV uno a
 uno.
 
 ## 2. El modelo, en estrella
