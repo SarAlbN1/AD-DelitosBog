@@ -300,7 +300,7 @@ table Medidas
 	measure 'Hallazgo modelo' =
 			VAR ref = IF ( [Mejor comparador] = "ingenuo_estacional", "repetir lo de hace una semana", "el mejor comparador ingenuo" )
 			RETURN
-			"Error medio: " & FORMAT ( [MAE mejor modelo], "0", "es-CO" ) & " víctimas al día (" & FORMAT ( [MAPE mejor modelo] / 100, "0%", "es-CO" ) & "), " & FORMAT ( [Mejora sobre la barra %], "0%", "es-CO" ) & " menos que " & ref & " (" & FORMAT ( [Barra MAE], "0", "es-CO" ) & "). Los cuatro mejores modelos no se diferencian de forma significativa. Solo el gradiente supera con claridad a la regresión lineal."
+			"Error medio: " & FORMAT ( [MAE mejor modelo], "0", "es-CO" ) & " víctimas al día (" & FORMAT ( [MAPE mejor modelo] / 100, "0%", "es-CO" ) & "), " & FORMAT ( [Mejora sobre la barra %], "0%", "es-CO" ) & " menos que " & ref & " (" & FORMAT ( [Barra MAE], "0", "es-CO" ) & "). Los cuatro mejores modelos no se diferencian de forma significativa, y la regresión lineal, la más débil, tampoco se distingue de ellos con solidez."
 		displayFolder: 5 Hallazgos
 		lineageTag: 9f219372-1061-4841-a67b-3db56ad634fa
 
