@@ -174,7 +174,7 @@ table Medidas
 
 	measure 'Aviso de lectura' =
 			VAR a = VALUES ( dim_anio[anio] )
-			VAR t2020 = IF ( 2020 IN a, "* 2020: año atípico por la pandemia. " )
+			VAR t2020 = IF ( 2020 IN a, "* 2020: año atípico (restricciones de movilidad). " )
 			VAR t2025 = IF ( 2025 IN a, "† 2025: llega al 31 de octubre. Compare víctimas al día, no totales." )
 			RETURN COALESCE ( t2020 & t2025, "" )
 		displayFolder: 0 Textos
