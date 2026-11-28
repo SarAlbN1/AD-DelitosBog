@@ -12,7 +12,7 @@
     "preview": "vite preview --port 4173 --strictPort",
     "export:pdf": "npm run build && tsx scripts/export-pdf.ts",
     "verificar": "tsx scripts/verificar-navegacion.ts",
-    "guia": "tsx scripts/generar-guia.ts"
+    "guion": "tsx scripts/generar-guion.ts"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",

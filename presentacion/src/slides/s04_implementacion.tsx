@@ -59,6 +59,7 @@ function Decisiones() {
       titulo="Cada decisión tiene una razón y una alternativa descartada"
       mensaje="Las decisiones de datos y de evaluación están registradas en docs/decisiones.md y en sus issues, antes de ver los resultados."
     >
+      <div className="rounded-[14px] border border-linea bg-white px-8 py-2">
       <table className="w-full text-[22px]">
         <thead>
           <tr className="border-b-2 border-tinta text-left text-[15px] uppercase tracking-[0.08em] text-gris">
@@ -71,14 +72,15 @@ function Decisiones() {
         <tbody>
           {DECISIONES.map(([d, q, p, a]) => (
             <tr key={d} className="border-b border-linea align-top">
-              <td className="py-[18px] pr-5 font-semibold">{d}</td>
-              <td className="py-[18px] pr-5 text-azul">{q}</td>
-              <td className="py-[18px] pr-5 leading-snug">{p}</td>
-              <td className="py-[18px] leading-snug text-gris">{a}</td>
+              <td className="py-[14px] pr-5 font-semibold">{d}</td>
+              <td className="py-[14px] pr-5 text-azul">{q}</td>
+              <td className="py-[14px] pr-5 leading-snug">{p}</td>
+              <td className="py-[14px] leading-snug text-gris">{a}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
     </Marco>
   );
 }
@@ -88,20 +90,19 @@ export const IMPLEMENTACION: Diapositiva[] = [
     id: "arquitectura",
     seccion: "Implementación",
     titulo: "Arquitectura y reproducibilidad",
-    minutos: 1.75,
     expone: "Juan Diego",
     Contenido: Arquitectura,
     notas: {
       guion: [
-        "Esta es la arquitectura del proyecto. A la izquierda, los datos originales y la configuración; en el centro, los scripts en el orden en que se ejecutan; a la derecha, los productos.",
-        "Lo importante es que no hay pasos a mano: cada cifra del informe sale de un archivo de outputs/ que produce un script.",
-        "Abajo están las cuatro garantías. Un solo arnés de evaluación, para que ningún modelo se evalúe en días distintos. 216 pruebas automáticas, 152 del modelado. Una huella por corrida: si dos corridas con la misma huella dan cifras distintas, el registro falla. Y una imagen de Docker.",
-        "¿Por qué Docker? Porque con la misma semilla y las mismas versiones, el gradiente por histogramas cambia hasta 0,7 de MAE entre macOS, Linux y Windows. Fijamos el entorno para que las cifras sean reproducibles.",
+        "Gracias, Sara. De izquierda a derecha: los datos, los scripts en el orden en que se ejecutan y los productos, el informe y el tablero de Power BI.",
+        "Lo importante es que no hay pasos a mano. Cada cifra del informe sale de un archivo de outputs que produce un script.",
+        { accion: "Señalar las cuatro garantías de abajo." },
+        "Cuatro garantías: un solo arnés de evaluación, 216 pruebas automáticas, una huella por corrida y una imagen de Docker, porque el gradiente cambia hasta 0,7 de MAE entre sistemas operativos.",
       ],
       enfatizar: [
         "Antes de escribir sus tablas, comparacion.py recalcula cada métrica desde las predicciones guardadas y se detiene si alguna no coincide: así se cotejaron 616 cifras.",
       ],
-      transicion: "Detrás de esa arquitectura hay decisiones que conviene justificar una por una.",
+      transicion: "Detrás de esto hay decisiones que conviene justificar.",
       preguntas: [
         {
           pregunta: "Si las cifras cambian entre sistemas, ¿son fiables?",
@@ -114,15 +115,14 @@ export const IMPLEMENTACION: Diapositiva[] = [
     id: "decisiones",
     seccion: "Decisiones",
     titulo: "Decisiones y justificaciones",
-    minutos: 1.75,
     expone: "Juan Diego",
     Contenido: Decisiones,
     notas: {
       guion: [
-        "Siete decisiones condicionan los resultados. Las tres primeras son de datos y de evaluación, y se tomaron antes de entrenar ningún modelo.",
-        "La fuente es el registro de la Policía porque es la única con una fila por víctima y resolución diaria. El agregado de MinDefensa llega a 2018, pero tiene una fila por día: no sirve para el requisito de registros.",
-        "La barra se elige en la evaluación porque el mejor comparador cambia de una ventana a otra.",
-        "Y la interpretación usa permutación agrupada porque los rezagos de 7 y 14 días llevan casi la misma información: si se permuta solo uno, el modelo usa el otro y ambos parecen irrelevantes.",
+        "Siete decisiones condicionan los resultados, y todas se tomaron antes de ver la evaluación final.",
+        "La fuente es la Policía, la única diaria y por víctima. La barra se elige en la evaluación porque el mejor comparador cambia con la ventana. Y el horizonte es de un día, el único con todas las predictoras disponibles.",
+        { accion: "Señalar la última fila." },
+        "Y en la interpretación permutamos grupos de variables, porque los rezagos de 7 y 14 días se suplen entre sí.",
       ],
       enfatizar: ["Ninguna decisión se tomó después de ver la evaluación final."],
       transicion: "Con todo esto fijado, vamos a los resultados.",

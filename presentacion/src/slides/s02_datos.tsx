@@ -94,7 +94,7 @@ function SerieObjetivo() {
         <div>
           <Rotulo>Media diaria de víctimas, por mes</Rotulo>
           <LineChart width={1220} height={520} data={datos} margin={{ top: 22, right: 20, bottom: 8, left: 0 }}>
-            <CartesianGrid stroke="#ebe9e3" vertical={false} />
+            <CartesianGrid stroke="#d9d1c1" vertical={false} />
             <ReferenceArea x1="2020-03" x2="2020-12" fill="#b4441a" fillOpacity={0.07} />
             <XAxis
               dataKey="mes"
@@ -155,7 +155,7 @@ function Patrones() {
         <div>
           <Rotulo>Media de víctimas por día de la semana, 2020–2025</Rotulo>
           <BarChart width={1040} height={470} data={dias} margin={{ top: 40, right: 10, bottom: 0, left: 0 }}>
-            <CartesianGrid stroke="#ebe9e3" vertical={false} />
+            <CartesianGrid stroke="#d9d1c1" vertical={false} />
             <XAxis dataKey="etiqueta" tick={{ ...EJE, fontSize: 21 }} tickLine={false} axisLine={{ stroke: "#cfcac0" }} />
             <YAxis tick={EJE} domain={[0, 450]} ticks={[0, 100, 200, 300, 400]} width={56} tickLine={false} axisLine={false} />
             <Bar dataKey="media" radius={[6, 6, 0, 0]} isAnimationActive={animar}>
@@ -215,7 +215,7 @@ function FuentesNoSeSuman() {
             <Leyenda items={claves.map((x) => ({ color: x.color, nombre: x.nombre }))} />
           </div>
           <LineChart width={1210} height={470} data={fuentes.serie} margin={{ top: 18, right: 16, bottom: 4, left: 0 }}>
-            <CartesianGrid stroke="#ebe9e3" vertical={false} />
+            <CartesianGrid stroke="#d9d1c1" vertical={false} />
             <XAxis dataKey="mes" tick={EJE} tickFormatter={(m: string) => (m.endsWith("-01") ? m.slice(0, 4) : "")} interval={0} tickLine={false} axisLine={{ stroke: "#cfcac0" }} />
             <YAxis tick={EJE} domain={[0, 160]} ticks={[0, 40, 80, 120, 160]} width={56} tickLine={false} axisLine={false} />
             <ReferenceLine y={100} stroke="#8a919c" strokeDasharray="5 5" />
@@ -300,21 +300,22 @@ export const DATOS: Diapositiva[] = [
     id: "auditoria",
     seccion: "Datos",
     titulo: "Auditoría y embudo",
-    minutos: 1.5,
     expone: "Juan Diego",
     Contenido: Auditoria,
     notas: {
       guion: [
-        "El primer objetivo fue auditar. Para la Policía, el embudo parte de 4,8 millones de filas de todo el país.",
-        "Filtrando Bogotá quedan 1,4 millones; filtrando hurto a personas, 741.986. Ese número es el que sostiene el requisito de 500.000 registros.",
-        "Al restringir al periodo de la serie, que termina el 31 de octubre de 2025, quedan 730.870 víctimas.",
-        "La auditoría deja tres advertencias. La más llamativa: 713.344 filas son duplicados exactos, y no es un error. El archivo no trae identificador, así que dos víctimas con el mismo perfil el mismo día producen filas idénticas. Deduplicar dejaría 28.642 filas y destruiría la serie.",
+        "Para la Policía, el embudo arranca con 4,8 millones de filas: todos los delitos del país en los archivos de 2020 a 2025.",
+        { accion: "Señalar las barras de arriba abajo." },
+        "Con solo Bogotá quedan 1,4 millones; con solo hurto a personas, 741.986; y en el periodo de la serie, 730.870 víctimas.",
+        { accion: "Señalar el recuadro «Tres advertencias de la auditoría»." },
+        "Lo más llamativo: 713.344 filas son duplicados exactos, y no es un error. El archivo no trae identificador, así que dos víctimas del mismo perfil el mismo día dan filas idénticas. Borrarlas dejaría 28.642 filas.",
+        "Además, noviembre y diciembre de 2025 caen a la mitad sin que lo haga la Línea 123, y por eso se excluyen.",
       ],
       enfatizar: [
         "Contamos filas en una sola unidad de observación: una víctima por fila.",
         "Cada archivo tiene su huella SHA-256 en el apéndice, para que cualquiera compruebe que usa los mismos datos.",
       ],
-      transicion: "Con esos registros se construye la serie diaria.",
+      transicion: "Con esos registros construimos la serie diaria. Sara, ¿cómo se comporta?",
       preguntas: [
         {
           pregunta: "¿Cómo saben que los duplicados no son errores?",
@@ -331,15 +332,14 @@ export const DATOS: Diapositiva[] = [
     id: "serie",
     seccion: "Datos",
     titulo: "Serie objetivo",
-    minutos: 1.5,
     expone: "Sara",
     Contenido: SerieObjetivo,
     notas: {
       guion: [
-        "Esta es la serie objetivo: la media diaria de víctimas por mes. La línea discontinua es la media de todo el periodo, 343 víctimas por día.",
-        "2020 cae por debajo de la mitad en abril, en las restricciones de movilidad. Su media anual es 227,1.",
-        "Después la serie sube hasta el pico de 2023, con 434,9 por día, baja en 2024 y se recupera en 2025.",
-        "Ese cambio de nivel es importante: los modelos tendrán que seguirlo, y veremos que lo hacen con el día anterior.",
+        "Gracias, Juan Diego. Esta es la serie que vamos a pronosticar, resumida como la media diaria de víctimas de cada mes. La línea punteada es la media de todo el periodo: 343 víctimas por día.",
+        { accion: "Señalar el sombreado de 2020." },
+        "En abril de 2020, con las restricciones de movilidad, la serie cae por debajo de la mitad; ese año tiene una media de 227 víctimas al día. Luego sube hasta el pico de 2023, con 435, baja en 2024 y se recupera en 2025.",
+        "Los modelos tendrán que seguir ese cambio de nivel. A 2020 no lo eliminamos: entra marcado como atípico, y las conclusiones no dependen de él.",
       ],
       enfatizar: [
         "2020 no se elimina: entra con un indicador de año atípico y se prueba la sensibilidad sin él.",
@@ -358,57 +358,61 @@ export const DATOS: Diapositiva[] = [
     id: "patrones",
     seccion: "Análisis exploratorio",
     titulo: "Ciclo semanal y festivos",
-    minutos: 1.5,
     expone: "Sara",
     Contenido: Patrones,
     notas: {
       guion: [
-        "El hurto registrado sigue la actividad de la ciudad. El viernes es el día más alto, con 403 víctimas de media; el domingo, el más bajo, con 245. Es un 65 % más.",
-        "El festivo tiene una trampa: la Ley Emiliani pasa muchos festivos al lunes, que ya es un día bajo. Comparar festivo contra no festivo mezclaría los dos efectos. Por eso comparamos lunes con lunes: un lunes festivo registra un 37,8 % menos.",
-        "La estacionalidad por mes existe, pero es mucho más débil.",
+        "El hurto registrado sigue la actividad de la ciudad.",
+        { accion: "Señalar la barra azul del viernes y la roja del domingo." },
+        "El viernes es el día más alto, con 403 víctimas de media, y el domingo el más bajo, con 245: el viernes registra un 65 % más.",
+        { accion: "Señalar el recuadro del festivo." },
+        "Con los festivos hay una trampa. En Colombia muchos festivos se trasladan al lunes, que ya es un día bajo, así que comparar festivo contra no festivo mezclaría los dos efectos. Por eso comparamos lunes con lunes: un lunes festivo registra un 37,8 % menos que uno laborable.",
+        "La estacionalidad por mes existe, pero es mucho más débil. Estas dos señales, el día de la semana y el festivo, son las que después esperamos encontrar dentro de los modelos.",
       ],
       enfatizar: [
         "El festivo es una variable que se conoce con años de antelación: no hay riesgo de fuga al usarla.",
         "Estas dos señales son la hipótesis que después contrastamos con lo que aprendieron los modelos.",
       ],
-      transicion: "¿Y qué pasa cuando se ponen las tres fuentes una al lado de la otra?",
+      transicion: "Ahora pongamos las tres fuentes una al lado de la otra.",
     },
   },
   {
     id: "fuentes",
     seccion: "Análisis exploratorio",
     titulo: "Las fuentes no se suman",
-    minutos: 1.25,
     expone: "Sara",
     Contenido: FuentesNoSeSuman,
     notas: {
       guion: [
-        "Para comparar tendencias sin sumar conteos, cada fuente se expresa como índice de su propia media en los 70 meses comunes.",
-        "La Policía y la Fiscalía casi se superponen: correlación de 0,962. Son dos registros institucionales del mismo proceso.",
-        "La Línea 123 se separa: 0,601 con la Policía, y solo 0,284 si se quita 2020. Buena parte de la coincidencia era la caída compartida de la pandemia.",
+        "Para comparar las fuentes sin sumarlas, expresamos cada una como un índice de su propia media, en los 70 meses que tienen en común.",
+        { accion: "Señalar las líneas azul y ocre." },
+        "La Policía y la Fiscalía casi se superponen: su correlación es de 0,962. Son dos registros institucionales del mismo proceso.",
+        { accion: "Señalar la línea verde." },
+        "La Línea 123 se separa. Su correlación con la Policía es de 0,601, y si quitamos 2020 baja a 0,284: buena parte de la coincidencia era la caída compartida de 2020.",
+        "Esto responde la pregunta complementaria: las fuentes no son intercambiables, y cada una se usa en la resolución que publica.",
       ],
       enfatizar: ["Esto responde la pregunta complementaria: las fuentes no son intercambiables y cada una se usa en su resolución."],
-      transicion: "La Línea 123 sí permite algo que las otras no: mirar el territorio.",
+      transicion: "Lo que sí permite la Línea 123 es mirar el territorio.",
     },
   },
   {
     id: "territorio",
     seccion: "Análisis exploratorio",
     titulo: "Territorio: número frente a tasa",
-    minutos: 1.25,
     expone: "Sara",
     Contenido: Territorio,
     notas: {
       guion: [
-        "Por número de llamadas, Kennedy, Engativá y Suba encabezan la lista, pero son también las localidades más pobladas.",
-        "Al dividir por población el orden cambia por completo: Los Mártires pasa del puesto 14 al primero, con 3,7 veces la tasa de Kennedy. La Candelaria, penúltima por número, es cuarta por tasa.",
-        "El mapa muestra que las tasas altas se concentran en el centro.",
+        "Si contamos llamadas, Kennedy, Engativá y Suba encabezan la lista, pero también son las localidades más pobladas.",
+        { accion: "Señalar las filas resaltadas: Los Mártires, La Candelaria y Kennedy." },
+        "Al dividir por población el orden cambia por completo. Los Mártires pasa del puesto 14 al primero, con 3,7 veces la tasa de Kennedy, y La Candelaria, penúltima por número, queda cuarta por tasa. En el mapa se ve que las tasas altas se concentran en el centro.",
+        "Pero hay dos cuidados. La tasa usa la población residente, y el centro recibe mucha población flotante, así que ahí está sobrestimada. Y ninguno de los dos órdenes mide peligrosidad: describen dónde se pide atención.",
       ],
       enfatizar: [
         "La tasa usa población residente y el centro recibe mucha población flotante: la tasa allí está sobrestimada.",
         "Ninguno de los dos órdenes mide peligrosidad ni dice nada de quienes viven en cada localidad.",
       ],
-      transicion: "Hasta aquí, la descripción. Ahora, cómo se plantea el pronóstico.",
+      transicion: "Hasta aquí la descripción. Ahora, cómo planteamos el pronóstico.",
       preguntas: [
         {
           pregunta: "¿Por qué no modelaron por localidad?",

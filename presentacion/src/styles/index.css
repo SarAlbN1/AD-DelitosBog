@@ -11,12 +11,12 @@
   --font-serif: "Source Serif 4 Variable", Georgia, serif;
   --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
 
-  --color-papel: #fbfaf7;
+  --color-papel: #f1ece2;
   --color-tinta: #14213d;
   --color-gris: #5b6472;
-  --color-suave: #8a919c;
-  --color-linea: #e3e1db;
-  --color-panel: #f3f1ec;
+  --color-suave: #6f7682;
+  --color-linea: #dbd3c4;
+  --color-panel: #faf7f1;
   --color-azul: #174778;
   --color-azul-claro: #e8eef6;
   --color-oxido: #b4441a;

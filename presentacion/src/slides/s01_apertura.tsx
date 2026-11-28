@@ -203,10 +203,10 @@ function Objetivos() {
           territoriales y evaluar modelos que pronostiquen el número diario de víctimas registradas.
         </p>
       </Revelar>
-      <div className="mt-9 divide-y divide-linea border-y border-linea">
+      <div className="mt-8 divide-y divide-linea rounded-[14px] border border-linea bg-white px-8">
         {objetivos.map(([o, ev, est], i) => (
           <Revelar key={o} paso={i + 1} desde="izquierda">
-            <div className="grid grid-cols-[60px_1fr_560px_150px] items-center gap-6 py-[22px]">
+            <div className="grid grid-cols-[60px_1fr_560px_150px] items-center gap-6 py-[19px]">
               <span className="font-serif text-[34px] font-semibold text-azul tabular">{i + 1}</span>
               <span className="text-[25px] leading-snug">{o}</span>
               <span className="text-[21px] leading-snug text-gris">{ev}</span>
@@ -226,41 +226,42 @@ export const APERTURA: Diapositiva[] = [
     id: "portada",
     seccion: "Apertura",
     titulo: "Portada",
-    minutos: 0.5,
-    expone: "Ambos",
+    expone: "Juan Diego",
     Contenido: Portada,
     notas: {
       guion: [
-        "Buenos días. Somos Juan Diego Rojas y Sara Albarracín, y presentamos la tercera entrega del proyecto de Analítica de Datos.",
-        "La pregunta del título es literal: queremos saber si la historia del hurto a personas en Bogotá permite anticipar cuántas víctimas registrará la Policía al día siguiente.",
-        "Las dos cifras de la derecha son la serie con la que trabajamos: 730.870 víctimas en 2.131 días, de enero de 2020 a octubre de 2025.",
+        { accion: "Juan Diego: presentación en pantalla completa (tecla F) en la diapositiva 1." },
+        "Buenos días, profesor. Somos Juan Diego Rojas y Sara Albarracín, y venimos a presentar la tercera entrega del proyecto de Analítica de Datos.",
+        "Queremos saber si la historia del hurto a personas en Bogotá permite anticipar cuántas víctimas registrará la Policía al día siguiente, mejor que una regla sencilla.",
+        "Trabajamos con 730.870 víctimas registradas en 2.131 días, de enero de 2020 a octubre de 2025.",
       ],
       enfatizar: [
         "Se pronostica el registro de la Policía, no el hurto ocurrido.",
         "La serie termina el 31 de octubre de 2025, y más adelante explicamos por qué.",
       ],
-      transicion: "Antes de hablar de modelos, hay que entender de dónde salen los datos.",
+      transicion: "Antes de hablar de modelos, hay que entender de dónde salen esos datos.",
     },
   },
   {
     id: "contexto",
     seccion: "Contexto",
     titulo: "Tres fuentes, tres unidades",
-    minutos: 1.5,
     expone: "Juan Diego",
     Contenido: Contexto,
     notas: {
       guion: [
-        "En Bogotá hay tres fuentes oficiales públicas sobre hurto, y cada una cuenta una cosa distinta.",
-        "La Policía publica una fila por víctima, con la fecha exacta del hecho, pero solo identifica el municipio. Es la única con resolución diaria y la que sostiene el requisito de 500.000 registros.",
-        "La Línea 123 publica conteos mensuales de llamadas tramitadas por localidad y UPZ. Es la única que permite mirar el territorio, pero mide demanda de atención, no hechos.",
-        "La Fiscalía publica pares proceso–delito por mes. Un proceso puede repetirse en varias filas, así que tampoco son víctimas ni hechos.",
+        "En Bogotá hay tres fuentes oficiales y públicas sobre hurto, y cada una cuenta una cosa distinta.",
+        { accion: "Señalar la tarjeta de la Policía." },
+        "La Policía publica una fila por víctima con la fecha del hecho, pero sin la localidad. Es la única fuente diaria, y sus 741.986 registros cumplen por sí solos el requisito de 500.000.",
+        { accion: "Señalar las tarjetas de la Línea 123 y de la Fiscalía." },
+        "La Línea 123 publica llamadas mensuales por localidad: permite mirar el territorio, pero mide demanda de atención, no hechos. Y la Fiscalía publica pares proceso–delito, donde un proceso puede repetirse.",
+        "Por eso las tres fuentes se comparan, pero nunca se suman: sumarlas contaría varias veces el mismo hecho.",
       ],
       enfatizar: [
         "Sumar las tres fuentes contaría varias veces el mismo hecho: se comparan en la escala común, mes por Bogotá, pero no se suman.",
         "Ninguna combinación de fuentes permite construir una serie diaria por localidad.",
       ],
-      transicion: "Con esa restricción en mente, la pregunta queda así.",
+      transicion: "Con esa restricción, la pregunta del proyecto queda así.",
       preguntas: [
         {
           pregunta: "¿Por qué no cruzar la Línea 123 con la Policía para tener localidad?",
@@ -277,20 +278,20 @@ export const APERTURA: Diapositiva[] = [
     id: "problema",
     seccion: "Planteamiento",
     titulo: "Pregunta de investigación",
-    minutos: 1.5,
     expone: "Juan Diego",
     Contenido: Problema,
     notas: {
       guion: [
-        "La pregunta principal tiene dos partes: identificar patrones temporales y pronosticar el número diario de víctimas con menos error que una línea base ingenua.",
-        "La pregunta complementaria es sobre las fuentes: qué diferencias de cobertura y registro impiden compararlas directamente.",
-        "A la derecha están las tres precisiones que hay que fijar desde el principio: qué se pronostica, qué no, y contra qué se compara.",
+        "Nuestra pregunta principal tiene dos partes: identificar los patrones temporales del hurto y pronosticar el número diario de víctimas registradas con menos error que una línea base ingenua.",
+        "La pregunta complementaria es sobre las fuentes: qué diferencias de cobertura y de registro impiden compararlas directamente.",
+        { accion: "Señalar los tres recuadros de la derecha." },
+        "Tres precisiones. Pronosticamos cuántas víctimas registrará la Policía mañana en toda la ciudad, con lo que se sabe hoy. No pronosticamos el hurto ocurrido: el que no se denuncia no está en la serie. Y un modelo solo aporta si se equivoca menos que repetir el mismo día de la semana anterior.",
       ],
       enfatizar: [
         "Un pronóstico de un día, de toda la ciudad, con la información disponible al cerrar el día anterior.",
         "La línea base no se elige a conveniencia: es el mejor de cuatro comparadores triviales.",
       ],
-      transicion: "¿Por qué vale la pena responder esta pregunta, y hasta dónde llega?",
+      transicion: "¿Por qué vale la pena responder esto, y hasta dónde llega?",
       preguntas: [
         {
           pregunta: "¿Por qué un horizonte de un solo día?",
@@ -303,34 +304,33 @@ export const APERTURA: Diapositiva[] = [
     id: "justificacion",
     seccion: "Justificación",
     titulo: "Justificación y alcance",
-    minutos: 1,
     expone: "Juan Diego",
     Contenido: Justificacion,
     notas: {
       guion: [
-        "La justificación tiene tres frentes: social, tecnológico y académico.",
-        "Pero lo importante es el alcance. El proyecto mide cuánto se puede anticipar un conteo agregado; no anticipa delitos individuales ni sirve para decidir dónde patrullar.",
-        "La literatura sobre subregistro y equidad en Bogotá (Riascos y colegas, Urcuqui y colegas) muestra por qué estas precauciones no son decorativas.",
+        "La justificación tiene tres frentes: social, tecnológico y académico. Pero lo más importante de esta diapositiva es el alcance.",
+        { accion: "Señalar el recuadro rojo, «Fuera del alcance»." },
+        "Medimos cuánto se puede anticipar un conteo agregado de toda la ciudad. No anticipamos delitos individuales, no pronosticamos por localidad, porque la Policía no publica la localidad, y no recomendamos dónde patrullar.",
+        "Un buen resultado estadístico no es evidencia causal ni justifica decisiones sobre comunidades concretas.",
       ],
       enfatizar: ["Las importancias de los modelos describen de qué información depende el pronóstico, no qué causa el hurto."],
-      transicion: "Con ese alcance definimos cinco objetivos específicos.",
+      transicion: "Con ese alcance planteamos cinco objetivos específicos.",
     },
   },
   {
     id: "objetivos",
     seccion: "Objetivos",
     titulo: "Objetivos",
-    minutos: 1,
     expone: "Juan Diego",
     Contenido: Objetivos,
     notas: {
       guion: [
-        "El objetivo general es analizar el hurto con varias fuentes y evaluar modelos de pronóstico diario.",
-        "Los cinco objetivos específicos van de los datos al modelo. A la derecha está la evidencia de cada uno; el informe los da por cumplidos solo si hay una sección y un archivo de resultados que los respalden.",
-        "Dos matices: la serie se cortó en octubre de 2025 y el quinto objetivo se cumplió sin intervalos de predicción.",
+        "El objetivo general es analizar el hurto con varias fuentes y evaluar modelos que pronostiquen el número diario de víctimas.",
+        "Los cinco objetivos específicos van de los datos al modelo: auditar las fuentes, construir la serie, comparar las fuentes, implementar los modelos y evaluarlos contra la línea base.",
+        "Los cinco están cumplidos, y a la derecha está la evidencia de cada uno. Hay dos matices que decimos de entrada: la serie se cortó en octubre de 2025 y la evaluación no incluye intervalos de predicción.",
       ],
       enfatizar: ["Cada cifra de esta presentación sale de un archivo de outputs/ producido por un script."],
-      transicion: "Empezamos por el primer objetivo: auditar los datos.",
+      transicion: "Empiezo por el primero: la auditoría de los datos.",
       preguntas: [
         {
           pregunta: "¿Por qué no hay intervalos de predicción?",

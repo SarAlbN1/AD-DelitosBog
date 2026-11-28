@@ -1,4 +1,5 @@
-import { Clock, MessageCircleQuestion, ArrowRightCircle, Star, User } from "lucide-react";
+import { Clock, MessageCircleQuestion, Star, User } from "lucide-react";
+import { esAccion, minutos } from "../slides/duracion";
 import type { Diapositiva } from "../slides/tipos";
 
 /** Guion del expositor. Solo existe en pantalla: no se imprime ni entra en el PDF. */
@@ -12,7 +13,7 @@ export function PanelNotas({ d, numero, total }: { d: Diapositiva; numero: numbe
       <h2 className="mt-1 text-[19px] font-semibold text-white">{d.titulo}</h2>
       <div className="mt-2 flex gap-4 text-[13px] text-slate-400">
         <span className="inline-flex items-center gap-1">
-          <Clock size={14} /> {d.minutos} min
+          <Clock size={14} /> {minutos(d).toLocaleString("es-CO")} min
         </span>
         <span className="inline-flex items-center gap-1">
           <User size={14} /> {d.expone}
@@ -20,9 +21,14 @@ export function PanelNotas({ d, numero, total }: { d: Diapositiva; numero: numbe
       </div>
 
       <section className="mt-4 space-y-2">
-        {n.guion.map((p, i) => (
-          <p key={i}>{p}</p>
-        ))}
+        {n.guion.map((l, i) =>
+          esAccion(l) ? (
+            <p key={i} className="font-semibold text-amber-300">[{l.accion}]</p>
+          ) : (
+            <p key={i}>{l}</p>
+          ),
+        )}
+        <p>{n.transicion}</p>
       </section>
 
       <section className="mt-5">
@@ -36,12 +42,6 @@ export function PanelNotas({ d, numero, total }: { d: Diapositiva; numero: numbe
         </ul>
       </section>
 
-      <section className="mt-5">
-        <h3 className="mb-1 inline-flex items-center gap-2 text-[13px] font-semibold uppercase tracking-wider text-emerald-300">
-          <ArrowRightCircle size={14} /> Transición
-        </h3>
-        <p className="italic text-slate-300">{n.transicion}</p>
-      </section>
 
       {n.preguntas && n.preguntas.length > 0 && (
         <section className="mt-5 pb-6">

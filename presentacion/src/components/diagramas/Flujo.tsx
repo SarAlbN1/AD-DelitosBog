@@ -13,7 +13,7 @@ interface Caja {
 }
 
 const TONO = {
-  dato: { fondo: "#f3f1ec", borde: "#cfcac0", texto: "#14213d" },
+  dato: { fondo: "#fbf8f2", borde: "#cfc6b4", texto: "#14213d" },
   script: { fondo: "#e8eef6", borde: "#9fb6d3", texto: "#174778" },
   salida: { fondo: "#ffffff", borde: "#cfcac0", texto: "#14213d" },
   producto: { fondo: "#174778", borde: "#174778", texto: "#ffffff" },

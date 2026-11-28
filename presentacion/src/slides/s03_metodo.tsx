@@ -173,6 +173,7 @@ function Modelos() {
       titulo="Cinco modelos, de menor a mayor capacidad, con el mismo protocolo"
       mensaje="No se busca el mejor modelo posible, sino medir cuánto mejora el pronóstico al añadir calendario y rezagos frente a los comparadores triviales."
     >
+      <div className="rounded-[14px] border border-linea bg-white px-8 py-2">
       <table className="w-full text-[20px]">
         <thead>
           <tr className="border-b-2 border-tinta text-left text-[15px] uppercase tracking-[0.08em] text-gris">
@@ -185,7 +186,7 @@ function Modelos() {
         <tbody>
           {filas.map((f, i) => (
             <tr key={f.id} className="border-b border-linea align-top">
-              <td className="py-[14px] pr-6">
+              <td className="py-[12px] pr-6">
                 <Revelar paso={i} desde="izquierda">
                   <div className="flex items-start gap-3">
                     <span className="mt-[7px] h-4 w-4 shrink-0 rounded-sm" style={{ background: COLOR[f.id] }} />
@@ -207,6 +208,7 @@ function Modelos() {
           ))}
         </tbody>
       </table>
+      </div>
       <div className="mt-5 grid grid-cols-3 gap-8 text-[19px] leading-snug">
         <p><b className="text-verde">SARIMA y ETS</b> representan el ciclo semanal de forma explícita, pero no ven el calendario.</p>
         <p><b className="text-azul">Los árboles</b> captan interacciones no lineales entre calendario y rezagos sin especificarlas.</p>
@@ -221,15 +223,15 @@ export const METODO: Diapositiva[] = [
     id: "fundamentos",
     seccion: "Fundamentos",
     titulo: "Pronóstico de un paso y fuga",
-    minutos: 1.5,
     expone: "Sara",
     Contenido: Fundamentos,
     notas: {
       guion: [
-        "Formalmente, el problema es un pronóstico de un paso: la predicción de hoy es una función de la historia hasta ayer y del calendario de hoy.",
-        "Las 21 predictoras se agrupan en siete familias. El calendario se conoce de antemano; todo lo demás es pasado.",
-        "La validación cruzada habitual, que baraja los datos, no sirve aquí. Si se barajan los días, cada día de prueba tiene a sus vecinos en el entrenamiento, y con rezagos el modelo prácticamente ve la respuesta. El error saldría optimista.",
-        "Por eso usamos origen rodante: se entrena con el pasado y se predice lo que sigue. Y lo comprobamos con una prueba automática que altera el futuro y exige que el pronóstico no cambie.",
+        "Formalmente es un pronóstico de un paso: el valor de hoy se predice con la historia hasta ayer y con el calendario de hoy.",
+        { accion: "Señalar la fórmula y luego la tabla de predictoras." },
+        "Usamos 21 predictoras en siete grupos: rezagos, medias recientes, día de la semana, festivos y calendario. El calendario se conoce de antemano; lo demás es pasado.",
+        { accion: "Señalar el diagrama de la derecha." },
+        "Aquí no sirve barajar los datos: cada día de prueba quedaría rodeado de días de entrenamiento y, con rezagos, el modelo vería la respuesta. Por eso usamos origen rodante: se entrena con el pasado y se predice lo que sigue. Una prueba automática altera el futuro y exige que el pronóstico no cambie.",
       ],
       enfatizar: ["La fuga de información es el error más común en series de tiempo; aquí está bloqueada por diseño y por prueba."],
       transicion: "Así se organiza esa validación en el tiempo.",
@@ -245,14 +247,14 @@ export const METODO: Diapositiva[] = [
     id: "validacion",
     seccion: "Metodología",
     titulo: "Origen rodante y evaluación final",
-    minutos: 1.5,
     expone: "Sara",
     Contenido: Validacion,
     notas: {
       guion: [
-        "Los datos hasta el 30 de abril de 2025 son entrenamiento. Los 184 días siguientes, de mayo a octubre de 2025, son la evaluación final, en rojo.",
-        "Dentro del entrenamiento hay seis pliegues de 90 días. Cada uno entrena con todo lo anterior a su origen y evalúa los 90 días siguientes; el entrenamiento crece de pliegue en pliegue.",
-        "Todos los hiperparámetros se eligen con el MAE de esas 540 fechas. La evaluación final se calcula una sola vez, al final, y no interviene en ninguna decisión.",
+        "Los datos hasta el 30 de abril de 2025 son el entrenamiento. Los 184 días siguientes, de mayo a octubre, son la evaluación final: la barra roja.",
+        { accion: "Recorrer los pliegues de arriba abajo." },
+        "Dentro del entrenamiento hay seis pliegues de 90 días. Cada uno entrena con todo lo anterior y evalúa los 90 días siguientes, y el entrenamiento crece de pliegue en pliegue.",
+        "Todos los hiperparámetros se eligen con el error en esas 540 fechas. La evaluación final se calcula una sola vez, al final, y no interviene en ninguna decisión. Así evitamos ajustar los modelos a la ventana con la que los juzgamos.",
       ],
       enfatizar: [
         "Separar elección y evaluación evita sobreajustar a la ventana de evaluación.",
@@ -271,20 +273,19 @@ export const METODO: Diapositiva[] = [
     id: "metricas",
     seccion: "Metodología",
     titulo: "Métricas y barra",
-    minutos: 1.5,
     expone: "Sara",
     Contenido: Metricas,
     notas: {
       guion: [
-        "La métrica principal es el MAE, porque se lee directamente: cuántas víctimas por día se equivoca el modelo.",
-        "El RMSE castiga más los errores grandes, y el MASE escala el error por el del ingenuo estacional dentro del entrenamiento, así que permite comparar ventanas.",
-        "A la derecha, los cuatro comparadores triviales. Ninguno usa información del día que predice. En la evaluación final, el mejor es el ingenuo estacional, que repite el valor de hace una semana: MAE de 49,04. Esa es la barra.",
+        "La métrica principal es el MAE: cuántas víctimas por día se equivoca el modelo. El RMSE castiga más los errores grandes, y un MASE menor que 1 significa que el modelo mejora al ingenuo estacional.",
+        { accion: "Señalar la tabla de comparadores y su fila resaltada." },
+        "La barra no la elegimos a conveniencia: es el mejor de cuatro comparadores triviales en la misma evaluación. Ganó el ingenuo estacional, que repite el valor de hace una semana, con un MAE de 49,04 víctimas por día. Esa es la cifra que hay que batir.",
       ],
       enfatizar: [
         "La barra es el mejor comparador en el mismo conjunto de evaluación, no uno elegido de antemano.",
         "El MAPE no decide: no está acotado por arriba y castiga más la sobreestimación.",
       ],
-      transicion: "Estos son los cinco modelos que compiten contra esa barra.",
+      transicion: "Y estos son los cinco modelos que compiten contra ella.",
       preguntas: [
         {
           pregunta: "¿No es injusto elegir la barra mirando la evaluación?",
@@ -297,19 +298,19 @@ export const METODO: Diapositiva[] = [
     id: "modelos",
     seccion: "Modelos",
     titulo: "Cinco familias de modelos",
-    minutos: 2,
     expone: "Sara",
     Contenido: Modelos,
     notas: {
       guion: [
-        "Los modelos están ordenados de menor a mayor capacidad, para ver qué aporta cada salto.",
-        "SARIMA y ETS modelan la propia serie: representan el ciclo semanal con términos de periodo 7, pero no ven el calendario. Un festivo es para ellos un día normal.",
-        "La regresión lineal usa las 21 predictoras con penalización ridge. Es el modelo transparente: cada coeficiente se lee en víctimas.",
-        "El bosque aleatorio promedia 300 árboles; el gradiente por histogramas encadena árboles que corrigen el error de los anteriores. Los dos captan interacciones sin que haya que escribirlas.",
-        "La última columna dice cómo se eligió cada configuración, siempre en los pliegues. En SARIMA y ETS no se eligió un orden fijo, sino la regla con que se eligen los órdenes dentro de cada tramo.",
+        "Los ordenamos de menor a mayor capacidad, para ver qué aporta cada salto.",
+        "SARIMA y ETS modelan la propia serie: representan el ciclo semanal, pero no ven el calendario, así que para ellos un festivo es un día normal.",
+        "La regresión lineal usa las 21 predictoras con una penalización ridge. Es el modelo transparente: cada coeficiente se lee en víctimas.",
+        "El bosque aleatorio promedia 300 árboles, y el gradiente por histogramas encadena árboles que corrigen el error de los anteriores. Los dos captan interacciones sin que tengamos que escribirlas.",
+        { accion: "Señalar la última columna." },
+        "Todos se eligieron en los pliegues y se evalúan con la misma función: mismos días, mismas métricas y misma barra.",
       ],
       enfatizar: ["Todos pasan por la misma función de evaluación: mismos días, mismas métricas, misma barra."],
-      transicion: "Ahora, cómo está construido todo esto por dentro.",
+      transicion: "Juan Diego nos muestra ahora cómo está construido todo esto.",
       preguntas: [
         {
           pregunta: "¿Por qué no usaron redes neuronales o Prophet?",

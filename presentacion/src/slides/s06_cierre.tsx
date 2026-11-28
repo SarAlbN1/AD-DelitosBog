@@ -19,12 +19,12 @@ function Limitaciones() {
       titulo="Lo que el resultado no permite afirmar"
       mensaje="Un buen pronóstico del conteo oficial no es un buen pronóstico del hurto ocurrido, ni una guía para asignar vigilancia."
     >
-      <div className="grid grid-cols-3 gap-x-14 gap-y-16 pt-4">
+      <div className="grid grid-cols-3 gap-8">
         {items.map((it, i) => {
           const Icono = it.icono;
           return (
             <Revelar key={it.t} paso={i}>
-              <div>
+              <div className="h-full rounded-[14px] border border-linea bg-white border-t-[5px] border-t-oxido p-8">
                 <Icono size={44} strokeWidth={1.6} className="text-oxido" />
                 <div className="mt-4 text-[29px] font-semibold leading-snug">{it.t}</div>
                 <p className="mt-3 text-[23px] leading-[1.4] text-gris">{it.d}</p>
@@ -96,6 +96,7 @@ function TrabajoFuturo() {
       titulo="Cada propuesta responde a un límite concreto"
       mensaje="Ninguna de estas extensiones está implementada."
     >
+      <div className="rounded-[14px] border border-linea bg-white px-8 py-2">
       <table className="w-full text-[23px]">
         <thead>
           <tr className="border-b-2 border-tinta text-left text-[15px] uppercase tracking-[0.08em] text-gris">
@@ -107,19 +108,20 @@ function TrabajoFuturo() {
         <tbody>
           {items.map(([t, c, l], i) => (
             <tr key={t} className="border-b border-linea align-top">
-              <td className="py-[19px] pr-6">
+              <td className="py-[15px] pr-6">
                 <Revelar paso={i} desde="izquierda">
                   <span className="font-semibold">{t}</span>
                 </Revelar>
               </td>
-              <td className="py-[19px] pr-6 leading-snug text-gris">{c}</td>
-              <td className="py-[19px]">
+              <td className="py-[15px] pr-6 leading-snug text-gris">{c}</td>
+              <td className="py-[15px]">
                 <Estado tipo="futuro">{l}</Estado>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      </div>
     </Marco>
   );
 }
@@ -180,19 +182,16 @@ export const CIERRE: Diapositiva[] = [
     id: "limitaciones",
     seccion: "Limitaciones",
     titulo: "Limitaciones",
-    minutos: 1.5,
     expone: "Juan Diego",
     Contenido: Limitaciones,
     notas: {
       guion: [
-        "Seis limitaciones, y conviene decirlas antes de que las pregunten.",
-        "La primera es la más importante: modelamos el registro. Riascos y colegas estiman para Bogotá precisamente esa brecha de subregistro; con nuestras fuentes no se puede observar.",
-        "La evaluación final va de mayo a octubre: no incluye la temporada de fin de año, donde el error sube.",
-        "No reportamos intervalos de predicción, porque los residuos conservan autocorrelación.",
-        "Y si un pronóstico así se usara para decidir dónde patrullar, podría reforzarse a sí mismo. El nuestro es de toda la ciudad, así que no concentra vigilancia en barrios, pero el riesgo no es nulo.",
+        "La primera limitación es la más importante: modelamos el registro, no la victimización. El hurto que no se denuncia no está en la serie, y con nuestras fuentes no se puede medir.",
+        "La evaluación no incluye la temporada de fin de año, donde el error sube. Un cambio en el registro se tomaría como un cambio real. No hay intervalos de predicción, porque los errores conservan autocorrelación. Y el pronóstico es de toda la ciudad y a un día.",
+        "Y si se usara para decidir dónde patrullar, podría reforzarse a sí mismo; el nuestro no asigna barrios, pero el riesgo no es nulo.",
       ],
       enfatizar: ["Los resultados valen para Bogotá, 2020–2025, el registro de la Policía tal como se descargó y un horizonte de un día."],
-      transicion: "Con esas precisiones, la respuesta a la pregunta.",
+      transicion: "Sara, con esas precisiones, ¿cuál es la respuesta a la pregunta?",
       preguntas: [
         {
           pregunta: "¿Qué es un bucle de retroalimentación en este contexto?",
@@ -205,66 +204,64 @@ export const CIERRE: Diapositiva[] = [
     id: "conclusiones",
     seccion: "Conclusiones",
     titulo: "Conclusiones",
-    minutos: 1.5,
-    expone: "Ambos",
+    expone: "Sara",
     Contenido: Conclusiones,
     notas: {
       guion: [
         "La respuesta tiene dos partes.",
-        "Sí, los patrones temporales se identifican con claridad: un ciclo semanal fuerte, un efecto de festivo de casi el 38 % y un nivel que cambia de un año a otro.",
-        "Y sí, el pronóstico a un día supera la línea base: los cinco modelos bajan el error entre un 26 y un 33 %, en todos los pliegues y con o sin 2020. Pero no hay un modelo ganador.",
-        "La pregunta complementaria se responde con la auditoría: las fuentes no son intercambiables, así que se comparan sin sumarse.",
-        "Los cinco objetivos específicos están cumplidos, con la serie cortada en octubre de 2025 y sin intervalos de predicción.",
+        { accion: "Señalar el recuadro azul." },
+        "Primera: los patrones temporales se identifican con claridad. Hay un ciclo semanal fuerte, un efecto de festivo de casi el 38 % y un nivel que cambia de un año a otro.",
+        { accion: "Señalar el recuadro verde." },
+        "Segunda: el pronóstico a un día supera la línea base. Los cinco modelos bajan el error entre un 26 y un 33 %, en todos los pliegues y con o sin 2020. Pero entre los cuatro mejores no hay un ganador.",
+        "Y los modelos se apoyan en las señales del análisis exploratorio: no es una caja negra que acierta por casualidad.",
       ],
       enfatizar: ["Que los modelos se apoyen en las mismas señales del análisis exploratorio da coherencia al resultado: no es una caja negra que acierta por casualidad."],
-      transicion: "Lo que queda abierto lo convertimos en trabajo futuro.",
+      transicion: "Lo que quedó abierto lo convertimos en trabajo futuro.",
     },
   },
   {
     id: "trabajo-futuro",
     seccion: "Trabajo futuro",
     titulo: "Trabajo futuro",
-    minutos: 1,
     expone: "Sara",
     Contenido: TrabajoFuturo,
     notas: {
       guion: [
-        "Cada propuesta ataca un límite concreto de los que acabamos de ver.",
-        "La más directa: dar a SARIMA los festivos como regresores externos, porque es exactamente su debilidad.",
-        "La más útil para un uso real: intervalos de predicción con cobertura medida y horizontes de 7 y 14 días.",
-        "Y la escala de localidad solo tendría sentido si la Policía publicara la localidad, y con salvaguardas.",
+        "Cada propuesta ataca un límite concreto de los que vimos.",
+        "La más directa es darle a SARIMA los festivos como variables externas, porque es exactamente su debilidad. La más útil para un uso real son los intervalos de predicción y los horizontes de 7 y 14 días. Y la escala de localidad solo tendría sentido si la Policía publicara la localidad, y con salvaguardas.",
+        "Ninguna de estas extensiones está implementada.",
       ],
       enfatizar: ["Nada de esto está implementado: son extensiones, no resultados."],
-      transicion: "Estas son las referencias en que se apoya lo que presentamos.",
+      transicion: "Ahí quedan las referencias en las que nos apoyamos.",
     },
   },
   {
     id: "referencias",
     seccion: "Referencias",
     titulo: "Referencias",
-    minutos: 0.25,
-    expone: "Ambos",
+    expone: "Sara",
     Contenido: Referencias,
     notas: {
-      guion: ["No se lee. Se deja en pantalla mientras se pasa a preguntas."],
+      guion: [
+        { accion: "No se lee. Dejarla en pantalla unos segundos y pasar a la siguiente." },
+      ],
       enfatizar: ["Las referencias metodológicas clave son Hyndman y Athanasopoulos (validación y MASE), Diebold y Mariano con Harvey et al. (comparación de pronósticos) y Breiman (bosques y permutación)."],
-      transicion: "Muchas gracias. Quedamos atentos a sus preguntas.",
+      transicion: "Juan Diego cierra.",
     },
   },
   {
     id: "preguntas",
     seccion: "Cierre",
     titulo: "Preguntas",
-    minutos: 0.25,
     expone: "Ambos",
     Contenido: Preguntas,
     notas: {
       guion: [
-        "Resumen en una frase: cinco modelos superan a la regla ingenua entre un 26 y un 33 %, sin un ganador entre ellos, y lo que se pronostica es el registro.",
-        "Para responder, volver con el índice (tecla O) a la diapositiva que corresponda.",
+        "En resumen: cinco modelos superan a la regla ingenua entre un 26 y un 33 %, ninguno se distingue de los demás, y lo que pronosticamos es el registro, no el hurto ocurrido.",
+        { accion: "Durante las preguntas: tecla O para abrir el índice e ir a la diapositiva que corresponda." },
       ],
       enfatizar: ["Si una pregunta pide una cifra que no está en el informe, decirlo: no improvisar resultados."],
-      transicion: "Fin de la exposición.",
+      transicion: "Muchas gracias. Quedamos atentos a sus preguntas.",
     },
   },
 ];

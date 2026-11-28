@@ -37,7 +37,7 @@ function Resultados() {
         <div>
           <Rotulo>MAE en la evaluación final (víctimas por día)</Rotulo>
           <BarChart width={820} height={470} data={datos} layout="vertical" margin={{ top: 12, right: 90, bottom: 8, left: 10 }}>
-            <CartesianGrid stroke="#ebe9e3" horizontal={false} />
+            <CartesianGrid stroke="#d9d1c1" horizontal={false} />
             <XAxis type="number" domain={[0, 55]} ticks={[0, 10, 20, 30, 40, 50]} tick={EJE} tickLine={false} axisLine={{ stroke: "#cfcac0" }} />
             <YAxis type="category" dataKey="nombre" width={260} tick={{ fontSize: 20, fill: "#14213d" }} tickLine={false} axisLine={false} />
             <ReferenceLine x={barra.MAE} stroke={COLOR.oxido} strokeDasharray="6 4" strokeWidth={2} />
@@ -129,7 +129,7 @@ function Pronostico() {
         )}
       </div>
       <LineChart width={1760} height={530} data={pronostico} margin={{ top: 20, right: 16, bottom: 6, left: 0 }}>
-        <CartesianGrid stroke="#ebe9e3" vertical={false} />
+        <CartesianGrid stroke="#d9d1c1" vertical={false} />
         <XAxis dataKey="fecha" tick={EJE} tickFormatter={(f: string) => (f.endsWith("-01") ? fechaCorta(f) : "")} interval={0} tickLine={false} axisLine={{ stroke: "#cfcac0" }} />
         <YAxis tick={EJE} domain={[100, 600]} ticks={[100, 200, 300, 400, 500, 600]} width={60} tickLine={false} axisLine={false} />
         {festivos.map((f) => (
@@ -165,7 +165,7 @@ function Pliegues() {
             <Leyenda items={[...MODELOS_FINALES.map((id) => ({ color: COLOR[id], nombre: NOMBRE[id] })), { color: COLOR.barra, nombre: "Barra", discontinua: true }]} />
           </div>
           <LineChart width={1150} height={480} data={modelos.pliegues} margin={{ top: 18, right: 20, bottom: 24, left: 0 }}>
-            <CartesianGrid stroke="#ebe9e3" vertical={false} />
+            <CartesianGrid stroke="#d9d1c1" vertical={false} />
             <XAxis
               dataKey="pliegue"
               tick={EJE}
@@ -231,14 +231,16 @@ function SinGanador() {
           <div className="grid" style={{ gridTemplateColumns: `230px repeat(4, ${celda}px)` }}>
             <div />
             {ORDEN.slice(0, 4).map((c) => (
-              <div key={c} className="px-2 pb-3 text-center text-[17px] font-semibold leading-tight" style={{ color: COLOR[c as keyof typeof COLOR] }}>
+              <div key={c} className="flex flex-col items-center gap-2 px-2 pb-3 text-center text-[17px] font-semibold leading-tight text-tinta">
+                <span className="h-[6px] w-12 rounded-full" style={{ background: COLOR[c as keyof typeof COLOR] }} />
                 {NOMBRE[c]}
               </div>
             ))}
             {ORDEN.slice(1).map((f, i) => (
               <div key={f} className="contents">
-                <div className="flex items-center pr-4 text-right text-[19px] font-semibold leading-tight" style={{ color: COLOR[f as keyof typeof COLOR] }}>
-                  <span className="ml-auto">{NOMBRE[f]}</span>
+                <div className="flex items-center justify-end gap-3 pr-4 text-right text-[19px] font-semibold leading-tight text-tinta">
+                  <span>{NOMBRE[f]}</span>
+                  <span className="h-6 w-[6px] shrink-0 rounded-full" style={{ background: COLOR[f as keyof typeof COLOR] }} />
                 </div>
                 {ORDEN.slice(0, 4).map((c, j) => {
                   if (j > i) return <div key={c} />;
@@ -308,7 +310,7 @@ function Festivos() {
             </div>
           </div>
           <BarChart width={1180} height={500} data={datos} margin={{ top: 36, right: 10, bottom: 4, left: 0 }} barGap={6}>
-            <CartesianGrid stroke="#ebe9e3" vertical={false} />
+            <CartesianGrid stroke="#d9d1c1" vertical={false} />
             <XAxis dataKey="corto" tick={{ ...EJE, fontSize: 19, fill: "#14213d" }} tickLine={false} axisLine={{ stroke: "#cfcac0" }} interval={0} />
             <YAxis tick={EJE} domain={[0, 90]} ticks={[0, 20, 40, 60, 80]} width={50} tickLine={false} axisLine={false} />
             <Bar dataKey="mae_festivo" fill={COLOR.oxido} radius={[5, 5, 0, 0]} barSize={56} isAnimationActive={animar}>
@@ -364,7 +366,7 @@ function Interpretacion() {
             </div>
           </div>
           <BarChart width={1000} height={520} data={grupos} layout="vertical" margin={{ top: 10, right: 70, bottom: 4, left: 10 }} barGap={4}>
-            <CartesianGrid stroke="#ebe9e3" horizontal={false} />
+            <CartesianGrid stroke="#d9d1c1" horizontal={false} />
             <XAxis type="number" domain={[0, 45]} ticks={[0, 10, 20, 30, 40]} tick={EJE} tickLine={false} axisLine={{ stroke: "#cfcac0" }} />
             <YAxis type="category" dataKey="grupo" width={330} tick={{ fontSize: 19, fill: "#14213d" }} tickLine={false} axisLine={false} />
             <Bar dataKey="gradiente" fill={COLOR.gradiente_histogramas} barSize={24} radius={[0, 4, 4, 0]} isAnimationActive={animar}>
@@ -423,15 +425,15 @@ export const RESULTADOS: Diapositiva[] = [
     id: "resultados",
     seccion: "Resultados",
     titulo: "Comparación con la barra",
-    minutos: 2,
     expone: "Juan Diego",
     Contenido: Resultados,
     notas: {
       guion: [
-        "Este es el resultado principal. La línea discontinua roja es la barra: el ingenuo estacional, con 49,04 víctimas por día de error.",
-        "Los cinco modelos quedan muy por debajo. SARIMA, ETS y los dos árboles entre 32,72 y 34,22: entre un 30 y un 33 % menos. La regresión lineal, 36,31: un 26 % menos.",
-        "La columna p es la prueba de Diebold-Mariano contra la barra: compara día a día la pérdida de los dos pronósticos. En los cinco la diferencia es muy significativa, y se mantiene con pérdida cuadrática y con Newey-West.",
-        "En términos prácticos, el error es de alrededor del 10 % del valor diario, frente al 14 % de la barra.",
+        { accion: "Señalar la línea discontinua roja." },
+        "Este es el resultado principal. La línea discontinua es la barra: 49,04 víctimas por día de error.",
+        "Los cinco modelos quedan muy por debajo. SARIMA, ETS y los dos árboles, entre 32,72 y 34,22: entre un 30 y un 33 % menos. La regresión lineal, 36,31: un 26 % menos.",
+        { accion: "Señalar la columna p de la tabla." },
+        "La columna p es la prueba de Diebold-Mariano, que compara día a día los errores de cada modelo con los de la barra. En los cinco la diferencia es muy significativa. En términos prácticos, el error es de alrededor del 10 % del valor diario, frente al 14 % de la barra.",
       ],
       enfatizar: [
         "La evaluación final se calculó una sola vez, después de elegir todo con los pliegues.",
@@ -454,32 +456,32 @@ export const RESULTADOS: Diapositiva[] = [
     id: "pronostico",
     seccion: "Resultados",
     titulo: "Pronóstico frente a observado",
-    minutos: 1.25,
     expone: "Juan Diego",
     Contenido: Pronostico,
     notas: {
       guion: [
-        "Aquí están los 184 días. En negro lo observado, en azul el gradiente y en gris discontinuo la barra.",
-        "El modelo sigue el ciclo semanal. La barra, en cambio, repite con una semana de retraso cualquier día anómalo: se ven picos y caídas aislados que aparecen siete días tarde.",
-        "Las líneas verticales son los ocho festivos. Con los botones de arriba se puede cambiar a ETS o a la regresión.",
+        "Aquí están los 184 días: en negro lo observado, en azul el gradiente y en gris punteado la barra.",
+        "El modelo sigue el ciclo semanal. La barra, en cambio, repite una semana después cualquier día anómalo: por eso se ven picos y caídas sueltos que aparecen siete días tarde.",
+        { accion: "Clic en el botón «ETS» y señalar una línea vertical de festivo." },
+        "Las líneas verticales son los ocho festivos. Si cambiamos a ETS, se ve que en el festivo no baja: no sabe que es festivo.",
+        { accion: "Clic en «Gradiente por histogramas» para volver." },
       ],
       enfatizar: ["Mostrar ETS en un festivo: el modelo no baja, porque no sabe que es festivo."],
-      transicion: "¿Y si la ventana de evaluación hubiera sido otra?",
+      transicion: "Pero una sola ventana podría engañar. ¿Qué pasa en otras?",
     },
   },
   {
     id: "pliegues",
     seccion: "Validación",
     titulo: "Estabilidad en los pliegues",
-    minutos: 1.5,
     expone: "Juan Diego",
     Contenido: Pliegues,
     notas: {
       guion: [
-        "Batir la barra en una sola ventana no basta. Aquí está el MAE en los seis pliegues.",
-        "Los cinco modelos ganan a la barra en los seis. Su peor pliegue, entre 35,49 y 44,61, queda muy por debajo del peor de la barra, 75,57.",
-        "También varían mucho menos: la desviación entre pliegues va de 4,34 a 7,46, frente a 14,11 de la barra.",
-        "El pliegue 5, noviembre a enero, es difícil para todos: los festivos de fin de año rompen el ciclo semanal.",
+        "Por eso repetimos la comparación en los seis pliegues de validación.",
+        { accion: "Señalar la línea gris punteada de la barra." },
+        "Los cinco modelos le ganan a la barra en los seis. Su peor pliegue, entre 35 y 45, queda muy por debajo del peor de la barra, 75,57. Y varían mucho menos: su desviación va de 4 a 7,5, frente a 14 de la barra.",
+        "El quinto pliegue, de noviembre a enero, es difícil para todos: los festivos de fin de año rompen el ciclo semanal. Y el orden de los modelos cambia entre los pliegues y la evaluación final: otra razón para no hablar de un ganador.",
       ],
       enfatizar: [
         "El orden de los modelos cambia entre pliegues y evaluación: otra razón para no hablar de un ganador.",
@@ -491,18 +493,18 @@ export const RESULTADOS: Diapositiva[] = [
     id: "sin-ganador",
     seccion: "Validación",
     titulo: "Diebold-Mariano entre modelos",
-    minutos: 1.5,
     expone: "Juan Diego",
     Contenido: SinGanador,
     notas: {
       guion: [
         "Esta matriz compara los modelos entre sí. Cada celda es el valor p de la prueba de Diebold-Mariano para ese par.",
         "Entre los cuatro primeros, los valores van de 0,17 a 0,91: ninguna diferencia es significativa.",
-        "La única celda en rojo es el gradiente frente a la regresión: 0,023. Pero con Newey-West sube a 0,073, y son diez comparaciones sin corregir por multiplicidad.",
-        "La conclusión honesta es que con estos 184 días no hay un ganador.",
+        { accion: "Señalar la celda roja." },
+        "La única en rojo es gradiente contra regresión: 0,023. Pero con Newey-West, que corrige la correlación entre días seguidos, sube a 0,073, y son diez comparaciones sin corregir.",
+        "Así que la conclusión honesta es que con estos 184 días no hay un ganador. Lo que sí se sostiene es que los cinco superan la barra.",
       ],
       enfatizar: ["Lo robusto no es el orden entre modelos, sino que todos superan la barra."],
-      transicion: "Pero hay un tipo de día en que los modelos sí se separan.",
+      transicion: "Hay un tipo de día, eso sí, en el que los modelos se separan.",
       preguntas: [
         {
           pregunta: "Entonces, ¿qué modelo recomendarían?",
@@ -515,39 +517,39 @@ export const RESULTADOS: Diapositiva[] = [
     id: "festivos",
     seccion: "Resultados",
     titulo: "Errores en festivos",
-    minutos: 1.25,
     expone: "Juan Diego",
     Contenido: Festivos,
     notas: {
       guion: [
-        "En los días no festivos, todos los modelos están entre 31 y 35 de MAE.",
-        "En los ocho festivos se separan. SARIMA y ETS se equivocan en 72 y 69, casi tanto como la barra, y sobrestiman en 56 y 59: no ven el calendario.",
-        "Los árboles bajan ese error a 37 y 43, aunque se pasan al otro lado y subestiman. La regresión queda en medio.",
+        "En los días normales, todos los modelos se equivocan entre 31 y 35 víctimas.",
+        { accion: "Señalar las barras rojas de SARIMA y ETS." },
+        "En los ocho festivos se separan. SARIMA y ETS se equivocan en 72 y 69, casi tanto como la barra, y sobrestiman en más de 55 víctimas: no ven el calendario.",
+        "Los árboles, que sí tienen la variable de festivo, bajan ese error a 37 y 43, aunque se pasan al otro lado y subestiman. Con solo ocho festivos la magnitud es imprecisa, pero el signo es claro y coincide con lo que ve cada modelo.",
       ],
       enfatizar: ["Con solo ocho festivos la magnitud es imprecisa, pero el signo es claro y coincide con la estructura de cada modelo."],
-      transicion: "¿En qué se apoyan los modelos para pronosticar?",
+      transicion: "¿Y en qué se apoyan los modelos para pronosticar?",
     },
   },
   {
     id: "interpretacion",
     seccion: "Interpretación",
     titulo: "Importancia por permutación",
-    minutos: 2,
     expone: "Juan Diego",
     Contenido: Interpretacion,
     notas: {
       guion: [
-        "Para los árboles medimos la importancia por permutación: se desordena un grupo de variables entre los días y se mide cuánto sube el MAE. Si no sube, el modelo no dependía de ese grupo.",
-        "Tres hallazgos. Primero, el ciclo semanal es la señal principal, y cada modelo la toma por un camino distinto: el gradiente del día de la semana, el bosque de los rezagos de 7, 14 y 28 días.",
-        "Segundo, el día anterior pesa tanto como el ciclo semanal. El análisis exploratorio no lo destacó, pero sí lo anticipaba que el ingenuo de un día ganara cuatro pliegues: recoge el nivel reciente de la serie.",
-        "Tercero, los festivos pesan aunque sean solo 8 de 184 días.",
-        "A la derecha comprobamos el sentido: al marcar un lunes laborable como festivo, el gradiente baja su pronóstico un 37,3 %, casi exactamente el 37,8 % del análisis exploratorio.",
+        "Para los árboles medimos la importancia por permutación: desordenamos un grupo de variables entre los días y medimos cuánto sube el error. Si no sube, el modelo no dependía de ese grupo.",
+        { accion: "Señalar las tres primeras barras." },
+        "Tres hallazgos. El ciclo semanal es la señal principal: el gradiente la toma del día de la semana y el bosque, de los rezagos semanales. El día anterior pesa igual, porque recoge el nivel reciente. Y los festivos pesan aunque sean 8 de 184 días.",
+        { accion: "Señalar la tabla de la derecha." },
+        "A la derecha comprobamos el sentido. Si marcamos un lunes laborable como festivo, el gradiente baja su pronóstico un 37,3 %, casi exactamente el 37,8 % que medimos en el análisis exploratorio.",
+        "Una aclaración importante: esto describe de qué depende el pronóstico, no qué causa el hurto.",
       ],
       enfatizar: [
         "Importancia no es causa: que el modelo use el día anterior no significa que un día con muchos hurtos provoque otro.",
         "El indicador de 2020 da cero por construcción: en la evaluación vale cero en todos los días.",
       ],
-      transicion: "Todo esto tiene límites que hay que decir con claridad.",
+      transicion: "Todo esto tiene límites que queremos decir con claridad.",
       preguntas: [
         {
           pregunta: "¿Por qué agrupar las variables al permutar?",
