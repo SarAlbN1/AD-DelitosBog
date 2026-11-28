@@ -186,12 +186,10 @@ export const CIERRE: Diapositiva[] = [
     Contenido: Limitaciones,
     notas: {
       guion: [
-        "La primera limitación es la más importante: modelamos el registro, no la victimización. El hurto que no se denuncia no está en la serie, y con nuestras fuentes no se puede medir.",
-        "La evaluación no incluye la temporada de fin de año, donde el error sube. Un cambio en el registro se tomaría como un cambio real. No hay intervalos de predicción, porque los errores conservan autocorrelación. Y el pronóstico es de toda la ciudad y a un día.",
-        "Y si se usara para decidir dónde patrullar, podría reforzarse a sí mismo; el nuestro no asigna barrios, pero el riesgo no es nulo.",
+        "Pronosticamos el registro, no la victimización: el hurto que no se denuncia no está. La evaluación no cubre la temporada de fin de año, no hay intervalos de predicción, y el pronóstico es de toda la ciudad y a un día. No sirve para decidir dónde patrullar.",
       ],
       enfatizar: ["Los resultados valen para Bogotá, 2020–2025, el registro de la Policía tal como se descargó y un horizonte de un día."],
-      transicion: "Sara, con esas precisiones, ¿cuál es la respuesta a la pregunta?",
+      transicion: "Sara, ¿cuál es la respuesta a la pregunta?",
       preguntas: [
         {
           pregunta: "¿Qué es un bucle de retroalimentación en este contexto?",
@@ -208,19 +206,16 @@ export const CIERRE: Diapositiva[] = [
     Contenido: Conclusiones,
     notas: {
       guion: [
-        "La respuesta tiene dos partes.",
-        { accion: "Señalar el recuadro azul." },
-        "Primera: los patrones temporales se identifican con claridad. Hay un ciclo semanal fuerte, un efecto de festivo de casi el 38 % y un nivel que cambia de un año a otro.",
-        { accion: "Señalar el recuadro verde." },
-        "Segunda: el pronóstico a un día supera la línea base. Los cinco modelos bajan el error entre un 26 y un 33 %, en todos los pliegues y con o sin 2020. Pero entre los cuatro mejores no hay un ganador.",
-        "Y los modelos se apoyan en las señales del análisis exploratorio: no es una caja negra que acierta por casualidad.",
+        "La respuesta tiene dos partes. Los patrones se identifican con claridad: un ciclo semanal fuerte, un efecto festivo de casi el 38 % y un nivel que cambia de un año a otro.",
+        "Y el pronóstico a un día supera la línea base entre un 26 y un 33 %, en todos los pliegues, aunque sin un modelo ganador. Como trabajo futuro: dar el calendario a SARIMA y calcular intervalos de predicción.",
       ],
       enfatizar: ["Que los modelos se apoyen en las mismas señales del análisis exploratorio da coherencia al resultado: no es una caja negra que acierta por casualidad."],
-      transicion: "Lo que quedó abierto lo convertimos en trabajo futuro.",
+      transicion: "Ahora les muestro todo esto en el tablero de Power BI.",
     },
   },
   {
     id: "trabajo-futuro",
+    anexo: true,
     seccion: "Trabajo futuro",
     titulo: "Trabajo futuro",
     expone: "Sara",
@@ -232,11 +227,12 @@ export const CIERRE: Diapositiva[] = [
         "Ninguna de estas extensiones está implementada.",
       ],
       enfatizar: ["Nada de esto está implementado: son extensiones, no resultados."],
-      transicion: "Ahí quedan las referencias en las que nos apoyamos.",
+      transicion: "",
     },
   },
   {
     id: "referencias",
+    anexo: true,
     seccion: "Referencias",
     titulo: "Referencias",
     expone: "Sara",
@@ -246,7 +242,7 @@ export const CIERRE: Diapositiva[] = [
         { accion: "No se lee. Dejarla en pantalla unos segundos y pasar a la siguiente." },
       ],
       enfatizar: ["Las referencias metodológicas clave son Hyndman y Athanasopoulos (validación y MASE), Diebold y Mariano con Harvey et al. (comparación de pronósticos) y Breiman (bosques y permutación)."],
-      transicion: "Juan Diego cierra.",
+      transicion: "",
     },
   },
   {
@@ -257,11 +253,11 @@ export const CIERRE: Diapositiva[] = [
     Contenido: Preguntas,
     notas: {
       guion: [
-        "En resumen: cinco modelos superan a la regla ingenua entre un 26 y un 33 %, ninguno se distingue de los demás, y lo que pronosticamos es el registro, no el hurto ocurrido.",
-        { accion: "Durante las preguntas: tecla O para abrir el índice e ir a la diapositiva que corresponda." },
+        { accion: "Alt + Tab de vuelta a la presentación, en la diapositiva de preguntas." },
+        { accion: "Para responder: tecla O e ir a la diapositiva que corresponda, incluido el anexo." },
       ],
       enfatizar: ["Si una pregunta pide una cifra que no está en el informe, decirlo: no improvisar resultados."],
-      transicion: "Muchas gracias. Quedamos atentos a sus preguntas.",
+      transicion: "",
     },
   },
 ];

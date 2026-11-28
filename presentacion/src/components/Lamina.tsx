@@ -17,7 +17,7 @@ export function Lamina({
   const { Contenido } = d;
   return (
     <ProveedorModo impresion={impresion}>
-      <PosicionContext.Provider value={{ numero, total }}>
+      <PosicionContext.Provider value={{ numero, total, anexo: d.anexo }}>
         <Contenido />
       </PosicionContext.Provider>
     </ProveedorModo>

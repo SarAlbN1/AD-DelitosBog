@@ -28,7 +28,7 @@ export function PanelNotas({ d, numero, total }: { d: Diapositiva; numero: numbe
             <p key={i}>{l}</p>
           ),
         )}
-        <p>{n.transicion}</p>
+        {n.transicion && <p>{n.transicion}</p>}
       </section>
 
       <section className="mt-5">

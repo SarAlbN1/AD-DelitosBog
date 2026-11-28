@@ -430,16 +430,14 @@ export const RESULTADOS: Diapositiva[] = [
     notas: {
       guion: [
         { accion: "Señalar la línea discontinua roja." },
-        "Este es el resultado principal. La línea discontinua es la barra: 49,04 víctimas por día de error.",
-        "Los cinco modelos quedan muy por debajo. SARIMA, ETS y los dos árboles, entre 32,72 y 34,22: entre un 30 y un 33 % menos. La regresión lineal, 36,31: un 26 % menos.",
-        { accion: "Señalar la columna p de la tabla." },
-        "La columna p es la prueba de Diebold-Mariano, que compara día a día los errores de cada modelo con los de la barra. En los cinco la diferencia es muy significativa. En términos prácticos, el error es de alrededor del 10 % del valor diario, frente al 14 % de la barra.",
+        "Gracias, Sara. La línea discontinua es la barra: 49,04. Los cinco modelos quedan muy por debajo. SARIMA, ETS y los árboles, entre 32,72 y 34,22: entre un 30 y un 33 % menos. La regresión, 36,31: un 26 % menos.",
+        "La prueba de Diebold-Mariano confirma que la diferencia con la barra es significativa en los cinco. El error queda en torno al 10 % del valor diario.",
       ],
       enfatizar: [
         "La evaluación final se calculó una sola vez, después de elegir todo con los pliegues.",
         "El MASE menor que 1 significa que el modelo se equivoca menos que repetir la semana anterior.",
       ],
-      transicion: "Veamos qué significa eso día a día.",
+      transicion: "¿Y si la ventana hubiera sido otra?",
       preguntas: [
         {
           pregunta: "¿Qué es exactamente la prueba de Diebold-Mariano?",
@@ -454,6 +452,7 @@ export const RESULTADOS: Diapositiva[] = [
   },
   {
     id: "pronostico",
+    anexo: true,
     seccion: "Resultados",
     titulo: "Pronóstico frente a observado",
     expone: "Juan Diego",
@@ -467,7 +466,7 @@ export const RESULTADOS: Diapositiva[] = [
         { accion: "Clic en «Gradiente por histogramas» para volver." },
       ],
       enfatizar: ["Mostrar ETS en un festivo: el modelo no baja, porque no sabe que es festivo."],
-      transicion: "Pero una sola ventana podría engañar. ¿Qué pasa en otras?",
+      transicion: "",
     },
   },
   {
@@ -478,15 +477,13 @@ export const RESULTADOS: Diapositiva[] = [
     Contenido: Pliegues,
     notas: {
       guion: [
-        "Por eso repetimos la comparación en los seis pliegues de validación.",
-        { accion: "Señalar la línea gris punteada de la barra." },
-        "Los cinco modelos le ganan a la barra en los seis. Su peor pliegue, entre 35 y 45, queda muy por debajo del peor de la barra, 75,57. Y varían mucho menos: su desviación va de 4 a 7,5, frente a 14 de la barra.",
-        "El quinto pliegue, de noviembre a enero, es difícil para todos: los festivos de fin de año rompen el ciclo semanal. Y el orden de los modelos cambia entre los pliegues y la evaluación final: otra razón para no hablar de un ganador.",
+        { accion: "Señalar la línea gris de la barra." },
+        "Los cinco modelos le ganan a la barra en los seis pliegues, y su peor pliegue queda muy por debajo del peor de la barra. La mejora no depende de una ventana concreta.",
       ],
       enfatizar: [
         "El orden de los modelos cambia entre pliegues y evaluación: otra razón para no hablar de un ganador.",
       ],
-      transicion: "Precisamente: ¿hay un modelo ganador?",
+      transicion: "Pero, ¿hay un modelo ganador?",
     },
   },
   {
@@ -497,14 +494,12 @@ export const RESULTADOS: Diapositiva[] = [
     Contenido: SinGanador,
     notas: {
       guion: [
-        "Esta matriz compara los modelos entre sí. Cada celda es el valor p de la prueba de Diebold-Mariano para ese par.",
-        "Entre los cuatro primeros, los valores van de 0,17 a 0,91: ninguna diferencia es significativa.",
+        "No. Entre los cuatro mejores, la prueba de Diebold-Mariano da valores p entre 0,17 y 0,91.",
         { accion: "Señalar la celda roja." },
-        "La única en rojo es gradiente contra regresión: 0,023. Pero con Newey-West, que corrige la correlación entre días seguidos, sube a 0,073, y son diez comparaciones sin corregir.",
-        "Así que la conclusión honesta es que con estos 184 días no hay un ganador. Lo que sí se sostiene es que los cinco superan la barra.",
+        "La única diferencia es gradiente contra regresión, 0,023, y deja de ser significativa al corregir la autocorrelación: 0,073. Lo sólido es que todos superan la barra.",
       ],
       enfatizar: ["Lo robusto no es el orden entre modelos, sino que todos superan la barra."],
-      transicion: "Hay un tipo de día, eso sí, en el que los modelos se separan.",
+      transicion: "¿En qué se apoyan para pronosticar?",
       preguntas: [
         {
           pregunta: "Entonces, ¿qué modelo recomendarían?",
@@ -515,6 +510,7 @@ export const RESULTADOS: Diapositiva[] = [
   },
   {
     id: "festivos",
+    anexo: true,
     seccion: "Resultados",
     titulo: "Errores en festivos",
     expone: "Juan Diego",
@@ -527,7 +523,7 @@ export const RESULTADOS: Diapositiva[] = [
         "Los árboles, que sí tienen la variable de festivo, bajan ese error a 37 y 43, aunque se pasan al otro lado y subestiman. Con solo ocho festivos la magnitud es imprecisa, pero el signo es claro y coincide con lo que ve cada modelo.",
       ],
       enfatizar: ["Con solo ocho festivos la magnitud es imprecisa, pero el signo es claro y coincide con la estructura de cada modelo."],
-      transicion: "¿Y en qué se apoyan los modelos para pronosticar?",
+      transicion: "",
     },
   },
   {
@@ -538,18 +534,15 @@ export const RESULTADOS: Diapositiva[] = [
     Contenido: Interpretacion,
     notas: {
       guion: [
-        "Para los árboles medimos la importancia por permutación: desordenamos un grupo de variables entre los días y medimos cuánto sube el error. Si no sube, el modelo no dependía de ese grupo.",
         { accion: "Señalar las tres primeras barras." },
-        "Tres hallazgos. El ciclo semanal es la señal principal: el gradiente la toma del día de la semana y el bosque, de los rezagos semanales. El día anterior pesa igual, porque recoge el nivel reciente. Y los festivos pesan aunque sean 8 de 184 días.",
-        { accion: "Señalar la tabla de la derecha." },
-        "A la derecha comprobamos el sentido. Si marcamos un lunes laborable como festivo, el gradiente baja su pronóstico un 37,3 %, casi exactamente el 37,8 % que medimos en el análisis exploratorio.",
-        "Una aclaración importante: esto describe de qué depende el pronóstico, no qué causa el hurto.",
+        "Al desordenar cada grupo de variables, el error sube sobre todo con el día anterior, que recoge el nivel reciente, y con el ciclo semanal. Los festivos también pesan.",
+        "Y al marcar un lunes como festivo, el gradiente baja su pronóstico un 37,3 %, casi el 37,8 % del análisis exploratorio. Esto describe dependencia, no causa.",
       ],
       enfatizar: [
         "Importancia no es causa: que el modelo use el día anterior no significa que un día con muchos hurtos provoque otro.",
         "El indicador de 2020 da cero por construcción: en la evaluación vale cero en todos los días.",
       ],
-      transicion: "Todo esto tiene límites que queremos decir con claridad.",
+      transicion: "Esto tiene límites claros.",
       preguntas: [
         {
           pregunta: "¿Por qué agrupar las variables al permutar?",

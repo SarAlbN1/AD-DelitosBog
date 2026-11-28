@@ -26,6 +26,10 @@ export interface Diapositiva {
   seccion: string;
   /** Título corto, para el índice y el pie. */
   titulo: string;
+  /** Diapositiva de respaldo: va después de «Preguntas», no se expone y no cuenta en el tiempo. */
+  anexo?: boolean;
+  /** Minutos fijos, para lo que no se mide por palabras (la demo en vivo). */
+  minutosFijos?: number;
   /** Quién la expone. */
   expone: "Juan Diego" | "Sara" | "Ambos";
   Contenido: ComponentType;

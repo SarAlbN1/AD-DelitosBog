@@ -1,6 +1,6 @@
 # Presentación de la sustentación final
 
-Presentación de la tercera entrega (#56), hecha en React. Tiene 27 diapositivas de 1920 × 1080 (16:9), notas del expositor y exportación a PDF. Vive en su propia carpeta y no cambia nada del proyecto: solo **lee** `outputs/` y una figura del informe.
+Presentación de la tercera entrega (#56), hecha en React. Está pensada para una sustentación de 15 minutos: 10 de presentación (16 diapositivas) y 5 de demo del tablero de Power BI. Después de «Preguntas» hay 11 diapositivas de anexo, que no se exponen y sirven para responder. Todas miden 1920 × 1080 (16:9) y tienen notas del expositor y exportación a PDF. Vive en su propia carpeta y no cambia nada del proyecto: solo **lee** `outputs/` y una figura del informe.
 
 - **PDF para el profesor:** [`entregables/Presentacion_Proyecto.pdf`](entregables/Presentacion_Proyecto.pdf)
 - **Guion de la exposición**, por bloques, con quién habla, el texto de cada diapositiva y las acotaciones de qué hacer en pantalla: [`GUION.md`](GUION.md) y, para imprimir, [`entregables/Guion_presentacion.pdf`](entregables/Guion_presentacion.pdf)
@@ -48,14 +48,14 @@ Ninguna cifra de las gráficas se escribe a mano.
 
 Como comprobación, el MAE recalculado desde las predicciones de los 184 días coincide con la tabla del informe: 32,72; 32,94; 33,57; 34,22; 36,31; y 49,04 para la barra. El 32,94 es el 32,95 del informe, redondeado desde predicciones con un decimal.
 
-El texto de las diapositivas resume el informe, sección por sección. El mapa de la diapositiva 10 es la figura `Informe/figuras/eda_mapa_tasa.pdf`, convertida a PNG.
+El texto de las diapositivas resume el informe, sección por sección. El mapa de la diapositiva de territorio (anexo) es la figura `Informe/figuras/eda_mapa_tasa.pdf`, convertida a PNG.
 
 ## Estructura
 
 ```text
 presentacion/
 ├── src/
-│   ├── slides/         Diapositivas por bloque (s01_apertura … s06_cierre), cada una con sus notas
+│   ├── slides/         Diapositivas por tema (s01_apertura … s07_powerbi), cada una con sus notas; index.ts fija el orden y el anexo
 │   │                   bloques.ts (quién habla) y duracion.ts (tiempo por palabras)
 │   ├── components/     Presentador, vista de impresión, índice, panel de notas, piezas, fórmula (KaTeX)
 │   │   └── diagramas/  Diagramas en SVG: fuentes, pliegues, fuga de información, flujo del proyecto
@@ -103,6 +103,6 @@ Todas en Windows 11, con Node 24 y Chromium 130 (Playwright 1.48.2):
 
 ## Pendiente
 
-- Confirmar con el profesor la duración y si la presentación se exige. #56 depende de esa confirmación.
-- La duración estimada es de unos 24 minutos, calculada por palabras (135 por minuto) y sin ensayar. Si el límite es de 20, el guion indica qué condensar. El criterio de cierre de #56 es un ensayo con los tiempos medidos.
+- La demo de Power BI recorre las cuatro páginas del rediseño de #159, que todavía no está en `main`.
+- La presentación dura unos 8,75 minutos estimados por palabras (135 por minuto), más 5 de Power BI, y no está ensayada. El generador del guion avisa si pasa de 10. El criterio de cierre de #56 es un ensayo con los tiempos medidos.
 - El reparto entre Juan Diego y Sara es una propuesta por áreas de responsabilidad; está en el campo `expone` de cada diapositiva.

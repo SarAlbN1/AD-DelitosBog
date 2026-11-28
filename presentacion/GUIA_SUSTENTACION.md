@@ -38,7 +38,8 @@ El reparto por bloques y los tiempos están en el «Resumen de quién habla» de
 **Atajos durante la exposición:**
 - → o Espacio avanzan; ← retrocede; **Inicio** y **Fin** van a la primera y la última.
 - **F**: pantalla completa. **N**: notas. **O**: índice, para saltar a una diapositiva durante las preguntas.
-- En la diapositiva 18 hay botones para cambiar el modelo que se superpone a lo observado (gradiente, ETS o regresión).
+- La exposición son las diapositivas 1 a 17. Las 18 a 28 son el anexo: solo se abren si una pregunta lo pide.
+- En la diapositiva 25 (anexo, pronóstico frente a observado) hay botones para cambiar el modelo que se superpone (gradiente, ETS o regresión).
 
 ---
 
@@ -259,7 +260,7 @@ Con las instrucciones de `docs/REPRODUCIBILIDAD.md`: descargar las fuentes, veri
 
 El criterio de aceptación de #56 es un ensayo con los tiempos medidos. Antes de cerrarla:
 
-- [ ] Confirmar con el profesor la duración y si la presentación es obligatoria.
+- [x] Duración confirmada: 15 minutos en total, 10 de presentación y 5 de Power BI.
 - [ ] Ensayar completa con cronómetro y anotar el tiempo real de cada bloque.
 - [ ] Anotar los tiempos medidos en la Parte 3 de `GUION.md` y, si hay que recortar, ajustar el texto de las notas y regenerar el guion (`npm run guion`).
 - [ ] Probar la presentación en el equipo y el proyector de la sustentación, con el PDF como respaldo.

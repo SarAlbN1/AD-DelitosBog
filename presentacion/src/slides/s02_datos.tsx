@@ -304,18 +304,15 @@ export const DATOS: Diapositiva[] = [
     Contenido: Auditoria,
     notas: {
       guion: [
-        "Para la Policía, el embudo arranca con 4,8 millones de filas: todos los delitos del país en los archivos de 2020 a 2025.",
         { accion: "Señalar las barras de arriba abajo." },
-        "Con solo Bogotá quedan 1,4 millones; con solo hurto a personas, 741.986; y en el periodo de la serie, 730.870 víctimas.",
-        { accion: "Señalar el recuadro «Tres advertencias de la auditoría»." },
-        "Lo más llamativo: 713.344 filas son duplicados exactos, y no es un error. El archivo no trae identificador, así que dos víctimas del mismo perfil el mismo día dan filas idénticas. Borrarlas dejaría 28.642 filas.",
-        "Además, noviembre y diciembre de 2025 caen a la mitad sin que lo haga la Línea 123, y por eso se excluyen.",
+        "De 4,8 millones de filas de todo el país quedan 741.986 registros de hurto a personas en Bogotá, que cumplen por sí solos el requisito de 500.000. En el periodo de la serie son 730.870 víctimas.",
+        "Dos advertencias: 713.344 filas son duplicados legítimos, porque el archivo no trae identificador; y noviembre y diciembre de 2025 caen a la mitad, así que se excluyen.",
       ],
       enfatizar: [
         "Contamos filas en una sola unidad de observación: una víctima por fila.",
         "Cada archivo tiene su huella SHA-256 en el apéndice, para que cualquiera compruebe que usa los mismos datos.",
       ],
-      transicion: "Con esos registros construimos la serie diaria. Sara, ¿cómo se comporta?",
+      transicion: "Sara, ¿cómo se comporta la serie?",
       preguntas: [
         {
           pregunta: "¿Cómo saben que los duplicados no son errores?",
@@ -336,16 +333,15 @@ export const DATOS: Diapositiva[] = [
     Contenido: SerieObjetivo,
     notas: {
       guion: [
-        "Gracias, Juan Diego. Esta es la serie que vamos a pronosticar, resumida como la media diaria de víctimas de cada mes. La línea punteada es la media de todo el periodo: 343 víctimas por día.",
+        "Gracias, Juan Diego. Esta es la media diaria de víctimas por mes: 343 de media en todo el periodo.",
         { accion: "Señalar el sombreado de 2020." },
-        "En abril de 2020, con las restricciones de movilidad, la serie cae por debajo de la mitad; ese año tiene una media de 227 víctimas al día. Luego sube hasta el pico de 2023, con 435, baja en 2024 y se recupera en 2025.",
-        "Los modelos tendrán que seguir ese cambio de nivel. A 2020 no lo eliminamos: entra marcado como atípico, y las conclusiones no dependen de él.",
+        "En 2020, con las restricciones de movilidad, la serie cae a la mitad. Luego sube hasta el pico de 2023, con 435 víctimas diarias, y baja en 2024. Los modelos tendrán que seguir ese cambio de nivel; 2020 entra marcado como año atípico.",
       ],
       enfatizar: [
         "2020 no se elimina: entra con un indicador de año atípico y se prueba la sensibilidad sin él.",
         "Con un año truncado se comparan medias diarias, nunca totales.",
       ],
-      transicion: "Dentro de cada semana aparece una regularidad mucho más fuerte.",
+      transicion: "Dentro de cada semana hay una regularidad más fuerte.",
       preguntas: [
         {
           pregunta: "¿Por qué no quitar 2020?",
@@ -362,22 +358,20 @@ export const DATOS: Diapositiva[] = [
     Contenido: Patrones,
     notas: {
       guion: [
-        "El hurto registrado sigue la actividad de la ciudad.",
-        { accion: "Señalar la barra azul del viernes y la roja del domingo." },
-        "El viernes es el día más alto, con 403 víctimas de media, y el domingo el más bajo, con 245: el viernes registra un 65 % más.",
-        { accion: "Señalar el recuadro del festivo." },
-        "Con los festivos hay una trampa. En Colombia muchos festivos se trasladan al lunes, que ya es un día bajo, así que comparar festivo contra no festivo mezclaría los dos efectos. Por eso comparamos lunes con lunes: un lunes festivo registra un 37,8 % menos que uno laborable.",
-        "La estacionalidad por mes existe, pero es mucho más débil. Estas dos señales, el día de la semana y el festivo, son las que después esperamos encontrar dentro de los modelos.",
+        { accion: "Señalar el viernes y el domingo." },
+        "El viernes registra un 65 % más víctimas que el domingo: el hurto registrado acompaña la actividad de la ciudad.",
+        "Y un lunes festivo registra un 37,8 % menos que un lunes laborable. Comparamos lunes con lunes porque muchos festivos se trasladan al lunes. Estas son las dos señales que esperamos ver dentro de los modelos.",
       ],
       enfatizar: [
         "El festivo es una variable que se conoce con años de antelación: no hay riesgo de fuga al usarla.",
         "Estas dos señales son la hipótesis que después contrastamos con lo que aprendieron los modelos.",
       ],
-      transicion: "Ahora pongamos las tres fuentes una al lado de la otra.",
+      transicion: "¿Cómo evaluamos esos modelos?",
     },
   },
   {
     id: "fuentes",
+    anexo: true,
     seccion: "Análisis exploratorio",
     titulo: "Las fuentes no se suman",
     expone: "Sara",
@@ -392,11 +386,12 @@ export const DATOS: Diapositiva[] = [
         "Esto responde la pregunta complementaria: las fuentes no son intercambiables, y cada una se usa en la resolución que publica.",
       ],
       enfatizar: ["Esto responde la pregunta complementaria: las fuentes no son intercambiables y cada una se usa en su resolución."],
-      transicion: "Lo que sí permite la Línea 123 es mirar el territorio.",
+      transicion: "",
     },
   },
   {
     id: "territorio",
+    anexo: true,
     seccion: "Análisis exploratorio",
     titulo: "Territorio: número frente a tasa",
     expone: "Sara",
@@ -412,7 +407,7 @@ export const DATOS: Diapositiva[] = [
         "La tasa usa población residente y el centro recibe mucha población flotante: la tasa allí está sobrestimada.",
         "Ninguno de los dos órdenes mide peligrosidad ni dice nada de quienes viven en cada localidad.",
       ],
-      transicion: "Hasta aquí la descripción. Ahora, cómo planteamos el pronóstico.",
+      transicion: "",
       preguntas: [
         {
           pregunta: "¿Por qué no modelaron por localidad?",

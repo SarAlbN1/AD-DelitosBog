@@ -230,16 +230,14 @@ export const APERTURA: Diapositiva[] = [
     Contenido: Portada,
     notas: {
       guion: [
-        { accion: "Juan Diego: presentación en pantalla completa (tecla F) en la diapositiva 1." },
-        "Buenos días, profesor. Somos Juan Diego Rojas y Sara Albarracín, y venimos a presentar la tercera entrega del proyecto de Analítica de Datos.",
-        "Queremos saber si la historia del hurto a personas en Bogotá permite anticipar cuántas víctimas registrará la Policía al día siguiente, mejor que una regla sencilla.",
-        "Trabajamos con 730.870 víctimas registradas en 2.131 días, de enero de 2020 a octubre de 2025.",
+        { accion: "Juan Diego: pantalla completa (tecla F) en la diapositiva 1." },
+        "Buenos días, profesor. Somos Juan Diego Rojas y Sara Albarracín. En diez minutos les contamos si la historia del hurto a personas en Bogotá permite anticipar cuántas víctimas registrará la Policía mañana, y después Sara les muestra el tablero de Power BI.",
       ],
       enfatizar: [
         "Se pronostica el registro de la Policía, no el hurto ocurrido.",
         "La serie termina el 31 de octubre de 2025, y más adelante explicamos por qué.",
       ],
-      transicion: "Antes de hablar de modelos, hay que entender de dónde salen esos datos.",
+      transicion: "Empiezo por la pregunta.",
     },
   },
   {
@@ -250,18 +248,14 @@ export const APERTURA: Diapositiva[] = [
     Contenido: Contexto,
     notas: {
       guion: [
-        "En Bogotá hay tres fuentes oficiales y públicas sobre hurto, y cada una cuenta una cosa distinta.",
-        { accion: "Señalar la tarjeta de la Policía." },
-        "La Policía publica una fila por víctima con la fecha del hecho, pero sin la localidad. Es la única fuente diaria, y sus 741.986 registros cumplen por sí solos el requisito de 500.000.",
-        { accion: "Señalar las tarjetas de la Línea 123 y de la Fiscalía." },
-        "La Línea 123 publica llamadas mensuales por localidad: permite mirar el territorio, pero mide demanda de atención, no hechos. Y la Fiscalía publica pares proceso–delito, donde un proceso puede repetirse.",
-        "Por eso las tres fuentes se comparan, pero nunca se suman: sumarlas contaría varias veces el mismo hecho.",
+        "Hay tres fuentes oficiales, y cada una cuenta algo distinto. La Policía publica una víctima por fila, con la fecha del hecho pero sin localidad. La Línea 123 cuenta llamadas por localidad, y la Fiscalía, procesos judiciales.",
+        "Por eso se comparan, pero nunca se suman. La Policía es la fuente principal: es la única diaria.",
       ],
       enfatizar: [
         "Sumar las tres fuentes contaría varias veces el mismo hecho: se comparan en la escala común, mes por Bogotá, pero no se suman.",
         "Ninguna combinación de fuentes permite construir una serie diaria por localidad.",
       ],
-      transicion: "Con esa restricción, la pregunta del proyecto queda así.",
+      transicion: "Y estos son sus números.",
       preguntas: [
         {
           pregunta: "¿Por qué no cruzar la Línea 123 con la Policía para tener localidad?",
@@ -282,16 +276,15 @@ export const APERTURA: Diapositiva[] = [
     Contenido: Problema,
     notas: {
       guion: [
-        "Nuestra pregunta principal tiene dos partes: identificar los patrones temporales del hurto y pronosticar el número diario de víctimas registradas con menos error que una línea base ingenua.",
-        "La pregunta complementaria es sobre las fuentes: qué diferencias de cobertura y de registro impiden compararlas directamente.",
+        "La pregunta tiene dos partes: identificar los patrones temporales del hurto y pronosticar las víctimas del día siguiente con menos error que una regla ingenua.",
         { accion: "Señalar los tres recuadros de la derecha." },
-        "Tres precisiones. Pronosticamos cuántas víctimas registrará la Policía mañana en toda la ciudad, con lo que se sabe hoy. No pronosticamos el hurto ocurrido: el que no se denuncia no está en la serie. Y un modelo solo aporta si se equivoca menos que repetir el mismo día de la semana anterior.",
+        "Tres precisiones: pronosticamos el registro de la Policía para toda la ciudad, no el hurto ocurrido; usamos solo lo que se sabe al cerrar el día; y un modelo solo aporta si se equivoca menos que repetir el mismo día de la semana anterior.",
       ],
       enfatizar: [
         "Un pronóstico de un día, de toda la ciudad, con la información disponible al cerrar el día anterior.",
         "La línea base no se elige a conveniencia: es el mejor de cuatro comparadores triviales.",
       ],
-      transicion: "¿Por qué vale la pena responder esto, y hasta dónde llega?",
+      transicion: "¿De dónde salen los datos?",
       preguntas: [
         {
           pregunta: "¿Por qué un horizonte de un solo día?",
@@ -302,6 +295,7 @@ export const APERTURA: Diapositiva[] = [
   },
   {
     id: "justificacion",
+    anexo: true,
     seccion: "Justificación",
     titulo: "Justificación y alcance",
     expone: "Juan Diego",
@@ -314,11 +308,12 @@ export const APERTURA: Diapositiva[] = [
         "Un buen resultado estadístico no es evidencia causal ni justifica decisiones sobre comunidades concretas.",
       ],
       enfatizar: ["Las importancias de los modelos describen de qué información depende el pronóstico, no qué causa el hurto."],
-      transicion: "Con ese alcance planteamos cinco objetivos específicos.",
+      transicion: "",
     },
   },
   {
     id: "objetivos",
+    anexo: true,
     seccion: "Objetivos",
     titulo: "Objetivos",
     expone: "Juan Diego",
@@ -330,7 +325,7 @@ export const APERTURA: Diapositiva[] = [
         "Los cinco están cumplidos, y a la derecha está la evidencia de cada uno. Hay dos matices que decimos de entrada: la serie se cortó en octubre de 2025 y la evaluación no incluye intervalos de predicción.",
       ],
       enfatizar: ["Cada cifra de esta presentación sale de un archivo de outputs/ producido por un script."],
-      transicion: "Empiezo por el primero: la auditoría de los datos.",
+      transicion: "",
       preguntas: [
         {
           pregunta: "¿Por qué no hay intervalos de predicción?",

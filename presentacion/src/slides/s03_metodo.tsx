@@ -221,6 +221,7 @@ function Modelos() {
 export const METODO: Diapositiva[] = [
   {
     id: "fundamentos",
+    anexo: true,
     seccion: "Fundamentos",
     titulo: "Pronóstico de un paso y fuga",
     expone: "Sara",
@@ -234,7 +235,7 @@ export const METODO: Diapositiva[] = [
         "Aquí no sirve barajar los datos: cada día de prueba quedaría rodeado de días de entrenamiento y, con rezagos, el modelo vería la respuesta. Por eso usamos origen rodante: se entrena con el pasado y se predice lo que sigue. Una prueba automática altera el futuro y exige que el pronóstico no cambie.",
       ],
       enfatizar: ["La fuga de información es el error más común en series de tiempo; aquí está bloqueada por diseño y por prueba."],
-      transicion: "Así se organiza esa validación en el tiempo.",
+      transicion: "",
       preguntas: [
         {
           pregunta: "Si el modelo ve la serie completa, ¿cómo saben que no hace trampa?",
@@ -251,16 +252,15 @@ export const METODO: Diapositiva[] = [
     Contenido: Validacion,
     notas: {
       guion: [
-        "Los datos hasta el 30 de abril de 2025 son el entrenamiento. Los 184 días siguientes, de mayo a octubre, son la evaluación final: la barra roja.",
-        { accion: "Recorrer los pliegues de arriba abajo." },
-        "Dentro del entrenamiento hay seis pliegues de 90 días. Cada uno entrena con todo lo anterior y evalúa los 90 días siguientes, y el entrenamiento crece de pliegue en pliegue.",
-        "Todos los hiperparámetros se eligen con el error en esas 540 fechas. La evaluación final se calcula una sola vez, al final, y no interviene en ninguna decisión. Así evitamos ajustar los modelos a la ventana con la que los juzgamos.",
+        "No barajamos los datos: con rezagos, el modelo vería la respuesta. Entrenamos con el pasado y predecimos lo que sigue.",
+        { accion: "Señalar los pliegues y luego la barra roja." },
+        "Los hiperparámetros se eligen en seis pliegues de 90 días dentro del entrenamiento. Los últimos 184 días, de mayo a octubre de 2025, son la evaluación final, y se calcula una sola vez.",
       ],
       enfatizar: [
         "Separar elección y evaluación evita sobreajustar a la ventana de evaluación.",
         "Los pliegues además muestran la variabilidad: un buen resultado en una sola ventana no basta.",
       ],
-      transicion: "¿Con qué medimos el error, y contra qué?",
+      transicion: "¿Y contra qué medimos el error?",
       preguntas: [
         {
           pregunta: "¿Por qué 90 días por pliegue y seis pliegues?",
@@ -277,15 +277,15 @@ export const METODO: Diapositiva[] = [
     Contenido: Metricas,
     notas: {
       guion: [
-        "La métrica principal es el MAE: cuántas víctimas por día se equivoca el modelo. El RMSE castiga más los errores grandes, y un MASE menor que 1 significa que el modelo mejora al ingenuo estacional.",
-        { accion: "Señalar la tabla de comparadores y su fila resaltada." },
-        "La barra no la elegimos a conveniencia: es el mejor de cuatro comparadores triviales en la misma evaluación. Ganó el ingenuo estacional, que repite el valor de hace una semana, con un MAE de 49,04 víctimas por día. Esa es la cifra que hay que batir.",
+        "La métrica principal es el MAE: cuántas víctimas por día se equivoca el modelo.",
+        { accion: "Señalar la fila resaltada de la tabla." },
+        "La barra es el mejor de cuatro comparadores triviales: el ingenuo estacional, que repite el valor de hace una semana, con 49,04 víctimas por día. Esa es la cifra que hay que batir.",
       ],
       enfatizar: [
         "La barra es el mejor comparador en el mismo conjunto de evaluación, no uno elegido de antemano.",
         "El MAPE no decide: no está acotado por arriba y castiga más la sobreestimación.",
       ],
-      transicion: "Y estos son los cinco modelos que compiten contra ella.",
+      transicion: "Estos son los cinco modelos que compiten.",
       preguntas: [
         {
           pregunta: "¿No es injusto elegir la barra mirando la evaluación?",
@@ -302,15 +302,11 @@ export const METODO: Diapositiva[] = [
     Contenido: Modelos,
     notas: {
       guion: [
-        "Los ordenamos de menor a mayor capacidad, para ver qué aporta cada salto.",
-        "SARIMA y ETS modelan la propia serie: representan el ciclo semanal, pero no ven el calendario, así que para ellos un festivo es un día normal.",
-        "La regresión lineal usa las 21 predictoras con una penalización ridge. Es el modelo transparente: cada coeficiente se lee en víctimas.",
-        "El bosque aleatorio promedia 300 árboles, y el gradiente por histogramas encadena árboles que corrigen el error de los anteriores. Los dos captan interacciones sin que tengamos que escribirlas.",
-        { accion: "Señalar la última columna." },
-        "Todos se eligieron en los pliegues y se evalúan con la misma función: mismos días, mismas métricas y misma barra.",
+        "SARIMA y ETS modelan la propia serie, con su ciclo semanal, pero no ven el calendario. La regresión lineal, el bosque aleatorio y el gradiente por histogramas usan 21 predictoras: rezagos, día de la semana, festivos y calendario.",
+        "Todos se eligen en los pliegues y se evalúan en los mismos días, contra la misma barra.",
       ],
       enfatizar: ["Todos pasan por la misma función de evaluación: mismos días, mismas métricas, misma barra."],
-      transicion: "Juan Diego nos muestra ahora cómo está construido todo esto.",
+      transicion: "Juan Diego, ¿qué resultados dieron?",
       preguntas: [
         {
           pregunta: "¿Por qué no usaron redes neuronales o Prophet?",

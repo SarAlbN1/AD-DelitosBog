@@ -17,6 +17,7 @@ export function acentoDe(seccion: string): string {
   if (/(fundamentos|metodología|modelos)/.test(s)) return "#9cc3f0";
   if (/(arquitectura|decisiones)/.test(s)) return "#c4a8f0";
   if (/(resultados|validación|interpretación)/.test(s)) return "#f28c5e";
+  if (/(tablero|power bi)/.test(s)) return "#f7d154";
   return "#e8d27a";
 }
 
@@ -25,8 +26,9 @@ export function acentoDe(seccion: string): string {
  * sobre papel cálido y pie numerado. El área de contenido mide 1760 px de ancho.
  */
 export function Marco({ seccion, titulo, mensaje, children }: Props) {
-  const { numero, total } = usePosicion();
+  const { numero, total, anexo } = usePosicion();
   const acento = acentoDe(seccion);
+  const etiqueta = anexo ? `Anexo · ${seccion}` : seccion;
   return (
     <div className="lienzo flex flex-col">
       <header className="relative overflow-hidden bg-[#14325c] px-20 pt-12 pb-9 text-white">
@@ -41,7 +43,7 @@ export function Marco({ seccion, titulo, mensaje, children }: Props) {
         </svg>
         <div className="relative flex items-center gap-4 text-[18px] font-semibold uppercase tracking-[0.16em]" style={{ color: acento }}>
           <span className="h-[3px] w-10" style={{ background: acento }} />
-          {seccion}
+          {etiqueta}
           <span className="ml-auto tabular text-white/55">
             {String(numero).padStart(2, "0")} / {total}
           </span>

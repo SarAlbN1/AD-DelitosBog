@@ -88,6 +88,7 @@ function Decisiones() {
 export const IMPLEMENTACION: Diapositiva[] = [
   {
     id: "arquitectura",
+    anexo: true,
     seccion: "Implementación",
     titulo: "Arquitectura y reproducibilidad",
     expone: "Juan Diego",
@@ -102,7 +103,7 @@ export const IMPLEMENTACION: Diapositiva[] = [
       enfatizar: [
         "Antes de escribir sus tablas, comparacion.py recalcula cada métrica desde las predicciones guardadas y se detiene si alguna no coincide: así se cotejaron 616 cifras.",
       ],
-      transicion: "Detrás de esto hay decisiones que conviene justificar.",
+      transicion: "",
       preguntas: [
         {
           pregunta: "Si las cifras cambian entre sistemas, ¿son fiables?",
@@ -113,6 +114,7 @@ export const IMPLEMENTACION: Diapositiva[] = [
   },
   {
     id: "decisiones",
+    anexo: true,
     seccion: "Decisiones",
     titulo: "Decisiones y justificaciones",
     expone: "Juan Diego",
@@ -125,7 +127,7 @@ export const IMPLEMENTACION: Diapositiva[] = [
         "Y en la interpretación permutamos grupos de variables, porque los rezagos de 7 y 14 días se suplen entre sí.",
       ],
       enfatizar: ["Ninguna decisión se tomó después de ver la evaluación final."],
-      transicion: "Con todo esto fijado, vamos a los resultados.",
+      transicion: "",
       preguntas: [
         {
           pregunta: "¿No habría sido mejor usar 2018–2025 para tener más datos?",

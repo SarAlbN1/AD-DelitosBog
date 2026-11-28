@@ -64,9 +64,9 @@ async function main(): Promise<void> {
     await p.getByRole("button", { name: "Primera diapositiva (Inicio)" }).click();
     comprobar((await contador(p)) === `1 / ${total}`, "botón Primera");
 
-    await p.goto(`${URL_BASE}#/17`, { waitUntil: "networkidle" });
+    await p.goto(`${URL_BASE}#/10`, { waitUntil: "networkidle" });
     await p.reload({ waitUntil: "networkidle" });
-    comprobar((await contador(p)) === `17 / ${total}`, "al recargar con #/17 abre la diapositiva 17");
+    comprobar((await contador(p)) === `10 / ${total}`, "al recargar con #/10 abre la diapositiva 10");
     await p.waitForTimeout(1200);
     await p.screenshot({ path: resolve(CAPTURAS, "modo-presentacion.png") });
 
@@ -82,9 +82,9 @@ async function main(): Promise<void> {
     await p.waitForTimeout(400);
     await p.screenshot({ path: resolve(CAPTURAS, "indice.png") });
     await p.keyboard.press("ArrowRight");
-    comprobar((await contador(p)) === `17 / ${total}`, "con el índice abierto, las flechas no navegan");
+    comprobar((await contador(p)) === `10 / ${total}`, "con el índice abierto, las flechas no navegan");
     await p.locator("button", { hasText: "Diebold-Mariano entre modelos" }).click();
-    comprobar((await contador(p)) === `20 / ${total}`, "clic en una miniatura va a esa diapositiva y cierra el índice");
+    comprobar((await contador(p)) === `12 / ${total}`, "clic en una miniatura va a esa diapositiva y cierra el índice");
 
     // La vista de impresión no lleva controles ni notas.
     const imp = await navegador.newPage({ viewport: { width: 1920, height: 1080 } });
