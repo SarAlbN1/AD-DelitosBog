@@ -58,7 +58,7 @@ docker run --rm --platform linux/amd64 -v "$PWD:/repo" -e AD_COMMIT=$(git rev-pa
 
 - **Página del dataset:** https://datosabiertos.bogota.gov.co/dataset/incidentes
 - **Recurso principal:** `30d65a8b-d0ed-4e95-977e-0d7cc2ea89ef`, «Llamadas Tramitadas C4 Bogotá NUSE Línea 123 enero 2015 – septiembre 2026». Su última modificación en el portal fue el 2026-10-22.
-- **Descarga usada:** 2026-11-11.
+- **Descarga usada:** 2026-11-09.
 
 ```bash
 mkdir -p data/raw/linea123 && cd data/raw/linea123
