@@ -1,0 +1,363 @@
+{
+ "tabla": [
+  {
+   "id": "gradiente_histogramas",
+   "nombre": "Gradiente por histogramas",
+   "familia": "arboles",
+   "MAE": 32.72,
+   "RMSE": 42.39,
+   "MAPE": 9.68,
+   "MASE": 0.615,
+   "delta_pct": -33.3,
+   "p": 2.23e-09,
+   "mae_medio_pliegues": 30.82,
+   "desv_pliegues": 4.34,
+   "peor_pliegue": 35.49,
+   "pliegues_ganados": 6
+  },
+  {
+   "id": "ets",
+   "nombre": "ETS",
+   "familia": "estadistico",
+   "MAE": 32.95,
+   "RMSE": 42.21,
+   "MAPE": 9.5,
+   "MASE": 0.619,
+   "delta_pct": -32.8,
+   "p": 2.2e-09,
+   "mae_medio_pliegues": 36.04,
+   "desv_pliegues": 5.89,
+   "peor_pliegue": 44.61,
+   "pliegues_ganados": 6
+  },
+  {
+   "id": "sarima",
+   "nombre": "SARIMA",
+   "familia": "estadistico",
+   "MAE": 33.57,
+   "RMSE": 42.97,
+   "MAPE": 9.8,
+   "MASE": 0.631,
+   "delta_pct": -31.5,
+   "p": 1.01e-09,
+   "mae_medio_pliegues": 36.11,
+   "desv_pliegues": 5.6,
+   "peor_pliegue": 42.58,
+   "pliegues_ganados": 6
+  },
+  {
+   "id": "bosque_aleatorio",
+   "nombre": "Bosque aleatorio",
+   "familia": "arboles",
+   "MAE": 34.22,
+   "RMSE": 42.69,
+   "MAPE": 9.86,
+   "MASE": 0.643,
+   "delta_pct": -30.2,
+   "p": 2.26e-08,
+   "mae_medio_pliegues": 34.89,
+   "desv_pliegues": 7.46,
+   "peor_pliegue": 43.12,
+   "pliegues_ganados": 6
+  },
+  {
+   "id": "regresion_lineal",
+   "nombre": "Regresión lineal",
+   "familia": "regresion",
+   "MAE": 36.31,
+   "RMSE": 46.54,
+   "MAPE": 10.47,
+   "MASE": 0.683,
+   "delta_pct": -26.0,
+   "p": 6.75e-06,
+   "mae_medio_pliegues": 34.57,
+   "desv_pliegues": 5.02,
+   "peor_pliegue": 41.27,
+   "pliegues_ganados": 6
+  },
+  {
+   "id": "ingenuo_estacional",
+   "nombre": "Ingenuo estacional (barra)",
+   "familia": "comparador",
+   "MAE": 49.04,
+   "RMSE": 61.44,
+   "MAPE": 14.39,
+   "MASE": 0.922,
+   "delta_pct": 0.0,
+   "p": null,
+   "mae_medio_pliegues": 58.3,
+   "desv_pliegues": 14.11,
+   "peor_pliegue": 75.57,
+   "pliegues_ganados": null
+  },
+  {
+   "id": "media_movil_7",
+   "nombre": "Media móvil de 7 días",
+   "familia": "comparador",
+   "MAE": 49.42,
+   "RMSE": 61.86,
+   "MAPE": 14.59,
+   "MASE": 0.929,
+   "delta_pct": 0.8,
+   "p": 0.908,
+   "mae_medio_pliegues": 58.78,
+   "desv_pliegues": 11.52,
+   "peor_pliegue": 76.38,
+   "pliegues_ganados": null
+  },
+  {
+   "id": "ingenuo",
+   "nombre": "Ingenuo",
+   "familia": "comparador",
+   "MAE": 52.92,
+   "RMSE": 68.41,
+   "MAPE": 15.62,
+   "MASE": 0.995,
+   "delta_pct": 7.9,
+   "p": 0.349,
+   "mae_medio_pliegues": 58.36,
+   "desv_pliegues": 9.37,
+   "peor_pliegue": 75.48,
+   "pliegues_ganados": null
+  },
+  {
+   "id": "media_movil_28",
+   "nombre": "Media móvil de 28 días",
+   "familia": "comparador",
+   "MAE": 55.83,
+   "RMSE": 70.72,
+   "MAPE": 16.75,
+   "MASE": 1.05,
+   "delta_pct": 13.8,
+   "p": 0.0481,
+   "mae_medio_pliegues": 65.12,
+   "desv_pliegues": 14.03,
+   "peor_pliegue": 82.0,
+   "pliegues_ganados": null
+  }
+ ],
+ "pliegues": [
+  {
+   "pliegue": 1,
+   "gradiente_histogramas": 35.49,
+   "ets": 44.61,
+   "sarima": 42.58,
+   "bosque_aleatorio": 43.12,
+   "regresion_lineal": 41.27,
+   "barra": 75.57
+  },
+  {
+   "pliegue": 2,
+   "gradiente_histogramas": 34.52,
+   "ets": 32.12,
+   "sarima": 36.18,
+   "bosque_aleatorio": 37.02,
+   "regresion_lineal": 35.03,
+   "barra": 58.27
+  },
+  {
+   "pliegue": 3,
+   "gradiente_histogramas": 26.17,
+   "ets": 31.38,
+   "sarima": 30.41,
+   "bosque_aleatorio": 27.75,
+   "regresion_lineal": 32.39,
+   "barra": 40.5
+  },
+  {
+   "pliegue": 4,
+   "gradiente_histogramas": 25.12,
+   "ets": 29.68,
+   "sarima": 28.44,
+   "bosque_aleatorio": 24.75,
+   "regresion_lineal": 26.81,
+   "barra": 43.09
+  },
+  {
+   "pliegue": 5,
+   "gradiente_histogramas": 32.95,
+   "ets": 38.14,
+   "sarima": 39.22,
+   "bosque_aleatorio": 42.11,
+   "regresion_lineal": 38.43,
+   "barra": 69.68
+  },
+  {
+   "pliegue": 6,
+   "gradiente_histogramas": 30.68,
+   "ets": 40.28,
+   "sarima": 39.84,
+   "bosque_aleatorio": 34.61,
+   "regresion_lineal": 33.48,
+   "barra": 62.71
+  }
+ ],
+ "comparadores_pliegues": [
+  {
+   "fin_entrenamiento": "2023-11-07",
+   "fin_evaluacion": "2024-02-05",
+   "dias_entrenamiento": 1407,
+   "dias_evaluacion": 90,
+   "ingenuo": 75.48,
+   "ingenuo_estacional": 75.57,
+   "media_movil_7": 76.38,
+   "media_movil_28": 82.0
+  },
+  {
+   "fin_entrenamiento": "2024-02-05",
+   "fin_evaluacion": "2024-05-05",
+   "dias_entrenamiento": 1497,
+   "dias_evaluacion": 90,
+   "ingenuo": 54.83,
+   "ingenuo_estacional": 58.27,
+   "media_movil_7": 55.57,
+   "media_movil_28": 62.6
+  },
+  {
+   "fin_entrenamiento": "2024-05-05",
+   "fin_evaluacion": "2024-08-03",
+   "dias_entrenamiento": 1587,
+   "dias_evaluacion": 90,
+   "ingenuo": 49.87,
+   "ingenuo_estacional": 40.5,
+   "media_movil_7": 45.0,
+   "media_movil_28": 47.17
+  },
+  {
+   "fin_entrenamiento": "2024-08-03",
+   "fin_evaluacion": "2024-11-01",
+   "dias_entrenamiento": 1677,
+   "dias_evaluacion": 90,
+   "ingenuo": 54.93,
+   "ingenuo_estacional": 43.09,
+   "media_movil_7": 50.59,
+   "media_movil_28": 51.3
+  },
+  {
+   "fin_entrenamiento": "2024-11-01",
+   "fin_evaluacion": "2025-01-30",
+   "dias_entrenamiento": 1767,
+   "dias_evaluacion": 90,
+   "ingenuo": 52.63,
+   "ingenuo_estacional": 69.68,
+   "media_movil_7": 57.19,
+   "media_movil_28": 77.52
+  },
+  {
+   "fin_entrenamiento": "2025-01-30",
+   "fin_evaluacion": "2025-04-30",
+   "dias_entrenamiento": 1857,
+   "dias_evaluacion": 90,
+   "ingenuo": 62.43,
+   "ingenuo_estacional": 62.71,
+   "media_movil_7": 67.97,
+   "media_movil_28": 70.15
+  }
+ ],
+ "dm": [
+  {
+   "a": "gradiente_histogramas (#45)",
+   "b": "ets (#45)",
+   "p_hln": 0.912,
+   "p_nw": 0.936
+  },
+  {
+   "a": "gradiente_histogramas (#45)",
+   "b": "sarima (#45)",
+   "p_hln": 0.649,
+   "p_nw": 0.725
+  },
+  {
+   "a": "gradiente_histogramas (#45)",
+   "b": "bosque_aleatorio (#45)",
+   "p_hln": 0.167,
+   "p_nw": 0.136
+  },
+  {
+   "a": "gradiente_histogramas (#45)",
+   "b": "regresion_lineal (#144)",
+   "p_hln": 0.0225,
+   "p_nw": 0.0727
+  },
+  {
+   "a": "ets (#45)",
+   "b": "sarima (#45)",
+   "p_hln": 0.49,
+   "p_nw": 0.506
+  },
+  {
+   "a": "ets (#45)",
+   "b": "bosque_aleatorio (#45)",
+   "p_hln": 0.467,
+   "p_nw": 0.554
+  },
+  {
+   "a": "ets (#45)",
+   "b": "regresion_lineal (#144)",
+   "p_hln": 0.117,
+   "p_nw": 0.19
+  },
+  {
+   "a": "sarima (#45)",
+   "b": "bosque_aleatorio (#45)",
+   "p_hln": 0.684,
+   "p_nw": 0.72
+  },
+  {
+   "a": "sarima (#45)",
+   "b": "regresion_lineal (#144)",
+   "p_hln": 0.161,
+   "p_nw": 0.224
+  },
+  {
+   "a": "bosque_aleatorio (#45)",
+   "b": "regresion_lineal (#144)",
+   "p_hln": 0.176,
+   "p_nw": 0.225
+  }
+ ],
+ "festivos": [
+  {
+   "nombre": "Gradiente por histogramas",
+   "mae_festivo": 42.73,
+   "sesgo_festivo": -24.34,
+   "mae_no_festivo": 32.26,
+   "sesgo_no_festivo": 9.78
+  },
+  {
+   "nombre": "ETS",
+   "mae_festivo": 68.81,
+   "sesgo_festivo": 55.67,
+   "mae_no_festivo": 31.32,
+   "sesgo_no_festivo": -0.49
+  },
+  {
+   "nombre": "SARIMA",
+   "mae_festivo": 72.41,
+   "sesgo_festivo": 58.73,
+   "mae_no_festivo": 31.81,
+   "sesgo_no_festivo": -0.76
+  },
+  {
+   "nombre": "Bosque aleatorio",
+   "mae_festivo": 36.68,
+   "sesgo_festivo": -11.76,
+   "mae_no_festivo": 34.11,
+   "sesgo_no_festivo": 2.93
+  },
+  {
+   "nombre": "Regresión lineal",
+   "mae_festivo": 54.51,
+   "sesgo_festivo": -30.7,
+   "mae_no_festivo": 35.48,
+   "sesgo_no_festivo": 10.55
+  },
+  {
+   "nombre": "Ingenuo estacional (barra)",
+   "mae_festivo": 80.38,
+   "sesgo_festivo": 63.38,
+   "mae_no_festivo": 47.61,
+   "sesgo_no_festivo": 1.66
+  }
+ ]
+}

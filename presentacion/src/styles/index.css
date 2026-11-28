@@ -1,0 +1,95 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/source-serif-4";
+@import "@fontsource-variable/jetbrains-mono";
+@import "katex/dist/katex.min.css";
+
+/* Paleta: azul institucional del informe (#174778), tinta y papel cálido. Los colores de los
+   modelos son fijos en toda la presentación (src/data/colores.ts). */
+@theme {
+  --font-sans: "Inter Variable", system-ui, sans-serif;
+  --font-serif: "Source Serif 4 Variable", Georgia, serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  --color-papel: #fbfaf7;
+  --color-tinta: #14213d;
+  --color-gris: #5b6472;
+  --color-suave: #8a919c;
+  --color-linea: #e3e1db;
+  --color-panel: #f3f1ec;
+  --color-azul: #174778;
+  --color-azul-claro: #e8eef6;
+  --color-oxido: #b4441a;
+  --color-oxido-claro: #f8e9e2;
+  --color-verde: #2f7d5b;
+  --color-verde-claro: #e6f1eb;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-tinta);
+  background: #1b2333;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "tnum" 1;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* La diapositiva se diseña a 1920 × 1080 y se escala al tamaño de la ventana. */
+@layer components {
+  .lienzo {
+    width: 1920px;
+    height: 1080px;
+    background: var(--color-papel);
+    position: relative;
+    overflow: hidden;
+  }
+}
+
+.katex {
+  font-size: 1.08em;
+}
+
+/* Impresión: una diapositiva por página, sin controles. */
+@page {
+  size: 1920px 1080px;
+  margin: 0;
+}
+
+@media print {
+  html,
+  body,
+  #root {
+    background: var(--color-papel);
+    height: auto;
+  }
+  .no-imprimir {
+    display: none !important;
+  }
+}
+
+.pagina-impresa {
+  width: 1920px;
+  height: 1080px;
+  break-after: page;
+  page-break-after: always;
+  overflow: hidden;
+}
+
+.pagina-impresa:last-child {
+  break-after: auto;
+  page-break-after: auto;
+}
+
+.recharts-cartesian-axis-tick-value {
+  font-family: var(--font-sans);
+}

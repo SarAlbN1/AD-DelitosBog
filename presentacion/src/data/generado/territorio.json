@@ -1,0 +1,142 @@
+[
+ {
+  "localidad": "LOS MÁRTIRES",
+  "incidentes": 29033,
+  "tasa": 5735.9,
+  "puesto_conteo": 14,
+  "puesto_tasa": 1
+ },
+ {
+  "localidad": "ANTONIO NARIÑO",
+  "incidentes": 19521,
+  "tasa": 4036.1,
+  "puesto_conteo": 17,
+  "puesto_tasa": 2
+ },
+ {
+  "localidad": "SANTA FE",
+  "incidentes": 25991,
+  "tasa": 3895.5,
+  "puesto_conteo": 15,
+  "puesto_tasa": 3
+ },
+ {
+  "localidad": "CANDELARIA",
+  "incidentes": 3834,
+  "tasa": 3729.0,
+  "puesto_conteo": 19,
+  "puesto_tasa": 4
+ },
+ {
+  "localidad": "BARRIOS UNIDOS",
+  "incidentes": 30974,
+  "tasa": 3675.1,
+  "puesto_conteo": 13,
+  "puesto_tasa": 5
+ },
+ {
+  "localidad": "TEUSAQUILLO",
+  "incidentes": 33702,
+  "tasa": 3578.2,
+  "puesto_conteo": 11,
+  "puesto_tasa": 6
+ },
+ {
+  "localidad": "CHAPINERO",
+  "incidentes": 33584,
+  "tasa": 3378.6,
+  "puesto_conteo": 12,
+  "puesto_tasa": 7
+ },
+ {
+  "localidad": "PUENTE ARANDA",
+  "incidentes": 42313,
+  "tasa": 2798.4,
+  "puesto_conteo": 7,
+  "puesto_tasa": 8
+ },
+ {
+  "localidad": "ENGATIVÁ",
+  "incidentes": 93654,
+  "tasa": 1890.8,
+  "puesto_conteo": 2,
+  "puesto_tasa": 9
+ },
+ {
+  "localidad": "FONTIBÓN",
+  "incidentes": 40371,
+  "tasa": 1727.6,
+  "puesto_conteo": 8,
+  "puesto_tasa": 10
+ },
+ {
+  "localidad": "TUNJUELITO",
+  "incidentes": 18446,
+  "tasa": 1724.3,
+  "puesto_conteo": 18,
+  "puesto_tasa": 11
+ },
+ {
+  "localidad": "RAFAEL URIBE URIBE",
+  "incidentes": 37524,
+  "tasa": 1643.2,
+  "puesto_conteo": 9,
+  "puesto_tasa": 12
+ },
+ {
+  "localidad": "KENNEDY",
+  "incidentes": 99525,
+  "tasa": 1552.1,
+  "puesto_conteo": 1,
+  "puesto_tasa": 13
+ },
+ {
+  "localidad": "SAN CRISTÓBAL",
+  "incidentes": 36998,
+  "tasa": 1536.8,
+  "puesto_conteo": 10,
+  "puesto_tasa": 14
+ },
+ {
+  "localidad": "USAQUÉN",
+  "incidentes": 50245,
+  "tasa": 1469.1,
+  "puesto_conteo": 5,
+  "puesto_tasa": 15
+ },
+ {
+  "localidad": "SUBA",
+  "incidentes": 93132,
+  "tasa": 1255.1,
+  "puesto_conteo": 3,
+  "puesto_tasa": 16
+ },
+ {
+  "localidad": "CIUDAD BOLÍVAR",
+  "incidentes": 48636,
+  "tasa": 1222.8,
+  "puesto_conteo": 6,
+  "puesto_tasa": 17
+ },
+ {
+  "localidad": "BOSA",
+  "incidentes": 52210,
+  "tasa": 1163.9,
+  "puesto_conteo": 4,
+  "puesto_tasa": 18
+ },
+ {
+  "localidad": "USME",
+  "incidentes": 25890,
+  "tasa": 1094.5,
+  "puesto_conteo": 16,
+  "puesto_tasa": 19
+ },
+ {
+  "localidad": "SUMAPAZ",
+  "incidentes": 38,
+  "tasa": 213.3,
+  "puesto_conteo": 20,
+  "puesto_tasa": 20
+ }
+]
