@@ -3,11 +3,11 @@
   "name": "aef2d28e18e0b9b08c97",
   "position": {
     "x": 24,
-    "y": 296,
-    "z": 8000,
-    "width": 727,
-    "height": 400,
-    "tabOrder": 8000
+    "y": 96,
+    "z": 3000,
+    "width": 720,
+    "height": 600,
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -194,7 +194,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#334155'"
+                      "Value": "'#2A3A5C'"
                     }
                   }
                 }
@@ -229,7 +229,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1E293B'"
+                      "Value": "'#131E36'"
                     }
                   }
                 }
@@ -271,7 +271,7 @@
             "rowPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "14L"
+                  "Value": "22L"
                 }
               }
             }
@@ -293,7 +293,14 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Mapa de calor: víctimas por día según día de la semana y mes'"
+                  "Value": "'Mapa de calor: víctimas por día según el día de la semana y el mes'"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             },
@@ -311,7 +318,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "14.0D"
+                  "Value": "13.0D"
                 }
               }
             },
@@ -340,7 +347,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1E293B'"
+                      "Value": "'#131E36'"
                     }
                   }
                 }
@@ -371,7 +378,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#334155'"
+                      "Value": "'#2A3A5C'"
                     }
                   }
                 }

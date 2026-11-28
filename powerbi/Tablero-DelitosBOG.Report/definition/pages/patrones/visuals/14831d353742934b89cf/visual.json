@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "14831d353742934b89cf",
   "position": {
-    "x": 24,
-    "y": 204,
-    "z": 6000,
-    "width": 606,
-    "height": 72,
-    "tabOrder": 6000
+    "x": 764,
+    "y": 304,
+    "z": 8000,
+    "width": 492,
+    "height": 96,
+    "tabOrder": 8000
   },
   "visual": {
     "visualType": "card",
@@ -103,7 +103,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#3B1D0E'"
+                      "Value": "'#1B2A4A'"
                     }
                   }
                 }
@@ -134,7 +134,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F97316'"
+                      "Value": "'#A78BFA'"
                     }
                   }
                 }
@@ -163,7 +163,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'▶ Hallazgo'"
+                  "Value": "'▶ La semana'"
                 }
               }
             },
@@ -172,7 +172,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F97316'"
+                      "Value": "'#A78BFA'"
                     }
                   }
                 }

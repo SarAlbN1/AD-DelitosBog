@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "bb234c9bec3a864fdd4e",
   "position": {
-    "x": 24,
+    "x": 40,
     "y": 8,
-    "z": 0,
-    "width": 940,
-    "height": 68,
-    "tabOrder": 0
+    "z": 1000,
+    "width": 916,
+    "height": 72,
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "textbox",
@@ -32,10 +32,10 @@
               {
                 "textRuns": [
                   {
-                    "value": "Mapa de calor por localidad · llamadas de hurto a la Línea 123 por 100.000 habitantes, 2020–2025",
+                    "value": "Llamadas de hurto a la Línea 123 por localidad, 2020–2025 · volumen frente a tasa por 100.000 habitantes",
                     "textStyle": {
                       "fontSize": "11pt",
-                      "color": "#E2E8F0"
+                      "color": "#CBD5E1"
                     }
                   }
                 ]

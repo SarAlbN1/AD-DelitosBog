@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
-  "name": "fe09033b03890148e95b",
+  "name": "f16dcb40101750861492",
   "position": {
-    "x": 650,
-    "y": 84,
-    "z": 4000,
-    "width": 293,
-    "height": 100,
-    "tabOrder": 4000
+    "x": 24,
+    "y": 560,
+    "z": 7000,
+    "width": 270,
+    "height": 136,
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "card",
@@ -24,12 +24,12 @@
                       "Entity": "Medidas"
                     }
                   },
-                  "Property": "Localidad tasa máxima"
+                  "Property": "Aviso de lectura"
                 }
               },
-              "queryRef": "Medidas.Localidad tasa máxima",
-              "nativeQueryRef": "Localidad tasa máxima",
-              "displayName": "Localidad con la tasa más alta"
+              "queryRef": "Medidas.Aviso de lectura",
+              "nativeQueryRef": "Aviso de lectura",
+              "displayName": "Hallazgo"
             }
           ]
         }
@@ -53,7 +53,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "30.0D"
+                  "Value": "13.0D"
                 }
               }
             }
@@ -66,25 +66,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#E2E8F0'"
-                    }
-                  }
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "13.0D"
+                  "Value": "false"
                 }
               }
             }
@@ -106,37 +88,6 @@
       ]
     },
     "visualContainerObjects": {
-      "border": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#F97316'"
-                    }
-                  }
-                }
-              }
-            },
-            "radius": {
-              "expr": {
-                "Literal": {
-                  "Value": "10.0D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "background": [
         {
           "properties": {
@@ -152,7 +103,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1E293B'"
+                      "Value": "'#1B2A4A'"
                     }
                   }
                 }
@@ -162,6 +113,82 @@
               "expr": {
                 "Literal": {
                   "Value": "0.0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#F59E0B'"
+                    }
+                  }
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "10.0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'▶ Cómo leerlo'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#F59E0B'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12.0D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }

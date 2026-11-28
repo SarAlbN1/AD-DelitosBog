@@ -26,7 +26,19 @@ modelo → páginas. No hay orígenes web, así que Power BI no pide niveles de 
    por defecto es `C:\ruta\al\AD-DelitosBog`, que no existe) y **Actualizar**.
 
 El mapa usa el visual **Azure Maps** con capa de calor ponderada por la tasa. Si la organización lo
-desactiva, la matriz de calor de la misma página muestra la misma lectura.
+desactiva, la tabla de la misma página muestra la misma lectura (tasa coloreada de amarillo a rojo).
+
+**Diseño.** Cada página tiene su propio color de acento (Panorama ámbar, ¿Cuándo? violeta, ¿Dónde?
+coral, Pronóstico cian), su propia composición y ningún tipo de gráfico se repite entre páginas:
+Panorama usa área y columnas; ¿Cuándo?, la matriz de calor y el anillo; ¿Dónde?, el mapa, el mapa de
+árbol del volumen y la tabla con los dos puestos; Pronóstico, líneas y barras. Las familias de modelos
+tienen un color fijo. Los títulos largos pasan a una segunda línea y los hallazgos tienen alto para la
+frase entera.
+
+**Textos fijos en el script.** El subtítulo y el título de la serie de la página Pronóstico nombran el
+modelo («gradiente por histogramas») y la ventana («184 días») a mano, porque un título de visual no
+lee medidas. Las dos cifras salen de `outputs/modelado/ajuste/` (#45) y del protocolo de evaluación
+(`config/modelado.json`). Si cambian, hay que cambiar esos textos en `scripts/generar_reporte_powerbi.py`.
 
 **Lo que no se versiona:** `powerbi/**/.pbi/localSettings.json` y `cache.abf` (en `powerbi/.gitignore`).
 
@@ -206,7 +218,8 @@ modelo se sostiene. Vista principal con `variante = "completo"` y `origen` en `#
 otras, en una página aparte de sensibilidad a 2020. **Las cifras del gradiente por histogramas no se
 reproducen exactas entre plataformas** (ver `docs/MODELADO.md`): el tablero muestra las de la imagen
 Docker de referencia (#128), y debe decirlo en una nota. **Entre los cuatro mejores modelos no hay
-diferencias significativas, y la regresión lineal solo se distingue del gradiente** (sección 9): el
+diferencias significativas, y la regresión lineal, la más débil, tampoco se distingue de ellos con
+solidez** (sección 9: frente al gradiente, p = 0,023 con HLN y 0,073 con Newey-West): el
 tablero no debe presentar un ganador. La regresión es la más débil de las cinco familias, y es la
 transparente: sus coeficientes están en `outputs/modelado/regresion/coeficientes.csv`.
 

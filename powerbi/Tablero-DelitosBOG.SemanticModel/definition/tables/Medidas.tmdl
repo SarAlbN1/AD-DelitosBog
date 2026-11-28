@@ -174,8 +174,8 @@ table Medidas
 
 	measure 'Aviso de lectura' =
 			VAR a = VALUES ( dim_anio[anio] )
-			VAR t2020 = IF ( 2020 IN a, "2020 es atípico (restricciones de movilidad). " )
-			VAR t2025 = IF ( 2025 IN a, "2025 llega hasta el 31 de octubre: compare la media diaria, no el total." )
+			VAR t2020 = IF ( 2020 IN a, "* 2020: año atípico (restricciones de movilidad). " )
+			VAR t2025 = IF ( 2025 IN a, "† 2025: llega al 31 de octubre. Compare víctimas al día, no totales." )
 			RETURN COALESCE ( t2020 & t2025, "" )
 		displayFolder: 0 Textos
 		lineageTag: 9738dfda-1fec-4421-a1cd-27bd1695f405
@@ -223,7 +223,7 @@ table Medidas
 			VAR apico = MAXX ( TOPN ( 1, t, [@m], DESC ), dim_anio[anio] )
 			VAR mpico = MAXX ( t, [@m] )
 			RETURN
-			"En " & anio & " se registran " & FORMAT ( m, "#,0", "es-CO" ) & " víctimas de hurto por día (" & FORMAT ( v, "+0%;-0%", "es-CO" ) & " frente a " & ( anio - 1 ) & "). El año más alto del periodo fue " & apico & ", con " & FORMAT ( mpico, "#,0", "es-CO" ) & " por día."
+			anio & ": " & FORMAT ( m, "#,0", "es-CO" ) & " víctimas al día, " & FORMAT ( v, "+0%;-0%", "es-CO" ) & " frente a " & ( anio - 1 ) & ". El pico fue " & apico & ", con " & FORMAT ( mpico, "#,0", "es-CO" ) & " al día."
 		displayFolder: 5 Hallazgos
 		lineageTag: 05153032-2033-400e-8fb4-3fd8b43f9c2c
 
@@ -231,11 +231,11 @@ table Medidas
 			VAR pico = [Día pico] VAR valle = [Día valle]
 			VAR mp = CALCULATE ( [Media diaria], dim_calendario[dia_semana] = pico )
 			VAR mv = CALCULATE ( [Media diaria], dim_calendario[dia_semana] = valle )
-			RETURN "El " & pico & " es el día con más hurtos (" & FORMAT ( mp, "#,0", "es-CO" ) & " víctimas por día): " & FORMAT ( DIVIDE ( mp - mv, mv ), "0%", "es-CO" ) & " más que el " & valle & " (" & FORMAT ( mv, "#,0", "es-CO" ) & ")."
+			RETURN UPPER ( LEFT ( pico, 1 ) ) & MID ( pico, 2, 20 ) & ": " & FORMAT ( mp, "#,0", "es-CO" ) & " víctimas al día, " & FORMAT ( DIVIDE ( mp - mv, mv ), "0%", "es-CO" ) & " más que el " & valle & " (" & FORMAT ( mv, "#,0", "es-CO" ) & ")."
 		displayFolder: 5 Hallazgos
 		lineageTag: a74901f0-583f-4973-a09d-161a31bd1fee
 
-	measure 'Hallazgo festivo' = "Un lunes festivo registra " & FORMAT ( - [Efecto festivo %], "0%", "es-CO" ) & " menos víctimas que un lunes laborable (" & FORMAT ( [Media lunes festivo], "#,0", "es-CO" ) & " frente a " & FORMAT ( [Media lunes laborable], "#,0", "es-CO" ) & "): un indicio de que el hurto acompaña la actividad laboral."
+	measure 'Hallazgo festivo' = "Un lunes festivo tiene " & FORMAT ( - [Efecto festivo %], "0%", "es-CO" ) & " menos hurtos que uno laborable (" & FORMAT ( [Media lunes festivo], "#,0", "es-CO" ) & " frente a " & FORMAT ( [Media lunes laborable], "#,0", "es-CO" ) & " al día). Con menos actividad en la ciudad, hay menos hurto."
 		displayFolder: 5 Hallazgos
 		lineageTag: fce85186-d004-4cb8-badb-17e0c66304a8
 
@@ -255,7 +255,7 @@ table Medidas
 			VAR pc = DIVIDE ( CALCULATE ( [Llamadas 123], dim_localidad[localidad] = locc ), CALCULATE ( [Llamadas 123], REMOVEFILTERS ( dim_localidad ) ) )
 			VAR rt = CALCULATE ( [Puesto por tasa], dim_localidad[localidad] = locc )
 			RETURN
-			loc & " tiene la tasa más alta: " & FORMAT ( t, "#,0", "es-CO" ) & " llamadas por hurto por cada 100.000 habitantes, " & FORMAT ( DIVIDE ( t, tc ), "0.0", "es-CO" ) & " veces la de la ciudad (" & LOWER ( lect ) & "). " & locc & " concentra el " & FORMAT ( pc, "0%", "es-CO" ) & " de las llamadas, pero por tasa es la n.º " & rt & ": su volumen refleja su población, no un mayor riesgo."
+			locc & " recibe el " & FORMAT ( pc, "0%", "es-CO" ) & " de las llamadas, pero por habitante es la n.º " & rt & ". La tasa más alta es la de " & loc & ": " & FORMAT ( DIVIDE ( t, tc ), "0.0", "es-CO" ) & " veces la de la ciudad (" & LOWER ( lect ) & ")."
 		displayFolder: 5 Hallazgos
 		lineageTag: 573aa06a-d1fb-4863-8f35-f8a36a04f15e
 
@@ -297,7 +297,10 @@ table Medidas
 		displayFolder: 4 Modelado
 		lineageTag: 4fe36d5c-f704-4d6e-89f8-fdb8592d5c91
 
-	measure 'Hallazgo modelo' = "El mejor modelo, " & [Mejor modelo] & ", pronostica las víctimas diarias con un error medio de " & FORMAT ( [MAE mejor modelo], "0", "es-CO" ) & " víctimas por día (" & FORMAT ( [MAPE mejor modelo] / 100, "0%", "es-CO" ) & "): " & FORMAT ( [Mejora sobre la barra %], "0%", "es-CO" ) & " menos error que el mejor comparador ingenuo (" & FORMAT ( [Barra MAE], "0", "es-CO" ) & "). Entre los cuatro mejores modelos las diferencias no son significativas, y la regresión lineal solo se distingue del gradiente: el orden describe esta ventana y no un ganador."
+	measure 'Hallazgo modelo' =
+			VAR ref = IF ( [Mejor comparador] = "ingenuo_estacional", "repetir lo de hace una semana", "el mejor comparador ingenuo" )
+			RETURN
+			"Error medio: " & FORMAT ( [MAE mejor modelo], "0", "es-CO" ) & " víctimas al día (" & FORMAT ( [MAPE mejor modelo] / 100, "0%", "es-CO" ) & "), " & FORMAT ( [Mejora sobre la barra %], "0%", "es-CO" ) & " menos que " & ref & " (" & FORMAT ( [Barra MAE], "0", "es-CO" ) & "). Los cuatro mejores modelos no se diferencian de forma significativa, y la regresión lineal, la más débil, tampoco se distingue de ellos con solidez."
 		displayFolder: 5 Hallazgos
 		lineageTag: 9f219372-1061-4841-a67b-3db56ad634fa
 

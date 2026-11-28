@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "e4ccd0ebd448eab9bf60",
   "position": {
-    "x": 852,
-    "y": 296,
-    "z": 8000,
-    "width": 404,
-    "height": 400,
-    "tabOrder": 8000
+    "x": 314,
+    "y": 494,
+    "z": 10000,
+    "width": 942,
+    "height": 202,
+    "tabOrder": 10000
   },
   "visual": {
     "visualType": "clusteredColumnChart",
@@ -81,7 +81,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#E2E8F0'"
+                      "Value": "'#CBD5E1'"
                     }
                   }
                 }
@@ -112,7 +112,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#E2E8F0'"
+                      "Value": "'#CBD5E1'"
                     }
                   }
                 }
@@ -123,7 +123,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#334155'"
+                      "Value": "'#2A3A5C'"
                     }
                   }
                 }
@@ -295,6 +295,13 @@
                 }
               }
             },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "fontColor": {
               "solid": {
                 "color": {
@@ -309,7 +316,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "14.0D"
+                  "Value": "13.0D"
                 }
               }
             },
@@ -338,7 +345,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1E293B'"
+                      "Value": "'#131E36'"
                     }
                   }
                 }
@@ -369,7 +376,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#334155'"
+                      "Value": "'#2A3A5C'"
                     }
                   }
                 }
