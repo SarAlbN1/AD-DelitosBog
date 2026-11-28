@@ -188,7 +188,7 @@ class Pagina:
         self.texto("titulo", 40, 8, ancho, 72, [
             (self.titulo, 22, TEXTO, True), (self.subtitulo, 11, TEXTO_2, False)])
         if con_filtro:
-            self.agregar("filtro_anio", "slicer", W - 24 - 260, 14, 260, 62,
+            self.agregar("filtro_anio", "slicer", W - 24 - 277, 14, 277, 74,
                          roles={"Values": [(col("dim_anio", "anio_texto"), "Año")]},
                          objetos={"data": [{"properties": {"mode": lit("Dropdown")}}],
                                   "header": [{"properties": {"show": lit(True), "fontColor": color(TEXTO_2),
