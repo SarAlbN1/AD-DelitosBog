@@ -1,6 +1,6 @@
 # Verificación de referencias (issue #24)
 
-Fecha de consulta: **2026-11-11**. Cada referencia de `Informe/primera_entrega.tex` se comparó con su fuente primaria: un registro del repositorio institucional, el PDF del documento, Crossref (DOI) u Open Library (libros).
+Fecha de consulta: **2026-11-11**. Cada referencia de la primera entrega (etiqueta `entrega-1`) se comparó con su fuente primaria: un registro del repositorio institucional, el PDF del documento, Crossref (DOI) u Open Library (libros).
 
 **Resultado:** las 8 referencias existen y son pertinentes; 7 de ellas son estudios académicos. Se corrigieron dos datos y queda una duda abierta.
 

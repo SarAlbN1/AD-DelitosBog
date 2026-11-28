@@ -28,7 +28,7 @@ SHA-256 del `.ods` usado: `f02e6d9b2d571a7bdc77fd3c2f5e3a0160b0c3a9a5c36925e14ad
 
 Bogotá suma 7.732.161 habitantes en 2020 y 7.937.898 en 2025 (`outputs/poblacion/resumen_poblacion.json`).
 
-`data/raw/`, `data/processed/` y `DataSet/` están excluidos de Git. Los notebooks buscan cada archivo primero en `DataSet/` y después en `data/raw/`.
+`data/raw/` y `data/processed/` están excluidos de Git. Todo archivo de entrada va en `data/raw/<fuente>/`: es la única ubicación de los datos originales. Las descargas de la Policía que el proyecto no usa (los cuadros de salida validados, la descripción de variables y el archivo parcial de 2026) están en `data/raw/policia_otros/`, solo como procedencia.
 
 ## Cómo leer estas cifras
 
@@ -79,5 +79,5 @@ El CSV de Policía es obligatorio. La consulta de filas nacionales es informativ
 - `$limit=50000` basta hoy para Policía porque el recurso devuelve 2.922 filas, pero no es un límite seguro si cambia la granularidad. Convendría paginar.
 - El esquema del registro **cambia entre años**: el encabezado está en la fila 12 en 2020, 2023, 2024 y 2025 y en la 13 en 2021 y 2022; la columna del arma es `ARMAS MEDIOS` salvo en 2021, que usa `ARMA MEDIO`; y 2023 no trae la columna `ICCS`. El detalle y su tratamiento están en [docs/cruce_policia_registro_agregado.md](../docs/cruce_policia_registro_agregado.md).
 - **No deduplique el registro por fila exacta.** 713.344 de las 741.986 filas son duplicados exactos, porque dos víctimas del mismo perfil el mismo día producen filas idénticas y el archivo no trae identificador. Un `drop_duplicates()` dejaría 28.642 filas y tumbaría el requisito de 500.000.
-- Por D-01 el periodo principal es 2020–2025. El informe ya está actualizado. Los notebooks de la segunda entrega aún usan el agregado 2018–2025 y se adaptan en #87.
+- Por D-01 el periodo principal es 2020–2025.
 - Noviembre y diciembre de 2025 caen a menos de la mitad en el registro, en el agregado y en los cuadros validados de la Policía. La causa está pendiente en #86.

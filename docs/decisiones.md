@@ -54,7 +54,7 @@ Las propuso Sara el 2026-11-11 y quedan pendientes de la respuesta del profesor:
   - esos dos años entran solo como agregado y **fuera** del conteo de filas.
 
   Microdato y agregado no se mezclan en el conteo del mínimo.
-- **Coherencia del periodo.** Si el periodo cambia a 2020–2025, se actualizan el informe, `README`, `data/README.md` y los notebooks de la segunda entrega (#27). Se decide antes de redactar la sección 4.
+- **Coherencia del periodo.** Si el periodo cambia a 2020–2025, se actualizan el informe, `README` y `data/README.md` (#27). Se decide antes de redactar la sección 4.
 - **Concordancia A–B.** La diferencia de una fila en 2024 se rastreó día a día; el detalle está en `docs/evidencia_policia_registro.md`, §3.
 
 ### Decisión
@@ -98,7 +98,7 @@ Las propuso Sara el 2026-11-11 y quedan pendientes de la respuesta del profesor:
 
 **Cambios de alcance:**
 - El informe usa 2020–2025 en el título, el alcance, los objetivos y la sección 4.
-- Los notebooks de la segunda entrega deben pasar a la serie del registro 2020–2025 (#87).
+- Los scripts de la segunda entrega usan la serie del registro 2020–2025 (#87); los notebooks que los precedían se retiraron en #157.
 - Hay que verificar la caída de noviembre y diciembre de 2025 antes de usar esos meses para evaluar modelos (#86).
 
 ---
