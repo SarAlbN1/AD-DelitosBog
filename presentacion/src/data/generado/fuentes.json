@@ -1,0 +1,430 @@
+{
+ "meses": 70,
+ "serie": [
+  {
+   "mes": "2020-01",
+   "Fiscalía (Procesos V3)": 105.6,
+   "Línea 123": 90.6,
+   "Policía (registro)": 110.1
+  },
+  {
+   "mes": "2020-02",
+   "Fiscalía (Procesos V3)": 86.1,
+   "Línea 123": 87.6,
+   "Policía (registro)": 83.7
+  },
+  {
+   "mes": "2020-03",
+   "Fiscalía (Procesos V3)": 59.4,
+   "Línea 123": 56.8,
+   "Policía (registro)": 58.3
+  },
+  {
+   "mes": "2020-04",
+   "Fiscalía (Procesos V3)": 25.7,
+   "Línea 123": 46.5,
+   "Policía (registro)": 24.7
+  },
+  {
+   "mes": "2020-05",
+   "Fiscalía (Procesos V3)": 51.6,
+   "Línea 123": 68.7,
+   "Policía (registro)": 48.8
+  },
+  {
+   "mes": "2020-06",
+   "Fiscalía (Procesos V3)": 59.7,
+   "Línea 123": 79.8,
+   "Policía (registro)": 57.0
+  },
+  {
+   "mes": "2020-07",
+   "Fiscalía (Procesos V3)": 66.1,
+   "Línea 123": 72.8,
+   "Policía (registro)": 64.1
+  },
+  {
+   "mes": "2020-08",
+   "Fiscalía (Procesos V3)": 65.0,
+   "Línea 123": 72.0,
+   "Policía (registro)": 62.3
+  },
+  {
+   "mes": "2020-09",
+   "Fiscalía (Procesos V3)": 67.6,
+   "Línea 123": 86.0,
+   "Policía (registro)": 64.6
+  },
+  {
+   "mes": "2020-10",
+   "Fiscalía (Procesos V3)": 75.9,
+   "Línea 123": 109.3,
+   "Policía (registro)": 73.1
+  },
+  {
+   "mes": "2020-11",
+   "Fiscalía (Procesos V3)": 73.4,
+   "Línea 123": 101.4,
+   "Policía (registro)": 71.5
+  },
+  {
+   "mes": "2020-12",
+   "Fiscalía (Procesos V3)": 79.7,
+   "Línea 123": 108.5,
+   "Policía (registro)": 78.1
+  },
+  {
+   "mes": "2021-01",
+   "Fiscalía (Procesos V3)": 64.4,
+   "Línea 123": 84.0,
+   "Policía (registro)": 64.4
+  },
+  {
+   "mes": "2021-02",
+   "Fiscalía (Procesos V3)": 73.5,
+   "Línea 123": 91.2,
+   "Policía (registro)": 73.4
+  },
+  {
+   "mes": "2021-03",
+   "Fiscalía (Procesos V3)": 81.5,
+   "Línea 123": 101.3,
+   "Policía (registro)": 85.5
+  },
+  {
+   "mes": "2021-04",
+   "Fiscalía (Procesos V3)": 66.0,
+   "Línea 123": 91.6,
+   "Policía (registro)": 68.7
+  },
+  {
+   "mes": "2021-05",
+   "Fiscalía (Procesos V3)": 82.9,
+   "Línea 123": 113.4,
+   "Policía (registro)": 84.7
+  },
+  {
+   "mes": "2021-06",
+   "Fiscalía (Procesos V3)": 86.2,
+   "Línea 123": 106.8,
+   "Policía (registro)": 86.4
+  },
+  {
+   "mes": "2021-07",
+   "Fiscalía (Procesos V3)": 95.0,
+   "Línea 123": 120.7,
+   "Policía (registro)": 95.7
+  },
+  {
+   "mes": "2021-08",
+   "Fiscalía (Procesos V3)": 92.4,
+   "Línea 123": 101.0,
+   "Policía (registro)": 93.3
+  },
+  {
+   "mes": "2021-09",
+   "Fiscalía (Procesos V3)": 88.8,
+   "Línea 123": 114.6,
+   "Policía (registro)": 90.6
+  },
+  {
+   "mes": "2021-10",
+   "Fiscalía (Procesos V3)": 98.6,
+   "Línea 123": 113.7,
+   "Policía (registro)": 102.3
+  },
+  {
+   "mes": "2021-11",
+   "Fiscalía (Procesos V3)": 101.3,
+   "Línea 123": 105.4,
+   "Policía (registro)": 105.5
+  },
+  {
+   "mes": "2021-12",
+   "Fiscalía (Procesos V3)": 95.5,
+   "Línea 123": 114.2,
+   "Policía (registro)": 97.7
+  },
+  {
+   "mes": "2022-01",
+   "Fiscalía (Procesos V3)": 82.3,
+   "Línea 123": 92.1,
+   "Policía (registro)": 84.4
+  },
+  {
+   "mes": "2022-02",
+   "Fiscalía (Procesos V3)": 83.9,
+   "Línea 123": 93.3,
+   "Policía (registro)": 87.0
+  },
+  {
+   "mes": "2022-03",
+   "Fiscalía (Procesos V3)": 101.4,
+   "Línea 123": 103.7,
+   "Policía (registro)": 108.8
+  },
+  {
+   "mes": "2022-04",
+   "Fiscalía (Procesos V3)": 87.1,
+   "Línea 123": 98.3,
+   "Policía (registro)": 94.2
+  },
+  {
+   "mes": "2022-05",
+   "Fiscalía (Procesos V3)": 86.9,
+   "Línea 123": 109.1,
+   "Policía (registro)": 88.8
+  },
+  {
+   "mes": "2022-06",
+   "Fiscalía (Procesos V3)": 83.0,
+   "Línea 123": 96.2,
+   "Policía (registro)": 84.9
+  },
+  {
+   "mes": "2022-07",
+   "Fiscalía (Procesos V3)": 85.9,
+   "Línea 123": 98.8,
+   "Policía (registro)": 88.8
+  },
+  {
+   "mes": "2022-08",
+   "Fiscalía (Procesos V3)": 107.8,
+   "Línea 123": 96.8,
+   "Policía (registro)": 114.2
+  },
+  {
+   "mes": "2022-09",
+   "Fiscalía (Procesos V3)": 129.7,
+   "Línea 123": 101.7,
+   "Policía (registro)": 144.0
+  },
+  {
+   "mes": "2022-10",
+   "Fiscalía (Procesos V3)": 142.6,
+   "Línea 123": 110.6,
+   "Policía (registro)": 154.2
+  },
+  {
+   "mes": "2022-11",
+   "Fiscalía (Procesos V3)": 130.9,
+   "Línea 123": 113.3,
+   "Policía (registro)": 134.3
+  },
+  {
+   "mes": "2022-12",
+   "Fiscalía (Procesos V3)": 136.4,
+   "Línea 123": 113.3,
+   "Policía (registro)": 130.0
+  },
+  {
+   "mes": "2023-01",
+   "Fiscalía (Procesos V3)": 117.7,
+   "Línea 123": 99.6,
+   "Policía (registro)": 118.4
+  },
+  {
+   "mes": "2023-02",
+   "Fiscalía (Procesos V3)": 116.4,
+   "Línea 123": 98.1,
+   "Policía (registro)": 117.1
+  },
+  {
+   "mes": "2023-03",
+   "Fiscalía (Procesos V3)": 137.4,
+   "Línea 123": 106.3,
+   "Policía (registro)": 141.1
+  },
+  {
+   "mes": "2023-04",
+   "Fiscalía (Procesos V3)": 121.4,
+   "Línea 123": 114.0,
+   "Policía (registro)": 125.1
+  },
+  {
+   "mes": "2023-05",
+   "Fiscalía (Procesos V3)": 131.3,
+   "Línea 123": 118.4,
+   "Policía (registro)": 134.3
+  },
+  {
+   "mes": "2023-06",
+   "Fiscalía (Procesos V3)": 124.8,
+   "Línea 123": 107.2,
+   "Policía (registro)": 126.8
+  },
+  {
+   "mes": "2023-07",
+   "Fiscalía (Procesos V3)": 122.5,
+   "Línea 123": 114.4,
+   "Policía (registro)": 124.8
+  },
+  {
+   "mes": "2023-08",
+   "Fiscalía (Procesos V3)": 133.5,
+   "Línea 123": 93.0,
+   "Policía (registro)": 135.5
+  },
+  {
+   "mes": "2023-09",
+   "Fiscalía (Procesos V3)": 127.3,
+   "Línea 123": 102.2,
+   "Policía (registro)": 130.9
+  },
+  {
+   "mes": "2023-10",
+   "Fiscalía (Procesos V3)": 123.7,
+   "Línea 123": 109.1,
+   "Policía (registro)": 129.1
+  },
+  {
+   "mes": "2023-11",
+   "Fiscalía (Procesos V3)": 114.5,
+   "Línea 123": 110.3,
+   "Policía (registro)": 121.5
+  },
+  {
+   "mes": "2023-12",
+   "Fiscalía (Procesos V3)": 112.2,
+   "Línea 123": 107.8,
+   "Policía (registro)": 115.9
+  },
+  {
+   "mes": "2024-01",
+   "Fiscalía (Procesos V3)": 105.6,
+   "Línea 123": 70.1,
+   "Policía (registro)": 109.4
+  },
+  {
+   "mes": "2024-02",
+   "Fiscalía (Procesos V3)": 105.9,
+   "Línea 123": 103.0,
+   "Policía (registro)": 108.7
+  },
+  {
+   "mes": "2024-03",
+   "Fiscalía (Procesos V3)": 95.8,
+   "Línea 123": 88.6,
+   "Policía (registro)": 94.8
+  },
+  {
+   "mes": "2024-04",
+   "Fiscalía (Procesos V3)": 112.5,
+   "Línea 123": 67.0,
+   "Policía (registro)": 114.6
+  },
+  {
+   "mes": "2024-05",
+   "Fiscalía (Procesos V3)": 109.4,
+   "Línea 123": 105.8,
+   "Policía (registro)": 111.2
+  },
+  {
+   "mes": "2024-06",
+   "Fiscalía (Procesos V3)": 90.5,
+   "Línea 123": 105.2,
+   "Policía (registro)": 87.6
+  },
+  {
+   "mes": "2024-07",
+   "Fiscalía (Procesos V3)": 97.8,
+   "Línea 123": 106.1,
+   "Policía (registro)": 96.3
+  },
+  {
+   "mes": "2024-08",
+   "Fiscalía (Procesos V3)": 101.3,
+   "Línea 123": 102.4,
+   "Policía (registro)": 102.9
+  },
+  {
+   "mes": "2024-09",
+   "Fiscalía (Procesos V3)": 99.2,
+   "Línea 123": 105.4,
+   "Policía (registro)": 104.4
+  },
+  {
+   "mes": "2024-10",
+   "Fiscalía (Procesos V3)": 107.6,
+   "Línea 123": 118.1,
+   "Policía (registro)": 113.5
+  },
+  {
+   "mes": "2024-11",
+   "Fiscalía (Procesos V3)": 110.4,
+   "Línea 123": 105.5,
+   "Policía (registro)": 116.1
+  },
+  {
+   "mes": "2024-12",
+   "Fiscalía (Procesos V3)": 109.2,
+   "Línea 123": 107.5,
+   "Policía (registro)": 90.3
+  },
+  {
+   "mes": "2025-01",
+   "Fiscalía (Procesos V3)": 97.4,
+   "Línea 123": 92.1,
+   "Policía (registro)": 93.8
+  },
+  {
+   "mes": "2025-02",
+   "Fiscalía (Procesos V3)": 106.2,
+   "Línea 123": 99.3,
+   "Policía (registro)": 108.1
+  },
+  {
+   "mes": "2025-03",
+   "Fiscalía (Procesos V3)": 117.5,
+   "Línea 123": 106.6,
+   "Policía (registro)": 111.6
+  },
+  {
+   "mes": "2025-04",
+   "Fiscalía (Procesos V3)": 108.5,
+   "Línea 123": 103.9,
+   "Policía (registro)": 111.8
+  },
+  {
+   "mes": "2025-05",
+   "Fiscalía (Procesos V3)": 119.6,
+   "Línea 123": 107.0,
+   "Policía (registro)": 93.8
+  },
+  {
+   "mes": "2025-06",
+   "Fiscalía (Procesos V3)": 114.2,
+   "Línea 123": 106.3,
+   "Policía (registro)": 103.2
+  },
+  {
+   "mes": "2025-07",
+   "Fiscalía (Procesos V3)": 122.7,
+   "Línea 123": 111.5,
+   "Policía (registro)": 113.7
+  },
+  {
+   "mes": "2025-08",
+   "Fiscalía (Procesos V3)": 123.4,
+   "Línea 123": 116.0,
+   "Policía (registro)": 108.0
+  },
+  {
+   "mes": "2025-09",
+   "Fiscalía (Procesos V3)": 127.6,
+   "Línea 123": 115.0,
+   "Policía (registro)": 110.7
+  },
+  {
+   "mes": "2025-10",
+   "Fiscalía (Procesos V3)": 135.2,
+   "Línea 123": 111.9,
+   "Policía (registro)": 117.1
+  }
+ ],
+ "correlaciones": {
+  "policia_fiscalia": 0.962,
+  "policia_linea123": 0.601,
+  "policia_linea123_sin2020": 0.284
+ }
+}

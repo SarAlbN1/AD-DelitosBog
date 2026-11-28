@@ -1,0 +1,22 @@
+[
+ {
+  "paso": "original",
+  "filas": 4829870,
+  "motivo": "todos los delitos del país"
+ },
+ {
+  "paso": "filtro Bogotá",
+  "filas": 1406157,
+  "motivo": "CODIGO DANE = 11001"
+ },
+ {
+  "paso": "filtro hurto a personas",
+  "filas": 741986,
+  "motivo": "DELITOS contiene (05022)"
+ },
+ {
+  "paso": "periodo 2020-01-01 a 2025-10-31",
+  "filas": 730870,
+  "motivo": "11116 fuera del periodo; el fin es 2025-10-31 porque noviembre y diciembre de 2025 están incompletos (#86)"
+ }
+]
