@@ -27,7 +27,8 @@ const duracionBloque = (b: Bloque) => diapos(b).reduce((s, d) => s + minutos(d),
 /** Las preguntas no tienen tiempo planeado: ocupan lo que quede del límite. */
 const tiempoBloque = (b: Bloque) => (b.tema === "Preguntas" ? "el tiempo que quede" : fmt(duracionBloque(b)));
 /** Quién habla en un bloque, en orden de aparición: «Juan Diego → Sara → Ambos». */
-const quienes = (b: Bloque) => [...new Set(diapos(b).map((d) => d.expone))].join(" → ");
+const quienes = (b: Bloque) =>
+  diapos(b).map((d) => d.expone).filter((e, i, a) => e !== a[i - 1]).join(" → ");
 const presentacion = BLOQUES.filter((b) => !b.fueraDeLaPresentacion).reduce((s, b) => s + duracionBloque(b), 0);
 const demo = BLOQUES.filter((b) => b.tema.includes("Power BI")).reduce((s, b) => s + duracionBloque(b), 0);
 const total = presentacion + demo;

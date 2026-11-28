@@ -167,7 +167,7 @@ def pronostico() -> None:
     base = base.merge(reg[["fecha", "prediccion"]].rename(columns={"prediccion": "regresion_lineal"}), on="fecha")
     base = base.merge(s[["fecha", "rezago_7", "festivo"]].rename(columns={"rezago_7": "barra"}), on="fecha")
     assert len(base) == 184, len(base)
-    guardar("pronostico", [{k: (v if k in ("fecha",) else (int(v) if k == "festivo" else r(v, 1)))
+    guardar("pronostico", [{k: (v if k in ("fecha",) else (int(v) if k == "festivo" else r(v, 2)))
                             for k, v in fila.items()} for fila in base.to_dict("records")])
 
 

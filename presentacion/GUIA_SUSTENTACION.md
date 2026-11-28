@@ -99,7 +99,7 @@ Se genera desde las notas de las diapositivas con `npm run guion`: es el mismo t
 - Se agrupan variables porque las sustitutas, como los rezagos de 7 y 14 días, se suplen entre sí cuando se permutan por separado.
 - Mide dependencia, no causalidad.
 
-**Ljung-Box.** Contrasta si los residuos tienen autocorrelación. En los SARIMA y ETS de referencia la rechaza a 7, 14 y 28 rezagos (p < 0,001). Queda estructura sin modelar, y un intervalo de predicción que supusiera independencia sería demasiado estrecho.
+**Ljung-Box.** Contrasta si los residuos tienen autocorrelación. En los SARIMA y ETS de referencia la rechaza a 7, 14 y 28 rezagos (p < 0,01; en las salidas versionadas, p < 0,001). Queda estructura sin modelar, y un intervalo de predicción que supusiera independencia sería demasiado estrecho.
 
 ---
 

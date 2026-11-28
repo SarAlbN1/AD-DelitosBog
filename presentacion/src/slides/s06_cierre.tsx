@@ -9,7 +9,7 @@ function Limitaciones() {
     { icono: Eye, t: "Se modela el registro, no la victimización", d: "El hurto que no se denuncia no está en la serie. Con estas fuentes el subregistro no se puede observar." },
     { icono: CalendarRange, t: "La evaluación no cubre noviembre a enero", d: "En los pliegues de esa temporada el MAE de los modelos sube hasta 44,61: cabe esperar errores mayores." },
     { icono: Repeat2, t: "El registro puede cambiar sin aviso", d: "Como en noviembre y diciembre de 2025. El modelo lo trasladaría al pronóstico como si fuera un cambio real." },
-    { icono: Scale, t: "Sin intervalos de predicción", d: "Los residuos conservan autocorrelación (Ljung-Box, p < 0,001): un intervalo ingenuo sería demasiado estrecho." },
+    { icono: Scale, t: "Sin intervalos de predicción", d: "Los residuos conservan autocorrelación (Ljung-Box, p < 0,01): un intervalo ingenuo sería demasiado estrecho." },
     { icono: MapPinOff, t: "Solo toda la ciudad, a un día", d: "No se traslada a localidades, a otros horizontes, a otros delitos ni a otras ciudades." },
     { icono: Shuffle, t: "Riesgo de retroalimentación", d: "Si se usara para patrullar, podría aumentar los hechos conocidos y reforzar lo aprendido (Ensign et al., 2018)." },
   ];

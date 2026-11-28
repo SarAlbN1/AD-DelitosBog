@@ -212,7 +212,7 @@ function Modelos() {
       <div className="mt-5 grid grid-cols-3 gap-8 text-[19px] leading-snug">
         <p><b className="text-verde">SARIMA y ETS</b> representan el ciclo semanal de forma explícita, pero no ven el calendario.</p>
         <p><b className="text-azul">Los árboles</b> captan interacciones no lineales entre calendario y rezagos sin especificarlas.</p>
-        <p><b style={{ color: COLOR.regresion_lineal }}>La regresión</b> es el modelo transparente: sus coeficientes se leen directamente.</p>
+        <p><b style={{ color: COLOR.regresion_lineal }}>La regresión</b> es el modelo transparente: cada coeficiente se lee en víctimas, con las demás variables fijas.</p>
       </div>
     </Marco>
   );

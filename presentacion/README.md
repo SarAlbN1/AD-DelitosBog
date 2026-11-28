@@ -46,7 +46,7 @@ Ninguna cifra de las gráficas se escribe a mano.
 2. `src/data/datos.ts` los tipa. Las diapositivas los importan.
 3. Cada gráfica indica al pie el archivo de origen.
 
-Como comprobación, el MAE recalculado desde las predicciones de los 184 días coincide con la tabla del informe: 32,72; 32,94; 33,57; 34,22; 36,31; y 49,04 para la barra. El 32,94 es el 32,95 del informe, redondeado desde predicciones con un decimal.
+Como comprobación, el MAE recalculado desde las predicciones de los 184 días coincide exactamente con la tabla del informe: 32,72; 32,95; 33,57; 34,22; 36,31; y 49,04 para la barra.
 
 El texto de las diapositivas resume el informe, sección por sección. El mapa de la diapositiva de territorio (anexo) es la figura `Informe/figuras/eda_mapa_tasa.pdf`, convertida a PNG.
 

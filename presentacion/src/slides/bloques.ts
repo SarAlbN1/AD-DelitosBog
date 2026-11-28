@@ -16,7 +16,7 @@ export const LIMITE_TOTAL = 15;
 export const BLOQUES: Bloque[] = [
   { numero: 1, tema: "Introducción, pregunta y datos", desde: 1, hasta: 4 },
   { numero: 2, tema: "Serie, validación y modelos", desde: 5, hasta: 9 },
-  { numero: 3, tema: "Resultados, interpretación y límites", desde: 10, hasta: 14 },
+  { numero: 3, tema: "Resultados, validación, interpretación y límites", desde: 10, hasta: 14 },
   { numero: 4, tema: "Conclusiones", desde: 15, hasta: 15 },
   { numero: 5, tema: "Demo del tablero de Power BI", desde: 16, hasta: 16, fueraDeLaPresentacion: true },
   { numero: 6, tema: "Preguntas", desde: 17, hasta: 17, fueraDeLaPresentacion: true },

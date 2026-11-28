@@ -406,7 +406,7 @@ function Interpretacion() {
           </table>
           <Panel tono="azul" className="mt-6 p-6">
             <p className="text-[19px] leading-snug">
-              <b>Regresión lineal:</b> cada víctima del día anterior suma {num(interpretacion.coeficientes.find((c) => c.variable === "rezago_1")!.por_unidad, 2)} al
+              <b>Regresión lineal:</b> con lo demás fijo, cada víctima del día anterior suma {num(interpretacion.coeficientes.find((c) => c.variable === "rezago_1")!.por_unidad, 2)} al
               pronóstico, y el festivo resta {num(-interpretacion.coeficientes.find((c) => c.variable === "festivo")!.por_unidad, 1)} víctimas,
               del orden de las 122 que separan un lunes laborable de uno festivo.
             </p>
@@ -437,7 +437,7 @@ export const RESULTADOS: Diapositiva[] = [
         "La evaluación final se calculó una sola vez, después de elegir todo con los pliegues.",
         "El MASE menor que 1 significa que el modelo se equivoca menos que repetir la semana anterior.",
       ],
-      transicion: "¿Y si la ventana hubiera sido otra?",
+      transicion: "Sara, ¿y si la ventana hubiera sido otra?",
       preguntas: [
         {
           pregunta: "¿Qué es exactamente la prueba de Diebold-Mariano?",
@@ -473,12 +473,12 @@ export const RESULTADOS: Diapositiva[] = [
     id: "pliegues",
     seccion: "Validación",
     titulo: "Estabilidad en los pliegues",
-    expone: "Juan Diego",
+    expone: "Sara",
     Contenido: Pliegues,
     notas: {
       guion: [
         { accion: "Señalar la línea gris de la barra." },
-        "Los cinco modelos le ganan a la barra en los seis pliegues, y su peor pliegue queda muy por debajo del peor de la barra. La mejora no depende de una ventana concreta.",
+        "Gracias, Juan Diego. Los cinco modelos le ganan a la barra en los seis pliegues, y su peor pliegue queda muy por debajo del peor de la barra. La mejora no depende de una ventana concreta.",
       ],
       enfatizar: [
         "El orden de los modelos cambia entre pliegues y evaluación: otra razón para no hablar de un ganador.",
@@ -490,7 +490,7 @@ export const RESULTADOS: Diapositiva[] = [
     id: "sin-ganador",
     seccion: "Validación",
     titulo: "Diebold-Mariano entre modelos",
-    expone: "Juan Diego",
+    expone: "Sara",
     Contenido: SinGanador,
     notas: {
       guion: [
@@ -499,7 +499,7 @@ export const RESULTADOS: Diapositiva[] = [
         "La única diferencia es gradiente contra regresión, 0,023, y deja de ser significativa al corregir la autocorrelación: 0,073. Lo sólido es que todos superan la barra.",
       ],
       enfatizar: ["Lo robusto no es el orden entre modelos, sino que todos superan la barra."],
-      transicion: "¿En qué se apoyan para pronosticar?",
+      transicion: "Juan Diego, ¿en qué se apoyan para pronosticar?",
       preguntas: [
         {
           pregunta: "Entonces, ¿qué modelo recomendarían?",
@@ -535,7 +535,7 @@ export const RESULTADOS: Diapositiva[] = [
     notas: {
       guion: [
         { accion: "Señalar las tres primeras barras." },
-        "Al desordenar cada grupo de variables, el error sube sobre todo con el día anterior, que recoge el nivel reciente, y con el ciclo semanal. Los festivos también pesan.",
+        "Gracias, Sara. Al desordenar cada grupo de variables, el error sube sobre todo con el día anterior, que recoge el nivel reciente, y con el ciclo semanal. Los festivos también pesan.",
         "Y al marcar un lunes como festivo, el gradiente baja su pronóstico un 37,3 %, casi el 37,8 % del análisis exploratorio. Esto describe dependencia, no causa.",
       ],
       enfatizar: [

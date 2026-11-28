@@ -11,7 +11,7 @@
 |---|---|---|---|---|
 | 1 | Introducción, pregunta y datos | 1–4 | Juan Diego | 2,5 min |
 | 2 | Serie, validación y modelos | 5–9 | Sara | 2,75 min |
-| 3 | Resultados, interpretación y límites | 10–14 | Juan Diego | 2,75 min |
+| 3 | Resultados, validación, interpretación y límites | 10–14 | Juan Diego → Sara → Juan Diego | 2,75 min |
 | 4 | Conclusiones | 15 | Sara | 0,75 min |
 | 5 | Demo del tablero de Power BI | 16 | Sara | 5 min |
 | 6 | Preguntas | 17 | Ambos | el tiempo que quede |
@@ -60,8 +60,8 @@ npm run preview      # abre la presentación en http://localhost:4173
 | 7 · Origen rodante y evaluación final | Señalar los pliegues y luego la barra roja. | Sara |
 | 8 · Métricas y barra | Señalar la fila resaltada de la tabla. | Sara |
 | 10 · Comparación con la barra | Señalar la línea discontinua roja. | Juan Diego |
-| 11 · Estabilidad en los pliegues | Señalar la línea gris de la barra. | Juan Diego |
-| 12 · Diebold-Mariano entre modelos | Señalar la celda roja. | Juan Diego |
+| 11 · Estabilidad en los pliegues | Señalar la línea gris de la barra. | Sara |
+| 12 · Diebold-Mariano entre modelos | Señalar la celda roja. | Sara |
 | 13 · Importancia por permutación | Señalar las tres primeras barras. | Juan Diego |
 | 16 · Demo del tablero de Power BI | Sara: Alt + Tab a Power BI Desktop, ya abierto y actualizado, en la página Panorama. | Sara |
 | 16 · Demo del tablero de Power BI | Panorama: señalar la serie mes a mes y la media diaria por año. | Sara |
@@ -176,9 +176,11 @@ npm run preview      # abre la presentación en http://localhost:4173
 
 ---
 
-### BLOQUE 3 · Resultados, interpretación y límites · 🎤 JUAN DIEGO · 2,75 min
+### BLOQUE 3 · Resultados, validación, interpretación y límites · 🎤 JUAN DIEGO → SARA → JUAN DIEGO · 2,75 min
 
 #### ▶ Diapositiva 10 · _Comparación con la barra_ · 0,75 min
+
+**🎤 JUAN DIEGO**
 
 **[Señalar la línea discontinua roja.]**
 
@@ -186,13 +188,15 @@ npm run preview      # abre la presentación en http://localhost:4173
 >
 > La prueba de Diebold-Mariano confirma que la diferencia con la barra es significativa en los cinco. El error queda en torno al 10 % del valor diario.
 >
-> ¿Y si la ventana hubiera sido otra?
+> Sara, ¿y si la ventana hubiera sido otra?
 
 #### ▶ Diapositiva 11 · _Estabilidad en los pliegues_ · 0,5 min
 
+**🎤 SARA**
+
 **[Señalar la línea gris de la barra.]**
 
-> Los cinco modelos le ganan a la barra en los seis pliegues, y su peor pliegue queda muy por debajo del peor de la barra. La mejora no depende de una ventana concreta.
+> Gracias, Juan Diego. Los cinco modelos le ganan a la barra en los seis pliegues, y su peor pliegue queda muy por debajo del peor de la barra. La mejora no depende de una ventana concreta.
 >
 > Pero, ¿hay un modelo ganador?
 
@@ -204,13 +208,15 @@ npm run preview      # abre la presentación en http://localhost:4173
 
 > La única diferencia es gradiente contra regresión, 0,023, y deja de ser significativa al corregir la autocorrelación: 0,073. Lo sólido es que todos superan la barra.
 >
-> ¿En qué se apoyan para pronosticar?
+> Juan Diego, ¿en qué se apoyan para pronosticar?
 
 #### ▶ Diapositiva 13 · _Importancia por permutación_ · 0,5 min
 
+**🎤 JUAN DIEGO**
+
 **[Señalar las tres primeras barras.]**
 
-> Al desordenar cada grupo de variables, el error sube sobre todo con el día anterior, que recoge el nivel reciente, y con el ciclo semanal. Los festivos también pesan.
+> Gracias, Sara. Al desordenar cada grupo de variables, el error sube sobre todo con el día anterior, que recoge el nivel reciente, y con el ciclo semanal. Los festivos también pesan.
 >
 > Y al marcar un lunes como festivo, el gradiente baja su pronóstico un 37,3 %, casi el 37,8 % del análisis exploratorio. Esto describe dependencia, no causa.
 >
