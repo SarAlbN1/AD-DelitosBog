@@ -10,7 +10,7 @@ No hay wiki ni documentos de arquitectura. Las fuentes de verdad son estas, en e
 4. Este archivo aplica las reglas del equipo al trabajo con asistentes. Ante discrepancias, señala la fuente afectada y propón la corrección donde se mantiene.
 5. El **informe en LaTeX** presenta el trabajo. Contrasta sus afirmaciones con el enunciado, las issues y los resultados obtenidos. Coordina las correcciones con quien mantiene cada sección.
 
-Los scripts, los notebooks ejecutados, los commits y los archivos de `outputs/` son la evidencia del estado real. Una cifra sin un script o un archivo que la produzca es un pendiente, no un resultado.
+Los scripts, los commits y los archivos de `outputs/` son la evidencia del estado real. Una cifra sin un script o un archivo que la produzca es un pendiente, no un resultado.
 
 ## Reparto entre las dos personas
 

@@ -4,25 +4,24 @@
 
 **Autores:** Juan Diego Rojas y Sara Albarracín. **Profesor:** Ferney Maldonado López.
 
-## Informe en curso (desde la segunda entrega)
+## Cómo se compila
 
-El informe se compila desde [informe.tex](informe.tex), que incluye un archivo por sección (#39):
+El informe se compila desde [informe.tex](informe.tex), que incluye un archivo por sección:
 
 | Archivo | Contenido | Responsable |
 |---|---|---|
 | `preambulo.tex`, `portada.tex` | Paquetes, formato y portada. La entrega se cambia en `\entregaactual` y `\entregasubtitulo`, dentro de `informe.tex` | Ambos |
-| `secciones/02_introduccion.tex` | Sección 2 | Juan Diego |
-| `secciones/03_trabajos_relacionados.tex` | Sección 3 | Juan Diego |
-| `secciones/04_datos.tex` | Sección 4 | Juan Diego |
-| `secciones/05_preprocesamiento.tex`, `06_analisis_exploratorio.tex`, `07_metodologia.tex` | Secciones 5–7. Parten de `scripts/preprocesamiento.py`, [`docs/EDA_HALLAZGOS.md`](../docs/EDA_HALLAZGOS.md) y [`docs/METODOLOGIA.md`](../docs/METODOLOGIA.md) | Sara (contenido) y Juan Diego (integración) |
+| `secciones/01_resumen.tex` | Sección 1, resumen ejecutivo | Juan Diego |
+| `secciones/02_introduccion.tex`, `03_trabajos_relacionados.tex`, `04_datos.tex` | Secciones 2 a 4 | Juan Diego |
+| `secciones/05_preprocesamiento.tex`, `06_analisis_exploratorio.tex`, `07_metodologia.tex` | Secciones 5 a 7. Parten de `scripts/preprocesamiento.py`, [`docs/EDA_HALLAZGOS.md`](../docs/EDA_HALLAZGOS.md) y [`docs/METODOLOGIA.md`](../docs/METODOLOGIA.md) | Sara (contenido) y Juan Diego (integración) |
+| `secciones/08_implementacion.tex` | Sección 8, implementación del modelado. Parte de [`docs/MODELADO.md`](../docs/MODELADO.md) | Juan Diego |
+| `secciones/09_resultados.tex`, `10_interpretacion.tex`, `11_conclusiones.tex` | Secciones 9 a 11: resultados, interpretación, y conclusiones con las limitaciones | Juan Diego |
 | `referencias.tex` | Referencias en APA 7 | Ambos |
-| `secciones/apendices.tex` | Apéndices A–D: diccionario de datos, archivos y SHA-256, reproducibilidad y tablas complementarias (#51) | Juan Diego |
+| `secciones/apendices.tex` | Apéndices A–D: diccionario de datos, archivos y SHA-256, reproducibilidad y tablas complementarias | Juan Diego |
 
-Se compila en Overleaf con pdfLaTeX. Hay que subir todos estos archivos con sus carpetas, incluida [`figuras/`](figuras/). Si falta una figura, el informe compila igual y muestra un recuadro «Figura pendiente».
+Se compila con pdfLaTeX (`latexmk -pdf`), en Overleaf o en local. Hay que subir todos estos archivos con sus carpetas, incluida [`figuras/`](figuras/). Si falta una figura, el informe compila igual y muestra un recuadro «Figura pendiente».
 
-## Primera entrega
-
-Archivo: [primera_entrega.tex](primera_entrega.tex). Es la versión entregada, en la etiqueta `entrega-1`, y no se edita. Contiene las secciones 2 (Introducción), 3 (Trabajos relacionados) y 4 (Recolección y entendimiento de datos). Las secciones 2–4 de `informe.tex` parten de ella.
+La versión de la primera entrega está en la etiqueta `entrega-1` del repositorio y no se edita aquí.
 
 ## Fuentes y función de cada una
 
@@ -36,7 +35,7 @@ Las decisiones están en [`docs/decisiones.md`](../docs/decisiones.md), D-01.
 
 Las filas de fuentes distintas no se suman.
 
-## De dónde sale cada cifra y figura de las secciones 4 a 7
+## De dónde sale cada cifra y figura de las secciones 4 a 11
 
 | Salida | Script |
 |---|---|
@@ -49,8 +48,11 @@ Las filas de fuentes distintas no se suman.
 | `outputs/features/diccionario_features.json` (variables derivadas y apéndice A) | `scripts/features.py` |
 | `outputs/eda/` y las figuras `eda_*.pdf` (sección 6) | `scripts/eda.py` |
 | `outputs/baselines/` (comparadores y pliegues de la sección 7) | `scripts/baselines.py` |
+| `outputs/modelado/` (métricas, predicciones y coeficientes de cada modelo) | `scripts/modelado/` (`estadisticos.py`, `arboles.py`, `ajuste.py`, `regresion.py`) |
+| `outputs/modelado/comparacion/` y las figuras `modelos_*.pdf` (sección 9) | `scripts/modelado/comparacion.py` |
+| `outputs/modelado/interpretacion/` y `importancia_permutacion_grupos.pdf` (sección 10) | `scripts/modelado/interpretacion.py` |
 
-Las figuras de `figuras/` son copias de las de `outputs/`. Si se regeneran, hay que volver a copiarlas.
+Las figuras de `figuras/` son copias de las de `outputs/`. Si se regeneran, hay que volver a copiarlas. Los scripts de la sección 9 y 10 las copian solos. Las cifras de modelado se generan en la imagen de Docker de referencia ([`docs/REPRODUCIBILIDAD.md`](../docs/REPRODUCIBILIDAD.md), sección 6).
 
 ```bash
 python scripts/policia_registro_a_csv.py --entrada data/raw/policia_registro --salida data/raw/policia_registro/csv

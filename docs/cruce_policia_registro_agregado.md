@@ -127,8 +127,8 @@ el control de consistencia es el agregado diario, no la unicidad de filas.
   con el agregado para cubrir 2018–2019 rompe la unidad de observación única que exige el mínimo, y
   esos dos años solo podrían entrar en análisis agregados, fuera del conteo de filas. Decisión en
   #18.
-- El informe, el `README.md` y los notebooks dicen 2018–2025 en todas partes. Si el periodo
-  principal queda en 2020–2025, hay que actualizarlos (#27 y la segunda entrega).
+- El informe y el `README.md` decían 2018–2025 en todas partes. Con el periodo principal en
+  2020–2025 (D-01), se actualizaron (#27 y la segunda entrega).
 - La auditoría conjunta de las cuatro fuentes en un solo reporte necesita el CSV de Fiscalía en
   local, que hoy no está en esta copia del repositorio. Las cifras de Fiscalía y Línea 123 siguen
   siendo las de `outputs/auditoria/`.
