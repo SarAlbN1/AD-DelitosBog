@@ -53,7 +53,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "12.0D"
+                  "Value": "13.0D"
                 }
               }
             }
@@ -103,7 +103,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F59E0B'"
+                      "Value": "'#1B2A4A'"
                     }
                   }
                 }
@@ -112,7 +112,7 @@
             "transparency": {
               "expr": {
                 "Literal": {
-                  "Value": "82.0D"
+                  "Value": "0.0D"
                 }
               }
             }

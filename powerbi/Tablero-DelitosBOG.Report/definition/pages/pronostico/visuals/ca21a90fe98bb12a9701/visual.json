@@ -53,7 +53,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "14.0D"
+                  "Value": "15.0D"
                 }
               }
             }
@@ -103,7 +103,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#22D3EE'"
+                      "Value": "'#1B2A4A'"
                     }
                   }
                 }
@@ -112,7 +112,7 @@
             "transparency": {
               "expr": {
                 "Literal": {
-                  "Value": "82.0D"
+                  "Value": "0.0D"
                 }
               }
             }
@@ -163,7 +163,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'▶ Hallazgo'"
+                  "Value": "'▶ Cómo leer el error'"
                 }
               }
             },

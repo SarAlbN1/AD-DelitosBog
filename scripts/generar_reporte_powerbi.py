@@ -35,6 +35,7 @@ W, H = 1280, 720
 # Cada página tiene su propio color de acento, para que se distingan a simple vista.
 FONDO, PANEL, BORDE = "#0B1120", "#131E36", "#2A3A5C"
 TEXTO, TEXTO_2 = "#FFFFFF", "#CBD5E1"
+PANEL_NOTA = "#1B2A4A"   # fondo de las notas: más claro que los paneles, para que el texto resalte
 CALOR = ("#FDE68A", "#F97316", "#B91C1C")
 ACENTO = "#F59E0B"
 ACENTOS = {"panorama": "#F59E0B", "patrones": "#A78BFA", "territorio": "#F87171", "pronostico": "#22D3EE"}
@@ -206,7 +207,7 @@ class Pagina:
                      contenedor={"border": [{"properties": {"show": lit(True), "color": color(self.acento),
                                                             "radius": lit(10.0)}}]})
 
-    def hallazgo(self, etiqueta, x, y, w, h, medida, titulo="Hallazgo", tam=13.0):
+    def hallazgo(self, etiqueta, x, y, w, h, medida, titulo="Hallazgo", tam=14.0):
         """Una frase calculada por una medida: el dato convertido en información.
 
         El alto de cada hallazgo deja sitio para la frase completa: a 13 pt caben unos 7 px por carácter."""
@@ -215,8 +216,8 @@ class Pagina:
                      objetos={"labels": [{"properties": {"color": color(TEXTO), "fontSize": lit(float(tam))}}],
                               "categoryLabels": [{"properties": {"show": lit(False)}}],
                               "wordWrap": [{"properties": {"show": lit(True)}}]},
-                     contenedor={"background": [{"properties": {"show": lit(True), "color": color(self.acento),
-                                                                "transparency": lit(82.0)}}],
+                     contenedor={"background": [{"properties": {"show": lit(True), "color": color(PANEL_NOTA),
+                                                                "transparency": lit(0.0)}}],
                                  "border": [{"properties": {"show": lit(True), "color": color(self.acento),
                                                             "radius": lit(10.0)}}],
                                  "title": [{"properties": {"show": lit(True), "text": lit("▶ " + titulo),
@@ -318,11 +319,11 @@ def pagina_panorama():
                                           ("Var. media diaria vs año anterior", "Frente al año anterior"),
                                           ("Registros Policía auditados", "Registros auditados (mín. 500.000)", 24.0)],
                              h=100)
-    p.hallazgo("aviso", M, fin + 16, wl, H - M - fin - 16, "Aviso de lectura", titulo="Cómo leerlo", tam=12.0)
+    p.hallazgo("aviso", M, fin + 16, wl, H - M - fin - 16, "Aviso de lectura", titulo="Cómo leerlo", tam=13.0)
     # Derecha: el hallazgo y la tendencia.
     xr = M + wl + G
     wr = W - M - xr
-    p.hallazgo("hallazgo", xr, Y0, wr, 96, "Hallazgo tendencia", tam=14.0)
+    p.hallazgo("hallazgo", xr, Y0, wr, 96, "Hallazgo tendencia", titulo="La tendencia", tam=15.0)
     p.agregar("serie_mensual", "areaChart", xr, Y0 + 96 + 16, wr, 270,
               titulo="Víctimas por día, mes a mes: la caída de 2020 y el pico de 2023",
               roles={"Category": [(col("dim_periodo", "fecha_mes"), "Mes")],
@@ -417,7 +418,7 @@ def pagina_territorio():
                          ("Tasa ciudad por 100k", "Tasa de la ciudad por 100.000 hab.", 24.0)],
                     h=84, x0=xr, ancho_total=wr, sep=16)
     y = Y0 + 84 + 16
-    p.hallazgo("hallazgo", xr, y, wr, 112, "Hallazgo territorio")
+    p.hallazgo("hallazgo", xr, y, wr, 112, "Hallazgo territorio", titulo="Volumen frente a tasa")
     y += 112 + 16
     loc = col("dim_localidad", "localidad")
     llamadas = med("Llamadas 123")
@@ -480,7 +481,7 @@ def pagina_pronostico():
               objetos=con_etiquetas({**ejes(), "dataPoint": colores_serie(familia, COLOR_FAMILIA)}),
               filtros=[filtro_en("fact_modelos", "variante", ["completo"], "f_completo"),
                        filtro_en("fact_modelos", "origen", ["#42", "#45", "#144"], "f_origen")])
-    p.hallazgo("hallazgo", x2, y, w2, H - M - y, "Hallazgo modelo", tam=14.0)
+    p.hallazgo("hallazgo", x2, y, w2, H - M - y, "Hallazgo modelo", titulo="Cómo leer el error", tam=15.0)
     return p
 
 
