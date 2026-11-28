@@ -1,18 +1,18 @@
 {
   "name": "TemaDelitosBOG",
   "dataColors": [
-    "#F97316",
-    "#38BDF8",
+    "#F59E0B",
+    "#22D3EE",
     "#A78BFA",
-    "#FACC15",
-    "#F43F5E",
+    "#F87171",
     "#34D399",
     "#94A3B8",
+    "#FACC15",
     "#E879F9"
   ],
-  "background": "#0F172A",
+  "background": "#0B1120",
   "foreground": "#FFFFFF",
-  "tableAccent": "#F97316",
+  "tableAccent": "#F59E0B",
   "good": "#34D399",
   "neutral": "#FACC15",
   "bad": "#F43F5E",
@@ -38,7 +38,7 @@
     "label": {
       "fontSize": 11,
       "fontFace": "Segoe UI",
-      "color": "#E2E8F0"
+      "color": "#CBD5E1"
     }
   },
   "visualStyles": {
@@ -49,7 +49,7 @@
             "show": true,
             "color": {
               "solid": {
-                "color": "#1E293B"
+                "color": "#131E36"
               }
             },
             "transparency": 0
@@ -60,7 +60,7 @@
             "show": true,
             "color": {
               "solid": {
-                "color": "#334155"
+                "color": "#2A3A5C"
               }
             },
             "radius": 10
@@ -80,7 +80,7 @@
           {
             "labelColor": {
               "solid": {
-                "color": "#E2E8F0"
+                "color": "#CBD5E1"
               }
             }
           }
@@ -89,12 +89,12 @@
           {
             "labelColor": {
               "solid": {
-                "color": "#E2E8F0"
+                "color": "#CBD5E1"
               }
             },
             "gridlineColor": {
               "solid": {
-                "color": "#334155"
+                "color": "#2A3A5C"
               }
             }
           }
@@ -103,7 +103,7 @@
           {
             "labelColor": {
               "solid": {
-                "color": "#E2E8F0"
+                "color": "#CBD5E1"
               }
             }
           }
@@ -112,12 +112,12 @@
           {
             "background": {
               "solid": {
-                "color": "#1E293B"
+                "color": "#131E36"
               }
             },
             "foreground": {
               "solid": {
-                "color": "#E2E8F0"
+                "color": "#CBD5E1"
               }
             }
           }
@@ -130,7 +130,7 @@
           {
             "color": {
               "solid": {
-                "color": "#0F172A"
+                "color": "#0B1120"
               }
             },
             "transparency": 0

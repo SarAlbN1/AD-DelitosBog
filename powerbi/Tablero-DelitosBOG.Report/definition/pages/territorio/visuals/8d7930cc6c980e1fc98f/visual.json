@@ -1,40 +1,36 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
-  "name": "34bce3b3a00b184c91da",
+  "name": "8d7930cc6c980e1fc98f",
   "position": {
-    "x": 771,
-    "y": 296,
-    "z": 9000,
-    "width": 485,
-    "height": 400,
-    "tabOrder": 9000
+    "x": 644,
+    "y": 520,
+    "z": 8000,
+    "width": 612,
+    "height": 176,
+    "tabOrder": 8000
   },
   "visual": {
-    "visualType": "clusteredColumnChart",
+    "visualType": "tableEx",
     "drillFilterOtherVisuals": true,
     "query": {
       "queryState": {
-        "Category": {
+        "Values": {
           "projections": [
             {
               "field": {
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_calendario"
+                      "Entity": "dim_localidad"
                     }
                   },
-                  "Property": "dia_semana"
+                  "Property": "localidad"
                 }
               },
-              "queryRef": "dim_calendario.dia_semana",
-              "nativeQueryRef": "dia_semana",
-              "displayName": "Día"
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
+              "queryRef": "dim_localidad.localidad",
+              "nativeQueryRef": "localidad",
+              "displayName": "Localidad"
+            },
             {
               "field": {
                 "Measure": {
@@ -43,12 +39,57 @@
                       "Entity": "Medidas"
                     }
                   },
-                  "Property": "Media diaria"
+                  "Property": "Llamadas 123"
                 }
               },
-              "queryRef": "Medidas.Media diaria",
-              "nativeQueryRef": "Media diaria",
-              "displayName": "Víctimas por día"
+              "queryRef": "Medidas.Llamadas 123",
+              "nativeQueryRef": "Llamadas 123",
+              "displayName": "Llamadas"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Puesto por conteo"
+                }
+              },
+              "queryRef": "Medidas.Puesto por conteo",
+              "nativeQueryRef": "Puesto por conteo",
+              "displayName": "Puesto por conteo"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Tasa 123 por 100k"
+                }
+              },
+              "queryRef": "Medidas.Tasa 123 por 100k",
+              "nativeQueryRef": "Tasa 123 por 100k",
+              "displayName": "Tasa por 100.000"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Puesto por tasa"
+                }
+              },
+              "queryRef": "Medidas.Puesto por tasa",
+              "nativeQueryRef": "Puesto por tasa",
+              "displayName": "Puesto por tasa"
             }
           ]
         }
@@ -60,10 +101,10 @@
               "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "dim_calendario"
+                    "Entity": "dim_localidad"
                   }
                 },
-                "Property": "dia_semana"
+                "Property": "localidad"
               }
             },
             "direction": "Ascending"
@@ -73,83 +114,10 @@
       }
     },
     "objects": {
-      "categoryAxis": [
+      "values": [
         {
           "properties": {
-            "labelColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#E2E8F0'"
-                    }
-                  }
-                }
-              }
-            },
-            "showAxisTitle": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "12.0D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "valueAxis": [
-        {
-          "properties": {
-            "labelColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#E2E8F0'"
-                    }
-                  }
-                }
-              }
-            },
-            "gridlineColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#334155'"
-                    }
-                  }
-                }
-              }
-            },
-            "showAxisTitle": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "12.0D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "legend": [
-        {
-          "properties": {
-            "labelColor": {
+            "fontColorPrimary": {
               "solid": {
                 "color": {
                   "expr": {
@@ -160,27 +128,51 @@
                 }
               }
             },
-            "position": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Top'"
+            "backColorPrimary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#131E36'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            },
+            "backColorSecondary": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#18243F'"
+                    }
+                  }
                 }
               }
             },
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "12.0D"
+                  "Value": "11.0D"
                 }
               }
             }
           }
-        }
-      ],
-      "dataPoint": [
+        },
         {
           "properties": {
-            "fill": {
+            "backColor": {
               "solid": {
                 "color": {
                   "expr": {
@@ -192,7 +184,7 @@
                               "Entity": "Medidas"
                             }
                           },
-                          "Property": "Media diaria"
+                          "Property": "Tasa 123 por 100k"
                         }
                       },
                       "FillRule": {
@@ -231,31 +223,28 @@
                   }
                 }
               }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#111827'"
+                    }
+                  }
+                }
+              }
             }
           },
           "selector": {
-            "data": [
-              {
-                "dataViewWildcard": {
-                  "matchingOption": 1
-                }
-              }
-            ],
-            "metadata": "Medidas.Media diaria"
+            "metadata": "Medidas.Tasa 123 por 100k"
           }
         }
       ],
-      "labels": [
+      "columnHeaders": [
         {
           "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "color": {
+            "fontColor": {
               "solid": {
                 "color": {
                   "expr": {
@@ -266,10 +255,41 @@
                 }
               }
             },
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#2A3A5C'"
+                    }
+                  }
+                }
+              }
+            },
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "12.0D"
+                  "Value": "11.0D"
+                }
+              }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }
@@ -291,7 +311,14 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Víctimas por día de la semana'"
+                  "Value": "'Volumen frente a tasa: el puesto de cada localidad por conteo y por tasa'"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             },
@@ -309,7 +336,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "14.0D"
+                  "Value": "13.0D"
                 }
               }
             },
@@ -338,7 +365,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1E293B'"
+                      "Value": "'#131E36'"
                     }
                   }
                 }
@@ -369,7 +396,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#334155'"
+                      "Value": "'#2A3A5C'"
                     }
                   }
                 }

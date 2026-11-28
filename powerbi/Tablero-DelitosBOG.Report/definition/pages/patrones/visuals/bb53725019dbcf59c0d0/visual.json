@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "bb53725019dbcf59c0d0",
   "position": {
-    "x": 24,
+    "x": 40,
     "y": 8,
-    "z": 0,
-    "width": 940,
-    "height": 68,
-    "tabOrder": 0
+    "z": 1000,
+    "width": 916,
+    "height": 72,
+    "tabOrder": 1000
   },
   "visual": {
     "visualType": "textbox",
@@ -35,7 +35,7 @@
                     "value": "Patrones por día de la semana, mes y festivos · media de víctimas por día",
                     "textStyle": {
                       "fontSize": "11pt",
-                      "color": "#E2E8F0"
+                      "color": "#CBD5E1"
                     }
                   }
                 ]

@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
   "name": "cb0d1458855b2979a60f",
   "position": {
-    "x": 650,
-    "y": 204,
-    "z": 7000,
-    "width": 606,
-    "height": 72,
-    "tabOrder": 7000
+    "x": 764,
+    "y": 416,
+    "z": 9000,
+    "width": 492,
+    "height": 104,
+    "tabOrder": 9000
   },
   "visual": {
     "visualType": "card",
@@ -53,7 +53,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "14.0D"
+                  "Value": "13.0D"
                 }
               }
             }
@@ -103,7 +103,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#3B1D0E'"
+                      "Value": "'#A78BFA'"
                     }
                   }
                 }
@@ -112,7 +112,7 @@
             "transparency": {
               "expr": {
                 "Literal": {
-                  "Value": "0.0D"
+                  "Value": "82.0D"
                 }
               }
             }
@@ -134,7 +134,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F97316'"
+                      "Value": "'#A78BFA'"
                     }
                   }
                 }
@@ -163,7 +163,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'▶ Hallazgo'"
+                  "Value": "'▶ Los festivos'"
                 }
               }
             },
@@ -172,7 +172,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F97316'"
+                      "Value": "'#A78BFA'"
                     }
                   }
                 }

@@ -26,7 +26,14 @@ modelo → páginas. No hay orígenes web, así que Power BI no pide niveles de 
    por defecto es `C:\ruta\al\AD-DelitosBog`, que no existe) y **Actualizar**.
 
 El mapa usa el visual **Azure Maps** con capa de calor ponderada por la tasa. Si la organización lo
-desactiva, la matriz de calor de la misma página muestra la misma lectura.
+desactiva, la tabla de la misma página muestra la misma lectura (tasa coloreada de amarillo a rojo).
+
+**Diseño.** Cada página tiene su propio color de acento (Panorama ámbar, ¿Cuándo? violeta, ¿Dónde?
+coral, Pronóstico cian), su propia composición y ningún tipo de gráfico se repite entre páginas:
+Panorama usa área y columnas; ¿Cuándo?, la matriz de calor y el anillo; ¿Dónde?, el mapa, el mapa de
+árbol del volumen y la tabla con los dos puestos; Pronóstico, líneas y barras. Las familias de modelos
+tienen un color fijo. Los títulos largos pasan a una segunda línea y los hallazgos tienen alto para la
+frase entera.
 
 **Lo que no se versiona:** `powerbi/**/.pbi/localSettings.json` y `cache.abf` (en `powerbi/.gitignore`).
 

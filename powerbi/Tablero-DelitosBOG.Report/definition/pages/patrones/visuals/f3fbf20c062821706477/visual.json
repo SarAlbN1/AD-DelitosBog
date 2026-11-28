@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
-  "name": "b058d42d326660a84aa3",
+  "name": "f3fbf20c062821706477",
   "position": {
-    "x": 650,
-    "y": 84,
-    "z": 4000,
-    "width": 293,
-    "height": 100,
-    "tabOrder": 4000
+    "x": 1018,
+    "y": 200,
+    "z": 7000,
+    "width": 238,
+    "height": 88,
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "card",
@@ -24,12 +24,12 @@
                       "Entity": "Medidas"
                     }
                   },
-                  "Property": "Efecto festivo %"
+                  "Property": "Media fin de semana vs laborable %"
                 }
               },
-              "queryRef": "Medidas.Efecto festivo %",
-              "nativeQueryRef": "Efecto festivo %",
-              "displayName": "Lunes festivo vs. laborable"
+              "queryRef": "Medidas.Media fin de semana vs laborable %",
+              "nativeQueryRef": "Media fin de semana vs laborable %",
+              "displayName": "Fin de semana vs. laborable"
             }
           ]
         }
@@ -53,7 +53,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "30.0D"
+                  "Value": "28.0D"
                 }
               }
             }
@@ -75,7 +75,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#E2E8F0'"
+                      "Value": "'#CBD5E1'"
                     }
                   }
                 }
@@ -84,7 +84,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "13.0D"
+                  "Value": "12.0D"
                 }
               }
             }
@@ -121,7 +121,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#F97316'"
+                      "Value": "'#A78BFA'"
                     }
                   }
                 }
@@ -152,7 +152,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1E293B'"
+                      "Value": "'#131E36'"
                     }
                   }
                 }
