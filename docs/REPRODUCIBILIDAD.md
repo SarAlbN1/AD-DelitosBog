@@ -278,7 +278,9 @@ Cada corrida añade una fila a `outputs/modelado/experimentos.csv` y un archivo 
 | Filas `#45` de `comparacion/tabla_comparativa.csv`, las que cita la sección 9 | Idénticas: gradiente 32,72, ETS 32,95, SARIMA 33,57, bosque 34,22 y barra 49,04 |
 | `outputs/modelado/estadisticos/` y `arboles/` (#43, #44) | **Distintas**, y por eso también sus filas en `tabla_comparativa.csv`, `mae_por_pliegue.csv` y `errores_por_periodo.csv` |
 
-La última fila no es un error de reproducción. Las salidas versionadas de #43 y #44 se generaron en macOS, antes de que existiera la imagen. En la imagen, SARIMA de #43 da 33,57 en vez de 33,53, porque AICc elige otra candidata cuando hay casi empate (#118). El gradiente de #44 da 32,77 en vez de 32,89, y su variante sin 2020, 33,68 en vez de 32,94, porque el gradiente por histogramas cambia con la plataforma (#117). El informe no cita esas filas. Las cifras de modelado que sí cita (secciones 9 y 10) son las de `ajuste/` y coinciden exactamente.
+La última fila no es un error de reproducción. Las salidas versionadas de #43 y #44 se generaron en macOS, antes de que existiera la imagen. En la imagen, SARIMA de #43 da 33,57 en vez de 33,53, porque AICc elige otra candidata cuando hay casi empate (#118). El gradiente de #44 da 32,77 en vez de 32,89, y su variante sin 2020, 33,68 en vez de 32,94, porque el gradiente por histogramas cambia con la plataforma (#117). El informe no cita esas filas. Las cifras de modelado que sí cita (secciones 9 y 10) son las de `ajuste/`, y en esta reproducción coinciden exactamente.
+
+**En otro equipo pueden cambiar unas décimas en SARIMA.** El 2026-11-28 se repitió la sección 6 con la misma imagen en un Mac con emulación x86. La regresión, el bosque y ETS salieron idénticos, y el gradiente dio lo mismo que aquí (32,77 y 33,68 sin 2020). SARIMA dio 33,43 en vez de 33,57, también en `ajuste/`, por el mismo casi empate de candidatas (#118). Y el Ljung-Box de SARIMA al rezago 7 dio p = 0,0012: por eso la sección 11 lo cita como p < 0,01, que vale en los dos equipos.
 
 ## 7. Registro de la reproducción
 
